@@ -56,6 +56,7 @@ def lcm(*args):
 
 
 def poly_normalize(P):
+    """Remove trailing zeroes"""
     while P[-1] == 0 and len(P) > 1:
         if len(P) == 1:
             break
@@ -63,12 +64,14 @@ def poly_normalize(P):
 
 
 def poly_pad(P,n):
+    """Add trailing zeroes"""
     out = P.copy()
     while len(out) < n:
         out.append(0)
     return out
 	
 def poly_add(P, Q):
+    """Take list of polynomial coefficients and add them"""
         
     pad = max(len(P),len(Q))
     
@@ -86,6 +89,7 @@ def poly_add(P, Q):
 
 
 def poly_mult(P, Q):
+    """Take list of polynomial coefficients and multiply them"""
     
     out = [0]*(len(P)+len(Q))
     

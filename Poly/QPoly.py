@@ -4,12 +4,9 @@
 ## TODO: Polynomial GCD
 ## TODO: Factorization
 ## TODO: Rational roots
-## TODO: Lagrange interpolation
 
-from Rational import Rational
+from Rational import Rational, rational_gcd
 from Utility import poly_add, poly_mult, poly_print
-#from math import copysign
-
 
 class QPoly:
     
@@ -246,24 +243,26 @@ class QPoly:
 
 
 
-#def content(poly):
-#    """GCD of the coefficients, negative if leading coef is negative
-#    makes the polynomial have integer coefs"""
-#    assert type(poly) == QPoly
-#    return gcd(poly.coef) * int(copysign(1,poly[-1]))
-#
-#
-#def primitive_part(poly):
-#    """Divide out the content"""
-#    assert type(poly) == QPoly
-#    cont = content(poly)
-#    return QPoly([c//cont for c in poly])
+
+
+def content(poly):
+    """Rational GCD of the coefficients, negative if leading coef is negative,
+    makes the polynomial have integer coefs"""
+    assert type(poly) == QPoly
+    return rational_gcd(poly.coef) * (-1 if poly.coef[-1] < 0 else 1)
+
+
+def primitive(poly):
+    """Divide out the content"""
+    assert type(poly) == QPoly
+    cont = content(poly)
+    return poly//cont
 
     
 def monic(poly):
     """Return the monic version of the polynomial with positive leading coef"""
     assert type(poly) == QPoly
-    return QPoly([p/poly.coef[-1] for p in poly.coef])
+    return poly//poly.coef[-1]
 
 
 def lagrange_interpolation(X,Y):
@@ -280,6 +279,8 @@ def lagrange_interpolation(X,Y):
     return final
 
 
+
+
 if __name__ == '__main__':
     P = QPoly([0,2,0,-6,-2,0,0])
     P[1] /= 3
@@ -289,11 +290,13 @@ if __name__ == '__main__':
     print(P//QPoly([0,1,2]))
     print(P)
     print(monic(P))
-    print()
+    
     Q = QPoly([-5,1,-3])
-    print(f"Q          = {Q}")
+    print(f"\nQ          = {Q}")
     print(f"integral   = {Q.integral(0)}")
     print(f"derivative = {Q.derivative()}")
-#    print(Q^2)
-    print(type(Q(1)))
     print(lagrange_interpolation([1,2,3],[1,8,27]))
+    
+    print(f"\nP = {P}")
+    print(f"content(P)   = {content(P)}")
+    print(f"primitive(P) = {primitive(P)}")
