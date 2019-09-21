@@ -22,6 +22,10 @@ class Rational:
         self.d = self.d//g
 
 
+    def copy(self):
+        return Rational(self.n,self.d)
+
+
     def inv(self):
         return Rational(self.d,self.n)
 
@@ -60,6 +64,12 @@ class Rational:
         if type(divisor) == int:
             divisor = Rational(divisor)
         return self*divisor.inv()
+    
+    
+    def __rtruediv__(self,dividend):
+        if type(dividend) == int:
+            dividend = Rational(dividend)
+        return self.inv()*dividend
 
 
     def __floordiv__(self,divisor):
@@ -68,6 +78,18 @@ class Rational:
         q = self*divisor.inv()
         v = q.n // q.d
         return v
+
+
+    def __mod__(self,modulus):
+        if type(modulus) == int:
+            modulus = Rational(modulus)
+        if modulus > self:
+            return self
+        else:
+            a = self.copy()
+            while a > modulus:
+                a -= modulus
+            return a
 
 
     def __add__(self,addend):
@@ -144,7 +166,7 @@ class Rational:
 
 
     def __hash__(self):
-        return hash(str(self))
+        return hash("CustomRational"+str(self))
 
 
     def __float__(self):
@@ -213,6 +235,29 @@ class Rational:
     
         return L
     
+
+def rational_gcd(A,B):
+    """Largest rational such that both A and B are integer multiples of it"""
+    assert type(A) == Rational
+    assert type(B) == Rational
+    return Rational(gcd(A.n*B.d,A.d*B.n),(A.d*B.d))
+
+
+def rational_lcm(A,B):
+    """Smallest rational such that it is an integer multiple of A and of B"""
+    assert type(A) == Rational
+    assert type(B) == Rational
+    return abs(a*b)/rational_gcd(A,B)
+
+
 if __name__ == '__main__':
-    r = Rational(5,7)
-    print(r)
+    r = Rational(32,7)
+    print(f"r = {r}")
+    print(f"1/r = {1/r}")
+    print(f"3/r = {3/r}")
+    a = Rational(13,6)
+    b = Rational(3,4)
+    G = rational_gcd(a,b)
+    L = rational_lcm(a,b)
+    print(f"gcd({a},{b}) = {G}")
+    print(f"lcm({a},{b}) = {L}")
