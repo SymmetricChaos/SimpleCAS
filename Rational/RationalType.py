@@ -41,6 +41,8 @@ class Rational:
 
 
     def __repr__(self):
+        if self.d == 1:
+            return str(self.n)
         return str(self.n) + "/" + str(self.d)
 
 
