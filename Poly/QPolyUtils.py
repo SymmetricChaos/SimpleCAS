@@ -1,5 +1,7 @@
 from Poly.QPoly import QPoly
 from Rational import Rational, rational_gcd
+from Utility import factorization
+from itertools import product
 
 def content(poly):
     """Rational GCD of the coefficients, negative if leading coef is negative,
@@ -35,6 +37,36 @@ def lagrange_interpolation(X,Y):
     return final
 
 
+def kronecker_factorization(poly):
+    # Degree of poly
+    deg = poly.degree()
+    # Degree of factor
+    fdeg = deg//2 
+    
+    points = [i for i in range(fdeg+1)]
+    ev = [poly(i) for i in points]
+    F = [factorization(e.n//e.d) for e in ev]
+
+    for evs in product(*F):
+        L = lagrange_interpolation(points,evs)
+        # Skip possible linear factors
+        if len(L) == 1:
+            continue
+        # Skip possible rational factors
+        if any(x.d != 1 for x in L):
+            continue
+        
+        # Try the division
+        q,r = divmod(poly,L)
+        
+        # Remainder must be zero
+        if r == QPoly([0]):
+            # all cofficients must be integers
+            if all(x.d == 1 for x in q):
+                print(f"{poly}\n{L}\n{q}\n")
+
+
+
 
 if __name__ == '__main__':
     Q = QPoly([-5,1,-3])
@@ -49,3 +81,6 @@ if __name__ == '__main__':
     print(f"\nP            = {P}")
     print(f"content(P)   = {content(P)}")
     print(f"primitive(P) = {primitive(P)}")
+    
+    R = QPoly([2,1,1,0,1,1])
+    kronecker_factorization(R)
