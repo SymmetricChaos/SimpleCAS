@@ -51,11 +51,12 @@ def rational_roots(poly):
                 R.add(Rational(-i,j))
     return R
 
+
 ## TODO: apply this method recursively to get a full factorization
 def kronecker_factorization(poly):
-    # Degree of poly
+
+    
     deg = poly.degree()
-    # Degree of factor
     fdeg = deg//2 
     
     # TODO: Need a better way to choose points
@@ -64,6 +65,8 @@ def kronecker_factorization(poly):
     points = [i for i in range(fdeg+1)]
     ev = [poly(i) for i in points]
     F = [factorization(e.n//e.d) for e in ev]
+
+    
 
     for evs in product(*F):
         L = lagrange_interpolation(points,evs)
@@ -86,24 +89,21 @@ def kronecker_factorization(poly):
 
 
 
+
+
 if __name__ == '__main__':
-    Q = QPoly([-5,1,-3])
-    print(f"\nQ          = {Q}")
-    print(f"integral   = {Q.integral(0)}")
-    print(f"derivative = {Q.derivative()}")
-    print(lagrange_interpolation([1,2,3],[1,8,27]))
+    x = [1,2,3]
+    y = [1,8,27]
+    print(f"Lagrange Interpolation of\nx = {x}\ny = {y}")
+    print(lagrange_interpolation(x,y))
     
-    P = QPoly([0,2,0,-6,-2])
-    P //= 3
-    P[1] = Rational(3,5)
-    print(f"\nP            = {P}")
-    print(f"content(P)   = {content(P)}")
-    print(f"primitive(P) = {primitive(P)}")
+
     
     R = QPoly([2,1,1,0,1,1])
     print(f"\n{R}")
     print(kronecker_factorization(R))
 
     S = QPoly([1,1]) * QPoly([2,-3])
+    print(S)
     print(rational_roots(S))
-    
+    print(kronecker_factorization(S))

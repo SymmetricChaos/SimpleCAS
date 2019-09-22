@@ -237,6 +237,18 @@ class QPoly:
         """Check if the polynomial is monic"""
         return self[-1] == 1 or self[-1] == -1
     
+    
+    def content(self):
+        return rational_gcd(self.coef) * (-1 if self.coef[-1] < 0 else 1)
+    
+
+    def primitive(self):
+        return self//self.content()
+    
+    
+    def is_primitive(self):
+        return self.content == 1
+
 
     def pretty_name(self):
         return poly_print(self,pretty=True)
@@ -255,3 +267,14 @@ if __name__ == '__main__':
     print(P//QPoly([0,1,2]))
     print(P)
     
+    Q = QPoly([-5,1,-3])
+    print(f"\nQ          = {Q}")
+    print(f"integral   = {Q.integral(0)}")
+    print(f"derivative = {Q.derivative()}")
+    
+    R = QPoly([0,2,0,-6,-2])
+    R //= 3
+    R[1] = Rational(3,5)
+    print(f"\nR            = {R}")
+    print(f"content(R)   = {R.content()}")
+    print(f"primitive(R) = {R.primitive()}")
