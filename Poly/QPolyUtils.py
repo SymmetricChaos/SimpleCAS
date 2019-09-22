@@ -37,12 +37,30 @@ def lagrange_interpolation(X,Y):
     return final
 
 
+def rational_roots(poly):
+    """Find all rational roots"""
+    A0 = factorization(poly[0].n)
+    Af = factorization(poly[-1].n)
+    R = set()
+    for i in A0:
+        for j in Af:
+            # Test each possible root
+            if poly(Rational(i,j)) == 0:
+                R.add(Rational(i,j))
+            if poly(Rational(-i,j)) == 0:
+                R.add(Rational(-i,j))
+    return R
+
+## TODO: apply this method recursively to get a full factorization
 def kronecker_factorization(poly):
     # Degree of poly
     deg = poly.degree()
     # Degree of factor
     fdeg = deg//2 
     
+    # TODO: Need a better way to choose points
+    # TODO: should search positive and negative and try to find values that 
+    # evaluate to small numbers
     points = [i for i in range(fdeg+1)]
     ev = [poly(i) for i in points]
     F = [factorization(e.n//e.d) for e in ev]
@@ -63,8 +81,8 @@ def kronecker_factorization(poly):
         if r == QPoly([0]):
             # all cofficients must be integers
             if all(x.d == 1 for x in q):
-                print(f"{poly}\n{L}\n{q}\n")
-
+                return L,q
+    return (poly,)
 
 
 
@@ -83,4 +101,9 @@ if __name__ == '__main__':
     print(f"primitive(P) = {primitive(P)}")
     
     R = QPoly([2,1,1,0,1,1])
-    kronecker_factorization(R)
+    print(f"\n{R}")
+    print(kronecker_factorization(R))
+
+    S = QPoly([1,1]) * QPoly([2,-3])
+    print(rational_roots(S))
+    
