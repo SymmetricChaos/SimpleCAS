@@ -55,8 +55,12 @@ def lcm(*args):
     return lcm(a,b)
 
 
+
+
+
 def inds_where(L,val):
     return [i for i in range(len(L)) if L[i] == val]
+
 
 def first_where(L,val):
     for pos,l in enumerate(L):
@@ -64,6 +68,8 @@ def first_where(L,val):
             return pos
     return None
      
+
+
 
 
 def poly_normalize(P):
@@ -177,3 +183,53 @@ def poly_print(poly,pretty=False):
                 s = f" {sgn} {val}x$^{{{pwr}}}$"
         out += s
     return out
+
+
+
+def estimate_root(x):
+    """Crude Estimate for Square Root"""
+    return x // (10**(len(str(x))//2))
+
+def int_root(x):
+    """Integer Square Root"""
+    
+    if x == 0:
+        return 0
+    
+    est = estimate_root(x)
+    a = est
+    b = (a+(x//a))//2
+    
+    t = [(a,b)]
+    
+    while True:
+        a, b = b, (b+(x//b))//2
+        if (a,b) in t:
+            break
+        t.append((a,b))
+    
+    # Sometimes b is too large when we reach a stopping point, this fixes that
+    if b**2 > x:
+        return b-1
+    return b
+
+
+def factorization(n):
+    """All Unique Factors"""
+    if type(n) != int:
+        raise Exception("n must be an integer") 
+    
+    lim = int_root(n)+1
+    
+    L = [1,n]
+    
+    for i in range(2,lim):
+        f,r = divmod(n,i)
+        if r == 0:
+            L.append(i)
+            L.append(f)
+            
+    L = list(set(L))
+    L.sort()
+    
+    return L
