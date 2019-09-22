@@ -49,7 +49,7 @@ class QPoly:
 
     def __repr__(self):
         """Print nicely in descending written form"""
-        return poly_print(self.coef)
+        return poly_print(self)
 
 
     def __len__(self):
