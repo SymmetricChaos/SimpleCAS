@@ -1,5 +1,4 @@
-from Utility import gcd, first_where
-import re
+from Utility import gcd
 
 class Rational:
     

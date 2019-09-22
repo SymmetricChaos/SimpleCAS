@@ -1,2 +1,5 @@
-from Rational.RationalType import Rational, rational_gcd, rational_lcm
-__all__=["Rational","rational_gcd","rational_lcm"]
+from Rational.RationalType import Rational
+from Rational.RationalUtils import rational_gcd, rational_lcm, digits_to_frac,\
+                                    cfrac_convergents, cfrac_to_frac, rational_round
+__all__=["Rational","rational_gcd","rational_lcm","digits_to_frac",
+         "cfrac_convergents","cfrac_to_frac","rational_round"]

@@ -1,4 +1,4 @@
-from RationalType import Rational
+from Rational.RationalType import Rational
 from Utility import gcd, first_where
 import re
 
@@ -29,7 +29,7 @@ def rational_gcd(*args):
     # if more than two break it up recursively
     a = rational_gcd(*args[0:2])
     b = rational_gcd(*args[2:])
-    return _rational_gcd(a,b)
+    return rational_gcd(a,b)
 
 
 def _rational_lcm(A,B):
@@ -154,9 +154,8 @@ if __name__ == '__main__':
     print(f"gcd({a},{b}) = {G}")
     print(f"lcm({a},{b}) = {L}")
     
-    d = "3.14159"
+    d = "3.141592"
     r = digits_to_frac(d)
     print(f"{d} = {r} = {r.n/r.d}")
-    
 
     print(rational_round(r,100))
