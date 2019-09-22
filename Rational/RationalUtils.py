@@ -127,12 +127,12 @@ def rational_round(Q,dlim):
     # https://shreevatsa.wordpress.com/2011/01/10/not-all-best-rational-approximations-are-the-convergents-of-the-continued-fraction/
     a = Q.cfrac()
 
-    semi = [0]
-    prev = Rational(0)
+    prev = Rational(a[0])
     for pos,val in enumerate(a):
-        oldsemi = semi
+        # Try appending the floor of half the next convergent
         semi = a[:pos]+[(val-1)//2+1]
-        if cfrac_to_frac(semi) - Q <= cfrac_to_frac(oldsemi) - Q:
+        # If it is worse than the last semiconvergent add 1
+        if abs(cfrac_to_frac(semi) - Q)  >  abs(prev - Q):
             semi[pos] += 1
         while semi[pos] <= val:
             if cfrac_to_frac(semi).d > dlim:
