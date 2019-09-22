@@ -55,6 +55,17 @@ def lcm(*args):
     return lcm(a,b)
 
 
+def inds_where(L,val):
+    return [i for i in range(len(L)) if L[i] == val]
+
+def first_where(L,val):
+    for pos,l in enumerate(L):
+        if l == val:
+            return pos
+    return None
+     
+
+
 def poly_normalize(P):
     """Remove trailing zeroes"""
     while P[-1] == 0 and len(P) > 1:
@@ -70,6 +81,7 @@ def poly_pad(P,n):
         out.append(0)
     return out
 	
+
 def poly_add(P, Q):
     """Take list of polynomial coefficients and add them"""
         
