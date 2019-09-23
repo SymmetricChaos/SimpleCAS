@@ -193,16 +193,18 @@ def estimate_root(x):
 def int_root(x):
     """Integer Square Root"""
     
-    if x == 0:
+    a = estimate_root(x)
+    
+    if a == 0:
         return 0
     
-    est = estimate_root(x)
-    a = est
     b = (a+(x//a))//2
     
     t = [(a,b)]
     
     while True:
+        if b == 0:
+            break
         a, b = b, (b+(x//b))//2
         if (a,b) in t:
             break
@@ -214,20 +216,30 @@ def int_root(x):
     return b
 
 
-def factorization(n):
+def factorization(n,negatives=False):
     """All Unique Factors"""
     if type(n) != int:
         raise Exception("n must be an integer") 
     
+    if n == 0:
+        return [0]
+    
     lim = int_root(n)+1
     
-    L = [1,n]
+    if negatives == True:
+        L = [1,-1,n,-n]
+    else:
+        L = [1,n]
     
     for i in range(2,lim):
         f,r = divmod(n,i)
+        if f == 0 or i == 0:
+            print(n)
         if r == 0:
-            L.append(i)
-            L.append(f)
+            if negatives == True:
+                L += [i,-i,f,-f]
+            else:
+                L += [i,f]
             
     L = list(set(L))
     L.sort()
