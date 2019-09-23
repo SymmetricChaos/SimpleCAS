@@ -58,18 +58,18 @@ def kronecker_factorization(poly):
     # TODO: should search positive and negative and try to find values that 
     # evaluate to small numbers
     points = [i for i in range(fdeg+1)]
-    ev = [poly(i) for i in points]
+    val_at_points = [poly(i) for i in points]
     
     ## Probably better to use rational roots to search for linear factors
     # Check for linear factors
     # If we find one divide it out an continue
-    for p,v in enumerate(ev):
+    for p,v in enumerate(val_at_points):
         if v == 0:
             P = QPoly([-p,1])
             B = kronecker_factorization(poly//P)
             return [P] + B
     
-    F = [factorization(e.n,negatives=True) for e in ev]
+    F = [reversed(factorization(e.n,negatives=True)) for e in val_at_points]
 
     for evs in product(*F):
         L = lagrange_interpolation(points,evs)
@@ -97,6 +97,13 @@ def kronecker_factorization(poly):
     return [poly]
 
 
+def poly_factor(poly):
+    # Use rational roots to find linear factors
+    lin = rational_roots(poly)
+
+    # Then do some Kronecker factorization on what's left
+
+
 
 
 
@@ -107,9 +114,15 @@ if __name__ == '__main__':
     print(lagrange_interpolation(x,y))
     
     
-    ## TODO: Find out why factoring sometimes fails
+    ## TODO: Find out why factoring sometimes fails or gives weird answers
     print()
-    S = QPoly( [-1,1] ) * QPoly( [3,1] )
+    S = QPoly( [-1,1] ) * QPoly( [3,1] ) * QPoly( [3,3,3] )
+    print(f"S = {S}")
+    print(f"Rational Roots of S: {rational_roots(S)}")
+    print(f"Factorization of S: {kronecker_factorization(S)}")
+
+    print()
+    S = QPoly( [2,1,1,0,1,1] )
     print(f"S = {S}")
     print(f"Rational Roots of S: {rational_roots(S)}")
     print(f"Factorization of S: {kronecker_factorization(S)}")
