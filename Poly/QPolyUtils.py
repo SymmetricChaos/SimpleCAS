@@ -39,23 +39,18 @@ def lagrange_interpolation(X,Y):
 
 def rational_roots(poly):
     """Find all rational roots"""
-    A0 = factorization(poly[0].n)
-    Af = factorization(poly[-1].n)
+    A0 = factorization(poly[0].n,negatives=True)
+    Af = factorization(poly[-1].n,negatives=True)
     R = set()
     for i in A0:
         for j in Af:
-            # Test each possible root
             if poly(Rational(i,j)) == 0:
                 R.add(Rational(i,j))
-            if poly(Rational(-i,j)) == 0:
-                R.add(Rational(-i,j))
     return R
 
 
-## TODO: apply this method recursively to get a full factorization
 def kronecker_factorization(poly):
 
-    
     deg = poly.degree()
     fdeg = deg//2 
     
@@ -64,16 +59,27 @@ def kronecker_factorization(poly):
     # evaluate to small numbers
     points = [i for i in range(fdeg+1)]
     ev = [poly(i) for i in points]
-    F = [factorization(e.n//e.d) for e in ev]
-
     
+    ## Probably better to use rational roots to search for linear factors
+    # Check for linear factors
+    # If we find one divide it out an continue
+    for p,v in enumerate(ev):
+        if v == 0:
+            P = QPoly([-p,1])
+            B = kronecker_factorization(poly//P)
+            return [P] + B
+    
+    F = [factorization(e.n,negatives=True) for e in ev]
 
     for evs in product(*F):
         L = lagrange_interpolation(points,evs)
-        # Skip possible linear factors
-        if len(L) == 1:
+
+        # Ignore trivial factors
+        if L == QPoly([1]) or L == poly:
             continue
-        # Skip possible rational factors
+        if L == QPoly([-1]) or L == -poly:
+            continue
+        # Skip possible factors with non-integer coefficients
         if any(x.d != 1 for x in L):
             continue
         
@@ -82,10 +88,13 @@ def kronecker_factorization(poly):
         
         # Remainder must be zero
         if r == QPoly([0]):
-            # all cofficients must be integers
+            # all cofficients of the quotient must be integers
             if all(x.d == 1 for x in q):
-                return L,q
-    return (poly,)
+                A = kronecker_factorization(L)
+                B = kronecker_factorization(q)
+                return A + B
+            
+    return [poly]
 
 
 
@@ -97,13 +106,10 @@ if __name__ == '__main__':
     print(f"Lagrange Interpolation of\nx = {x}\ny = {y}")
     print(lagrange_interpolation(x,y))
     
-
     
-    R = QPoly([2,1,1,0,1,1])
-    print(f"\n{R}")
-    print(kronecker_factorization(R))
-
-    S = QPoly([1,1]) * QPoly([2,-3])
-    print(S)
-    print(rational_roots(S))
-    print(kronecker_factorization(S))
+    ## TODO: Find out why factoring sometimes fails
+    print()
+    S = QPoly( [-1,1] ) * QPoly( [3,1] )
+    print(f"S = {S}")
+    print(f"Rational Roots of S: {rational_roots(S)}")
+    print(f"Factorization of S: {kronecker_factorization(S)}")
