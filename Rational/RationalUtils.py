@@ -2,6 +2,14 @@ from Rational.RationalType import Rational
 from Utility import gcd, first_where
 import re
 
+
+def rational_seq(lo,hi,step):
+    out = [lo]
+    while out[-1] < hi:
+        out.append(out[-1]+step)
+    return out[:-1]
+    
+
 def _rational_gcd(A,B):
     """Largest rational such that both A and B are integer multiples of it"""
     assert type(A) == Rational
@@ -159,3 +167,5 @@ if __name__ == '__main__':
     print(f"{d} = {r} = {r.n/r.d}")
 
     print(rational_round(r,100))
+    
+    print(rational_seq(0,3,Rational(2,3)))
