@@ -54,7 +54,8 @@ def kronecker_factorization(poly):
     deg = poly.degree()
     fdeg = deg//2
     
-    # Skip constant and linear terms, these could be factored using
+    # Skip constant and linear terms, these could be factored using Kronecker's
+    # method but we will remove them before this.
     if fdeg <= 1:
         return [poly]
     
