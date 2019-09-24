@@ -105,17 +105,17 @@ def poly_factor(poly):
     out = []
     # Divide out the content
     if P.content() != 1:
-        out.append(P.content())
+        out.append(QPoly([P.content()]))
         P = P.primitive()
         
-        print(f"Removed constant factor: {out[-1]}")
+#        print(f"Removed constant factor: {out[-1]}")
     
     # Use rational roots to find linear factors
     lin = rational_roots(poly)
     for f in lin:
         out.append(QPoly( [-f.n,f.d] ))
         P = P // out[-1]
-        print(f"Removed linear factor: {out[-1]}")
+#        print(f"Removed linear factor: {out[-1]}")
 
     # Then do some Kronecker factorization on what's left
     out += kronecker_factorization(P)
