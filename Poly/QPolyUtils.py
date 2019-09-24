@@ -50,9 +50,9 @@ def rational_roots(poly):
 
 
 def kronecker_factorization(poly):
-
     deg = poly.degree()
-    fdeg = deg//2 
+    fdeg = deg//2
+    
     
     # TODO: Need a better way to choose points
     # TODO: should search positive and negative and try to find values that 
@@ -98,13 +98,29 @@ def kronecker_factorization(poly):
 
 
 def poly_factor(poly):
+    
+    P = poly.copy()
+    
+    out = []
+    # Divide out the content
+    if P.content() != 1:
+        out.append(P.content())
+        P = P.primitive()
+        
+        print(f"Removed constant factor: {out[-1]}")
+    
     # Use rational roots to find linear factors
     lin = rational_roots(poly)
+    for f in lin:
+        if f.d == 1:
+            out.append(QPoly( [-f,1] ))
+            P = P // out[-1]
+            print(f"Removed linear factor: {out[-1]}")
 
     # Then do some Kronecker factorization on what's left
+    out += kronecker_factorization(P)
 
-
-
+    return out
 
 
 if __name__ == '__main__':
@@ -117,12 +133,16 @@ if __name__ == '__main__':
     ## TODO: Find out why factoring sometimes fails or gives weird answers
     print()
     S = QPoly( [-1,1] ) * QPoly( [3,1] ) * QPoly( [3,3,3] )
+    print(rational_gcd(S.coef))
     print(f"S = {S}")
-    print(f"Rational Roots of S: {rational_roots(S)}")
-    print(f"Factorization of S: {kronecker_factorization(S)}")
+    print(f"Factorization of S: {poly_factor(S)}")
+    
+    print()
+    S = -S
+    print(f"S = {S}")
+    print(f"Factorization of S: {poly_factor(S)}")
 
     print()
     S = QPoly( [2,1,1,0,1,1] )
     print(f"S = {S}")
-    print(f"Rational Roots of S: {rational_roots(S)}")
-    print(f"Factorization of S: {kronecker_factorization(S)}")
+    print(f"Factorization of S: {poly_factor(S)}")
