@@ -1,4 +1,5 @@
 from Poly import QPoly, poly_factor
+from Rational import Rational
 
 class RationalFunc:
     
@@ -23,7 +24,25 @@ class RationalFunc:
 
 
     def __str__(self):
-        return str(self.N) + "  /  " + str(self.D)
+        if str(self.D) == "1":
+            return f"{self.N}"
+        return f"({self.N}) / ({self.D})"
+    
+    
+    def __call__(self,val):
+        n = self.N(val)
+        d = self.D(val)
+        
+        if d == 0:
+            return float('NaN')
+        else:
+            return n/d
+        
+        
+    def evaluate(self,val):
+        assert type(val) == list
+        
+        return [self(v) for v in val]
 
 
 
@@ -32,7 +51,20 @@ class RationalFunc:
 if __name__ == '__main__':
     P = QPoly( [1,0,1] ) * QPoly( [-1,1] ) * 4
     Q = QPoly( [1,0,1] ) * QPoly( [-2,3] )
-    
     R = RationalFunc(P,Q)
     
+    print(P)
+    print(Q)
+    print(R)
+    
+    print(f"R(3) = {R(3)}")
+    
+    print()
+    
+    P = QPoly( [1,0,1] ) * QPoly( [-1,1] ) * 4
+    Q = QPoly( [2] )
+    R = RationalFunc(P,Q)
+    
+    print(P)
+    print(Q)
     print(R)
