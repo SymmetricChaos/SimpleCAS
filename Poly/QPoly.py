@@ -241,7 +241,7 @@ class QPoly:
     def content(self):
         """Rational GCD of the coefficients, negative if leading coef is negative,
         makes the polynomial have integer coefs"""
-        return rational_gcd(self.coef) * (-1 if self.coef[-1] < 0 else 1)
+        return abs(rational_gcd(self.coef)) * (-1 if self.coef[-1] < 0 else 1)
     
 
     def primitive(self):

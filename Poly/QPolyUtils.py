@@ -50,8 +50,13 @@ def rational_roots(poly):
 
 
 def kronecker_factorization(poly):
+    """Modified kroneck factorization"""
     deg = poly.degree()
     fdeg = deg//2
+    
+    # Skip constant and linear terms, these could be factored using
+    if fdeg <= 1:
+        return [poly]
     
     
     # TODO: Need a better way to choose points
@@ -60,28 +65,23 @@ def kronecker_factorization(poly):
     points = [i for i in range(fdeg+1)]
     val_at_points = [poly(i) for i in points]
     
-    ## Probably better to use rational roots to search for linear factors
-    # Check for linear factors
-    # If we find one divide it out an continue
-    for p,v in enumerate(val_at_points):
-        if v == 0:
-            P = QPoly([-p,1])
-            B = kronecker_factorization(poly//P)
-            return [P] + B
     
     F = [reversed(factorization(e.n,negatives=True)) for e in val_at_points]
 
     for evs in product(*F):
         L = lagrange_interpolation(points,evs)
 
+
+        # Ignore factors with negative leading coefficient
+        if L[-1] < 0:
+            continue
         # Ignore trivial factors
         if L == QPoly([1]) or L == poly:
-            continue
-        if L == QPoly([-1]) or L == -poly:
             continue
         # Skip possible factors with non-integer coefficients
         if any(x.d != 1 for x in L):
             continue
+
         
         # Try the division
         q,r = divmod(poly,L)
@@ -112,10 +112,9 @@ def poly_factor(poly):
     # Use rational roots to find linear factors
     lin = rational_roots(poly)
     for f in lin:
-        if f.d == 1:
-            out.append(QPoly( [-f,1] ))
-            P = P // out[-1]
-            print(f"Removed linear factor: {out[-1]}")
+        out.append(QPoly( [-f.n,f.d] ))
+        P = P // out[-1]
+        print(f"Removed linear factor: {out[-1]}")
 
     # Then do some Kronecker factorization on what's left
     out += kronecker_factorization(P)
@@ -130,17 +129,12 @@ if __name__ == '__main__':
     print(lagrange_interpolation(x,y))
     
     
-    ## TODO: Find out why factoring sometimes fails or gives weird answers
     print()
-    S = QPoly( [-1,1] ) * QPoly( [3,1] ) * QPoly( [3,3,3] )
+    S = QPoly( [-1,1] ) * QPoly( [3,3,3] ) * QPoly( [-1,2] ) * QPoly( [1,1,1,0,1] )
     print(rational_gcd(S.coef))
     print(f"S = {S}")
     print(f"Factorization of S: {poly_factor(S)}")
     
-    print()
-    S = -S
-    print(f"S = {S}")
-    print(f"Factorization of S: {poly_factor(S)}")
 
     print()
     S = QPoly( [2,1,1,0,1,1] )
