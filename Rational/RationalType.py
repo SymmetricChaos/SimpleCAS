@@ -3,6 +3,7 @@ from Utility import gcd
 class Rational:
     
     def __init__(self,n,d=1):
+        
         assert type(n) == int, "Numerator must be int."
         assert type(d) == int, "Denominator must be int."
         if d == 0:
@@ -249,4 +250,4 @@ if __name__ == '__main__':
     print(f"1/r = {1/r}")
     print(f"3/r = {3/r}")
 
-    
+    print(f""""2/3" = {Rational("2/3")} """)

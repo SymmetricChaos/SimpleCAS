@@ -86,6 +86,21 @@ def digits_to_frac(S):
         raise Exception(f"Cannot coerce {S} to Rational")
 
 
+def str_to_frac(S):
+    """Convert String to Rational"""
+    assert type(S) == str
+    if "/" not in S:
+        S += "/1"
+        
+    m = re.fullmatch("\d*\/\d*",S)
+    if m:
+        n,d = S.split("/")
+        return Rational(int(n),int(d))
+    else:
+        raise Exception(f"Cannot coerce {S} to Rational")
+
+
+
 def cfrac_convergents(L):
     """Rational convergents of a simple continued fraction."""
     assert type(L) == list
