@@ -5,7 +5,7 @@
 ## TODO: Factorization
 ## TODO: Rational roots
 
-from Rational import Rational, rational_gcd, str_to_frac
+from Rational import Rational, rational_gcd, str_to_frac, digits_to_frac
 from Utility import poly_add, poly_mult, poly_print
 
 class QPoly:
@@ -19,7 +19,10 @@ class QPoly:
             elif type(c) == Rational:
                 self.coef.append(c)
             elif type(c) == str:
-                self.coef.append(str_to_frac(c))
+                try:
+                    self.coef.append(str_to_frac(c))
+                except:
+                    self.coef.append(digits_to_frac(c))
             else:
                 raise Exception(f"Could not coerce {c} to Rational")
         self.normalize()
@@ -287,5 +290,5 @@ if __name__ == '__main__':
     print(f"content(R)   = {R.content()}")
     print(f"primitive(R) = {R.primitive()}")
     
-    S = QPoly([0,"3/2",0,"4/3","1/7"])
+    S = QPoly([0,"3/2",0,"4/3","11.76"])
     print(S)
