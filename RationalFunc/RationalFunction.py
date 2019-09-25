@@ -49,6 +49,11 @@ class RationalFunc:
             return n/d
 
 
+    def evaluate(self,val):
+        assert type(val) == list
+        return [self(v) for v in val]
+    
+
     def inv(self):
         return RationalFunc(self.D,self.N)
 
@@ -58,26 +63,38 @@ class RationalFunc:
         assert type(other) == RationalFunc
         return RationalFunc(self.N * other.N, self.D * other.D)
         
-    # TODO: accept other types
-    def __add__(self,other):
-        assert type(other) == RationalFunc
-        return RationalFunc(self.N*other.D + other.N*self.D, self.D*other.D)
-
+    
     # TODO: accept other types
     def __truediv__(self,other):
         assert type(other) == RationalFunc
         return self * other.inv()
 
 
-    def evaluate(self,val):
-        assert type(val) == list
-        return [self(v) for v in val]
+    def __neg__(self):
+        return self*-1
+
+
+    # TODO: accept other types
+    def __add__(self,other):
+        assert type(other) == RationalFunc
+        return RationalFunc(self.N*other.D + other.N*self.D, self.D*other.D)
+
+
+    # TODO: accept other types
+    def __sub__(self,other):
+        assert type(other) == RationalFunc
+        return self + -other
+
+
 
 
 
 
 
 # TODO: Turn these into proper unit tests
+# need to include: roots with multiplicity, multiplication by negative numbers,
+# division by zero, division by 1, division by int, 0 divided by Qpoly,
+# int divided by Qpoly        
 if __name__ == '__main__':
     P = QPoly( [1,0,1] ) * QPoly( [-1,1] ) * QPoly( [7,3] ) * 4
     Q = QPoly( [1,0,1] ) * QPoly( [-2,1] ) * QPoly( [-1,1] ) * QPoly( [-1,1] )
