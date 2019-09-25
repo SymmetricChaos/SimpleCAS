@@ -2,9 +2,23 @@ from Poly import QPoly, poly_factor
 
 class RationalFunc:
     
-    def __init__(self,N,D):
-        assert type(N) == QPoly
-        assert type(D) == QPoly
+    def __init__(self,N,D=QPoly([1])):
+        
+        if type(N) == QPoly:
+            pass
+        else:
+            try:
+                N = QPoly( [N] )
+            except:
+                raise ValueError(f"Could not coerce {N} to QPoly")
+        if type(D) == QPoly:
+            pass
+        else:
+            try:
+                D = QPoly( [D] )
+            except:
+                raise ValueError(f"Could not coerce {D} to QPoly")
+            
         self.N = N
         self.D = D
 
@@ -58,17 +72,18 @@ class RationalFunc:
         return RationalFunc(self.D,self.N)
 
 
-    # TODO: accept other types
     def __mul__(self,other):
-        assert type(other) == RationalFunc
-        return RationalFunc(self.N * other.N, self.D * other.D)
-        
+        if type(other) == RationalFunc:
+            return RationalFunc(self.N * other.N, self.D * other.D)
+        else:
+            return self * RationalFunc(other)
     
-    # TODO: accept other types
+    
     def __truediv__(self,other):
-        assert type(other) == RationalFunc
-        return self * other.inv()
-
+        if type(other) == RationalFunc:
+            return self * other.inv()
+        else:
+            return self / RationalFunc(other)
 
     def __neg__(self):
         return self*-1
@@ -76,14 +91,18 @@ class RationalFunc:
 
     # TODO: accept other types
     def __add__(self,other):
-        assert type(other) == RationalFunc
-        return RationalFunc(self.N*other.D + other.N*self.D, self.D*other.D)
+        if type(other) == RationalFunc:
+            return RationalFunc(self.N*other.D + other.N*self.D, self.D*other.D)
+        else:
+            return self + RationalFunc(other)
 
 
     # TODO: accept other types
     def __sub__(self,other):
-        assert type(other) == RationalFunc
-        return self + -other
+        if type(other) == RationalFunc:
+            return self + -other
+        else:
+            return self - RationalFunc(other)
 
 
 
@@ -112,9 +131,6 @@ if __name__ == '__main__':
     print()
     
     P = QPoly( [1,0,1] ) * QPoly( [-1,1] ) * 4
-    Q = QPoly( [2] )
-    R = RationalFunc(P,Q)
     
-    print(P)
-    print(Q)
-    print(R)
+    print(f"P   = {P}")
+    print(f"P/2 = {RationalFunc(P,2)}")
