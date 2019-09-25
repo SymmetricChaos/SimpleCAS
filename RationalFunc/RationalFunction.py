@@ -36,7 +36,7 @@ class RationalFunc:
         else:
             d = f"({self.D})"
 
-        return f"{n}/{d}"
+        return f"{n} / {d}"
 
 
     def __call__(self,val):
@@ -49,6 +49,26 @@ class RationalFunc:
             return n/d
 
 
+    def inv(self):
+        return RationalFunc(self.D,self.N)
+
+
+    # TODO: accept other types
+    def __mul__(self,other):
+        assert type(other) == RationalFunc
+        return RationalFunc(self.N * other.N, self.D * other.D)
+        
+    # TODO: accept other types
+    def __add__(self,other):
+        assert type(other) == RationalFunc
+        return RationalFunc(self.N*other.D + other.N*self.D, self.D*other.D)
+
+    # TODO: accept other types
+    def __truediv__(self,other):
+        assert type(other) == RationalFunc
+        return self * other.inv()
+
+
     def evaluate(self,val):
         assert type(val) == list
         return [self(v) for v in val]
@@ -57,9 +77,10 @@ class RationalFunc:
 
 
 
+# TODO: Turn these into proper unit tests
 if __name__ == '__main__':
     P = QPoly( [1,0,1] ) * QPoly( [-1,1] ) * QPoly( [7,3] ) * 4
-    Q = QPoly( [1,0,1] ) * QPoly( [-2,3] ) * QPoly( [-1,1] ) * QPoly( [-1,1] )
+    Q = QPoly( [1,0,1] ) * QPoly( [-2,1] ) * QPoly( [-1,1] ) * QPoly( [-1,1] )
     R = RationalFunc(P,Q)
     
     print(P)
@@ -67,6 +88,9 @@ if __name__ == '__main__':
     print(R)
     
     print(f"R(3) = {R(3)}")
+    
+    print(f"R*R = {R*R}")
+    print(f"R+R = {R+R}")
     
     print()
     
