@@ -2,8 +2,6 @@
 
 
 ## TODO: Polynomial GCD
-## TODO: Factorization
-## TODO: Rational roots
 
 from Rational import Rational, rational_gcd, str_to_frac, digits_to_frac
 from Utility import poly_add, poly_mult, poly_print
@@ -191,6 +189,11 @@ class QPoly:
         """Remainder of integer division of polynomials"""
         a,b = divmod(self,poly)
         return b
+    
+    
+#    def __truediv__(self,poly):
+#        """Truedivision of polynomials"""
+#        return RationalFunc(self,poly)
 
 
     def normalize(self):

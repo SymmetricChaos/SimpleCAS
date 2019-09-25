@@ -85,11 +85,11 @@ class RationalFunc:
         else:
             return self / RationalFunc(other)
 
+
     def __neg__(self):
         return self*-1
 
 
-    # TODO: accept other types
     def __add__(self,other):
         if type(other) == RationalFunc:
             return RationalFunc(self.N*other.D + other.N*self.D, self.D*other.D)
@@ -97,7 +97,6 @@ class RationalFunc:
             return self + RationalFunc(other)
 
 
-    # TODO: accept other types
     def __sub__(self,other):
         if type(other) == RationalFunc:
             return self + -other

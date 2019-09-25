@@ -243,11 +243,11 @@ class Rational:
 
 
 
-
 if __name__ == '__main__':
+
+    
     r = Rational(32,7)
     print(f"r   = {r}")
     print(f"1/r = {1/r}")
     print(f"3/r = {3/r}")
-
-    print(f""""2/3" = {Rational("2/3")} """)
+    
