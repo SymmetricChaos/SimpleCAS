@@ -98,7 +98,20 @@ def str_to_frac(S):
         return Rational(int(n),int(d))
     else:
         raise Exception(f"Cannot coerce {S} to Rational")
+        
 
+def coerce_to_rational(T):
+    if type(T) == Rational:
+        return T
+    elif type(T) == int:
+        return Rational(T)
+    elif type(T) == str:
+        try:
+            return str_to_frac(T)
+        except:
+            return digits_to_frac(T)
+    else:
+        raise Exception(f"Could not coerce {T} to Rational")
 
 
 def cfrac_convergents(L):

@@ -3,7 +3,7 @@
 
 ## TODO: Polynomial GCD
 
-from Rational import Rational, rational_gcd, str_to_frac, digits_to_frac
+from Rational import Rational, rational_gcd, coerce_to_rational
 from Utility import poly_add, poly_mult, poly_print
 
 class QPoly:
@@ -12,17 +12,7 @@ class QPoly:
         assert type(coef) == list
         self.coef = []
         for c in coef:
-            if type(c) == int:
-                self.coef.append(Rational(c))
-            elif type(c) == Rational:
-                self.coef.append(c)
-            elif type(c) == str:
-                try:
-                    self.coef.append(str_to_frac(c))
-                except:
-                    self.coef.append(digits_to_frac(c))
-            else:
-                raise Exception(f"Could not coerce {c} to Rational")
+            self.coef.append(coerce_to_rational(c))
         self.normalize()
 
 
