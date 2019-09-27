@@ -6,13 +6,18 @@ class RationalFunc:
         
         if type(N) == QPoly:
             pass
+        elif type(N) == list:
+            N = QPoly( N )
         else:
             try:
                 N = QPoly( [N] )
             except:
                 raise ValueError(f"Could not coerce {N} to QPoly")
+        
         if type(D) == QPoly:
             pass
+        elif type(D) == list:
+            D = QPoly( D )
         else:
             try:
                 D = QPoly( [D] )
@@ -118,18 +123,24 @@ if __name__ == '__main__':
     Q = QPoly( [1,0,1] ) * QPoly( [-2,1] ) * QPoly( [-1,1] ) * QPoly( [-1,1] )
     R = RationalFunc(P,Q)
     
-    print(P)
-    print(Q)
-    print(R)
+    print(f"P   = {P}\n")
+    print(f"Q   = {Q}\n")
+    print(f"P/Q = {R}\n")
+
     
-    print(f"R(3) = {R(3)}")
-    
-    print(f"R*R = {R*R}")
-    print(f"R+R = {R+R}")
+    print(f"R   = {R}\n")
+    print(f"R*P = {R*P}\n")
+    print(f"R+P = {R+P}\n")
     
     print()
-    
+    print(f"R(3) = {R(3)}")
+    print()
+        
     P = QPoly( [1,0,1] ) * QPoly( [-1,1] ) * 4
     
     print(f"P   = {P}")
     print(f"P/2 = {RationalFunc(P,2)}")
+    
+    print("\nRationalFunc can accept lists and coerce them to QPoly")
+    print("RationalFunc([1,0,1,1,2,0,1],[1,0,1])")
+    print(RationalFunc([1,0,1,1,2,0,1],[1,0,1]))
