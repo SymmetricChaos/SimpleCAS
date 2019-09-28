@@ -37,6 +37,18 @@ def lagrange_interpolation(X,Y):
     return final
 
 
+#def complete_the_square(poly):
+#    """Returns a tuple (x,y,z) such that x*y+z = poly"""
+#    assert type(poly) == ZPoly
+#    assert len(poly) == 3, "Must be a quadratic"
+#    assert poly[1] % 2 == 0, "Second coefficient must be even"
+#    a = poly[2]
+#    h = poly[1]//(2*a)
+#    k = poly[0]-a*(h*h)
+#    
+#    return a, ZPoly([h,1]), k
+
+
 def rational_roots(poly):
     """Find all rational roots"""
     A0 = factorization(poly[0].n,negatives=True)
