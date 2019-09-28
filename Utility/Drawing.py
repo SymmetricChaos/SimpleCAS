@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.lines as lines
 from Utility.ListManip import tuples_to_lists
 
-def make_canvas(x,y=None,size=None,show_axes=True,title=""):
+def make_canvas(x,y=None,size=None,show_axes=True,title="",titlesize=15):
     # If y is not provided make the y-axis the same as the x
     if not y:
         y = x
@@ -24,7 +24,7 @@ def make_canvas(x,y=None,size=None,show_axes=True,title=""):
         ax.set_xticks([])
         ax.set_yticks([])
     plt.tight_layout()
-    plt.title(title+"\n",fontsize=15)
+    plt.title(title+"\n",fontsize=titlesize)
     return fig, ax
 
 
