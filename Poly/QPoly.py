@@ -4,7 +4,7 @@
 ## TODO: Polynomial GCD
 
 from Rational import Rational, rational_gcd, coerce_to_rational
-from Utility import poly_add, poly_mult, poly_print
+from Utility import poly_add, poly_mult, poly_print, poly_print_pretty
 
 class QPoly:
     
@@ -254,7 +254,7 @@ class QPoly:
 
     def pretty_name(self):
         """Formatted for LaTeX"""
-        return poly_print(self,pretty=True)
+        return poly_print_pretty(self)
 
 
 
