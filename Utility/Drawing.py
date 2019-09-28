@@ -40,3 +40,6 @@ def connect(A,B,**kwargs):
     ax = plt.gca()
     line = lines.Line2D([A[0],B[0]], [A[1],B[1]], axes=ax,**kwargs)
     ax.add_line(line)
+    
+def show_plot():
+    plt.show()
