@@ -238,6 +238,12 @@ class Rational:
             tmp = f.inv()
     
         return L
+    
+    def pretty_name(self):
+        if self.d == 1:
+            return str(self)
+        else:
+            return f"$\dfrac{{{self.n}}}{{{self.d}}}$"
 
 
 

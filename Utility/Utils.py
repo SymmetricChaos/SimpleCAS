@@ -162,10 +162,15 @@ def poly_print(poly,pretty=False):
                 s = f"{sgn}{val}"
             else:
                 if pretty == False:
-                    s = f"{sgn}{val}x^{pwr}"
+                    s = f" {sgn}{val}x^{pwr}"
                 else:
-                    s = f"{sgn}{val}x$^{{{pwr}}}$"
-                    
+                    if val.d == 1:
+                        s = f" {sgn}{val}x$^{{{pwr}}}$"
+                    elif val.n == 1:
+                        s = f" {sgn}$\dfrac{{x^{{{pwr}}}}}{{{val.d}}}$"
+                    else:
+                        s = f" {sgn}$\dfrac{{{val.n}x^{{{pwr}}}}}{{{val.d}}}$"
+                        
         
         # If the power is 1 just show x rather than x^1
         elif pwr == 1:
@@ -180,8 +185,14 @@ def poly_print(poly,pretty=False):
             if pretty == False:
                 s = f" {sgn} {val}x^{pwr}"
             else:
-                s = f" {sgn} {val}x$^{{{pwr}}}$"
+                if val.d == 1:
+                    s = f" {sgn} {val}x$^{{{pwr}}}$"
+                elif val.n == 1:
+                    s = f" {sgn} $\dfrac{{x^{{{pwr}}}}}{{{val.d}}}$"
+                else:
+                    s = f" {sgn} $\dfrac{{{val.n}x^{{{pwr}}}}}{{{val.d}}}$"
         out += s
+        out = out.replace("-", u"\u2212")
     return out
 
 
