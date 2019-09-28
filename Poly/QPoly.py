@@ -22,9 +22,8 @@ class QPoly:
 
 
     def __setitem__(self,n,val):
-        """Allow valid coefficients to be set"""
-        assert type(val) == int or type(val) == Rational, "Coefficients must be integers or rationals"
-        self.coef[n] = val
+        """Allow valid coefficients to be set"""    
+        self.coef[n] = coerce_to_rational(val)
 
 
     def __call__(self,x):

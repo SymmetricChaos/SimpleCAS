@@ -37,16 +37,18 @@ def lagrange_interpolation(X,Y):
     return final
 
 
-#def complete_the_square(poly):
-#    """Returns a tuple (x,y,z) such that x*y+z = poly"""
-#    assert type(poly) == ZPoly
-#    assert len(poly) == 3, "Must be a quadratic"
-#    assert poly[1] % 2 == 0, "Second coefficient must be even"
-#    a = poly[2]
-#    h = poly[1]//(2*a)
-#    k = poly[0]-a*(h*h)
-#    
-#    return a, ZPoly([h,1]), k
+def complete_the_square(poly):
+    """Returns a tuple (x,y,z) such that x*y+z = poly"""
+    assert type(poly) == QPoly
+    assert len(poly) == 3, "Must be a quadratic"
+    print(poly[1])
+    print(poly[1]%2)
+    assert poly[1] % 2 == Rational(0), "Linear coefficient must be even"
+    a = poly[2]
+    h = poly[1]//(2*a)
+    k = poly[0]-a*(h*h)
+    
+    return a, QPoly([h,1]), k
 
 
 def rational_roots(poly):
@@ -157,3 +159,7 @@ if __name__ == '__main__':
     S = QPoly( [2,1,1,0,1,1] )
     print(f"S = {S}")
     print(f"Factorization of S: {poly_factor(S)}")
+    
+    R = QPoly( [1,2,1] )
+    print(R)
+    print(complete_the_square( R ))
