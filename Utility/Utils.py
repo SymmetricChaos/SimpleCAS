@@ -283,7 +283,7 @@ def poly_print_pretty(poly):
                     s = f" {sgn} $\dfrac{{x}}{{{val.d}}}$"
                 # Special case of term n/d
                 elif pwr == 0:
-                    s = f" {sgn} $\dfrac{{val.n}}{{{val.d}}}$"
+                    s = f" {sgn} $\dfrac{{{val.n}}}{{{val.d}}}$"
                 # General case
                 else:
                     s = f" {sgn} $\dfrac{{x^{{{pwr}}}}}{{{val.d}}}$"
