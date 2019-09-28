@@ -231,86 +231,77 @@ def poly_print_pretty(poly):
     # We do this because polynomials are usually written in descending order
     for pwr in range(d,-1,-1):
         
+        
         # Skip the zero coefficients entirely
         if poly[pwr] == 0:
             continue
+        
         
         coe = poly[pwr]
         val = abs(coe)
         sgn = "-" if coe//val == -1 else "+"
         
+        
         # Handle sign for leading term
         if pwr == d and sgn == "+":
             sgn = ""
             
+        
+        # Handle integer coefficients
+        if val.d == 1:
+            
+            # Handle the special case of coefficient 1 or -1
+            if val.n == 1:
                 
-        # When the coefficient is 1 or -1 don't print it unless it is the
-        # coefficient for x^0
-        if val == 1 and pwr != 0:
-
-            if pwr == d:
-                if sgn == "+":
-                    sgn = ""
-                
-                # Handle powers of 1 or 0 that appear as the first term
+                # Special case if term is x or -x
                 if pwr == 1:
-                    s = f"{sgn}x"
-                else:
-                    s = f" {sgn}x$^{{{pwr}}}$"
-
-                            
-            
-            # If the power is 1 just show x rather than x^1
-            elif pwr == 1:
-                s = f" {sgn} x"
-            
-            # If the power is 0 only show the sign and value
-            elif pwr == 0:
-                s = f" {sgn} x"
-            
-            # Otherwise show everything
-            else:
-                s = f" {sgn} x$^{{{pwr}}}$"
-            out += s
-    
-        else:
-    
-            # If it is the first term include the sign of the coefficient
-            if pwr == d:
-                if sgn == "+":
-                    sgn = ""
-                
-                # Handle powers of 1 or 0 that appear as the first term
-                if pwr == 1:
-                    s = f"{sgn}$\dfrac{{{val.n}x}}{{{val.d}}}$"
+                    s = f" {sgn} x"
+                # Special case is term is 1 or -1
                 elif pwr == 0:
-                    s = f"{sgn}$\dfrac{{{val.n}}}{{{val.d}}}$"
+                    s = f" {sgn} 1"
+                # General case
                 else:
-                    if val.d == 1:
-                        s = f" {sgn}{val}x$^{{{pwr}}}$"
-                    elif val.n == 1:
-                        s = f" {sgn}$\dfrac{{x^{{{pwr}}}}}{{{val.d}}}$"
-                    else:
-                        s = f" {sgn}$\dfrac{{{val.n}x^{{{pwr}}}}}{{{val.d}}}$"
-                            
-            
-            # If the power is 1 just show x rather than x^1
-            elif pwr == 1:
-                s = f" {sgn} $\dfrac{{{val.n}x}}{{{val.d}}}$"
-            
-            # If the power is 0 only show the sign and value
-            elif pwr == 0:
-                s = f" {sgn} $\dfrac{{{val.n}}}{{{val.d}}}$"
-            
-            # Otherwise show everything
+                    s = f" {sgn} x$^{{{pwr}}}$"
+
+            # General case
             else:
-                if val.d == 1:
+                if pwr == 1:
+                    s = f" {sgn} {val}x"
+                elif pwr == 0:
+                    s = f" {sgn} {val}"
+                else:
                     s = f" {sgn} {val}x$^{{{pwr}}}$"
-                elif val.n == 1:
+
+        # Handle non-integer coefficients
+        else:
+            
+            # Handle special case of numerator 1
+            if val.n == 1:
+                
+                # Special case of term x/d
+                if pwr == 1:
+                    s = f" {sgn} $\dfrac{{x}}{{{val.d}}}$"
+                # Special case of term n/d
+                elif pwr == 0:
+                    s = f" {sgn} $\dfrac{{val.n}}{{{val.d}}}$"
+                # General case
+                else:
                     s = f" {sgn} $\dfrac{{x^{{{pwr}}}}}{{{val.d}}}$"
+                
+            # General case
+            else:
+                if pwr == 1:
+                    s = f" {sgn} $\dfrac{{{val.n}x}}{{{val.d}}}$"
+                elif pwr == 0:
+                    s = f" {sgn} $\dfrac{{{val.n}}}{{{val.d}}}$"
                 else:
                     s = f" {sgn} $\dfrac{{{val.n}x^{{{pwr}}}}}{{{val.d}}}$"
-            out += s
+        
+        # Special case of leading coefficient
+        if pwr == d:
+            s = s.replace(" ","")
+            
+        out += s
     
     out = out.replace("-", u"\u2212")
     return out
@@ -319,6 +310,7 @@ def poly_print_pretty(poly):
 def estimate_root(x):
     """Crude Estimate for Square Root"""
     return x // (10**(len(str(x))//2))
+
 
 def int_root(x):
     """Integer Square Root"""
