@@ -2,12 +2,6 @@ from Rational.RationalType import Rational
 from Utility import gcd, first_where
 import re
 
-
-def rational_seq(lo,hi,step):
-    out = [lo]
-    while out[-1] < hi:
-        out.append(out[-1]+step)
-    return out[:-1]
     
 
 def _rational_gcd(A,B):
@@ -151,6 +145,16 @@ def cfrac_to_frac(L):
         con += 1
         
     return Rational(N[-1],D[-1])
+
+
+def rational_seq(lo,hi,step):
+    lo   = coerce_to_rational(lo)
+    hi   = coerce_to_rational(hi)
+    step = coerce_to_rational(step)
+    out = [lo]
+    while out[-1] <= hi:
+        out.append(out[-1]+step)
+    return out[:-1]
 
 
 def rational_round(Q,dlim):
