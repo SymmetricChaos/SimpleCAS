@@ -14,78 +14,62 @@ def poly_print(poly):
     # We do this because polynomials are usually written in descending order
     for pwr in range(d,-1,-1):
         
+        
         # Skip the zero coefficients entirely
         if poly[pwr] == 0:
             continue
+        
         
         coe = poly[pwr]
         val = abs(coe)
         sgn = "-" if coe//val == -1 else "+"
         
+        
         # Handle sign for leading term
         if pwr == d and sgn == "+":
             sgn = ""
             
+        
+        # Handle integer coefficients
+        if val.d == 1:
+            
+            # Handle the special case of coefficient 1 or -1
+            if val.n == 1:
                 
-        # When the coefficient is 1 or -1 don't print it unless it is the
-        # coefficient for x^0
-        if val == 1 and pwr != 0:
-
-            if pwr == d:
-                if sgn == "+":
-                    sgn = ""
-                
-                # Handle powers of 1 or 0 that appear as the first term
+                # Special case if term is x or -x
                 if pwr == 1:
-                    s = f"{sgn}x"
-                else:
-                    s = f" {sgn}x^{pwr}"
-
-                            
-            
-            # If the power is 1 just show x rather than x^1
-            elif pwr == 1:
-                s = f" {sgn} x"
-            
-            # If the power is 0 only show the sign and value
-            elif pwr == 0:
-                s = f" {sgn} x"
-            
-            # Otherwise show everything
-            else:
-                s = f" {sgn} x^{pwr}"
-            out += s
-    
-        else:
-    
-            # If it is the first term include the sign of the coefficient
-            if pwr == d:
-                if sgn == "+":
-                    sgn = ""
-                
-                # Handle powers of 1 or 0 that appear as the first term
-                if pwr == 1:
-                    s = f"{sgn}{val}x"
+                    s = f" {sgn} x"
+                # Special case is term is 1 or -1
                 elif pwr == 0:
-                    s = f"{sgn}{val}"
+                    s = f" {sgn} 1"
+                # General case
                 else:
-                    s = f" {sgn}{val}x^{pwr}"
+                    s = f" {sgn} x^{pwr}"
 
-                            
-            
-            # If the power is 1 just show x rather than x^1
-            elif pwr == 1:
-                s = f" {sgn} {val}x"
-            
-            # If the power is 0 only show the sign and value
-            elif pwr == 0:
-                s = f" {sgn} {val}"
-            
-            # Otherwise show everything
+            # General case
             else:
-                s = f" {sgn} {val}x^{pwr}"
+                if pwr == 1:
+                    s = f" {sgn} {val}x"
+                elif pwr == 0:
+                    s = f" {sgn} {val}"
+                else:
+                    s = f" {sgn} {val}x^{pwr}"
 
-            out += s
+        # Handle non-integer coefficients
+        else:
+            
+            if pwr == 1:
+                s = f" {sgn} {val.n}/{val.d}x"
+            elif pwr == 0:
+                s = f" {sgn} {val.n}/{val.d}"
+            else:
+                s = f" {sgn} {val.n}/{val.d}x^{pwr}"
+        
+        # Special case of leading coefficient
+        if pwr == d:
+            s = s.replace(" ","")
+            
+        out += s
     
     return out
 

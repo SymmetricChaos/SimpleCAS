@@ -1,4 +1,4 @@
-from Rational import Rational, rational_seq
+from Rational import rational_seq
 from Utility import make_canvas, plot_points
 from Poly import QPoly
 
