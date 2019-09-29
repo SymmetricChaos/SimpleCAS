@@ -3,12 +3,8 @@ from Utility import make_canvas, plot_points
 from Poly import QPoly
 
 
-c3 = Rational(-1,6)
-c5 = Rational(1,120)
-c7 = Rational(-1,5040)
-
-P = QPoly( [0,1,0,c3,0,c5,0,c7] )
-x = rational_seq(-5,5,".01")
+P = QPoly( [0,1,0,"-1/6",0,"1/120",0,"-1/5040",0,"1/362880"] )
+x = rational_seq(-7,7,.01)
 y = P.evaluate(x)
 
 pts = [i for i in zip(x,y)]

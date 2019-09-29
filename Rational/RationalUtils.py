@@ -2,7 +2,7 @@ from Rational.RationalType import Rational
 from Utility import gcd, first_where
 import re
 
-    
+
 
 def _rational_gcd(A,B):
     """Largest rational such that both A and B are integer multiples of it"""
@@ -12,6 +12,7 @@ def _rational_gcd(A,B):
 
 
 def rational_gcd(*args):
+    """Greatest common divisor"""
     
     # Handle the case that a list is provided
     if len(args) == 1 and type(args[0]) is list:
@@ -65,40 +66,57 @@ def rational_lcm(*args):
     return _rational_lcm(a,b)
 
 
+
+
+
 def digits_to_frac(S):
-    """Convert String to Rational"""
-    assert type(S) == str
+    """Convert a string of form a.b to Rational"""
+    if type(S) != str:
+        raise TypeError("Input {S} is {type(S)} not str")
     if "." not in S:
         S += "."
         
-    m = re.fullmatch("\d*\.\d*",S)
+    m = re.fullmatch("-?\d*\.\d*",S)
+    is_neg = 1
     if m:
+        if m[0] == "-":
+            is_neg = -1
+            m = m[1:]
         D = len(S)-first_where(S,".")-1
         S = S.replace(".","")
-        return Rational(int(S),10**D)
+        return Rational(int(S)*is_neg,10**D)
     else:
         raise Exception(f"Cannot coerce {S} to Rational")
 
 
 def str_to_frac(S):
-    """Convert String to Rational"""
-    assert type(S) == str
+    """Convert a string of form a/b to Rational"""
+    if type(S) != str:
+        raise TypeError("Input {S} is {type(S)} not str")
     if "/" not in S:
         S += "/1"
         
-    m = re.fullmatch("\d*\/\d*",S)
+    m = re.fullmatch("-?\d*\/\d*",S)
+    is_neg = 1
     if m:
+        if m[0] == "-":
+            is_neg = -1
+            m = m[1:]
         n,d = S.split("/")
-        return Rational(int(n),int(d))
+        return Rational(int(n)*is_neg,int(d))
     else:
         raise Exception(f"Cannot coerce {S} to Rational")
         
 
 def coerce_to_rational(T):
+    """Best effort to transform input to a rational number"""
+    
     if type(T) == Rational:
         return T
     elif type(T) == int:
         return Rational(T)
+    elif type(T) == float:
+        return coerce_to_rational(str(T))
     elif type(T) == str:
         try:
             return str_to_frac(T)
@@ -106,6 +124,9 @@ def coerce_to_rational(T):
             return digits_to_frac(T)
     else:
         raise Exception(f"Could not coerce {T} to Rational")
+
+
+
 
 
 def cfrac_convergents(L):
