@@ -267,4 +267,3 @@ if __name__ == '__main__':
     print(f"1/r = {1/r}")
     print(f"3/r = {3/r}")
     print(f"{s}%2 = {s%2}")
-    
