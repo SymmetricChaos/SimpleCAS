@@ -238,14 +238,23 @@ class Rational:
             tmp = f.inv()
     
         return L
-    
+
+
     def pretty_name(self):
+        """Format for LaTeX"""
         if self.d == 1:
-            return str(self)
+            return str(self.n)
         else:
             return f"$\dfrac{{{self.n}}}{{{self.d}}}$"
 
-
+    
+    def mixed_name(self):
+        """Format for LaTeX as a mixed fraction"""
+        if self.d == 1:
+            return str(self.n)
+        else:
+            w,f = self.mixed_form()
+            return f"${w}\dfrac{{{f.n}}}{{{f.d}}}$"
 
 
 
