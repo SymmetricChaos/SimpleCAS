@@ -123,7 +123,7 @@ def poly_mult(P, Q):
 
 	
 def poly_print(poly,pretty=False):
-    """Show the polynomial in descending form as it would be written"""
+    """Show the polynomial in descending form with commandline formatting"""
 
         
     # Get the degree of the polynomial in case it is in non-normal form
@@ -216,7 +216,7 @@ def poly_print(poly,pretty=False):
 
 
 def poly_print_pretty(poly):
-    """Show the polynomial in descending form as it would be written"""
+    """Show the polynomial in descending form with LaTeX formatting"""
 
         
     # Get the degree of the polynomial in case it is in non-normal form
@@ -239,7 +239,7 @@ def poly_print_pretty(poly):
         
         coe = poly[pwr]
         val = abs(coe)
-        sgn = "-" if coe//val == -1 else "+"
+        sgn = u"\u2212" if coe//val == -1 else "+" #U+2212 is the large minus
         
         
         # Handle sign for leading term
@@ -303,7 +303,6 @@ def poly_print_pretty(poly):
             
         out += s
     
-    out = out.replace("-", u"\u2212")
     return out
 
 
