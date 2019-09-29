@@ -12,7 +12,7 @@ class RationalFunc:
             try:
                 N = QPoly( [N] )
             except:
-                raise ValueError(f"Could not coerce {N} to QPoly")
+                raise Exception(f"Could not coerce {N} to QPoly")
         
         if type(D) == QPoly:
             pass
@@ -22,7 +22,7 @@ class RationalFunc:
             try:
                 D = QPoly( [D] )
             except:
-                raise ValueError(f"Could not coerce {D} to QPoly")
+                raise Exception(f"Could not coerce {D} to QPoly")
             
         self.N = N
         self.D = D
@@ -108,6 +108,14 @@ class RationalFunc:
         else:
             return self - RationalFunc(other)
 
+
+    def pretty_name(self):
+        if str(self.N) == "0":
+            return "0"
+        elif str(self.D) == "1":
+            return str(self.N)
+        else:
+            return f"$\dfrac{{{self.N}}}{{{self.D}}}$"
 
 
 
