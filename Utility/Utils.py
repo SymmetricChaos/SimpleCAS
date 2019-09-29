@@ -255,22 +255,22 @@ def poly_print_pretty(poly):
                 
                 # Special case if term is x or -x
                 if pwr == 1:
-                    s = f" {sgn} x"
+                    s = f" {sgn} $x$"
                 # Special case is term is 1 or -1
                 elif pwr == 0:
                     s = f" {sgn} 1"
                 # General case
                 else:
-                    s = f" {sgn} x$^{{{pwr}}}$"
+                    s = f" {sgn} $x^{{{pwr}}}$"
 
             # General case
             else:
                 if pwr == 1:
-                    s = f" {sgn} {val}x"
+                    s = f" {sgn} {val}$x$"
                 elif pwr == 0:
                     s = f" {sgn} {val}"
                 else:
-                    s = f" {sgn} {val}x$^{{{pwr}}}$"
+                    s = f" {sgn} {val}$x^{{{pwr}}}$"
 
         # Handle non-integer coefficients
         else:
