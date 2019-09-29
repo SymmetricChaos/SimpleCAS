@@ -169,13 +169,14 @@ def cfrac_to_frac(L):
 
 
 def rational_seq(lo,hi,step):
+    """Sequence of rational numbers"""
     lo   = coerce_to_rational(lo)
     hi   = coerce_to_rational(hi)
     step = coerce_to_rational(step)
     out = [lo]
-    while out[-1] <= hi:
+    while out[-1]+step <= hi:
         out.append(out[-1]+step)
-    return out[:-1]
+    return out
 
 
 def rational_round(Q,dlim):

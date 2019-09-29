@@ -1,5 +1,5 @@
 from Poly.QPoly import QPoly
-from Rational import Rational, rational_gcd
+from Rational import Rational, rational_gcd, coerce_to_rational, rational_round
 from Utility import factorization
 from itertools import product
 
@@ -23,6 +23,9 @@ def monic(poly):
     return poly//poly.coef[-1]
 
 
+
+
+
 def lagrange_interpolation(X,Y):
     """Lagrange Polynomial"""
     final = QPoly([0])
@@ -35,6 +38,9 @@ def lagrange_interpolation(X,Y):
                 out *= P*d
         final += out
     return final
+
+
+
 
 
 def complete_the_square(poly):
@@ -139,6 +145,9 @@ def poly_factor(poly):
     out += kronecker_factorization(P)
 
     return out
+
+
+
 
 
 if __name__ == '__main__':
