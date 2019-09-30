@@ -1,5 +1,5 @@
 from Poly.QPoly import QPoly
-from Rational import coerce_to_rational, rational_round
+from Rational import coerce_to_rational, rational_round, sign
 
 def newtons_method(poly,start,den_lim=100,iter_lim=100):
     """Approximate a root by Newton's method limited by denominator and number of iterations"""
@@ -37,7 +37,6 @@ def bisection_method(poly,lo,hi,iter_lim=10):
     if iter_lim == 0:
         return [mid]
     
-    
     out = []
     out += bisection_method(poly,lo,mid,iter_lim=iter_lim-1)
     out += bisection_method(poly,mid,hi,iter_lim=iter_lim-1)
@@ -45,6 +44,7 @@ def bisection_method(poly,lo,hi,iter_lim=10):
     return out
 
 
+## TODO use for sturm's method of root isolation
 def sturm_chain(poly):
     assert type(poly) == QPoly
     
@@ -59,7 +59,21 @@ def sturm_chain(poly):
         
         if len(p0) == 1:
             break
-        
+
+
+def descartes_rule(poly):
+    """Use descartes rule of signs to estimate number of roots"""
+    
+    co = poly.coef.copy()
+    n = 0
+    cur_sgn = sign(co[0])
+    for i in co[1:]:
+        if sign(i) != cur_sgn:
+            n += 1
+            cur_sgn = sign(i)
+    
+    return n
+
 
 
 
@@ -85,3 +99,8 @@ if __name__ == '__main__':
     print("Sturm Chain")
     for i in sturm_chain( QPoly( [-1,-1,0,1,1] ) ):
         print(i)
+        
+    print("\n\n")
+    P = QPoly( [-1,-1,1,1] )
+    print(f"P = {P}")
+    print(f"by Descarte's Rule of Signs, P has at most {descartes_rule(P)} positive real roots")

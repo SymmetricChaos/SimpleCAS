@@ -260,7 +260,6 @@ class QPoly:
 
 
 
-
 if __name__ == '__main__':
     P = QPoly([0,2,0,-6,-2,0,0])
     P[1] /= 3
