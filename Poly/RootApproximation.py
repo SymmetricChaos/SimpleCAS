@@ -76,21 +76,54 @@ def sturm_sequence(poly):
             break
         
         
-def count_sign_changes(L,A):
+def sturm_sign_changes(L,A):
     """Given a Sturm sequence and a point check how many changes of sign there
     are in the sequences of polynomials evaluated at that point"""
     cur_sgn = sign(L[0](A))
     n = 0
-    for poly in L:
+    for poly in L[1:]:
+        if sign(poly(A)) == 0:
+            continue
         if sign(poly(A)) != cur_sgn:
             n += 1
             cur_sgn = sign(poly(A))
     
-    return A
+    return n
 
 
-def sturm_roots(poly):
+def sturm_roots(poly,lo,hi):
     assert type(poly) == QPoly
+    
+    hi = coerce_to_rational(hi)
+    lo = coerce_to_rational(lo)
+    
+    L = [i for i in sturm_sequence(poly)]
+        
+    
+        
+    mid = (lo+hi)/2
+    Va = sturm_sign_changes(L,lo)
+    Vb = sturm_sign_changes(L,hi)
+    Vc = sturm_sign_changes(L,mid)
+    
+    rts_lo = abs(Va - Vc)
+    rts_hi = abs(Vc - Vb)
+    
+    out = []
+    
+    if rts_lo == 1:
+        out += [ (lo,mid) ] 
+    if rts_hi == 1:
+        out += [ (mid,hi) ] 
+    
+    if rts_lo > 1:
+        out += sturm_roots(poly,lo,mid)
+    if rts_hi > 1:
+        out += sturm_roots(poly,mid,hi)
+    
+    return out
+    
+    
 
 
 def descartes_rule(poly):
@@ -137,8 +170,13 @@ if __name__ == '__main__':
     
     print("\n\n")
     print("Sturm Chain")
-    for i in sturm_chain( QPoly( [-1,-1,0,1,1] ) ):
+    for i in sturm_sequence( QPoly( [-1,-1,0,1,1] ) ):
         print(i)
+        
+    print("\n\n")
+    P = QPoly( [0,1,0,"-1/6",0,"1/120",0,"-1/5040"] )
+    print(f"P = {P}")
+    print(f"The roots of P are within the intervals: {sturm_roots(P,-10,10)}")
         
     print("\n\n")
     P = QPoly( [-1,-1,1,1] )
