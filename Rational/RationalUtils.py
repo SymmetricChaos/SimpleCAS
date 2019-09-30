@@ -205,6 +205,18 @@ def rational_round(Q,dlim):
     return Q
 
 
+def sign(Q):
+    """Sign of a rational number"""
+    assert type(Q) == Rational
+    
+    if Q.n > 0:
+        return 1
+    elif Q.n < 0:
+        return -1
+    else:
+        return 0
+
+
 
 
 
