@@ -91,16 +91,8 @@ def sturm_sign_changes(L,A):
     return n
 
 
-def sturm_roots(poly,lo,hi):
-    assert type(poly) == QPoly
+def sturm_roots(poly,lo,hi,L):
     
-    hi = coerce_to_rational(hi)
-    lo = coerce_to_rational(lo)
-    
-    L = [i for i in sturm_sequence(poly)]
-        
-    
-        
     mid = (lo+hi)/2
     Va = sturm_sign_changes(L,lo)
     Vb = sturm_sign_changes(L,hi)
@@ -117,13 +109,25 @@ def sturm_roots(poly,lo,hi):
         out += [ (mid,hi) ] 
     
     if rts_lo > 1:
-        out += sturm_roots(poly,lo,mid)
+        out += sturm_roots(poly,lo,mid,L)
     if rts_hi > 1:
-        out += sturm_roots(poly,mid,hi)
+        out += sturm_roots(poly,mid,hi,L)
     
     return out
     
+def sturm_root_isolation(poly):
+    """Find disjoint intervals containing each root"""
     
+    assert type(poly) == QPoly
+    
+    # Place a bound on the absolute value of the the roots, this tells us the
+    # largest interval we need to search
+    B = bound_of_roots(poly)
+    
+    
+    L = [i for i in sturm_sequence(poly)]
+    
+    return sturm_roots(poly,-B,B,L)
 
 
 def descartes_rule(poly):
@@ -173,11 +177,14 @@ if __name__ == '__main__':
     for i in sturm_sequence( QPoly( [-1,-1,0,1,1] ) ):
         print(i)
         
-    print("\n\n")
-    P = QPoly( [0,1,0,"-1/6",0,"1/120",0,"-1/5040"] )
-    print(f"P = {P}")
-    print(f"The roots of P are within the intervals: {sturm_roots(P,-10,10)}")
         
+    print("\n\n")
+    P = QPoly( [-4,1] ) * QPoly( [3,1] ) * QPoly( [1,1] )
+    print(f"P = {P}")
+    print(f"The roots of P are within the intervals: {sturm_root_isolation(P)}")
+        
+    
+    
     print("\n\n")
     P = QPoly( [-1,-1,1,1] )
     print(f"P = {P}")
