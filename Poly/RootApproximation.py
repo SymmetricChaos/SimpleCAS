@@ -1,6 +1,19 @@
 from Poly.QPoly import QPoly
 from Rational import coerce_to_rational, rational_round, sign
 
+def bound_of_roots(poly):
+    """Cauchy's forumla for bounds on roots"""
+    assert type(poly) == QPoly
+    
+    co = reversed(poly.coef.copy())
+    lim = 0
+    for i in co:
+        if abs(i/poly[-1]) > lim:
+            lim = abs(i/poly[-1])
+    
+    return lim+1
+
+
 def newtons_method(poly,start,den_lim=100,iter_lim=100):
     """Approximate a root by Newton's method limited by denominator and number of iterations"""
     assert type(poly) == QPoly
@@ -16,6 +29,7 @@ def newtons_method(poly,start,den_lim=100,iter_lim=100):
         r = rold
     
     return r
+
 
 ## TODO: make sure this actually makes sense
 ## TODO: denominator limit
@@ -45,7 +59,8 @@ def bisection_method(poly,lo,hi,iter_lim=10):
 
 
 ## TODO use for sturm's method of root isolation
-def sturm_chain(poly):
+def sturm_sequence(poly):
+    """Sequence of polynomials used for Sturm's Theorem"""
     assert type(poly) == QPoly
     
     p0 = poly
@@ -59,10 +74,28 @@ def sturm_chain(poly):
         
         if len(p0) == 1:
             break
+        
+        
+def count_sign_changes(L,A):
+    """Given a Sturm sequence and a point check how many changes of sign there
+    are in the sequences of polynomials evaluated at that point"""
+    cur_sgn = sign(L[0](A))
+    n = 0
+    for poly in L:
+        if sign(poly(A)) != cur_sgn:
+            n += 1
+            cur_sgn = sign(poly(A))
+    
+    return A
+
+
+def sturm_roots(poly):
+    assert type(poly) == QPoly
 
 
 def descartes_rule(poly):
     """Use descartes rule of signs to estimate number of positive roots"""
+    assert type(poly) == QPoly
     
     co = poly.coef.copy()
     n = 0
@@ -73,17 +106,6 @@ def descartes_rule(poly):
             cur_sgn = sign(i)
     
     return n
-
-
-def bound_of_roots(poly):
-    
-    co = reversed(poly.coef.copy())
-    lim = 0
-    for i in co:
-        if abs(i/poly[-1]) > lim:
-            lim = abs(i/poly[-1])
-    
-    return lim+1
 
 
 
