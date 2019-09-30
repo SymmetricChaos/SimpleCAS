@@ -62,7 +62,7 @@ def sturm_chain(poly):
 
 
 def descartes_rule(poly):
-    """Use descartes rule of signs to estimate number of roots"""
+    """Use descartes rule of signs to estimate number of positive roots"""
     
     co = poly.coef.copy()
     n = 0
@@ -73,6 +73,17 @@ def descartes_rule(poly):
             cur_sgn = sign(i)
     
     return n
+
+
+def bound_of_roots(poly):
+    
+    co = reversed(poly.coef.copy())
+    lim = 0
+    for i in co:
+        if abs(i/poly[-1]) > lim:
+            lim = abs(i/poly[-1])
+    
+    return lim+1
 
 
 
@@ -94,8 +105,15 @@ if __name__ == '__main__':
     print(f"by the bisection method R has a root at approximately: {approx_root}\nwhich is {approx_root.digits(5)}")
     print(f"Approximation has an error of about {float(R(approx_root))}")
     
-    print("\n\n")
     
+    print("\n\n")
+    b = bound_of_roots(R)
+    print(f"All roots of {R} have absolute value {b} or less")
+    
+    
+    
+    
+    print("\n\n")
     print("Sturm Chain")
     for i in sturm_chain( QPoly( [-1,-1,0,1,1] ) ):
         print(i)
@@ -104,3 +122,4 @@ if __name__ == '__main__':
     P = QPoly( [-1,-1,1,1] )
     print(f"P = {P}")
     print(f"by Descarte's Rule of Signs, P has at most {descartes_rule(P)} positive real roots")
+    
