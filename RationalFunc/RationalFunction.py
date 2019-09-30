@@ -121,7 +121,6 @@ class RationalFunc:
 
 
 
-
 # TODO: Turn these into proper unit tests
 # need to include: roots with multiplicity, multiplication by negative numbers,
 # division by zero, division by 1, division by int, 0 divided by Qpoly,

@@ -1,7 +1,10 @@
 from Poly.QPoly import QPoly
-from Rational import Rational, rational_gcd, coerce_to_rational, rational_round
+from Rational import Rational, rational_gcd
 from Utility import factorization
 from itertools import product
+
+# TODO: Find inflection points
+
 
 def content(poly):
     """Rational GCD of the coefficients, negative if leading coef is negative,

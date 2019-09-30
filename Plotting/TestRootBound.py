@@ -11,6 +11,9 @@ y = [float(i) for i in P.evaluate(x)]
 
 pts = [i for i in zip(x,y)]
 
+#b = max(b,max(y))
+
 make_canvas([-b,b],show_axes=True,title=P.pretty_name())
 
 plot_points(pts)
+plot_points( [ [-10,0], [10,0] ]  )
