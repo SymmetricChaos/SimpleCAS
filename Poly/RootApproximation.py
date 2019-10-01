@@ -164,6 +164,22 @@ def all_roots(poly):
 
     return sorted(roots)
 
+def critical_points(poly):
+    assert type(poly) == QPoly
+    
+    if poly.degree() == 0:
+        return [0]
+    
+    elif poly.degree() == 1:
+        return [0]
+
+    else:
+        
+        Pd = poly.derivative()
+        return all_roots(Pd)
+        
+        
+
 
 
 

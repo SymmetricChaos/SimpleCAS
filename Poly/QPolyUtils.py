@@ -155,6 +155,8 @@ def poly_factor(poly):
 
 
 
+
+
 if __name__ == '__main__':
     x = [1,2,3]
     y = [1,8,27]
