@@ -276,7 +276,8 @@ class Rational:
 if __name__ == '__main__':
 
     Explanation = open(r"Explanation.txt","r")
-    print(Explanation.read())
+    for i in Explanation.readlines():
+        print(i)
     
     
     r = Rational(32,7)

@@ -1,4 +1,5 @@
 from Poly.QPoly import QPoly
+from Poly.QPolyUtils import rational_roots
 from Rational import coerce_to_rational, rational_round, sign
 
 def bound_of_roots(poly):
@@ -144,6 +145,26 @@ def descartes_rule(poly):
     return n
 
 
+def all_roots(poly):
+    
+    P = poly.copy()
+    rr = rational_roots(poly)
+    
+    roots = []
+    
+    for i in rr:
+        roots.append(i)
+        P = P//QPoly( [-i,1] )
+
+    intervals = sturm_root_isolation(P)
+    
+    for i in intervals:
+        roots.append(newtons_method(P, (i[0]+i[1])/2 ))
+
+
+    return sorted(roots)
+
+
 
 
 
@@ -191,3 +212,10 @@ if __name__ == '__main__':
     print(f"P = {P}")
     print(f"by Descarte's Rule of Signs, P has at most {descartes_rule(P)} positive real roots")
 
+
+
+    print("\n\n")
+    P = QPoly( [0,-6,3,2] )
+    print(f"P = {P}")
+    print(f"The roots of P are approximately {all_roots(P)}")
+    
