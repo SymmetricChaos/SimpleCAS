@@ -4,13 +4,17 @@ class Rational:
     
     def __init__(self,n,d=1):
         
-        assert type(n) == int, "Numerator must be int."
-        assert type(d) == int, "Denominator must be int."
+        if type(n) != int:
+            raise TypeError("Numerator must be int.")
+        if type(d) != int:
+            raise TypeError("Denominator must be int.")
         if d == 0:
             raise ZeroDivisionError
+
         if d < 0:
             d = abs(d)
             n = -n
+
         self.n = n
         self.d = d
         self.simplify()
@@ -64,18 +68,24 @@ class Rational:
 
 
     def __truediv__(self,divisor):
+        if divisor == 0:
+            raise ZeroDivisionError
         if type(divisor) == int:
             divisor = Rational(divisor)
         return self*divisor.inv()
     
-    
+     
     def __rtruediv__(self,dividend):
+        if self == 0:
+            raise ZeroDivisionError
         if type(dividend) == int:
             dividend = Rational(dividend)
         return self.inv()*dividend
 
 
     def __floordiv__(self,divisor):
+        if divisor == 0:
+            raise ZeroDivisionError
         if type(divisor) == int:
             divisor = Rational(divisor)
         q = self*divisor.inv()
@@ -84,6 +94,8 @@ class Rational:
 
 
     def __mod__(self,modulus):
+        if modulus == 0:
+            raise ZeroDivisionError
         if type(modulus) == int:
             modulus = Rational(modulus)
         if modulus > self:
@@ -262,6 +274,9 @@ class Rational:
 
 if __name__ == '__main__':
 
+    Explanation = open(r"Explanation.txt","r")
+    print(Explanation.read())
+    
     
     r = Rational(32,7)
     s = Rational(8,1)
