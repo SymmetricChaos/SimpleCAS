@@ -31,6 +31,8 @@ def monic(poly):
 
 def lagrange_interpolation(X,Y):
     """Lagrange Polynomial"""
+    assert type(X) == list
+    assert type(Y) == list
     final = QPoly([0])
     for x,y in zip(X,Y):
         out = QPoly([y])
@@ -158,20 +160,21 @@ if __name__ == '__main__':
     y = [1,8,27]
     print(f"Lagrange Interpolation of\nx = {x}\ny = {y}")
     print(lagrange_interpolation(x,y))
-    
-    
+
+
     print()
     S = QPoly( [-1,1] ) * QPoly( [3,3,3] ) * QPoly( [-1,2] ) * QPoly( [1,1,1,0,1] )
     print(rational_gcd(S.coef))
     print(f"S = {S}")
     print(f"Factorization of S: {poly_factor(S)}")
-    
+
 
     print()
     S = QPoly( [2,1,1,0,1,1] )
     print(f"S = {S}")
     print(f"Factorization of S: {poly_factor(S)}")
-    
+
+
     R = QPoly( [1,2,1] )
     print(R)
     print(complete_the_square( R ))
