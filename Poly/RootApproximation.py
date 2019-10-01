@@ -58,7 +58,6 @@ def bisection_method(poly,lo,hi,iter_lim=10):
     return out
 
 
-## TODO use for sturm's method of root isolation
 def sturm_sequence(poly):
     """Sequence of polynomials used for Sturm's Theorem"""
     assert type(poly) == QPoly
@@ -91,8 +90,8 @@ def sturm_sign_changes(L,A):
     return n
 
 
-def sturm_roots(poly,lo,hi,L):
-    
+def _sturm_roots(poly,lo,hi,L):
+    """Recursive function to using Sturm's Theorem to isolate real roots"""
     mid = (lo+hi)/2
     Va = sturm_sign_changes(L,lo)
     Vb = sturm_sign_changes(L,hi)
@@ -109,12 +108,13 @@ def sturm_roots(poly,lo,hi,L):
         out += [ (mid,hi) ] 
     
     if rts_lo > 1:
-        out += sturm_roots(poly,lo,mid,L)
+        out += _sturm_roots(poly,lo,mid,L)
     if rts_hi > 1:
-        out += sturm_roots(poly,mid,hi,L)
+        out += _sturm_roots(poly,mid,hi,L)
     
     return out
-    
+
+
 def sturm_root_isolation(poly):
     """Find disjoint intervals containing each root"""
     
@@ -124,10 +124,9 @@ def sturm_root_isolation(poly):
     # largest interval we need to search
     B = bound_of_roots(poly)
     
-    
     L = [i for i in sturm_sequence(poly)]
     
-    return sturm_roots(poly,-B,B,L)
+    return _sturm_roots(poly,-B,B,L)
 
 
 def descartes_rule(poly):
@@ -149,44 +148,46 @@ def descartes_rule(poly):
 
 
 if __name__ == '__main__':
+    
     R = QPoly( [-3,1,1] )
     approx_root = newtons_method(R,2)
     
     print(f"R = {R}")
     print(f"by Newton's method R has a root at approximately: {approx_root}\nwhich is {approx_root.digits(5)}")
     print(f"Approximation has an error of about {float(R(approx_root))}")
-    
-    print("\n\n")
-    
-    approx_root = bisection_method(R,0,2,10)[0]
 
+
+
+    print("\n\n")
+    approx_root = bisection_method(R,0,2,10)[0]
     print(f"R = {R}")
     print(f"by the bisection method R has a root at approximately: {approx_root}\nwhich is {approx_root.digits(5)}")
     print(f"Approximation has an error of about {float(R(approx_root))}")
-    
-    
+
+
+
     print("\n\n")
     b = bound_of_roots(R)
     print(f"All roots of {R} have absolute value {b} or less")
-    
-    
-    
-    
+
+
+
     print("\n\n")
     print("Sturm Chain")
     for i in sturm_sequence( QPoly( [-1,-1,0,1,1] ) ):
         print(i)
-        
-        
+
+
+
     print("\n\n")
     P = QPoly( [-4,1] ) * QPoly( [3,1] ) * QPoly( [1,1] )
     print(f"P = {P}")
     print(f"The roots of P are within the intervals: {sturm_root_isolation(P)}")
-        
-    
-    
+
+
+
     print("\n\n")
     P = QPoly( [-1,-1,1,1] )
     print(f"P = {P}")
     print(f"by Descarte's Rule of Signs, P has at most {descartes_rule(P)} positive real roots")
-    
+
