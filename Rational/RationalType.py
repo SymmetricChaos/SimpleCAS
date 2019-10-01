@@ -31,6 +31,26 @@ class Rational:
         return Rational(self.n,self.d)
 
 
+    def __str__(self):
+        if self.d == 1:
+            return str(self.n)
+        return f"{self.n}/{self.d}"
+
+
+    def pretty_name(self):
+        """Format for LaTeX"""
+        if self.d == 1:
+            return f"${self.n}$"
+        else:
+            return f"$\dfrac{{{self.n}}}{{{self.d}}}$"
+
+
+    def __repr__(self):
+        if self.d == 1:
+            return str(self.n)
+        return f"{self.n}/{self.d}"
+
+
     def inv(self):
         return Rational(self.d,self.n)
 
@@ -39,17 +59,29 @@ class Rational:
         return Rational(-self.n,self.d)
 
 
-    def __str__(self):
-        if self.d == 1:
-            return str(self.n)
-        return str(self.n) + "/" + str(self.d)
+    def __add__(self,addend):
+        if type(addend) == int:
+            addend = Rational(addend)
+        
+        n = self.n*addend.d + addend.n*self.d
+        d = self.d*addend.d
+
+        return Rational(n,d)
 
 
-    def __repr__(self):
-        if self.d == 1:
-            return str(self.n)
-        return str(self.n) + "/" + str(self.d)
+    def __radd__(self,addend):
+        if type(addend) == int:
+            addend = Rational(addend)
+        return self + addend
 
+
+    def __sub__(self,addend):
+        return self + -addend
+
+
+    def __rsub__(self,addend):
+        return addend + -self
+    
 
     def __mul__(self,multiplier):
         if type(multiplier) == int:
@@ -107,30 +139,6 @@ class Rational:
             return a
 
 
-    def __add__(self,addend):
-        if type(addend) == int:
-            addend = Rational(addend)
-        
-        n = self.n*addend.d + addend.n*self.d
-        d = self.d*addend.d
-
-        return Rational(n,d)
-
-
-    def __radd__(self,addend):
-        if type(addend) == int:
-            addend = Rational(addend)
-        return self + addend
-
-
-    def __sub__(self,addend):
-        return self + -addend
-
-
-    def __rsub__(self,addend):
-        return addend + -self
-
-
     def __eq__(self,other):
         if type(other) == int:
             other = Rational(other)
@@ -169,7 +177,8 @@ class Rational:
     
     
     def __pow__(self,power):
-        assert type(power) == int,"Only powers of integers are supported"
+        assert type(power) == int, "Only non-negative powers of integers are supported"
+        assert power >= 0, "Only non-negative powers of integers are supported"
         if power == 0:
             return Rational(1)
         if power == 1:
@@ -214,6 +223,15 @@ class Rational:
         f = self.fractional_part()
         return w,f
     
+        
+    def mixed_name(self):
+        """Format for LaTeX as a mixed fraction"""
+        if self.d == 1:
+            return str(self.n)
+        else:
+            w,f = self.mixed_form()
+            return f"${w}\dfrac{{{f.n}}}{{{f.d}}}$"
+    
     
     def digits(self,n):
         """Return the decimal representation of the fraction out to n digits"""
@@ -252,23 +270,6 @@ class Rational:
         return L
 
 
-    def pretty_name(self):
-        """Format for LaTeX"""
-        if self.d == 1:
-            return str(self.n)
-        else:
-            return f"$\dfrac{{{self.n}}}{{{self.d}}}$"
-
-    
-    def mixed_name(self):
-        """Format for LaTeX as a mixed fraction"""
-        if self.d == 1:
-            return str(self.n)
-        else:
-            w,f = self.mixed_form()
-            return f"${w}\dfrac{{{f.n}}}{{{f.d}}}$"
-
-
 
 
 
@@ -284,3 +285,4 @@ if __name__ == '__main__':
     print(f"1/r = {1/r}")
     print(f"3/r = {3/r}")
     print(f"{s}%2 = {s%2}")
+    print(f"r**3 = {r**3}")
