@@ -16,15 +16,19 @@ def make_canvas(x,y=None,size=None,show_axes=True,title="",titlesize=15):
         xco = min(xlim,ylim)/xlim
         yco = min(xlim,ylim)/ylim
         size = [xco*9,yco*9]
+        
     fig = plt.figure()
     fig.set_size_inches(size[0], size[1])
     ax = plt.axes(xlim=x, ylim=y)
+    
     if show_axes == False:
         ax.axis('off')
         ax.set_xticks([])
         ax.set_yticks([])
+        
     plt.tight_layout()
     plt.title(title+"\n",fontsize=titlesize)
+    
     return fig, ax
 
 
