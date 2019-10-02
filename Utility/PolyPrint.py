@@ -6,7 +6,9 @@ def poly_print(poly):
     d = poly.degree()
     
     if d == -1:
-        return f"0"
+        return "0"
+    if d == 0:
+        return str(poly.coef[0])
 
     out = ""
     
@@ -83,7 +85,9 @@ def poly_print_pretty(poly):
     d = poly.degree()
     
     if d == -1:
-        return f"0"
+        return "0"
+    if d == 0:
+        return str(poly.coef[0])
 
     out = ""
     
