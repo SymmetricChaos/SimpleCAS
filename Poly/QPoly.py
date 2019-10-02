@@ -109,7 +109,7 @@ class QPoly:
             return self
         else:
             assert type(pwr) == int, f"{pwr} is not an integer"
-            assert type(pwr) > 0, f"{pwr} is negative"
+            assert pwr > 0, f"{pwr} is negative"
             out = self.copy()
             for i in range(pwr-1):
                 out *= self
