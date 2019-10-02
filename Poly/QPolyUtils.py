@@ -31,8 +31,6 @@ def monic(poly):
 
 def lagrange_interpolation(X,Y):
     """Lagrange Polynomial"""
-    assert type(X) == list
-    assert type(Y) == list
     final = QPoly([0])
     for x,y in zip(X,Y):
         out = QPoly([y])
@@ -150,8 +148,6 @@ def poly_factor(poly):
     out += kronecker_factorization(P)
 
     return out
-
-
 
 
 

@@ -187,6 +187,8 @@ class QPoly:
 
     def normalize(self):
         """Remove trailing zeroes"""
+        if self.coef == []:
+            self.coef = [0]
         while self.coef[-1] == 0 and len(self.coef) > 1:
             if len(self.coef) == 1:
                 break
