@@ -169,13 +169,13 @@ class QPoly:
 
     # Still using floor division since there can be a remainder
     def __floordiv__(self,poly):
-        """Integer division of polynomials"""
+        """Euclidean division of polynomials"""
         a,b = divmod(self,poly)
         return a
 
 
     def __mod__(self,poly):
-        """Remainder of integer division of polynomials"""
+        """Remainder of Euclidean division of polynomials"""
         a,b = divmod(self,poly)
         return b
     
@@ -263,25 +263,26 @@ class QPoly:
 
 
 if __name__ == '__main__':
-    P = QPoly([0,2,0,-6,-2,0,0])
-    P[1] /= 3
-    print(f"P    = {P}")
-    print(f"P(2) = {P(2)}")
-    print(f"P//3 = {P//3}")
-    print(P//QPoly([0,1,2]))
-    print(P)
-    
-    Q = QPoly([-5,1,-3])
-    print(f"\nQ          = {Q}")
-    print(f"integral   = {Q.integral(0)}")
-    print(f"derivative = {Q.derivative()}")
-    
-    R = QPoly([0,2,0,-6,-2])
-    R //= 3
-    R[1] = Rational(3,5)
-    print(f"\nR            = {R}")
-    print(f"content(R)   = {R.content()}")
-    print(f"primitive(R) = {R.primitive()}")
-    
-    S = QPoly([0,"3/2",0,"4/3","11.76"])
-    print(S)
+    P = QPoly(["3/2",0,1,"11.6"])
+    Q = QPoly([-5,1])
+    print(f"P      = {P}")
+    print(f"Q      = {Q}")
+    print(f"P+2    = {P+2}")
+    print(f"2+P    = {2+P}")
+    print(f"P+Q    = {P+Q}")
+    print(f"Q+P    = {Q+P}")
+    print(f"P*2    = {P*2}")
+    print(f"2*P    = {2*P}")
+    print(f"P*Q    = {P*Q}")
+    print(f"Q*P    = {Q*P}")
+    print(f"P**2   = {P**2}")
+    print(f"P//2   = {P//2}")
+    print(f"P%2    = {P%2}")
+    print(f"P//Q   = {P//Q}")
+    print(f"P%Q    = {P%Q}")
+    print()
+    print(f"P.integral(0)   = {P.integral(0)}")
+    print(f"P.derivative()  = {P.derivative()}")
+    print()
+    print(f"P.content()   = {P.content()}")
+    print(f"P.primitive() = {P.primitive()}")
