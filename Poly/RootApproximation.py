@@ -144,7 +144,8 @@ def descartes_rule(poly):
     
     return n
 
-
+## TODO: This mostly works but sometimes Newton's method converges on the same
+##       root despite the starting positions
 def all_roots(poly):
     
     P = poly.copy()
@@ -163,6 +164,7 @@ def all_roots(poly):
 
 
     return sorted(roots)
+
 
 def critical_points(poly):
     assert type(poly) == QPoly
