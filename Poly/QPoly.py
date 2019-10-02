@@ -170,14 +170,12 @@ class QPoly:
     # Still using floor division since there can be a remainder
     def __floordiv__(self,poly):
         """Euclidean division of polynomials"""
-        a,b = divmod(self,poly)
-        return a
+        return divmod(self,poly)[0]
 
 
     def __mod__(self,poly):
         """Remainder of Euclidean division of polynomials"""
-        a,b = divmod(self,poly)
-        return b
+        return divmod(self,poly)[1]
     
     
 #    def __truediv__(self,poly):
