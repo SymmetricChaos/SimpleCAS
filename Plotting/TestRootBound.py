@@ -1,17 +1,16 @@
 from Rational import rational_seq
 from Utility import make_canvas, plot_points, scatter_points, connect
-from Poly import QPoly, all_roots, critical_points, sturm_root_isolation
+from Poly import QPoly, all_roots, critical_points
 from random import randint
 
 co = [randint(-9,9) for i in range(5)]
-co = [3,-1,3,-7,-5]
+co = [3,5,4,-2,-16,-17,-5]
 P = QPoly( co )
 print(f"P = {P}")
 r = all_roots(P)
-print(f"roots = {r}")
+print(f"approx roots    = {r}")
 c = critical_points(P)
-print(f"critical = {c}")
-print(f"root_intervals = {sturm_root_isolation(P)}")
+print(f"approx critical = {c}")
 
 interesting_points = r + c
 interesting_values = P.evaluate(interesting_points)
