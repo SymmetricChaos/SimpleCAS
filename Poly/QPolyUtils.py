@@ -3,8 +3,6 @@ from Rational import Rational, rational_gcd
 from Utility import factorization
 from itertools import product
 
-# TODO: Find inflection points
-
 
 def content(poly):
     """Rational GCD of the coefficients, negative if leading coef is negative,
@@ -151,27 +149,6 @@ def poly_factor(poly):
 
 
 
-<<<<<<< HEAD
-def critical_points(poly):
-    assert type(poly) == QPoly
-    
-    if poly.degree() == 0:
-        return [0]
-    
-    elif poly.degree() == 1:
-        return [0]
-
-    else:
-        
-        Pd = poly.derivative()
-        return all_roots(Pd)
-    
-
-
-
-
-=======
->>>>>>> parent of 6cef35d... Moved things around a bit
 if __name__ == '__main__':
     x = [1,2,3]
     y = [1,8,27]
