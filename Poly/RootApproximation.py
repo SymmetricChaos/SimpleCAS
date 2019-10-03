@@ -24,39 +24,35 @@ def newtons_method(poly,start,den_lim=100,iter_lim=100):
     
     r = coerce_to_rational(start)
     for i in range(iter_lim):
-        rold = rational_round(r - p(r)/dp(r),den_lim)
-        if rold == r:
+        rnew = rational_round(r - p(r)/dp(r),den_lim)
+        if rnew == r:
             return r
-        r = rold
+        r = rnew
     
     return r
 
 
-## TODO: make sure this actually makes sense
-## TODO: denominator limit
-## TODO: test with higher order polynomials
-def bisection_method(poly,lo,hi,iter_lim=10):
+def bisection_method(poly,lo,hi,den_lim=100,iter_lim=100):
+    """Approximate a root by the bisection method limited by denominator and number of iterations"""
     assert type(poly) == QPoly
     
     lo = coerce_to_rational(lo)
     hi = coerce_to_rational(hi)
     
-    # Signs of the limits must differ in order to guarantee a root
-    if poly(lo) > 0 and poly(hi) > 0:
-        return []
-    if poly(lo) < 0 and poly(hi) < 0:
-        return []
-    
-    mid = (hi+lo)/2
-    
-    if iter_lim == 0:
-        return [mid]
-    
-    out = []
-    out += bisection_method(poly,lo,mid,iter_lim=iter_lim-1)
-    out += bisection_method(poly,mid,hi,iter_lim=iter_lim-1)
-
-    return out
+    oldmid = hi
+    for i in range(iter_lim):
+        mid = rational_round((hi+lo)/2,den_lim)
+        if sign(poly(lo)) != sign(poly(mid)):
+            lo,hi = lo,mid
+        elif sign(poly(mid)) != sign(poly(hi)):
+            lo,hi = mid,hi
+        
+        if mid == oldmid:
+            return mid
+        
+        oldmid = mid
+        
+    return mid
 
 
 def sturm_sequence(poly):
@@ -144,9 +140,9 @@ def descartes_rule(poly):
     
     return n
 
-## TODO: This mostly works but sometimes Newton's method converges on the same
-##       root despite the starting positions
-def all_roots(poly):
+## TODO: bisection method doesn't leave the interval like Newton's methods can
+##       but is pretty slow even for this.
+def all_roots(poly,den_lim=100,iter_lim=100):
     
     P = poly.copy()
     rr = rational_roots(poly)
@@ -160,7 +156,7 @@ def all_roots(poly):
     intervals = sturm_root_isolation(P)
     
     for i in intervals:
-        roots.append(newtons_method(P, (i[0]+i[1])/2 ))
+        roots.append(bisection_method(P,i[0],i[1],den_lim,iter_lim))
 
 
     return sorted(roots)
@@ -180,8 +176,6 @@ def critical_points(poly):
         Pd = poly.derivative()
         return all_roots(Pd)
         
-        
-
 
 
 
@@ -198,7 +192,7 @@ if __name__ == '__main__':
 
 
     print("\n\n")
-    approx_root = bisection_method(R,0,2,10)[0]
+    approx_root = bisection_method(R,0,2,10)
     print(f"R = {R}")
     print(f"by the bisection method R has a root at approximately: {approx_root}\nwhich is {approx_root.digits(5)}")
     print(f"Approximation has an error of about {float(R(approx_root))}")
