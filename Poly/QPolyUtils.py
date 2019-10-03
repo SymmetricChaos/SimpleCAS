@@ -151,6 +151,7 @@ def poly_factor(poly):
 
 
 
+<<<<<<< HEAD
 def critical_points(poly):
     assert type(poly) == QPoly
     
@@ -169,6 +170,8 @@ def critical_points(poly):
 
 
 
+=======
+>>>>>>> parent of 6cef35d... Moved things around a bit
 if __name__ == '__main__':
     x = [1,2,3]
     y = [1,8,27]

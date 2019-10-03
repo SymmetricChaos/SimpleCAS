@@ -14,4 +14,4 @@ def asymptote(rfunc):
         pass
     
 if __name__ == '__main__':
-    pass
+    R = RationalFunc( [3,1,6,4] , [7,9,5,3] )
