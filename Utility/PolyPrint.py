@@ -119,22 +119,22 @@ def poly_print_pretty(poly):
                 
                 # Special case if term is x or -x
                 if pwr == 1:
-                    s = f" {sgn} $x$"
+                    s = f" {sgn} x"
                 # Special case is term is 1 or -1
                 elif pwr == 0:
                     s = f" {sgn} 1"
                 # General case
                 else:
-                    s = f" {sgn} $x^{{{pwr}}}$"
+                    s = f" {sgn} x^{{{pwr}}}"
 
             # General case
             else:
                 if pwr == 1:
-                    s = f" {sgn} {val}$x$"
+                    s = f" {sgn} {val}x"
                 elif pwr == 0:
                     s = f" {sgn} {val}"
                 else:
-                    s = f" {sgn} {val}$x^{{{pwr}}}$"
+                    s = f" {sgn} {val}x^{{{pwr}}}"
 
         # Handle non-integer coefficients
         else:
@@ -144,22 +144,22 @@ def poly_print_pretty(poly):
                 
                 # Special case of term x/d
                 if pwr == 1:
-                    s = f" {sgn} $\dfrac{{x}}{{{val.d}}}$"
+                    s = f" {sgn} \dfrac{{x}}{{{val.d}}}"
                 # Special case of term n/d
                 elif pwr == 0:
-                    s = f" {sgn} $\dfrac{{{val.n}}}{{{val.d}}}$"
+                    s = f" {sgn} \dfrac{{{val.n}}}{{{val.d}}}"
                 # General case
                 else:
-                    s = f" {sgn} $\dfrac{{x^{{{pwr}}}}}{{{val.d}}}$"
+                    s = f" {sgn} \dfrac{{x^{{{pwr}}}}}{{{val.d}}}"
                 
             # General case
             else:
                 if pwr == 1:
-                    s = f" {sgn} $\dfrac{{{val.n}x}}{{{val.d}}}$"
+                    s = f" {sgn} \dfrac{{{val.n}x}}{{{val.d}}}"
                 elif pwr == 0:
-                    s = f" {sgn} $\dfrac{{{val.n}}}{{{val.d}}}$"
+                    s = f" {sgn} \dfrac{{{val.n}}}{{{val.d}}}"
                 else:
-                    s = f" {sgn} $\dfrac{{{val.n}x^{{{pwr}}}}}{{{val.d}}}$"
+                    s = f" {sgn} \dfrac{{{val.n}x^{{{pwr}}}}}{{{val.d}}}"
         
         # Special case of leading coefficient
         if pwr == d:
@@ -167,4 +167,4 @@ def poly_print_pretty(poly):
             
         out += s
     
-    return out
+    return f"${out}$"

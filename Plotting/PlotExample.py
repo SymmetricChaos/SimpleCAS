@@ -12,7 +12,7 @@ pts = [i for i in zip(x,y)]
 make_canvas([-6,6],show_axes=True,title=P.pretty_name())
 plot_points(pts)
 
-
+print(P.pretty_name())
 
 
 R = RationalFunc(P,[-1,1])
