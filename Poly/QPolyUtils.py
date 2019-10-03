@@ -151,6 +151,22 @@ def poly_factor(poly):
 
 
 
+def bound_of_roots(poly):
+    """Cauchy's forumla for bounds on roots"""
+    assert type(poly) == QPoly
+    
+    co = reversed(poly.coef.copy())
+    lim = 0
+    for i in co:
+        if abs(i/poly[-1]) > lim:
+            lim = abs(i/poly[-1])
+    
+    return lim+1
+
+
+
+
+
 if __name__ == '__main__':
     x = [1,2,3]
     y = [1,8,27]

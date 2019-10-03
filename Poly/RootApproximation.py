@@ -2,18 +2,6 @@ from Poly.QPoly import QPoly
 from Poly.QPolyUtils import rational_roots
 from Rational import coerce_to_rational, rational_round, sign
 
-def bound_of_roots(poly):
-    """Cauchy's forumla for bounds on roots"""
-    assert type(poly) == QPoly
-    
-    co = reversed(poly.coef.copy())
-    lim = 0
-    for i in co:
-        if abs(i/poly[-1]) > lim:
-            lim = abs(i/poly[-1])
-    
-    return lim+1
-
 
 def newtons_method(poly,start,den_lim=100,iter_lim=100):
     """Approximate a root by Newton's method limited by denominator and number of iterations"""

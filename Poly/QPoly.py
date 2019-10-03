@@ -51,8 +51,7 @@ class QPoly:
 
     def __neg__(self):
         """Additive inverse of each coefficient"""
-        L = [-c for c in self.coef]
-        return QPoly(L)
+        return QPoly( [-c for c in self.coef] )
 
 
     def __add__(self,poly):
@@ -167,7 +166,7 @@ class QPoly:
             return QPoly(qt), QPoly(P)
 
 
-    # Still using floor division since there can be a remainder
+    # Using __floordiv__ since there can be a remainder
     def __floordiv__(self,poly):
         """Euclidean division of polynomials"""
         return divmod(self,poly)[0]
