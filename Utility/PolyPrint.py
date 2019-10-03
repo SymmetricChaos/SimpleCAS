@@ -164,6 +164,8 @@ def poly_print_pretty(poly):
         # Special case of leading coefficient
         if pwr == d:
             s = s.replace(" ","")
+        else:
+            s = s.replace(" ","\;")
             
         out += s
     
