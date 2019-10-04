@@ -1,6 +1,6 @@
 from Poly import QPoly, poly_factor
 
-class RationalFunc:
+class RFunc:
     
     def __init__(self,N,D=QPoly([1])):
         
@@ -74,21 +74,21 @@ class RationalFunc:
     
 
     def inv(self):
-        return RationalFunc(self.D,self.N)
+        return RFunc(self.D,self.N)
 
 
     def __mul__(self,other):
-        if type(other) == RationalFunc:
-            return RationalFunc(self.N * other.N, self.D * other.D)
+        if type(other) == RFunc:
+            return RFunc(self.N * other.N, self.D * other.D)
         else:
-            return self * RationalFunc(other)
+            return self * RFunc(other)
     
     
     def __truediv__(self,other):
-        if type(other) == RationalFunc:
+        if type(other) == RFunc:
             return self * other.inv()
         else:
-            return self / RationalFunc(other)
+            return self / RFunc(other)
 
 
     def __neg__(self):
@@ -96,21 +96,27 @@ class RationalFunc:
 
 
     def __add__(self,other):
-        if type(other) == RationalFunc:
-            return RationalFunc(self.N*other.D + other.N*self.D, self.D*other.D)
+        if type(other) == RFunc:
+            return RFunc(self.N*other.D + other.N*self.D, self.D*other.D)
         else:
-            return self + RationalFunc(other)
+            return self + RFunc(other)
 
 
     def __sub__(self,other):
-        if type(other) == RationalFunc:
+        if type(other) == RFunc:
             return self + -other
         else:
-            return self - RationalFunc(other)
+            return self - RFunc(other)
 
 
     def degree(self):
         return max(self.N.degree(),self.D.degree())
+
+
+    def derivative(self):
+        N = self.D * self.N.derivative() - self.N * self.D.derivative()
+        D = self.D * self.D
+        return RFunc(N,D)
 
 
     def _pretty_name(self):
@@ -136,7 +142,7 @@ class RationalFunc:
 if __name__ == '__main__':
     P = QPoly( [1,0,1] ) * QPoly( [-1,1] ) * QPoly( [7,3] ) * 4
     Q = QPoly( [1,0,1] ) * QPoly( [-2,1] ) * QPoly( [-1,1] ) * QPoly( [-1,1] )
-    R = RationalFunc(P,Q)
+    R = RFunc(P,Q)
     
     print(f"P   = {P}\n")
     print(f"Q   = {Q}\n")
@@ -154,8 +160,8 @@ if __name__ == '__main__':
     P = QPoly( [1,0,1] ) * QPoly( [-1,1] ) * 4
     
     print(f"P   = {P}")
-    print(f"P/2 = {RationalFunc(P,2)}")
+    print(f"P/2 = {RFunc(P,2)}")
     
-    print("\nRationalFunc can accept lists and coerce them to QPoly")
-    print("RationalFunc([1,0,1,1,2,0,1],[1,0,1])")
-    print(RationalFunc([1,0,1,1,2,0,1],[1,0,1]))
+    print("\nRFunc can accept lists and coerce them to QPoly")
+    print("RFunc([1,0,1,1,2,0,1],[1,0,1])")
+    print(RFunc([1,0,1,1,2,0,1],[1,0,1]))
