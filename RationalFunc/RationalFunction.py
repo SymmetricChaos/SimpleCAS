@@ -109,6 +109,10 @@ class RationalFunc:
             return self - RationalFunc(other)
 
 
+    def degree(self):
+        return max(self.N.degree(),self.D.degree())
+
+
     def pretty_name(self):
         if str(self.N) == "0":
             return "0"
