@@ -13,12 +13,12 @@ for i in range(5):
     
     pts = [i for i in zip(x,y)]
     
-    make_canvas([-6,6],show_axes=True,title=P.pretty_name(),size=5)
+    make_canvas([-6,6],show_axes=True,title=P.pretty_name,size=5)
     
     
     
     print("\n\n",P.coef)
     print("\n",P)
-    print("\n",P.pretty_name())
+    print("\n",P.pretty_name)
     plot_points(pts)
     show_plot()

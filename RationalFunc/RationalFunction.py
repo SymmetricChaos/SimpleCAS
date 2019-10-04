@@ -113,13 +113,17 @@ class RationalFunc:
         return max(self.N.degree(),self.D.degree())
 
 
-    def pretty_name(self):
+    def _pretty_name(self):
         if str(self.N) == "0":
             return "0"
         elif str(self.D) == "1":
             return str(self.N)
         else:
             return f"$\dfrac{{{self.N}}}{{{self.D}}}$"
+
+
+    # Things that are like attributes can be access as properties
+    pretty_name = property(_pretty_name)
 
 
 

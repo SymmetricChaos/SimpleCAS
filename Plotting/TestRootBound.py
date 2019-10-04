@@ -27,7 +27,7 @@ x = [float(i) for i in x]
 
 
 pts = [i for i in zip(x,y)]
-make_canvas(xwidth,ywidth,size=[5,5],show_axes=True,title=P.pretty_name())
+make_canvas(xwidth,ywidth,size=[5,5],show_axes=True,title=P.pretty_name)
 plot_points(pts,color="black")
 
 connect([xwidth[0],0],[xwidth[1],0],color="gray",zorder=-1)

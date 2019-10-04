@@ -235,16 +235,22 @@ class QPoly:
         return self[-1] == 1 or self[-1] == -1
     
     
-    def content(self):
+    def make_monic(self):
+        C = self[-1]
+        for i in range(len(self)):
+            self[i] /= C
+
+
+    def _content(self):
         """Rational GCD of the coefficients, negative if leading coef is negative,
         makes the polynomial have integer coefs"""
         return abs(rational_gcd(self.coef)) * (-1 if self.coef[-1] < 0 else 1)
     
 
-    def primitive(self):
+    def _primitive_part(self):
         """Smallest rational multiple of the polynomial with integer coefficients
         that have no common factors"""
-        return self//self.content()
+        return self//self.content
     
     
     def is_primitive(self):
@@ -252,11 +258,21 @@ class QPoly:
         return self.content == 1
 
 
-    def pretty_name(self):
+    def make_primitive(self):
+        C = self.content
+        for i in range(len(self)):
+            self[i] /= C
+
+
+    def _pretty_name(self):
         """Formatted for LaTeX"""
         return poly_print_pretty(self)
 
 
+    # Things that are like attributes can be access as properties
+    pretty_name = property(_pretty_name)
+    content = property(_content)
+    primitive_part = property(_primitive_part)
 
 
 
@@ -282,5 +298,16 @@ if __name__ == '__main__':
     print(f"P.integral(0)   = {P.integral(0)}")
     print(f"P.derivative()  = {P.derivative()}")
     print()
-    print(f"P.content()   = {P.content()}")
-    print(f"P.primitive() = {P.primitive()}")
+    print(f"P.content        = {P.content}")
+    print(f"P.primitive_part = {P.primitive_part}")
+    print()
+    print("P.make_primitive()")
+    R = P.copy()
+    R.make_primitive()
+    print(R)
+    print()
+    print("P.make_monic()")
+    S = P.copy()
+    S.make_monic()
+    print(S)
+    

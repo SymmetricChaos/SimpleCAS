@@ -9,16 +9,17 @@ x = rational_seq(-7,7,.1)
 y = P.evaluate(x)
 pts = [i for i in zip(x,y)]
 
-make_canvas([-6,6],show_axes=True,title=P.pretty_name())
+make_canvas([-6,6],show_axes=True,title=P.pretty_name)
 plot_points(pts)
-print(P.pretty_name())
+print(P.pretty_name)
 
-
-R = RationalFunc(P,[-1,1])
-x = rational_seq(-7,7,.1)
+# TODO: decide on a way to draw rational functions without making streaks along
+#       the asymptotes
+R = RationalFunc(P,[-.5,1,1])
+x = rational_seq(-7,7,.05)
 y = R.evaluate(x)
 pts = [i for i in zip(x,y)]
 
-make_canvas([-6,6],show_axes=True,title=R.pretty_name())
+make_canvas([-6,6],show_axes=True,title=R.pretty_name)
 plot_points(pts)
-print(R.pretty_name())
+print(R.pretty_name)

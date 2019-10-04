@@ -1,10 +1,10 @@
 from Rational import rational_seq
 from Utility import make_canvas, plot_points, connect
 from Poly import QPoly, all_roots, critical_points
-from random import randint
+
 
 def poly_plot(poly):
-    
+    """Automatically make a plot that shows the roots and critical points of the polynomial"""
     
     r = all_roots(poly)
     c = critical_points(poly)
@@ -31,14 +31,16 @@ def poly_plot(poly):
     
     
     pts = [i for i in zip(x,y)]
-    make_canvas(xwidth,ywidth,size=[5,5],show_axes=True,title=P.pretty_name())
+    make_canvas(xwidth,ywidth,size=[5,5],show_axes=True,title=poly.pretty_name)
     plot_points(pts,color="black")
     
     connect([xwidth[0],0],[xwidth[1],0],color="gray",zorder=-1)
     
 
 if __name__ == '__main__':
-    co = [randint(-9,9) for i in range(7)]
+    from random import sample
+    coefs = [1, 2, 3, 4, 5, -1, -2, -3, -4, -5, 0, 0, 0, 0, 0]
+    co = sample(coefs,6)
     P = QPoly( co )
     print(f"P = {P}")
     
