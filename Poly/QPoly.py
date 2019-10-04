@@ -75,7 +75,7 @@ class QPoly:
             poly = QPoly([poly])
 
         L = poly_add(self.coef,[-c for c in poly.coef])
-        return QPoly(L,self)
+        return QPoly(L)
 
 
     def __rsub__(self,poly):
