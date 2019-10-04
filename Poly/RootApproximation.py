@@ -29,7 +29,7 @@ def critical_points(poly):
     else:
         
         Pd = poly.derivative()
-        return all_roots(Pd)
+        return qpoly_roots(Pd)
     
 
 def newtons_method(poly,start,den_lim=100,iter_lim=100):
@@ -159,7 +159,7 @@ def descartes_rule(poly):
 
 ## TODO: bisection method doesn't leave the interval like Newton's methods can
 ##       but is pretty slow even for this.
-def all_roots(poly,den_lim=100,iter_lim=100):
+def qpoly_roots(poly,den_lim=100,iter_lim=100):
     
     P = poly.copy()
     rr = rational_roots(poly)
@@ -234,5 +234,5 @@ if __name__ == '__main__':
     print("\n\n")
     P = QPoly( [0,-6,3,2] )
     print(f"P = {P}")
-    print(f"The roots of P are approximately {all_roots(P)}")
+    print(f"The roots of P are approximately {qpoly_roots(P)}")
     

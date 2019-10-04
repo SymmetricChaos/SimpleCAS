@@ -123,9 +123,9 @@ def poly_factor(poly):
     
     out = []
     # Divide out the content
-    if P.content() != 1:
-        out.append(QPoly([P.content()]))
-        P = P.primitive()
+    if P.content != 1:
+        out.append(QPoly([P.content]))
+        P = P.primitive_part
 
     # Use rational roots to find linear factors
     # A root may have multiplicity so we check each root until it doesn't

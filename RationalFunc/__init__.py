@@ -1,3 +1,4 @@
-from RationalFunc.RationalFunction import RationalFunc
-                                    
-__all__ = ["RationalFunc"]
+from RationalFunc.RationalFunction import RFunc
+from RationalFunc.RationalFunctionUtils import rfunc_roots
+                                                           
+__all__ = ["RFunc","rfunc_roots"]
