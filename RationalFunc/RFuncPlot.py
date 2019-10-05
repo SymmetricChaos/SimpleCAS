@@ -22,19 +22,22 @@ def rfunc_plot(rfunc):
     ywidth = [float(ylimit[0]-ymargin), float(ylimit[1]+ymargin)]
     
     
-    x = rational_seq(xwidth[0],xwidth[1],.02)
+    # Need to identify points outside the plot then change everything except
+    # points on the edge of that sequence of float('NaN') so the asymptote
+    # isn't drawn.
+    x = rational_seq(xwidth[0],xwidth[1],.1)
     y = [float(i) for i in rfunc.evaluate(x)]
-#    for pos,val in enumerate(y):
-#        if val > ywidth[1]:
-#            y[pos] = float('NaN')
-#        if val < ywidth[0]:
-#            y[pos] = float('NaN')
+    for pos,val in enumerate(y):
+        if val > ywidth[1]:
+            y[pos] = ywidth[1]+1
+        if val < ywidth[0]:
+            y[pos] = ywidth[0]-1
     x = [float(i) for i in x]
     
     
     pts = [i for i in zip(x,y)]
     make_canvas(xwidth,ywidth,size=[5,5],show_axes=True,title=rfunc.pretty_name)
-    scatter_points(pts,color="black")
+    plot_points(pts,color="black")
     
     connect([xwidth[0],0],[xwidth[1],0],color="gray",zorder=-1)
     
@@ -42,8 +45,8 @@ def rfunc_plot(rfunc):
 if __name__ == '__main__':
     from random import sample
     coefs = [1, 2, 3, 4, 5, -1, -2, -3, -4, -5, 0, 0, 0, 0, 0]
-    co1 = sample(coefs,6)
-    co2 = sample(coefs,6)
+    co1 = sample(coefs,4)
+    co2 = sample(coefs,4)
     R = RFunc( co1, co2 )
     print(f"R = {R}")
     
