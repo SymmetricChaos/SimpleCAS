@@ -114,7 +114,7 @@ class RFunc:
 
 
     def derivative(self):
-        N = self.D * self.N.derivative() - self.N * self.D.derivative()
+        N = (self.D * self.N.derivative()) - (self.N * self.D.derivative())
         D = self.D * self.D
         return RFunc(N,D)
 
@@ -165,3 +165,8 @@ if __name__ == '__main__':
     print("\nRFunc can accept lists and coerce them to QPoly")
     print("RFunc([1,0,1,1,2,0,1],[1,0,1])")
     print(RFunc([1,0,1,1,2,0,1],[1,0,1]))
+    
+    print()
+    R = RFunc([1,0,1,1,2,0,1],[1,0,1])
+    print(R)
+    print(R.derivative())
