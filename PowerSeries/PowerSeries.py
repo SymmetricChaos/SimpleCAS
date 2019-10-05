@@ -34,7 +34,11 @@ class PSeries:
             try:
                 N = len(self.a)
             except:
+<<<<<<< Updated upstream
                 raise Exception("When a has no len() N must be supplied")
+=======
+                raise Exception(f"{self.a} has no len() so N must be supplied")
+>>>>>>> Stashed changes
         else:
             N = N
         
@@ -55,4 +59,8 @@ if __name__ == '__main__':
     print(P.c)
     
     print(P.cast_to_poly(3))
+<<<<<<< Updated upstream
     print(P.evaluate(6))
+=======
+    print(P.evaluate("1/2"))
+>>>>>>> Stashed changes
