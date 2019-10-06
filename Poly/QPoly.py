@@ -6,6 +6,7 @@
 from Rational import Rational, rational_gcd, coerce_to_rational
 from Utility import poly_add, poly_mult, poly_print, poly_print_pretty
 
+
 class QPoly:
     
     def __init__(self,coef):
@@ -103,13 +104,16 @@ class QPoly:
 
     def __pow__(self,pwr):
         """Multiply a polynomial by itself"""
+        if type(pwr) != int:
+            raise TypeError(f"pwr must be an integer not {type(pwr)}")
+        if pwr < 0:
+            raise TypeError(f"pwr must be positive")
+
         if pwr == 0:
             return QPoly([1])
-        if pwr == 1:
+        elif pwr == 1:
             return self
         else:
-            assert type(pwr) == int, f"{pwr} is not an integer"
-            assert pwr > 0, f"{pwr} is negative"
             out = self.copy()
             for i in range(pwr-1):
                 out *= self
@@ -180,7 +184,7 @@ class QPoly:
     
 #    def __truediv__(self,poly):
 #        """Truedivision of polynomials"""
-#        return RationalFunc(self,poly)
+#        return RFunc(self,poly)
 
 
     def normalize(self):

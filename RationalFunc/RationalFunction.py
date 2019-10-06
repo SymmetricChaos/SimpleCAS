@@ -39,6 +39,10 @@ class RFunc:
                 self.D //= F
 
 
+    def copy(self):
+        return RFunc(self.N.copy(),self.D.copy())
+
+
     def __str__(self):
         if str(self.N) == "0":
             return "0"
@@ -83,6 +87,23 @@ class RFunc:
         else:
             return self * RFunc(other)
     
+    
+    def __pow__(self,pwr):
+        if type(pwr) != int:
+            raise TypeError(f"pwr must be an integer not {type(pwr)}")
+
+        if pwr == 0:
+            return RFunc([1],[1])
+        else:
+            out = self.copy()
+            for i in range(abs(pwr)-1):
+                out *= self
+        
+        if pwr < 0:
+            return out.inv()
+            
+        return out
+        
     
     def __truediv__(self,other):
         if type(other) == RFunc:
@@ -142,31 +163,23 @@ class RFunc:
 if __name__ == '__main__':
     P = QPoly( [1,0,1] ) * QPoly( [-1,1] ) * QPoly( [7,3] ) * 4
     Q = QPoly( [1,0,1] ) * QPoly( [-2,1] ) * QPoly( [-1,1] ) * QPoly( [-1,1] )
-    R = RFunc(P,Q)
+
     
     print(f"P   = {P}\n")
     print(f"Q   = {Q}\n")
-    print(f"P/Q = {R}\n")
+    print(f"P/Q = {RFunc(P,Q)}\n")
 
     
-    print(f"R   = {R}\n")
-    print(f"R*P = {R*P}\n")
-    print(f"R+P = {R+P}\n")
     
-    print()
-    print(f"R(3) = {R(3)}")
-    print()
-        
-    P = QPoly( [1,0,1] ) * QPoly( [-1,1] ) * 4
-    
-    print(f"P   = {P}")
-    print(f"P/2 = {RFunc(P,2)}")
-    
-    print("\nRFunc can accept lists and coerce them to QPoly")
-    print("RFunc([1,0,1,1,2,0,1],[1,0,1])")
-    print(RFunc([1,0,1,1,2,0,1],[1,0,1]))
-    
-    print()
-    R = RFunc([1,0,1,1,2,0,1],[1,0,1])
-    print(R)
-    print(R.derivative())
+    print("Create an RFunc from two lists")
+    R = RFunc([1,0,1,1,2],[1,0,1])
+    print("R = RFunc([1,0,1,1,2,0,1],[1,0,1])")
+    print(f"R = {R}")
+
+    print(f"\n\nderivative of R = {R.derivative()}")
+
+    print("\n\n")
+    S = RFunc([3,2,1])
+    print(f"S     = {S}")
+    print(f"S**2  = {S**2}")
+    print(f"S**-2 = {S**-2}")

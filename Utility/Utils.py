@@ -191,7 +191,7 @@ def int_root(x):
 def factorization(n,negatives=False):
     """All Unique Factors"""
     if type(n) != int:
-        raise Exception("n must be an integer") 
+        raise TypeError("n must be an integer") 
     
     if n == 0:
         return [0]
