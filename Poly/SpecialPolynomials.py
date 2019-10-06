@@ -1,5 +1,9 @@
 from QPoly import QPoly
 
+## TODO: generators for abel and chebyshev
+## TODO: bernoulli, legendre
+
+
 def abel_poly(n,a):
     """Abel polynomial"""
     if n == 0:

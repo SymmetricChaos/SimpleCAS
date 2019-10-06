@@ -56,6 +56,9 @@ def lcm(*args):
 
 
 def factorial(n):
+    """Factorial of n"""
+    if type(n) != int:
+        raise TypeError(f"n must be an integer not {type(n)}")
     out = 1
     for i in range(1,n+1):
         out *= i
@@ -64,6 +67,10 @@ def factorial(n):
 
 def choose(n,k):
     """Binomial coefficient"""
+    if type(n) != int:
+        raise TypeError(f"n must be an integer not {type(n)}")
+    if type(k) != int:
+        raise TypeError(f"k must be an integer not {type(k)}")
     if n < k:
         raise Exception("n cannot be less than k")
     if k < 0:
