@@ -10,8 +10,31 @@ class PSeries:
             raise Exception(f"{a} is not iterable")
         self.a = a
         self.c = coerce_to_rational(c)
-        
-        
+    
+
+    def head(self,N):
+        out = ""
+        for pos,val in enumerate(self.a):
+            if pos > N:
+                break
+            
+            if val < 0:
+                val = abs(val)
+                sgn = " - "
+            else:
+                sgn = " + "
+            
+            if pos == 0:
+                if sgn == " - ":
+                    sgn = "-"
+                if sgn == " + ":
+                    sgn = ""
+            
+            out += sgn + term(val,self.c,pos)
+            
+        return out + " + ..."
+    
+
     def truncate(self,N):
         """Truncates the power series"""
         return PSeries(self.a[:N],self.c)
@@ -57,11 +80,66 @@ class PSeries:
             
         return out
         
+    
+def term(a,c,p):
+    if a == 0:
+        return "0"
+    
+    if c == 0:
+        if a == 1:
+            if p == 0:
+                return f"1"
+            elif p == 1:
+                return f"x"
+            else:
+                return f"x^{p}"
+            
+        else:
+            if p == 0:
+                return f"{a}"
+            elif p == 1:
+                return f"{a}x"
+            else:
+                return f"{a}x^{p}"
+            
+    else:
+        if c < 0:
+            c = f" + {abs(c)}"
+        elif c > 0:
+            c = f" - {c}"
+            
+        if a == 1:
+            if p == 0:
+                return f"1"
+            elif p == 1:
+                return f"(x{c})"
+            else:
+                return f"(x{c})^{p}"
+            
+        else:
+            if p == 0:
+                return f"{a}"
+            elif p == 1:
+                return f"{a}(x{c})"
+            else:
+                return f"{a}(x{c})^{p}"
+        
+        
         
 if __name__ == '__main__':
-    P = PSeries([1,1,1,1,1,1],2)
+    def sq():
+        out = 0
+        while True:
+            yield out*out
+            out += 1
+    
+    
+    P = PSeries(sq(),1)
     print(P.a)
     print(P.c)
     
-    print(P.cast_to_poly())
-    print(P.evaluate("1/2"))
+    print(P.head(3))
+    
+    print()
+    print(P.cast_to_poly(4))
+    print(P.evaluate("1/2",4))
