@@ -1,6 +1,6 @@
 from QPoly import QPoly
 
-## TODO: generators for abel and chebyshev
+## TODO: generators for abel
 ## TODO: bernoulli, legendre
 
 
@@ -36,6 +36,30 @@ def chebyshev_poly(n,kind=1):
 
     else:
         raise Exception(f"There are only Chebyshev polynomials of the 1st and 2nd kind")
+
+
+
+def chebyshev_poly_gen(n,kind=1):
+    """Chebyshev polynomial"""
+    if kind == 1:
+        
+        K0 = QPoly([1])
+        K1 = QPoly([0,1])
+        for i in range(n):
+            yield K0
+            K0, K1 = K1, QPoly([0,2])*K1 - K0
+    
+    elif kind == 2:
+        
+        K0 = QPoly([1])
+        K1 = QPoly([0,2])
+        for i in range(n):
+            yield K0
+            K0, K1 = K1, QPoly([0,2])*K1 - K0
+
+    else:
+        raise Exception(f"There are only Chebyshev polynomials of the 1st and 2nd kind")
+
 
 
 def falling_factorial(n):
@@ -80,22 +104,22 @@ def rising_factorial_gen(n):
 if __name__ == '__main__':
     
     print("Abel Polynomials for a = 1")
-    for n in range(6):
+    for n in range(7):
         print(abel_poly(n,1))
         
     print("\n\nChebyshev Polynomials of the 1st Kind")
-    for i in range(6):
-        print(chebyshev_poly(i,1))
+    for i in chebyshev_poly_gen(7,1):
+        print(i)
         
     print("\n\nChebyshev Polynomials of the 2nd Kind")
-    for i in range(6):
-        print(chebyshev_poly(i,2))
+    for i in chebyshev_poly_gen(7,2):
+        print(i)
         
     print("\n\nFalling Factorial Polynomials")
-    for i in falling_factorial_gen(6):
+    for i in falling_factorial_gen(7):
         print(i)
         
     print("\n\nRising Factorial Polynomials")
-    for i in rising_factorial_gen(6):
+    for i in rising_factorial_gen(7):
         print(i)
         
