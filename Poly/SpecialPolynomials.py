@@ -19,7 +19,7 @@ def chebyshev_poly(n,kind=1):
         elif n == 1:
             return QPoly([0,1])
         else:
-            return QPoly([0,2])*chebyshev_poly(n-1) - chebyshev_poly(n-2)
+            return QPoly([0,2])*chebyshev_poly(n-1,1) - chebyshev_poly(n-2,1)
     
     elif kind == 2:
         
@@ -28,7 +28,7 @@ def chebyshev_poly(n,kind=1):
         elif n == 1:
             return QPoly([0,2])
         else:
-            return QPoly([0,2])*chebyshev_poly(n-1) - chebyshev_poly(n-2)
+            return QPoly([0,2])*chebyshev_poly(n-1,2) - chebyshev_poly(n-2,2)
 
     else:
         raise Exception(f"There are only Chebyshev polynomials of the 1st and 2nd kind")
@@ -70,15 +70,22 @@ def rising_factorial_gen(n):
         out *= (x+k)
 
 
+
+
+
 if __name__ == '__main__':
     
     print("Abel Polynomials for a = 1")
     for n in range(6):
         print(abel_poly(n,1))
         
-    print("\n\nChebyshev Polynomials")
+    print("\n\nChebyshev Polynomials of the 1st Kind")
     for i in range(6):
-        print(chebyshev_poly(i))
+        print(chebyshev_poly(i,1))
+        
+    print("\n\nChebyshev Polynomials of the 2nd Kind")
+    for i in range(6):
+        print(chebyshev_poly(i,2))
         
     print("\n\nFalling Factorial Polynomials")
     for i in falling_factorial_gen(6):
