@@ -2,19 +2,28 @@
 
 [logo]: https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/simpleCASlogo.png "SimpleCAS"
 
-The purpose of SimpleCAS is not to provide a practical library for computer algebra since there are already much better options for that. Instead SimpleCAS is meant to be examinable for people who are curious about how such systems work.
+
+SimpleCAS is a computer algebra library that is meant to be simple enough (and hopefully written clearly enough) that a curious person can examine it, take it apart, and extend it. 
 
 ## Features
-Currently three kinds of objects are supported by SimpleCAS:
+Currently four kinds of objects are supported by SimpleCAS:
 
-### Rational Numbers
+### Rational
 Rational numbers are represented in simplest form.
 
-### Univariate Polynomials
+### QPoly
 Univariate polynomials with rational coefficients.
 
-### Rational Functions
+### RFunc
 True quotient of polynomials, represented in simplest form.
 
-## Multivariate Polynomials
-Multivariate polynomials would, to my knowledge, require fundamentally redesigning the logic of how the system treats polynomials to be vastly more complex. For this reason there are no plans to include multivariate polynomials in SimpleCAS.
+### PSeries
+Power series with finite or infinite terms.
+
+
+## Not Planned
+### Multivariate Polynomials
+Multivariate polynomials would, to my knowledge, require fundamentally redesigning the logic of how the system treats polynomials to be vastly more complex. Because the simplicity of the QPoly object is central to making SimpleCAS easy to understand there are no plans to include multivariate polynomials in SimpleCAS.
+
+### Radicals and Logarithms
+Can't figure out a good way to handle these right now.
