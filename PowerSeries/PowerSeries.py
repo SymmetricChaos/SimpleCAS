@@ -104,9 +104,9 @@ def term(a,c,p):
             
     else:
         if c < 0:
-            c = f" + {abs(c)}"
+            c = f"+{abs(c)}"
         elif c > 0:
-            c = f" - {c}"
+            c = f"-{c}"
             
         if a == 1:
             if p == 0:
@@ -135,11 +135,6 @@ if __name__ == '__main__':
     
     
     P = PSeries(sq(),1)
-    print(P.a)
-    print(P.c)
-    
-    print(P.head(3))
-    
-    print()
-    print(P.cast_to_poly(4))
-    print(P.evaluate("1/2",4))
+    print(f"P.head(3) = {P.head(3)}")
+    print(f"\nCast the first four terms to a polynomial:\n{P.cast_to_poly(4)}")
+    print(f"\nEvaluate the first four terms at x = 1:\n{P.evaluate('1/2',4)}")
