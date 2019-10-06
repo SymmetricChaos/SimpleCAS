@@ -17,8 +17,17 @@ class PSeries:
         return PSeries(self.a[:N],self.c)
 
 
-    def cast_to_poly(self,N):
+    def cast_to_poly(self,N=None):
         """Truncates the power series and returns a polynomial"""
+        
+        if N == None:
+            try:
+                N = len(self.a)
+            except:
+                raise Exception(f"{self.a} has no len() so N must be supplied")
+        else:
+            N = N
+        
         P = QPoly([0])
         x = QPoly([0,1])
         for pos,val in enumerate(self.a):
@@ -34,7 +43,6 @@ class PSeries:
             try:
                 N = len(self.a)
             except:
-
                 raise Exception(f"{self.a} has no len() so N must be supplied")
         else:
             N = N
@@ -51,9 +59,9 @@ class PSeries:
         
         
 if __name__ == '__main__':
-    P = PSeries([1,1,1,1,1,1],4)
+    P = PSeries([1,1,1,1,1,1],2)
     print(P.a)
     print(P.c)
     
-    print(P.cast_to_poly(3))
+    print(P.cast_to_poly())
     print(P.evaluate("1/2"))
