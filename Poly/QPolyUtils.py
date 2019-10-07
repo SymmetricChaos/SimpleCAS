@@ -24,6 +24,17 @@ def monic(poly):
     return poly//poly.coef[-1]
 
 
+def poly_gcd(P,Q):
+    """GCD of two polynomials"""
+    assert type(P) == QPoly
+    assert type(Q) == QPoly
+    if P == QPoly([0]):
+        return Q.primitive_part
+    else:
+        g = poly_gcd(P % Q, P)
+        return g.primitive_part
+
+
 
 
 
@@ -177,3 +188,9 @@ if __name__ == '__main__':
     print(sq)
     print(f"{sq[0]}({sq[1]})^2 + {sq[2]}")
     print()
+
+    A = QPoly( [6,7,1] )
+    B = QPoly( [-6,-5,1] )
+    print(A)
+    print(B)
+    print(poly_gcd(A,B))
