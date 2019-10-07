@@ -14,7 +14,7 @@ def gcd(*args):
     if len(args) == 1 and type(args[0]) is list:
         return gcd(*args[0])
     
-    # the gcd of a number with itself is iself
+    # the gcd of a single number is itself
     if len(args) == 1:
         return args[0]
     
@@ -38,7 +38,7 @@ def lcm(*args):
     if len(args) == 1 and type(args[0]) is list:
         return lcm(*args[0])
     
-    # the lcm of a number with itself is iself
+    # the lcm of a single number is itself
     if len(args) == 1:
         return args[0]
     

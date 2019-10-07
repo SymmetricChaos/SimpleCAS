@@ -31,9 +31,8 @@ class RFunc:
 
 
     def simplify(self):
-
+#
 #        G = poly_gcd(self.N,self.D)
-#        print(G)
 #        self.N //= G
 #        self.D //= G
         
@@ -174,7 +173,11 @@ if __name__ == '__main__':
     print(f"P          = {P}\n")
     print(f"Q          = {Q}\n")
     print(f"RFunc(P,Q) = {RFunc(P,Q)}")
-
+    
+    print()
+    print(f"poly_gcd(P,Q) = {poly_gcd(P,Q)}")
+    print(f"P//G = {P//poly_gcd(P,Q)}")
+    print(f"Q//G = {Q//poly_gcd(P,Q)}")
     
     
     print("\n\nCreate an RFunc from two lists")

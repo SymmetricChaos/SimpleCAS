@@ -24,14 +24,17 @@ def monic(poly):
     return poly//poly.coef[-1]
 
 
+## TODO: sometimes throws recursion depth errors
 def poly_gcd(P,Q):
     """GCD of two polynomials"""
     assert type(P) == QPoly
     assert type(Q) == QPoly
-    if P == QPoly([0]):
-        return Q.primitive_part
+    if Q.degree() > P.degree():
+        P,Q = Q,P
+    if Q == QPoly([0]):
+        return P.primitive_part
     else:
-        g = poly_gcd(P % Q, P)
+        g = poly_gcd(P % Q, Q)
         return g.primitive_part
 
 
@@ -189,6 +192,8 @@ if __name__ == '__main__':
     print(f"{sq[0]}({sq[1]})^2 + {sq[2]}")
     print()
 
+    print()
+    print("Polynomial GCD")
     A = QPoly( [6,7,1] ) * QPoly([1,1])
     B = QPoly( [-6,-5,1] ) * QPoly([1,1])
     print(A)

@@ -1,8 +1,6 @@
 # Univariate polynomials with coefficients from the field of rationals
 
 
-## TODO: Polynomial GCD
-
 from Rational import Rational, rational_gcd, coerce_to_rational
 from Utility import poly_add, poly_mult, poly_print, poly_print_pretty
 
@@ -134,7 +132,7 @@ class QPoly:
         # Cast integer to poly if needed
         if type(poly) == int or type(poly) == Rational:
             poly = QPoly([poly])
-        assert type(poly) == QPoly, f"Could not cast {poly} to rational polynomial"
+        assert type(poly) == QPoly, f"Could not cast {poly} to QPoly"
 
         # Check for division by zero    
         if poly.coef == [0]:
@@ -171,7 +169,7 @@ class QPoly:
             return QPoly(qt), QPoly(P)
 
 
-    # Still using floor division since there can be a remainder
+    # Using __floordiv__ since there can be a remainder not because we round down
     def __floordiv__(self,poly):
         """Euclidean division of polynomials"""
         return divmod(self,poly)[0]
