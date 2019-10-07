@@ -176,8 +176,7 @@ if __name__ == '__main__':
 
 
     print()
-    S = QPoly( [-1,1] ) * QPoly( [3,3,3] ) * QPoly( [-1,2] ) * QPoly( [1,1,1,0,1] )
-    print(rational_gcd(S.coef))
+    S = QPoly( [-1,1] ) * QPoly( [3,3,3] ) * QPoly( [-1,2] ) * QPoly( [1,1,0,1] )
     print(f"S = {S}")
     print(f"Factorization of S: {poly_factor(S)}")
 
@@ -196,11 +195,12 @@ if __name__ == '__main__':
     print(sq)
     print(f"{sq[0]}({sq[1]})^2 + {sq[2]}")
     
+    
     print()
     print("Polynomial GCD")
-    A = QPoly( [6,7,1] ) * QPoly([1,1])
-    B = QPoly( [-6,-5,1] ) * QPoly([1,1])
-    print(A)
-    print(B)
-    print(poly_gcd(A,B))
+    A = QPoly( [6,13,8,1] )
+    B = QPoly( [-6,-11,-4,1] )
+    print(f"A = {A}")
+    print(f"B = {B}")
+    print(f"poly_gcd(A,B) = {poly_gcd(A,B)}")
     

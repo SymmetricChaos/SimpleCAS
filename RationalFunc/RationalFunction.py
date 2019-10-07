@@ -1,4 +1,4 @@
-from Poly import QPoly, poly_factor, poly_gcd
+from Poly import QPoly, poly_gcd
 
 class RFunc:
     
@@ -83,6 +83,10 @@ class RFunc:
             return RFunc(self.N * other.N, self.D * other.D)
         else:
             return self * RFunc(other)
+
+
+    def __rmul__(self,other):
+        return self*other
     
     
     def __pow__(self,pwr):
@@ -116,8 +120,14 @@ class RFunc:
     def __add__(self,other):
         if type(other) == RFunc:
             return RFunc(self.N*other.D + other.N*self.D, self.D*other.D)
-        else:
+        elif type(other) == QPoly:
             return self + RFunc(other)
+        else:
+            return self + RFunc([other])
+        
+
+    def __radd__(self,other):
+        return self + other
 
 
     def __sub__(self,other):
@@ -158,29 +168,41 @@ class RFunc:
 # division by zero, division by 1, division by int, 0 divided by Qpoly,
 # int divided by Qpoly        
 if __name__ == '__main__':
-    P = QPoly( [1,0,1] ) * QPoly( [-1,1] ) * QPoly( [7,3] ) * 4
-    Q = QPoly( [1,0,1] ) * QPoly( [-2,1] ) * QPoly( [-1,1] ) * QPoly( [-1,1] )
-
     
+    print("Rational functions are in simplest form")
+    P = QPoly( [-28,16,-16,16,12] )
+    Q = QPoly( [-2,5,-6,6,-4,1] )
     print(f"P          = {P}\n")
     print(f"Q          = {Q}\n")
     print(f"RFunc(P,Q) = {RFunc(P,Q)}")
     
-    print()
-    print(f"poly_gcd(P,Q) = {poly_gcd(P,Q)}")
-    print(f"P//G = {P//poly_gcd(P,Q)}")
-    print(f"Q//G = {Q//poly_gcd(P,Q)}")
     
-    
-    print("\n\nCreate an RFunc from two lists")
+    print("\n\nRational functions can quickly be created just by supplying lists")
     R = RFunc([1,0,1,1,2],[2,0,1])
     print("R = RFunc([1,0,1,1,2],[2,0,1])")
     print(f"R = {R}")
 
-    print(f"\n\nderivative of R = {R.derivative()}")
+    print(f"\n\nderivative of R =\n{R.derivative()}")
 
-    print("\n\n")
-    S = RFunc([3,2,1])
-    print(f"S     = {S}")
-    print(f"S**2  = {S**2}")
-    print(f"S**-2 = {S**-2}")
+#    print("\n\n")
+#    S = RFunc([3,2,1])
+#    print(f"S     = {S}")
+#    print(f"S**2  = {S**2}")
+#    print(f"S**-2 = {S**-2}")
+    
+    print("\n\nTest Operations")
+    
+    R = RFunc( [-28,16,-16,16,12], [-2,5,-6,6,-4,1] )
+    S = RFunc( [1,0,0,1], [2,4,3] )
+    P = RFunc( [3,5,1] )
+    print(f"R      = {R}")
+    print(f"S      = {S}")
+    print(f"-R     = {-R}")
+    print(f"R+2    = {R+2}")
+    print(f"2+R    = {2+R}")
+    print(f"R+S    = {R+S}")
+    print(f"S+R    = {S+R}")
+    print(f"R*2    = {R*2}")
+    print(f"2*R    = {2*R}")
+    print(f"R**2   = {R**2}")
+    print(f"R**-2   = {R**-2}")
