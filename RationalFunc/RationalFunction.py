@@ -1,4 +1,4 @@
-from Poly import QPoly, poly_factor
+from Poly import QPoly, poly_factor, poly_gcd
 
 class RFunc:
     
@@ -31,6 +31,12 @@ class RFunc:
 
 
     def simplify(self):
+
+#        G = poly_gcd(self.N,self.D)
+#        print(G)
+#        self.N //= G
+#        self.D //= G
+        
         DF = poly_factor(self.D)
 
         for F in DF:
@@ -165,15 +171,15 @@ if __name__ == '__main__':
     Q = QPoly( [1,0,1] ) * QPoly( [-2,1] ) * QPoly( [-1,1] ) * QPoly( [-1,1] )
 
     
-    print(f"P   = {P}\n")
-    print(f"Q   = {Q}\n")
-    print(f"P/Q = {RFunc(P,Q)}\n")
+    print(f"P          = {P}\n")
+    print(f"Q          = {Q}\n")
+    print(f"RFunc(P,Q) = {RFunc(P,Q)}")
 
     
     
-    print("Create an RFunc from two lists")
-    R = RFunc([1,0,1,1,2],[1,0,1])
-    print("R = RFunc([1,0,1,1,2,0,1],[1,0,1])")
+    print("\n\nCreate an RFunc from two lists")
+    R = RFunc([1,0,1,1,2],[2,0,1])
+    print("R = RFunc([1,0,1,1,2],[2,0,1])")
     print(f"R = {R}")
 
     print(f"\n\nderivative of R = {R.derivative()}")

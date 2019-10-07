@@ -189,8 +189,8 @@ if __name__ == '__main__':
     print(f"{sq[0]}({sq[1]})^2 + {sq[2]}")
     print()
 
-    A = QPoly( [6,7,1] )
-    B = QPoly( [-6,-5,1] )
+    A = QPoly( [6,7,1] ) * QPoly([1,1])
+    B = QPoly( [-6,-5,1] ) * QPoly([1,1])
     print(A)
     print(B)
     print(poly_gcd(A,B))
