@@ -31,17 +31,9 @@ class RFunc:
 
 
     def simplify(self):
-#
-#        G = poly_gcd(self.N,self.D)
-#        self.N //= G
-#        self.D //= G
-        
-        DF = poly_factor(self.D)
-
-        for F in DF:
-            if self.N % F == QPoly( [0] ):
-                self.N //= F
-                self.D //= F
+        G = poly_gcd(self.N,self.D)
+        self.N //= G
+        self.D //= G
 
 
     def copy(self):
