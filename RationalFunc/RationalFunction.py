@@ -195,21 +195,17 @@ if __name__ == '__main__':
     print("R = RFunc([1,0,1,1,2],[2,0,1])")
     print(f"R = {R}")
 
+
     print(f"\n\nderivative of R =\n{R.derivative()}")
 
-#    print("\n\n")
-#    S = RFunc([3,2,1])
-#    print(f"S     = {S}")
-#    print(f"S**2  = {S**2}")
-#    print(f"S**-2 = {S**-2}")
     
     print("\n\nTest Operations")
-    
     R = RFunc( [28,12], [2,-3,1] )
     S = RFunc( [1,0,0,1], [2,4,3] )
-    P = RFunc( [3,5,1] )
+    P = QPoly( [3,5,1] )
     print(f"R      = {R}")
     print(f"S      = {S}")
+    print(f"P      = {P}")
     print(f"-R     = {-R}")
     print(f"R+2    = {R+2}")
     print(f"2+R    = {2+R}")
@@ -218,4 +214,5 @@ if __name__ == '__main__':
     print(f"R*2    = {R*2}")
     print(f"2*R    = {2*R}")
     print(f"S**2   = {S**2}")
-    print(f"S**-2   = {S**-2}")
+    print(f"S**-2  = {S**-2}")
+    print(f"S+Q    = {S+Q}")
