@@ -56,12 +56,17 @@ class QPoly:
 
     def __add__(self,poly):
         """Add a polynomial to a polynomial"""
-        if type(poly)  == int or type(poly) == Rational:
-            poly = QPoly([poly])
+        if type(poly) in [int,str,float,Rational]:
+            poly = QPoly( [coerce_to_rational(poly)] )
+            L = poly_add(self.coef,poly.coef)
+            return QPoly(L)
+        
+        elif type(poly) == QPoly:
+            L = poly_add(self.coef,poly.coef)
+            return QPoly(L)
 
-        L = poly_add(self.coef,poly.coef)
-        return QPoly(L)
-
+        else:
+            return poly + self
 
     def __radd__(self,poly):
         """Polynomial addition is commutative"""
