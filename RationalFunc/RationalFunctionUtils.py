@@ -1,6 +1,8 @@
 from RationalFunc import RFunc
 from Poly import qpoly_roots
 
+# TODO: Partial fraction decomposition
+
 def rfunc_roots(rfunc):
     """Approximate roots of a rational function"""
     assert type(rfunc) == RFunc
@@ -20,7 +22,11 @@ def asymptote(rfunc):
         pass
     elif dN < dD:
         pass
-    
+
+
+
+
+
 if __name__ == '__main__':
     from random import sample
     coefs = [1, 2, 3, 4, 5, -1, -2, -3, -4, -5, 0, 0, 0, 0, 0]
