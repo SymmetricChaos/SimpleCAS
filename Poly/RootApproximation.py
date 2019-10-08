@@ -144,6 +144,7 @@ def sturm_root_isolation(poly):
     return _sturm_roots(poly,-B,B,L)
 
 
+# TODO: make this into a root isolation test
 def descartes_rule(poly):
     """Use descartes rule of signs to estimate number of positive roots"""
     assert type(poly) == QPoly
@@ -157,6 +158,7 @@ def descartes_rule(poly):
             cur_sgn = sign(i)
     
     return n
+
 
 ## TODO: bisection method doesn't leave the interval like Newton's methods can
 ##       but is pretty slow even for this.

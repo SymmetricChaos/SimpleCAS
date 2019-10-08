@@ -1,4 +1,8 @@
+# Field of rational functions with rational coefficients
+
 from Poly import QPoly, poly_gcd
+
+# TODO: make RFunc interact correctly with QPoly as much as possible
 
 class RFunc:
     
