@@ -1,5 +1,5 @@
 from Rational import rational_seq
-from Utility import make_canvas, plot_points, scatter_points, connect
+from Utility import make_canvas, plot_points, connect
 from RationalFunc import RFunc, rfunc_roots
 
 
@@ -37,10 +37,15 @@ def rfunc_plot(rfunc):
     
     pts = [i for i in zip(x,y)]
     make_canvas(xwidth,ywidth,size=[5,5],show_axes=True,title=rfunc.pretty_name)
-    plot_points(pts,color="black")
+    plot_points(pts)
     
     connect([xwidth[0],0],[xwidth[1],0],color="gray",zorder=-1)
     
+    return [(a,b) for a,b in zip(x,y)]
+
+
+
+
 
 if __name__ == '__main__':
     from random import sample

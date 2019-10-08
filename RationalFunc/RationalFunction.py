@@ -49,7 +49,10 @@ class RFunc:
         if len(self.N) == 1:
             n = str(self.N)
         else:
-            n = f"({self.N})"
+            if self.N.content < 0:
+                n = f"-({-self.N})"
+            else:  
+                n = f"({self.N})"
 
         if len(self.D) == 1:
             d = str(self.D)
@@ -153,7 +156,13 @@ class RFunc:
         elif str(self.D) == "1":
             return str(self.N)
         else:
-            return f"$\dfrac{{{self.N}}}{{{self.D}}}$"
+            if self.N.content < 0:
+                sgn = "-"
+                n = -self.N
+            else:
+                sgn = ""
+                n = self.N
+            return f"${sgn}\dfrac{{{n}}}{{{self.D}}}$"
 
 
     # Things that are like attributes can be access as properties
@@ -192,7 +201,7 @@ if __name__ == '__main__':
     
     print("\n\nTest Operations")
     
-    R = RFunc( [-28,16,-16,16,12], [-2,5,-6,6,-4,1] )
+    R = RFunc( [28,12], [2,-3,1] )
     S = RFunc( [1,0,0,1], [2,4,3] )
     P = RFunc( [3,5,1] )
     print(f"R      = {R}")
@@ -204,5 +213,5 @@ if __name__ == '__main__':
     print(f"S+R    = {S+R}")
     print(f"R*2    = {R*2}")
     print(f"2*R    = {2*R}")
-    print(f"R**2   = {R**2}")
-    print(f"R**-2   = {R**-2}")
+    print(f"S**2   = {S**2}")
+    print(f"S**-2   = {S**-2}")

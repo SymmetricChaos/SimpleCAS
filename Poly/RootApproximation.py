@@ -72,6 +72,7 @@ def bisection_method(poly,lo,hi,den_lim=100,iter_lim=100):
     return mid
 
 
+# TODO: prevent this from throwing ZeroDivisionError
 def sturm_sequence(poly):
     """Sequence of polynomials used for Sturm's Theorem"""
     assert type(poly) == QPoly
@@ -192,7 +193,6 @@ if __name__ == '__main__':
     
     print(f"R = {R}")
     print(f"by Newton's method R has a root at approximately: {approx_root}\nwhich is {approx_root.digits(5)}")
-    print(f"Approximation has an error of about {float(R(approx_root))}")
 
 
 
@@ -200,7 +200,6 @@ if __name__ == '__main__':
     approx_root = bisection_method(R,0,2,10)
     print(f"R = {R}")
     print(f"by the bisection method R has a root at approximately: {approx_root}\nwhich is {approx_root.digits(5)}")
-    print(f"Approximation has an error of about {float(R(approx_root))}")
 
 
 
