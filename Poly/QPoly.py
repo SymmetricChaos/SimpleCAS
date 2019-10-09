@@ -56,15 +56,18 @@ class QPoly:
 
     def __add__(self,poly):
         """Add a polynomial to a polynomial"""
+        # If we can turn the other into a rational do that
         if type(poly) in [int,str,float,Rational]:
             poly = QPoly( [coerce_to_rational(poly)] )
             L = poly_add(self.coef,poly.coef)
             return QPoly(L)
-        
+        # If its another QPoly just add them
         elif type(poly) == QPoly:
             L = poly_add(self.coef,poly.coef)
             return QPoly(L)
-
+        # Otherwise check if the other object can have QPoly added to it
+        # This is probably a bad idea in general but everything we care about
+        # is commutative.
         else:
             return poly + self
 

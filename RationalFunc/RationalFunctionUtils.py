@@ -1,6 +1,5 @@
 from RationalFunc import RFunc
-from Poly import qpoly_roots
-from Rational import Rational
+from Poly import QPoly, qpoly_roots
 
 # TODO: Partial fraction decomposition
 
@@ -16,8 +15,6 @@ def vert_asymptotes(rfunc):
     return qpoly_roots(rfunc.D)
 
 
-# TODO: potential bug because this returns a different type for each case
-# probably should all be QPoly
 def horiz_asymptote(rfunc):
     """Approximate horizontal asymptote of a rational function"""
     assert type(rfunc) == RFunc
@@ -28,9 +25,9 @@ def horiz_asymptote(rfunc):
     if dN == dD+1:
         return rfunc.N//rfunc.D
     elif dN == dD:
-        return Rational( rfunc.N[-1],rfunc.D[-1] )
+        return QPoly( [rfunc.N[-1]/rfunc.D[-1]] )
     elif dN < dD:
-        return 0
+        return QPoly( [0] )
 
 
 def rfunc_asymptotes(rfunc):
@@ -50,3 +47,5 @@ if __name__ == '__main__':
     R = RFunc( co1, co2 )
     print(f"R = {R}")
     print(rfunc_roots(R))
+    
+    print(rfunc_asymptotes(R))
