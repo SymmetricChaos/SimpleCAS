@@ -8,32 +8,25 @@ def rfunc_roots(rfunc):
     assert type(rfunc) == RFunc
     return qpoly_roots(rfunc.N)
 
-    
-def vert_asymptotes(rfunc):
-    """Approximate vertical asymptotes of a rational funcion"""
-    assert type(rfunc) == RFunc
-    return qpoly_roots(rfunc.D)
 
-
-def horiz_asymptote(rfunc):
-    """Approximate horizontal asymptote of a rational function"""
+def rfunc_asymptotes(rfunc):
+    """Approximate asymptots of a rational function"""
     assert type(rfunc) == RFunc
     dN = rfunc.N.degree()
     dD = rfunc.D.degree()
     
+    out = []
     
     if dN == dD+1:
-        return rfunc.N//rfunc.D
+        out += [rfunc.N//rfunc.D]
     elif dN == dD:
-        return QPoly( [rfunc.N[-1]/rfunc.D[-1]] )
+        out += [QPoly( [rfunc.N[-1]/rfunc.D[-1]] )]
     elif dN < dD:
-        return QPoly( [0] )
-
-
-def rfunc_asymptotes(rfunc):
-    A = vert_asymptotes(rfunc)
-    A += [horiz_asymptote(rfunc)]
-    return A
+        out += [QPoly( [0] )]
+    
+    out += [QPoly([i]) for i in qpoly_roots(rfunc.D)]
+    
+    return out
 
 
 
