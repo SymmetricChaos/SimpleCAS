@@ -245,6 +245,11 @@ class QPoly:
         return self[-1] == 1 or self[-1] == -1
     
     
+    def _monic_part(self):
+        C = self.copy().make_monic()
+        return C
+
+    
     def make_monic(self):
         C = self[-1]
         for i in range(len(self)):
@@ -283,7 +288,7 @@ class QPoly:
     pretty_name = property(_pretty_name)
     content = property(_content)
     primitive_part = property(_primitive_part)
-
+    monic_part = property(_monic_part)
 
 
 if __name__ == '__main__':
