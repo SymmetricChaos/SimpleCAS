@@ -1,7 +1,12 @@
 from RationalFunc import RFunc
 from Poly import QPoly, qpoly_roots
 
-# TODO: Partial fraction decomposition
+
+def partial_fraction(rfunc)
+    """Partial fraction decomposition of a rational function"""
+    #f(x)/g(x) = Df(x)/P + Cf(x)/Q
+    # Need Bezout's identity
+    pass
 
 def rfunc_roots(rfunc):
     """Approximate roots of a rational function"""
@@ -10,7 +15,7 @@ def rfunc_roots(rfunc):
 
 
 def rfunc_asymptotes(rfunc):
-    """Approximate asymptots of a rational function"""
+    """Approximate asymptotes of a rational function"""
     assert type(rfunc) == RFunc
     dN = rfunc.N.degree()
     dD = rfunc.D.degree()

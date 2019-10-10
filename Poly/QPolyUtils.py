@@ -43,7 +43,25 @@ def poly_gcd(P,Q):
         return g.primitive_part
 
 
+def poly_egcd(P,Q):
+    """Bézout's identity for two polynomials"""
+    assert type(P) == QPoly
+    assert type(Q) == QPoly
+    
+    if Q.degree() > P.degree():
+        P,Q = Q,P
 
+    r0, r1 = P,Q
+    s0, s1 = 1,0
+    t0, t1 = 0,1
+    
+    while r1 != QPoly([0]):
+        q = r0//r1
+        r0,r1 = r1, r0 - q*r1
+        s0,s1 = s1, s0 - q*s1
+        t0,t1 = t1, t0 - q*t1
+    
+    return r0.primitive_part, s0, t0
 
 
 def lagrange_interpolation(X,Y):
@@ -203,4 +221,13 @@ if __name__ == '__main__':
     print(f"A = {A}")
     print(f"B = {B}")
     print(f"poly_gcd(A,B) = {poly_gcd(A,B)}")
+    
+    print()
+    print(f"A = {A}")
+    print(f"B = {B}")
+    g, u, v = poly_egcd(A,B)
+    print(f"g = {g}")
+    print(f"u = {u}")
+    print(f"v = {v}")
+    print((A*u + B*v).primitive_part)
     
