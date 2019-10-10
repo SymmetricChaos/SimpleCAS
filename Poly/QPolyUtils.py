@@ -216,13 +216,15 @@ if __name__ == '__main__':
     
     print()
     print("Polynomial GCD")
-    A = QPoly( [6,13,8,1] )
-    B = QPoly( [-6,-11,-4,1] )
+    A = QPoly( [6,13,8,1] ) * QPoly( [3,0,0,-2] ) * QPoly( [1,1,1] )
+    B = QPoly( [-6,-11,-4,1] ) * QPoly( [3,0,0,-2] )
     print(f"A = {A}")
     print(f"B = {B}")
     print(f"poly_gcd(A,B) = {poly_gcd(A,B)}")
     
+    
     print()
+    print("Polynomial eGCD")
     print(f"A = {A}")
     print(f"B = {B}")
     g, u, v = poly_egcd(A,B)
