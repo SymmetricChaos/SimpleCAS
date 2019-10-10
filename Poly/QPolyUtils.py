@@ -24,6 +24,9 @@ def monic(poly):
     return poly//poly.coef[-1]
 
 
+# GCD is defined as primitive part
+# It could also be defined as the monic part but primitive works even when one
+# wishes to work with integer polynomials
 def poly_gcd(P,Q):
     """GCD of two polynomials"""
     assert type(P) == QPoly
@@ -222,7 +225,7 @@ if __name__ == '__main__':
     print(f"B = {B}")
     print(f"poly_gcd(A,B) = {poly_gcd(A,B)}")
     
-    
+
     print()
     print("Polynomial eGCD")
     print(f"A = {A}")
@@ -231,5 +234,6 @@ if __name__ == '__main__':
     print(f"g = {g}")
     print(f"u = {u}")
     print(f"v = {v}")
-    print((A*u + B*v).primitive_part)
-    
+    bid = (A*u + B*v).primitive_part
+    print(f"(A*u + B*v) = {bid}")
+    print("The GCD is defined only up to scalar multiplication so only the primitive part of Bézout's identity is shown")
