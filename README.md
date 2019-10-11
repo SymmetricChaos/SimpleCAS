@@ -1,5 +1,4 @@
 ![alt text][logo]
-
 [logo]: https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/simpleCASlogo.png "SimpleCAS"
 
 
@@ -14,11 +13,25 @@ Currently three kinds of objects are supported by SimpleCAS:
 Rational numbers represented in simplest form.
 
 #### QPoly
-Univariate polynomials with rational coefficients.
+Univariate polynomials with rational coefficients. Internally these are simply to represent as a list with the term of degree 0 in position 0, the term of degree 1 in position 1, and so on. This makes indexing the polynomial when working with it in Python intuitive but its now how we generally write polynomials. When a QPoly object is printed it will show the standard written form with terms in descending order.
 
-![alt text][logo]
+```
+P = QPoly( [2,3,1,0,-11] )
+print(P)
+-11x^4 + x^2 + 3x + 2
+```
 
-[logo]: https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_ploy_example_2.png "SimpleCAS"
+But wait, there's more! The standard written form is fine for text but it looks ugly in places where more complex formatting is expected. To that end the pretty_name property gives a LaTeX formated version of the polynomial.
+
+```
+print(P.pretty_name)
+$11x^{4}\;+\;5x^{2}\;+\;3x\;+\;2$
+```
+
+That looks pretty horrendous 
+
+![poly_text][poly]
+[poly]: https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_ploy_example_2.png "SimpleCAS"
 
 
 #### RFunc
