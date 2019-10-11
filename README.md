@@ -27,9 +27,11 @@ print(P.pretty_name)
 $−11x^{4}\;+\;x^{2}\;+\;3x\;+\;2$
 ```
 
-That looks pretty horrendous just written out but lets try it with the `poly_plot()` function
+It looks pretty horrendous just written out like that but lets try it with the `poly_plot()` function
 
-![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_ploy_example_2.png "polynomial")
+![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_example.png "polynomial")
+
+
 
 #### RFunc
 Quotients of polynomials represented in simplest form.
