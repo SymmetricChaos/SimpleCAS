@@ -8,13 +8,18 @@ SimpleCAS is a computer algebra library that is meant to be simple enough (and h
 
 
 ## Features
-Currently three kinds of objects are fully supported by SimpleCAS:
+Currently three kinds of objects are supported by SimpleCAS:
 
 #### Rational
 Rational numbers represented in simplest form.
 
 #### QPoly
 Univariate polynomials with rational coefficients.
+
+![alt text][logo]
+
+[logo]: https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_ploy_example_2.png "SimpleCAS"
+
 
 #### RFunc
 Quotients of polynomials represented in simplest form.
