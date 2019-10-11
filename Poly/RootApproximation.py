@@ -17,6 +17,7 @@ def bound_of_roots(poly):
 
 
 def critical_points(poly):
+    """Local minima and local maxima"""
     assert type(poly) == QPoly
     
     if poly.degree() == 0:
@@ -28,6 +29,22 @@ def critical_points(poly):
     else:
         
         Pd = poly.derivative()
+        return qpoly_roots(Pd)
+    
+    
+def inflectionl_points(poly):
+    """Inflection points"""
+    assert type(poly) == QPoly
+    
+    if poly.degree() == 0:
+        return [0]
+    
+    elif poly.degree() == 1:
+        return [0]
+
+    else:
+        
+        Pd = poly.derivative().derivative()
         return qpoly_roots(Pd)
     
 
