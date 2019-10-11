@@ -1,7 +1,7 @@
 # Univariate polynomials with coefficients from the field of rationals
 
 
-from Rational import Rational, rational_gcd, coerce_to_rational
+from Rational import Rational, rational_gcd, cast_to_rational
 from Utility import poly_add, poly_mult, poly_print, poly_print_pretty
 
 
@@ -11,7 +11,7 @@ class QPoly:
         assert type(coef) == list
         self.coef = []
         for c in coef:
-            self.coef.append(coerce_to_rational(c))
+            self.coef.append(cast_to_rational(c))
         self.normalize()
 
 
@@ -22,7 +22,7 @@ class QPoly:
 
     def __setitem__(self,n,val):
         """Allow valid coefficients to be set"""    
-        self.coef[n] = coerce_to_rational(val)
+        self.coef[n] = cast_to_rational(val)
 
 
     def __call__(self,x):
@@ -58,7 +58,7 @@ class QPoly:
         """Add a polynomial to a polynomial"""
         # If we can turn the other into a rational do that
         if type(poly) in [int,str,float,Rational]:
-            poly = QPoly( [coerce_to_rational(poly)] )
+            poly = QPoly( [cast_to_rational(poly)] )
             L = poly_add(self.coef,poly.coef)
             return QPoly(L)
         # If its another QPoly just add them

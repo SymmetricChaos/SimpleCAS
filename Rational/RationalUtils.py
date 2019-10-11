@@ -108,7 +108,7 @@ def str_to_frac(S):
         raise Exception(f"Cannot coerce {S} to Rational")
         
 
-def coerce_to_rational(T):
+def cast_to_rational(T):
     """Best effort to transform input to a rational number"""
     
     if type(T) == Rational:
@@ -116,7 +116,7 @@ def coerce_to_rational(T):
     elif type(T) == int:
         return Rational(T)
     elif type(T) == float:
-        return coerce_to_rational(str(T))
+        return cast_to_rational(str(T))
     elif type(T) == str:
         try:
             return str_to_frac(T)
@@ -170,9 +170,9 @@ def cfrac_to_frac(L):
 
 def rational_seq(lo,hi,step):
     """Sequence of rational numbers"""
-    lo   = coerce_to_rational(lo)
-    hi   = coerce_to_rational(hi)
-    step = coerce_to_rational(step)
+    lo   = cast_to_rational(lo)
+    hi   = cast_to_rational(hi)
+    step = cast_to_rational(step)
     out = [lo]
     while out[-1]+step <= hi:
         out.append(out[-1]+step)

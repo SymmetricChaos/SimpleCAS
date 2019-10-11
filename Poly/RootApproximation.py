@@ -1,6 +1,6 @@
 from Poly.QPoly import QPoly
 from Poly.QPolyUtils import rational_roots
-from Rational import coerce_to_rational, rational_round, sign
+from Rational import cast_to_rational, rational_round, sign
 
 
 def bound_of_roots(poly):
@@ -39,7 +39,7 @@ def newtons_method(poly,start,den_lim=100,iter_lim=100):
     p  = poly
     dp = poly.derivative()
     
-    r = coerce_to_rational(start)
+    r = cast_to_rational(start)
     for i in range(iter_lim):
         rnew = rational_round(r - p(r)/dp(r),den_lim)
         if rnew == r:
@@ -53,8 +53,8 @@ def bisection_method(poly,lo,hi,den_lim=100,iter_lim=100):
     """Approximate a root by the bisection method limited by denominator and number of iterations"""
     assert type(poly) == QPoly
     
-    lo = coerce_to_rational(lo)
-    hi = coerce_to_rational(hi)
+    lo = cast_to_rational(lo)
+    hi = cast_to_rational(hi)
     
     oldmid = hi
     for i in range(iter_lim):
