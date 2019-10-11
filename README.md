@@ -1,5 +1,4 @@
-![alt text][logo]
-[logo]: https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/simpleCASlogo.png "SimpleCAS"
+![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/simpleCASlogo.png "SimpleCAS")
 
 
 SimpleCAS is a computer algebra library that is meant to be simple enough (and hopefully written clearly enough) that a curious person can take it apart in order to understand how it works. Don't use SimpleCAS for anything important. Its quite slow and, despite my best effort, I can't guarantee it is always accurate.
@@ -21,18 +20,16 @@ print(P)
 -11x^4 + x^2 + 3x + 2
 ```
 
-But wait, there's more! The standard written form is fine for text but it looks ugly in places where more complex formatting is expected. To that end the pretty_name property gives a LaTeX formated version of the polynomial.
+But wait, there's more! The standard written form is fine for text but it looks ugly in places where more complex formatting is expected. To that end the `pretty_name` property gives a LaTeX formated version of the polynomial.
 
 ```
 print(P.pretty_name)
-$11x^{4}\;+\;5x^{2}\;+\;3x\;+\;2$
+$−11x^{4}\;+\;x^{2}\;+\;3x\;+\;2$
 ```
 
-That looks pretty horrendous 
+That looks pretty horrendous just written out but lets try it with the `poly_plot()` function
 
-![poly_text][poly]
-[poly]: https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_ploy_example_2.png "SimpleCAS"
-
+![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_ploy_example_2.png "polynomial")
 
 #### RFunc
 Quotients of polynomials represented in simplest form.
