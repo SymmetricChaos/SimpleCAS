@@ -16,7 +16,6 @@ def bound_of_roots(poly):
     return lim+1
 
 
-
 def critical_points(poly):
     assert type(poly) == QPoly
     
@@ -72,7 +71,6 @@ def bisection_method(poly,lo,hi,den_lim=100,iter_lim=100):
     return mid
 
 
-# TODO: prevent this from throwing ZeroDivisionError
 def sturm_sequence(poly):
     """Sequence of polynomials used for Sturm's Theorem"""
     assert type(poly) == QPoly
@@ -83,6 +81,8 @@ def sturm_sequence(poly):
     yield p0
 
     while True:
+        if p1 == QPoly([0]):
+            break
         p0, p1 = p1, -(p0 % p1)
         yield p0
         
