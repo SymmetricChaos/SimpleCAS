@@ -279,11 +279,3 @@ if __name__ == '__main__':
     for i in Explanation.readlines():
         print(i)
     
-    
-    r = Rational(32,7)
-    s = Rational(8,1)
-    print(f"r   = {r}")
-    print(f"1/r = {1/r}")
-    print(f"3/r = {3/r}")
-    print(f"{s}%2 = {s%2}")
-    print(f"r**3 = {r**3}")

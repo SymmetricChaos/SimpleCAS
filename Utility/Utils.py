@@ -217,3 +217,18 @@ def factorization(n,negatives=False):
     L.sort()
     
     return L
+
+
+def unit_test(minitests):
+    err_ctr = 0
+    err_loc = []
+    for pos,test in enumerate(minitests):
+        if str(test[0]) != test[1]:
+            err_ctr += 1
+            err_loc.append(pos)
+            
+    print(f"Total Errors: {err_ctr}")
+    if err_loc:
+        for i in err_loc:
+            print(f"Error in test {i}")
+            print(minitests[i])
