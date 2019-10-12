@@ -220,7 +220,7 @@ class QPoly:
     def integral(self,C):
         """Calculate the integral of the polynomial"""
         co = self.coef.copy()
-        co.insert(C,0)
+        co.insert(0,C)
         for pos,val in enumerate(co[1:],start=1):
             co[pos] = val/(pos)
         return QPoly(co)
