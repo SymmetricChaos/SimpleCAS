@@ -56,12 +56,15 @@ if __name__ == '__main__':
 
     poly_plot(P)
     
-    rpts = [(i,P(i)) for i in r]
-    scatter_points(rpts,zorder=5,color='black')
+
+    if len(r) > 0:
+        rpts = [(i,P(i)) for i in r]
+        scatter_points(rpts,zorder=5,color='black')
     
-    spts = [(i,P(i)) for i in s]
-    scatter_points(spts,zorder=5,color='blue')
+    if len(s) > 0:
+        spts = [(i,P(i)) for i in s]
+        scatter_points(spts,zorder=5,color='blue')
     
-    cpts = [(i,P(i)) for i in c]
-    scatter_points(cpts,zorder=5,color='red')
-    
+    if len(c) > 0:
+        cpts = [(i,P(i)) for i in c]
+        scatter_points(cpts,zorder=5,color='red')

@@ -71,6 +71,7 @@ class QPoly:
         else:
             return poly + self
 
+
     def __radd__(self,poly):
         """Polynomial addition is commutative"""
         return self + poly
@@ -289,6 +290,9 @@ class QPoly:
     content = property(_content)
     primitive_part = property(_primitive_part)
     monic_part = property(_monic_part)
+
+
+
 
 
 if __name__ == '__main__':
