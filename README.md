@@ -1,7 +1,9 @@
 ![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/simpleCASlogo.png "SimpleCAS")
 
 
-SimpleCAS is a computer algebra library that is meant to be simple enough (and hopefully written clearly enough) that a curious person can take it apart in order to understand how it works. Don't use SimpleCAS for anything important. Its quite slow and, despite my best effort, I can't guarantee it is always accurate.
+SimpleCAS is a computer algebra library that is meant to be simple enough (and hopefully written clearly enough) that a curious person can take it apart in order to understand how it works. It is written almost entirely in base Python so that even the most basic parts can be seen. In particular the standard library modules `math`, `fractions`, and `decimal` are not used.
+
+For the love of common sense don't use SimpleCAS for anything remotely important. Its quite slow and, despite my best efforts, I can't guarantee it is always accurate.
 
 
 
@@ -9,10 +11,25 @@ SimpleCAS is a computer algebra library that is meant to be simple enough (and h
 Currently three kinds of objects are supported by SimpleCAS:
 
 ## Rational
-Rational numbers represented in simplest form.
+Rational numbers represented in simplest form. They are essentially just a pair of numbers with a bunch of methods defined to make sure they interact with other Rational objects as well as Python's integers.
+
+```
+R = Rational(34,18)
+S = Rational(8,1)
+print(R)
+17/9
+print(S)
+8
+print(R+S)
+89/9
+```
+
+For most purposes creating Rational objects directly is rather cumbersome but also unnecessary. For convenience there is a `cast_to_rational` function provided that will try to create a Rational object from integers, floats, and properly formatted strings. This is used automatically by every function that accepts Rationals as an argument.
+
+
 
 ## QPoly
-Univariate polynomials with rational coefficients. Internally these are simply to represent as a list with the term of degree 0 in position 0, the term of degree 1 in position 1, and so on. This makes indexing the polynomial when working with it in Python intuitive but its now how we generally write polynomials. When a QPoly object is printed it will show the standard written form with terms in descending order.
+Univariate polynomials with rational coefficients. Internally these are simple to represent as a list with the term of degree 0 in position 0, the term of degree 1 in position 1, and so on. This makes indexing the polynomial when working with it in Python intuitive but its now how we generally write polynomials. When a QPoly object is printed it will show the standard written form with terms in descending order.
 
 ```
 P = QPoly( [2,3,1,0,-11] )
