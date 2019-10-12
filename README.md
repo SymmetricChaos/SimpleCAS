@@ -37,6 +37,16 @@ print(P)
 -11x^4 + x^2 + 3x + 2
 ```
 
+Because the coefficients are automatically passed through `cast_to_rational` it is easy to create polynomials with non-integer coefficients.
+
+```
+P = QPoly( ["-1.3",3,"9/5",0,-1] )
+print(P)
+-x^4 + 9/5x^2 + 3x - 13/10
+```
+
+Naturally QPoly will interact with most mathematical operations. Addition, subtraction, and multiplication are defined with for all inputs. Exponentiation is defined for non-negative integers. True division is not defined because not every polynomial has an inverse which is also a polynomials, instead Euclidean divison is used.
+
 But wait, there's more! The standard written form is fine for text but it looks ugly in places where more complex formatting is expected. To that end the `pretty_name` property gives a LaTeX formated version of the polynomial.
 
 ```
