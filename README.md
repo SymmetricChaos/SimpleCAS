@@ -54,29 +54,27 @@ print(P.pretty_name)
 $−11x^{4}\;+\;x^{2}\;+\;3x\;+\;2$
 ```
 
-It looks pretty horrendous just written out like that but lets try it with the `poly_plot()` function
+It looks pretty horrendous just written out like that but lets try it with the `poly_plot()` function.
 
 ![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_example.png "polynomial")
 
 
 
 ## RFunc
-Quotients of polynomials represented in simplest form.
+Quotients of polynomials represented in simplest form. Unfortunately rational functions are not generally as well behaved as polynomials are so there isn't quite as much support for them.
 
 
 
-# In Progress
-One object is partially supported:
+# Planned
+Two objects are planned
 
 ## PSeries
 Power series with finite or infinite terms.
 
-
-# Planned
-One object is planned:
-
 ## ZPoly
 Polynomials with integer coefficients reduced modulo some integer.
+
+
 
 # Not Planned
 ## Multivariate Polynomials
