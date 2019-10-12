@@ -32,7 +32,8 @@ pminitests = [ (P, "58/5x^3 + x^2 + 3/2"),
                (P.integral(2), "29/10x^4 + 1/3x^3 + 3/2x + 2"),
                (P.derivative(), "174/5x^2 + 2x"),
                (P.content, "1/10"),
-               (P.primitive_part, "116x^3 + 10x^2 + 15")
+               (P.primitive_part, "116x^3 + 10x^2 + 15"),
+               (P.monic_part, "x^3 + 5/58x^2 + 15/116")
             ]
 
 

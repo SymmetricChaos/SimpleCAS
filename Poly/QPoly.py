@@ -247,7 +247,8 @@ class QPoly:
     
     
     def _monic_part(self):
-        C = self.copy().make_monic()
+        C = self.copy()
+        C.make_monic()
         return C
 
     
