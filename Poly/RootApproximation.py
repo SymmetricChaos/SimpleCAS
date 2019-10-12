@@ -16,7 +16,7 @@ def bound_of_roots(poly):
     return lim+1
 
 
-def critical_points(poly):
+def stationary_points(poly):
     """Local minima and local maxima"""
     assert type(poly) == QPoly
     
@@ -32,7 +32,7 @@ def critical_points(poly):
         return qpoly_roots(Pd)
     
     
-def inflectionl_points(poly):
+def inflection_points(poly):
     """Inflection points"""
     assert type(poly) == QPoly
     
@@ -253,4 +253,16 @@ if __name__ == '__main__':
     P = QPoly( [0,-6,3,2] )
     print(f"P = {P}")
     print(f"The roots of P are approximately {qpoly_roots(P)}")
+    
+
+    print("\n\n")
+    P = QPoly( [0,-6,3,2] )
+    print(f"P = {P}")
+    print(f"The stationary points of P are approximately {stationary_points(P)}")
+
+
+    print("\n\n")
+    P = QPoly( [0,-6,3,2] )
+    print(f"P = {P}")
+    print(f"The inflection points of P are approximately {inflection_points(P)}")
     

@@ -1,15 +1,16 @@
 from Rational import rational_seq
-from Utility import make_canvas, plot_points, connect
-from Poly import QPoly, qpoly_roots, critical_points
+from Utility import make_canvas, plot_points, scatter_points, connect
+from Poly import QPoly, qpoly_roots, stationary_points, inflection_points
 
 
 def poly_plot(poly,size=[5,5],show_plot=True):
     """Automatically make a plot that shows the roots and critical points of the polynomial"""
     
     r = qpoly_roots(poly)
-    c = critical_points(poly)
+    s = stationary_points(poly)
+    c = inflection_points(poly)
     
-    interesting_points = r + c
+    interesting_points = r + s + c
     interesting_values = poly.evaluate(interesting_points)
     
     # Pick the minimum possible axes for the graph
@@ -43,16 +44,24 @@ def poly_plot(poly,size=[5,5],show_plot=True):
 
 
 if __name__ == '__main__':
-    from random import sample
-    coefs = [i for i in range(10)] + [-i for i in range(10)] + [0,0]
-    co = sample(coefs,7)
+    from random import sample, randint
+    coefs = [f"{i}/6" for i in range(30)] + [f"-{i}/6" for i in range(30)] + [i for i in range(20)] + [-i for i in range(20)]
+    co = sample(coefs,randint(3,7))
     P = QPoly( co )
     print(f"P = {P}")
     
-    r = [round(float(i),3) for i in qpoly_roots(P)]
-    c = [round(float(i),3) for i in critical_points(P)]
+    r = [i for i in qpoly_roots(P)]
+    s = [i for i in stationary_points(P)]
+    c = [i for i in inflection_points(P)]
 
     poly_plot(P)
     
-#    print(sorted(r))
-#    print(sorted(c))
+    rpts = [(i,P(i)) for i in r]
+    scatter_points(rpts,zorder=5,color='black')
+    
+    spts = [(i,P(i)) for i in s]
+    scatter_points(spts,zorder=5,color='blue')
+    
+    cpts = [(i,P(i)) for i in c]
+    scatter_points(cpts,zorder=5,color='red')
+    
