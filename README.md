@@ -45,7 +45,7 @@ print(rational_round(R,100))
 ```
 
 ## QPoly
-Univariate polynomials with rational coefficients. Internally these are simple to represent as a list with the term of degree 0 in position 0, the term of degree 1 in position 1, and so on. This makes indexing the polynomial when working with it in Python intuitive but its now how we generally write polynomials. When a QPoly object is printed it will show the standard written form with terms in descending order.
+Univariate polynomials with rational coefficients. Internally these are simple to represent as a list with the term of degree 0 in position 0, the term of degree 1 in position 1, and so on. This makes indexing the polynomial when working with it in Python intuitive but its not how we generally write polynomials in order to read them. When a QPoly object is printed it will show the standard written form with terms in descending order.
 
 ```
 P = QPoly( [2,3,1,0,-11] )
@@ -77,7 +77,7 @@ It looks pretty horrendous just written out like that but lets try it with the `
 
 
 ## RFunc
-Quotients of polynomials represented in simplest form. Unfortunately rational functions are not generally as well behaved as polynomials are so there isn't quite as much support for them.
+Rational functions are quotients of polynomials represented in simplest form. Unfortunately rational functions are not generally as well behaved as polynomials are so there isn't quite as much support for them.
 
 
 
@@ -97,4 +97,4 @@ Polynomials with integer coefficients reduced modulo some integer.
 Multivariate polynomials would, to my knowledge, require fundamentally redesigning the logic of how the system treats polynomials to be vastly more complex. Because the simplicity of the QPoly object is central to making SimpleCAS easy to understand there are no plans to include multivariate polynomials in SimpleCAS.
 
 ## Radicals and Logarithms
-Can't figure out a good way to handle these right now.
+Can't figure out a good way to generally handle these right now.
