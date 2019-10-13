@@ -235,3 +235,4 @@ if __name__ == '__main__':
     print(rational_round(r,100))
     
     print(rational_seq(0,3,Rational(2,3)))
+    

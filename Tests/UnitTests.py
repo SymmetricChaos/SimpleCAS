@@ -6,6 +6,7 @@ from Utility import unit_test
 r = Rational(192,42)
 s = Rational(12,2)
 t = Rational(17,9)
+u = Rational(-423,13)
 
 rminitests = [ (r, "32/7" ),
                (s , "6"),
@@ -18,7 +19,8 @@ rminitests = [ (r, "32/7" ),
                (r+s, "74/7"),
                (s*t, "34/3"),
                (-r, "-32/7"),
-               (r-s, "-10/7")
+               (r-s, "-10/7"),
+               (u.digits(5),"-32.5384")
             ]
 
 P = QPoly(["3/2",0,1,"11.6"])

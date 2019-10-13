@@ -235,10 +235,11 @@ class Rational:
     
     def digits(self,n):
         """Return the decimal representation of the fraction out to n digits"""
-        N = self.n
+        N = abs(self.n)
         D = self.d
-                
-        pos = 0
+
+        sgn = "-" if N != self.n else ""
+
         digits = []
         m = []
         ctr = 0
@@ -248,11 +249,10 @@ class Rational:
             N = (N % D)*10
             m.append(N)
         
-        if(pos == 0):
-            x1 = str(digits[0])
-            x2 = "".join(str(e) for e in digits[1:])
-            out = "{}.{}".format(x1,x2)
-            
+        x1 = str(digits[0])
+        x2 = "".join(str(e) for e in digits[1:])
+        out = f"{sgn}{x1}.{x2}"
+
         return out
 
 
@@ -278,4 +278,3 @@ if __name__ == '__main__':
     Explanation = open(r"Explanation.txt","r")
     for i in Explanation.readlines():
         print(i)
-    
