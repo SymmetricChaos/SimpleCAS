@@ -51,12 +51,12 @@ But wait, there's more! The standard written form is fine for text but it looks 
 
 ```
 print(P.pretty_name)
-$−11x^{4}\;+\;x^{2}\;+\;3x\;+\;2$
+$−x^{4}\;+\;\dfrac{9x^{2}}{5}\;+\;3x\;−\;\dfrac{13}{10}$
 ```
 
 It looks pretty horrendous just written out like that but lets try it with the `poly_plot()` function.
 
-![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_example.png "polynomial")
+![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_example_1.png "polynomial")
 
 
 
