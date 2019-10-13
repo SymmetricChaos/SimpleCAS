@@ -27,7 +27,7 @@ def poly_plot(poly,size=[5,5],show_plot=True):
     
     step_size = abs(xwidth[0]-xwidth[1])/100
     x = rational_seq(xwidth[0],xwidth[1],step_size)
-    y = [float(i) for i in P.evaluate(x)]
+    y = [float(i) for i in poly.evaluate(x)]
     x = [float(i) for i in x]
     
     pts = [i for i in zip(x,y)]

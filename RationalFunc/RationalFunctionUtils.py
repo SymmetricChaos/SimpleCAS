@@ -2,7 +2,7 @@ from RationalFunc import RFunc
 from Poly import QPoly, qpoly_roots
 
 
-def partial_fraction(rfunc)
+def partial_fraction(rfunc):
     """Partial fraction decomposition of a rational function"""
     #f(x)/g(x) = Df(x)/P + Cf(x)/Q
     # Need Bezout's identity
