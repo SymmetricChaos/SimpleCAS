@@ -26,7 +26,23 @@ print(R+S)
 
 For most purposes creating Rational objects directly is rather cumbersome but also unnecessary. For convenience there is a `cast_to_rational` function provided that will try to create a Rational object from integers, floats, and properly formatted strings. This is used automatically by every function that accepts Rationals as an argument.
 
+Rationals can be expanded into both their decimal and simple continued fraction representations.
 
+```
+R = Rational(37,11)
+print(R.digits(5))
+3.3636
+print(R.cfrac())
+[3, 2, 1, 3]
+```
+
+The continued fraction representation is useful for "rounding" rational numbers by finding the best rational approximation with a denominator no greater than a certain value.
+
+```
+R = Rational(392699,125000)
+print(rational_round(R,100))
+311/99
+```
 
 ## QPoly
 Univariate polynomials with rational coefficients. Internally these are simple to represent as a list with the term of degree 0 in position 0, the term of degree 1 in position 1, and so on. This makes indexing the polynomial when working with it in Python intuitive but its now how we generally write polynomials. When a QPoly object is printed it will show the standard written form with terms in descending order.
