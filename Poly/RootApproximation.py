@@ -16,7 +16,7 @@ def bound_of_roots(poly):
     return lim+1
 
 
-def stationary_points(poly):
+def stationary_points(poly,den_lim=100,iter_lim=100):
     """Local minima and local maxima"""
     assert type(poly) == QPoly
     
@@ -29,10 +29,10 @@ def stationary_points(poly):
     else:
         
         Pd = poly.derivative()
-        return qpoly_roots(Pd)
+        return qpoly_roots(Pd,den_lim,iter_lim)
     
     
-def inflection_points(poly):
+def inflection_points(poly,den_lim=100,iter_lim=100):
     """Inflection points"""
     assert type(poly) == QPoly
     
@@ -45,7 +45,7 @@ def inflection_points(poly):
     else:
         
         Pd = poly.derivative().derivative()
-        return qpoly_roots(Pd)
+        return qpoly_roots(Pd,den_lim,iter_lim)
     
 
 def newtons_method(poly,start,den_lim=100,iter_lim=100):
