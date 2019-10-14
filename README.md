@@ -70,15 +70,23 @@ print(P.pretty_name)
 $−x^{4}\;+\;\dfrac{9x^{2}}{5}\;+\;3x\;−\;\dfrac{13}{10}$
 ```
 
-It looks pretty horrendous just written out like that but lets try it with the `poly_plot()` function.
+It looks pretty horrendous just written out like that but lets try it with the `poly_plot()` function which attempts to find the "interesting" part of the polynomial based on where the roots and stationary points are.
 
 ![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_example_1.png "polynomial")
 
+Rational approximations of the locations of where certain special points are given by `qpoly_roots()`, `stationary_points()`, and `inflection points()`. Fineness of the approximation is adjustable.
 
 
 ## RFunc
 Rational functions are quotients of polynomials represented in simplest form. Unfortunately rational functions are not generally as well behaved as polynomials are so there isn't quite as much support for them.
 
+An RFunc object can be created in must the same way QPoly except that there are two lists rather than just one. These lists are automatically concerted to QPoly objects and then their common factors are divided out.
+
+```
+R = RFunc( [-28,16,-16,16,12], [-2,5,-6,6,-4,1] )
+print(R)
+(12x + 28) / (x^2 - 3x + 2)
+```
 
 
 # Planned
