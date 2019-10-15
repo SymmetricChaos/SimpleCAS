@@ -197,17 +197,20 @@ if __name__ == '__main__':
 
 
     print()
+    print()
     S = QPoly( [-1,1] ) * QPoly( [3,3,3] ) * QPoly( [-1,2] ) * QPoly( [1,1,0,1] )
     print(f"S = {S}")
     print(f"Factorization of S: {poly_factor(S)}")
 
 
     print()
+    print()
     S = QPoly( [2,1,1,0,1,1] )
     print(f"S = {S}")
     print(f"Factorization of S: {poly_factor(S)}")
 
 
+    print()
     print()
     print("Completing the Square")
     R = QPoly( [27,12,3] )
@@ -218,6 +221,7 @@ if __name__ == '__main__':
     
     
     print()
+    print()
     print("Polynomial GCD")
     A = QPoly( [6,13,8,1] ) * QPoly( [3,0,0,-2] ) * QPoly( [1,1,1] )
     B = QPoly( [-6,-11,-4,1] ) * QPoly( [3,0,0,-2] )
@@ -227,11 +231,12 @@ if __name__ == '__main__':
     
 
     print()
+    print()
     print("Polynomial eGCD")
-    print(f"A = {A}")
-    print(f"B = {B}")
+#    print(f"A = {A}")
+#    print(f"B = {B}")
     g, u, v = poly_egcd(A,B)
-    print(f"g = {g}")
+#    print(f"g = {g}")
     print(f"u = {u}")
     print(f"v = {v}")
     bid = (A*u + B*v).primitive_part

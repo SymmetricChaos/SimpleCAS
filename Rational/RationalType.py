@@ -37,7 +37,7 @@ class Rational:
         return f"{self.n}/{self.d}"
 
 
-    def pretty_name(self):
+    def _pretty_name(self):
         """Format for LaTeX"""
         if self.d == 1:
             return f"${self.n}$"
@@ -269,7 +269,7 @@ class Rational:
     
         return L
 
-
+    pretty_name = property(_pretty_name)
 
 
 

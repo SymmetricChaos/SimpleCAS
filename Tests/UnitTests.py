@@ -20,7 +20,9 @@ rminitests = [ (r, "32/7" ),
                (s*t, "34/3"),
                (-r, "-32/7"),
                (r-s, "-10/7"),
-               (u.digits(5),"-32.5384")
+               (u.digits(5),"-32.5384"), #Previous bug involving decimals for negative numbers
+               (r.digits(5),"4.5714"),
+               (r.pretty_name,"$\\dfrac{32}{7}$")
             ]
 
 P = QPoly(["3/2",0,1,"11.6"])
