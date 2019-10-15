@@ -7,6 +7,9 @@ r = Rational(192,42)
 s = Rational(12,2)
 t = Rational(17,9)
 u = Rational(-423,13)
+v = Rational(1,144)
+w = Rational(1,477)
+
 
 rminitests = [ (r, "32/7" ),
                (s , "6"),
@@ -20,9 +23,11 @@ rminitests = [ (r, "32/7" ),
                (s*t, "34/3"),
                (-r, "-32/7"),
                (r-s, "-10/7"),
-               (u.digits(5),"-32.5384"), #Previous bug involving decimals for negative numbers
-               (r.digits(5),"4.5714"),
-               (r.pretty_name,"$\\dfrac{32}{7}$")
+               (u.digits(5),"-32.53846"), #Previous bug involving decimals for negative numbers
+               (r.digits(5),"4.57142"),
+               (r.pretty_name,"$\\dfrac{32}{7}$"),
+               (v.decimal_expansion,"0.0069(4)"),
+               (w.decimal_expansion,"0.(0020964360587)")
             ]
 
 P = QPoly(["3/2",0,1,"11.6"])

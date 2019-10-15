@@ -1,4 +1,4 @@
-from Utility import gcd
+from Utility import gcd, first_where
 
 class Rational:
     
@@ -207,12 +207,12 @@ class Rational:
         return self.n // self.d
 
 
-    def whole_part(self):
+    def _whole_part(self):
         """The whole part of the fraction"""
         return self.n // self.d
 
 
-    def fractional_part(self):
+    def _fractional_part(self):
         """The fractional part of the fraction"""
         return Rational(self.n % self.d, self.d)
     
@@ -224,7 +224,7 @@ class Rational:
         return w,f
     
         
-    def mixed_name(self):
+    def _mixed_name(self):
         """Format for LaTeX as a mixed fraction"""
         if self.d == 1:
             return str(self.n)
@@ -234,20 +234,21 @@ class Rational:
     
     
     def digits(self,n):
-        """Return the decimal representation of the fraction out to n digits"""
+        """Return the decimal representation of the fraction out to n digits past the decimal point"""
+        
+        if n == 0:
+            return self.whole_part
+        
         N = abs(self.n)
         D = self.d
 
         sgn = "-" if N != self.n else ""
 
         digits = []
-        m = []
-        ctr = 0
         
-        for ctr in range(n):
+        for ctr in range(n+1):
             digits.append(N//D)
             N = (N % D)*10
-            m.append(N)
         
         x1 = str(digits[0])
         x2 = "".join(str(e) for e in digits[1:])
@@ -255,6 +256,47 @@ class Rational:
 
         return out
 
+
+    def _decimal_expansion(self):
+        """The complete decimal expansion of the rational, with repeating part"""
+        
+        # Quickly deal with integers
+        if self.d == 1:
+            return str(self.n)
+        
+        N = abs(self.n)
+        D = self.d
+
+        sgn = "-" if N != self.n else ""
+
+        # Keep track of digits and remainders
+        digits = []
+        rems = []
+        
+        # Get digits until a remainder repeats which means we've gotten to the
+        # end of repeating part of the decimal (if it exists) or the end of the
+        # decimal expansion (if it terminates)
+        while N not in rems:
+            rems.append(N)
+            digits.append(N//D)
+            N = (N % D)*10
+        # Locate the start of the repeating section
+        nonrep = first_where(rems,N)
+        
+        x1 = str(digits[0])
+        x2 = "".join(str(e) for e in digits[1:nonrep])
+        x3 = "".join(str(e) for e in digits[nonrep:])
+        
+        # If the repeating section is 0 ignore it
+        # Otherwise put it in parentheses to indicate it is repeating
+        if x3 == "0":
+            x3 = ""
+        else:
+            x3 = f"({x3})"
+            
+        out = f"{sgn}{x1}.{x2}{x3}"
+
+        return out
 
     def cfrac(self):
         """Canonical simple continued fraction representation"""
@@ -270,11 +312,20 @@ class Rational:
         return L
 
     pretty_name = property(_pretty_name)
-
+    whole_part = property(_whole_part)
+    fractional_part = property(_fractional_part)
+    mixed_name = property(_mixed_name)
+    decimal_expansion = property(_decimal_expansion)
 
 
 if __name__ == '__main__':
 
-    Explanation = open(r"Explanation.txt","r")
-    for i in Explanation.readlines():
-        print(i)
+#    Explanation = open(r"Explanation.txt","r")
+#    for i in Explanation.readlines():
+#        print(i)
+    import random 
+    for i in range(10):
+        R = Rational(random.randint(1,200),random.randint(1,200))
+        print(R)
+        print(R._decimal_expansion())
+        print()
