@@ -74,7 +74,7 @@ It looks pretty horrendous just written out like that but lets try it with the `
 
 ![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_example_1.png "polynomial")
 
-Rational approximations of the locations of where certain special points are given by `qpoly_roots()`, `stationary_points()`, and `inflection points()`. Fineness of the approximation is adjustable.
+Rational approximations of the locations of where certain special points are given by `qpoly_roots()`, `stationary_points()`, and `inflection_points()`. Fineness of the approximation is adjustable.
 
 
 ## RFunc
@@ -87,6 +87,10 @@ R = RFunc( [-28,16,-16,16,12], [-2,5,-6,6,-4,1] )
 print(R)
 (12x + 28) / (x^2 - 3x + 2)
 ```
+
+Making a picture of the "interesting" part of rational function is rather difficult. Given that Wolfram Alpha struggles to do this don't expect anything particularly pretty here. The LaTeX formatted names look nice, though.
+
+![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/rfunc_example.png "rational function")
 
 
 # Planned
