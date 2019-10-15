@@ -60,7 +60,6 @@ if __name__ == '__main__':
     co1 = sample(coefs,4)
     co2 = sample(coefs,4)
     R = RFunc( co1, co2 )
-#    R = RFunc( [-4,0,2], [-1,-5] )
     print(f"R = {R}")
     print("Roots:",[r.digits(3) for r in rfunc_roots(R)])
     print("VertA:",qpoly_roots(R.D))
