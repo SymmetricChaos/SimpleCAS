@@ -12,7 +12,7 @@ v = Rational(1,144)
 w = Rational(1,477)
 
 
-rminitests = [ (r, "32/7" ),
+r_minitests = [ (r, "32/7" ),
                (s , "6"),
                (t , "17/9"),
                (1/r, "7/32"),
@@ -24,10 +24,11 @@ rminitests = [ (r, "32/7" ),
                (s*t, "34/3"),
                (-r, "-32/7"),
                (r-s, "-10/7"),
-               (u.digits(5),"-32.53846"), #Previous bug involving decimals for negative numbers
+               (u.digits(5),"-32.53846"), # make sure decimals for natives work
                (r.digits(5),"4.57142"),
                (r.pretty_name,"$\\dfrac{32}{7}$"),
                (s.decimal_expansion,"6"),
+               (u.decimal_expansion,"-32.(538461)"),
                (v.decimal_expansion,"0.0069(4)"),
                (w.decimal_expansion,"0.(0020964360587)")
             ]
@@ -35,7 +36,7 @@ rminitests = [ (r, "32/7" ),
 P = QPoly(["3/2",0,1,"11.6"])
 Q = QPoly([-5,1])
 
-pminitests = [ (P, "58/5x^3 + x^2 + 3/2"),
+p_minitests = [ (P, "58/5x^3 + x^2 + 3/2"),
                (Q, "x - 5"),
                (P+Q, "58/5x^3 + x^2 + x - 7/2"),
                (P*Q, "58/5x^4 - 57x^3 - 5x^2 + 3/2x - 15/2"),
@@ -50,13 +51,12 @@ pminitests = [ (P, "58/5x^3 + x^2 + 3/2"),
 
 R = RFunc( [1,1], [2,3] )
 
-
-rminitests = [ (R, "(x + 1) / (3x + 2)")
+rf_minitests = [ (R, "(x + 1) / (3x + 2)")
             ]
 
 print("\nTest Rational")
-unit_test(rminitests)
+unit_test(r_minitests)
 print("\nTest QPoly")
-unit_test(pminitests)
+unit_test(p_minitests)
 print("\nTest RFunc")
-unit_test(rminitests)
+unit_test(rf_minitests)

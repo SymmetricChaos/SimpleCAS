@@ -226,9 +226,13 @@ def unit_test(minitests):
         if str(test[0]) != test[1]:
             err_ctr += 1
             err_loc.append(pos)
-            
-    print(f"Total Errors: {err_ctr}")
-    if err_loc:
-        for i in err_loc:
-            print(f"Error in test {i}")
-            print(f"{minitests[i][0]} should be {minitests[i][1]}")
+        
+        
+    if err_ctr == 0:
+        print(f"All {len(minitests)} tests passed")
+    else:
+        print(f"Total Errors: {err_ctr}\n")
+        if err_loc:
+            for i in err_loc:
+                print(f"Error in test {i}")
+                print(f"{minitests[i][0]} should be {minitests[i][1]}\n")
