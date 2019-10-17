@@ -231,4 +231,4 @@ def unit_test(minitests):
     if err_loc:
         for i in err_loc:
             print(f"Error in test {i}")
-            print(minitests[i])
+            print(f"{minitests[i][0]} should be {minitests[i][1]}")

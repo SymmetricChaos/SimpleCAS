@@ -1,5 +1,6 @@
 from Rational import Rational
 from Poly import QPoly
+from RationalFunc import RFunc
 from Utility import unit_test
 
 
@@ -26,6 +27,7 @@ rminitests = [ (r, "32/7" ),
                (u.digits(5),"-32.53846"), #Previous bug involving decimals for negative numbers
                (r.digits(5),"4.57142"),
                (r.pretty_name,"$\\dfrac{32}{7}$"),
+               (s.decimal_expansion,"6"),
                (v.decimal_expansion,"0.0069(4)"),
                (w.decimal_expansion,"0.(0020964360587)")
             ]
@@ -46,9 +48,15 @@ pminitests = [ (P, "58/5x^3 + x^2 + 3/2"),
             ]
 
 
+R = RFunc( [1,1], [2,3] )
 
+
+rminitests = [ (R, "(x + 1) / (3x + 2)")
+            ]
 
 print("\nTest Rational")
 unit_test(rminitests)
 print("\nTest QPoly")
 unit_test(pminitests)
+print("\nTest RFunc")
+unit_test(rminitests)
