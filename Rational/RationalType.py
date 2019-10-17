@@ -219,8 +219,8 @@ class Rational:
     
     def mixed_form(self):
         """Whole and fractional part"""
-        w = self.whole_part()
-        f = self.fractional_part()
+        w = self.whole_part
+        f = self.fractional_part
         return w,f
     
         
@@ -298,6 +298,7 @@ class Rational:
 
         return out
 
+
     def cfrac(self):
         """Canonical simple continued fraction representation"""
         tmp = Rational(self.n,self.d)
@@ -310,6 +311,7 @@ class Rational:
             tmp = f.inv()
     
         return L
+
 
     pretty_name = property(_pretty_name)
     whole_part = property(_whole_part)
@@ -327,5 +329,5 @@ if __name__ == '__main__':
     for i in range(10):
         R = Rational(random.randint(1,200),random.randint(1,200))
         print(R)
-        print(R._decimal_expansion())
+        print(R.decimal_expansion)
         print()

@@ -16,7 +16,7 @@ def bound_of_roots(poly):
     return lim+1
 
 
-def stationary_points(poly,den_lim=100,iter_lim=100):
+def stationary_points(poly,den_lim=1000,iter_lim=1000):
     """Local minima and local maxima"""
     assert type(poly) == QPoly
     
@@ -32,7 +32,7 @@ def stationary_points(poly,den_lim=100,iter_lim=100):
         return qpoly_roots(Pd,den_lim,iter_lim)
     
     
-def inflection_points(poly,den_lim=100,iter_lim=100):
+def inflection_points(poly,den_lim=1000,iter_lim=1000):
     """Inflection points"""
     assert type(poly) == QPoly
     
@@ -48,7 +48,7 @@ def inflection_points(poly,den_lim=100,iter_lim=100):
         return qpoly_roots(Pd,den_lim,iter_lim)
     
 
-def newtons_method(poly,start,den_lim=100,iter_lim=100):
+def newtons_method(poly,start,den_lim=1000,iter_lim=1000):
     """Approximate a root by Newton's method limited by denominator and number of iterations"""
     assert type(poly) == QPoly
     
@@ -65,7 +65,7 @@ def newtons_method(poly,start,den_lim=100,iter_lim=100):
     return r
 
 
-def bisection_method(poly,lo,hi,den_lim=100,iter_lim=100):
+def bisection_method(poly,lo,hi,den_lim=1000,iter_lim=1000):
     """Approximate a root by the bisection method limited by denominator and number of iterations"""
     assert type(poly) == QPoly
     
@@ -179,7 +179,7 @@ def descartes_rule(poly):
 
 ## TODO: bisection method doesn't leave the interval like Newton's methods can
 ##       but is pretty slow even for this.
-def qpoly_roots(poly,den_lim=100,iter_lim=100):
+def qpoly_roots(poly,den_lim=1000,iter_lim=1000):
     
     P = poly.copy()
     rr = rational_roots(poly)
