@@ -3,7 +3,7 @@
 
 SimpleCAS is a computer algebra library that works with rational numbers and univariate polynomials which is meant to be simple enough (and hopefully written clearly enough) that a curious person can take it apart in order to understand how it works. It is written almost entirely in base Python so that even the most basic parts can be seen. In particular the standard library modules `math`, `fractions`, and `decimal` are not used.
 
-For the love of common sense don't use SimpleCAS for anything remotely important. Its quite slow and, despite my best efforts, I can't guarantee it is always accurate. Also it can't provide symbol computation of roots since I couldn't figure out how to make that work.
+For the love of common sense don't use SimpleCAS for anything remotely important. Its quite slow and, despite my best efforts, I can't guarantee it is always accurate. Also it does not currently provide symbolic calculation of roots for any polynomials.
 
 
 
@@ -94,7 +94,7 @@ Making a picture of the "interesting" part of rational function is rather diffic
 
 
 # Planned Expansions
-Currently there are plans for a few additions to the system. Power series already have a tiny bit of support as the PSeries object. Polynomials with integer coefficient reduced modulo some integer used to be included as ZPoly but were removed to focus on the correctness of QPoly, they will be reintroduced at some point. Symbolic calculation for roots, rather than rational approximations, will be added once I sit down and decided on a good way to do that.
+Currently there are plans for a few additions to the system. Power series already have a tiny bit of support as the PSeries object. Polynomials with integer coefficient reduced modulo some integer used to be included as ZPoly but were removed to focus on the correctness of QPoly, they will be reintroduced at some point.
 
 
 
