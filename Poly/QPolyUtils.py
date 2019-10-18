@@ -2,7 +2,7 @@ from Poly.QPoly import QPoly
 from Rational import Rational, rational_gcd
 from Utility import factorization
 from itertools import product
-
+from collections import Counter
 
 def content(poly):
     """Rational GCD of the coefficients, negative if leading coef is negative,
@@ -182,63 +182,89 @@ def poly_factor(poly):
 
     # Then do some Kronecker factorization on what's left
     out += kronecker_factorization(P)
-
+    out.sort(key=len,reverse=True)
+    
     return out
+
+
+def factored_form(poly):
+    F = poly_factor(poly)
+    C = Counter(F)
+
+    out = ""
+
+    for poly,pwr in C.items():
+        if str(poly) == "1":
+            continue
+        if len(poly) == 1:
+            out += f"{poly}"
+        elif pwr == 1:
+            out += f"({poly})"
+        else:
+            out += f"({poly})^{pwr}"
+
+    print(out)
 
 
 
 
 
 if __name__ == '__main__':
-    x = [1,2,3]
-    y = [1,8,27]
-    print(f"Lagrange Interpolation of\nx = {x}\ny = {y}")
-    print(lagrange_interpolation(x,y))
-
-
-    print()
-    print()
-    S = QPoly( [-1,1] ) * QPoly( [3,3,3] ) * QPoly( [-1,2] ) * QPoly( [1,1,0,1] )
-    print(f"S = {S}")
-    print(f"Factorization of S: {poly_factor(S)}")
-
-
-    print()
-    print()
-    S = QPoly( [2,1,1,0,1,1] )
-    print(f"S = {S}")
-    print(f"Factorization of S: {poly_factor(S)}")
-
-
-    print()
-    print()
-    print("Completing the Square")
-    R = QPoly( [27,12,3] )
-    print(f"R = {R}")
-    sq = complete_the_square(R)
-    print(sq)
-    print(f"{sq[0]}({sq[1]})^2 + {sq[2]}")
     
+    S = QPoly([-1,1]) * QPoly([5,-7,3]) * QPoly([-1,1]) * QPoly([7,2])
+    print(S)
+    print("Factored version of S")
+    factored_form(S)
     
-    print()
-    print()
-    print("Polynomial GCD")
-    A = QPoly( [6,13,8,1] ) * QPoly( [3,0,0,-2] ) * QPoly( [1,1,1] )
-    B = QPoly( [-6,-11,-4,1] ) * QPoly( [3,0,0,-2] )
-    print(f"A = {A}")
-    print(f"B = {B}")
-    print(f"poly_gcd(A,B) = {poly_gcd(A,B)}")
-    
-
-    print()
-    print()
-    print("Polynomial eGCD")
+#    x = [1,2,3]
+#    y = [1,8,27]
+#    print(f"Lagrange Interpolation of\nx = {x}\ny = {y}")
+#    print(lagrange_interpolation(x,y))
+#
+#
+#    print()
+#    print()
+#    S = QPoly( [-1,1] ) * QPoly( [3,3,3] ) * QPoly( [-1,2] ) * QPoly( [1,1,0,1] )
+#    print(f"S = {S}")
+#    print(f"Factorization of S: {poly_factor(S)}")
+#
+#
+#    print()
+#    print()
+#    S = QPoly( [2,1,1,0,1,1] )
+#    print(f"S = {S}")
+#    print(f"Factorization of S: {poly_factor(S)}")
+#
+#
+#    print()
+#    print()
+#    print("Completing the Square")
+#    R = QPoly( [27,12,3] )
+#    print(f"R = {R}")
+#    sq = complete_the_square(R)
+#    print(sq)
+#    print(f"{sq[0]}({sq[1]})^2 + {sq[2]}")
+#    
+#    
+#    print()
+#    print()
+#    print("Polynomial GCD")
+#    A = QPoly( [6,13,8,1] ) * QPoly( [3,0,0,-2] ) * QPoly( [1,1,1] )
+#    B = QPoly( [-6,-11,-4,1] ) * QPoly( [3,0,0,-2] )
 #    print(f"A = {A}")
 #    print(f"B = {B}")
-    g, u, v = poly_egcd(A,B)
-#    print(f"g = {g}")
-    print(f"u = {u}")
-    print(f"v = {v}")
-    bid = (A*u + B*v).primitive_part
-    print(f"(A*u + B*v) = {bid}")
-    print("The GCD is defined only up to scalar multiplication so only the primitive part of Bézout's identity is shown")
+#    print(f"poly_gcd(A,B) = {poly_gcd(A,B)}")
+#    
+#
+#    print()
+#    print()
+#    print("Polynomial eGCD")
+##    print(f"A = {A}")
+##    print(f"B = {B}")
+#    g, u, v = poly_egcd(A,B)
+##    print(f"g = {g}")
+#    print(f"u = {u}")
+#    print(f"v = {v}")
+#    bid = (A*u + B*v).primitive_part
+#    print(f"(A*u + B*v) = {bid}")
+#    print("The GCD is defined only up to scalar multiplication so only the primitive part of Bézout's identity is shown")

@@ -41,6 +41,10 @@ class QPoly:
     def __repr__(self):
         """Print nicely in descending written form"""
         return poly_print(self)
+    
+    
+    def __hash__(self):
+        return hash(str(self))
 
 
     def __len__(self):
