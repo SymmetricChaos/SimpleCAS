@@ -31,7 +31,7 @@ r_minitests = [ (r, "32/7" ),
                (u.decimal_expansion,"-32.(538461)"),
                (v.decimal_expansion,"0.0069(4)"),
                (w.decimal_expansion,"0.(0020964360587)")
-            ]
+              ]
 
 P = QPoly(["3/2",0,1,"11.6"])
 Q = QPoly([-5,1])
@@ -46,13 +46,18 @@ p_minitests = [ (P, "58/5x^3 + x^2 + 3/2"),
                (P.content, "1/10"),
                (P.primitive_part, "116x^3 + 10x^2 + 15"),
                (P.monic_part, "x^3 + 5/58x^2 + 15/116")
-            ]
+              ]
 
 
 R = RFunc( [1,1], [2,3] )
+S = RFunc( [-28,16,-16,16,12],[-2,5,-6,6,-4,1] )
+P = RFunc( [1,0,0,1], [2,4,3] )
+T = RFunc( [3,5,1], [1] )
 
-rf_minitests = [ (R, "(x + 1) / (3x + 2)")
-            ]
+rf_minitests = [ (R, "(x + 1) / (3x + 2)"),
+                 (S, "(12x + 28) / (x^2 - 3x + 2)"),
+                 (T, "x^2 + 5x + 3")
+               ]
 
 print("\nTest Rational")
 unit_test(r_minitests)
