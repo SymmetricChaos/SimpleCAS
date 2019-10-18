@@ -297,41 +297,55 @@ class QPoly:
     monic_part = property(_monic_part)
 
 
+# Objects to represent unsimplified sums, products, and quotients
+# Join like terms
+class QPolySum:
+    
+    def __init__(self,terms):
+        assert type(terms) == list
+        self.terms = terms
+        
+    def __str__(self):
+        out = []
+        for i in self.terms:
+            if len(str(i)) == 1:
+                out.append(str(i))
+            else:
+                out.append(f"({i})")
+        
+        return " + ".join(out)
+
+
+class QPolyProd:
+    
+    def __init__(self,terms):
+        assert type(terms) == list
+        self.terms = terms 
+        
+    def __str__(self):
+        out = []
+        for i in self.terms:
+            if len(str(i)) == 1:
+                out.append(str(i))
+            else:
+                out.append(f"({i})")
+        
+        return "".join(out)
+
+        
+class QPolyQuo:
+    
+    def __init__(self,N,D):
+        self.N = N 
+        self.D = D
+    
+
 
 
 
 if __name__ == '__main__':
-    P = QPoly(["3/2",0,1,"11.6"])
-    Q = QPoly([-5,1])
-    print(f"P      = {P}")
-    print(f"Q      = {Q}")
-    print(f"P+2    = {P+2}")
-    print(f"2+P    = {2+P}")
-    print(f"P+Q    = {P+Q}")
-    print(f"Q+P    = {Q+P}")
-    print(f"P*2    = {P*2}")
-    print(f"2*P    = {2*P}")
-    print(f"P*Q    = {P*Q}")
-    print(f"Q*P    = {Q*P}")
-    print(f"P**2   = {P**2}")
-    print(f"P//2   = {P//2}")
-    print(f"P%2    = {P%2}")
-    print(f"P//Q   = {P//Q}")
-    print(f"P%Q    = {P%Q}")
-    print()
-    print(f"P.integral(0)   = {P.integral(0)}")
-    print(f"P.derivative()  = {P.derivative()}")
-    print()
-    print(f"P.content        = {P.content}")
-    print(f"P.primitive_part = {P.primitive_part}")
-    print()
-    print("P.make_primitive()")
-    R = P.copy()
-    R.make_primitive()
-    print(R)
-    print()
-    print("P.make_monic()")
-    S = P.copy()
-    S.make_monic()
-    print(S)
-    
+
+    P = QPoly([1,2,3])
+    Q = QPoly([6,-2,1])
+    print(QPolySum([P,Q,P]))
+    print(QPolyProd([P,Q,P]))

@@ -210,5 +210,3 @@ if __name__ == '__main__':
     print(f"2*R    = {2*R}")
     print(f"S**2   = {S**2}")
     print(f"S**-2  = {S**-2}")
-    print(f"S+Q    = {S+Q}")
-    print(f"Q+S    = {Q+S}")

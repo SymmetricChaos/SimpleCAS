@@ -187,6 +187,7 @@ def poly_factor(poly):
     return out
 
 
+# Deal with sorting
 def factored_form(poly):
     F = poly_factor(poly)
     C = Counter(F)
@@ -199,9 +200,9 @@ def factored_form(poly):
         if len(poly) == 1:
             out += f"{poly}"
         elif pwr == 1:
-            out += f"({poly})"
+            out += f"({poly}) "
         else:
-            out += f"({poly})^{pwr}"
+            out += f"({poly})^{pwr} "
 
     print(out)
 
@@ -211,7 +212,7 @@ def factored_form(poly):
 
 if __name__ == '__main__':
     
-    S = QPoly([-1,1]) * QPoly([5,-7,3]) * QPoly([-1,1]) * QPoly([7,2])
+    S = QPoly([-1,1]) * QPoly([5,-7,3]) * QPoly([-1,1]) * QPoly([7,2]) * 3
     print(S)
     print("Factored version of S")
     factored_form(S)
