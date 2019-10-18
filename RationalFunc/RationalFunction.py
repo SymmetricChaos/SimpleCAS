@@ -35,10 +35,20 @@ class RFunc:
 
 
     def simplify(self):
+        # Remove common factors
         G = poly_gcd(self.N,self.D)
         self.N //= G
         self.D //= G
+        
+    
+    # Not really a thing for Rational Functions but still useful
+    def _content(self):
+        return self.N.content * self.D.content
 
+
+    def _primitive_part(self):
+        return RFunc( self.N // self.content, self.D // self.content )
+        
 
     def copy(self):
         return RFunc(self.N.copy(),self.D.copy())
@@ -171,7 +181,8 @@ class RFunc:
 
     # Things that are like attributes can be access as properties
     pretty_name = property(_pretty_name)
-
+    content = property(_content)
+    primitive_part = property(_primitive_part)
 
 
 
@@ -182,38 +193,27 @@ class RFunc:
 # int divided by Qpoly        
 if __name__ == '__main__':
     
-    print("Rational functions are in simplest form")
-    P = QPoly( [-28,16,-16,16,12] )
-    Q = QPoly( [-2,5,-6,6,-4,1] )
-    print(f"P          = {P}\n")
-    print(f"Q          = {Q}\n")
-    print(f"RFunc(P,Q) = {RFunc(P,Q)}")
-    
-    
-    print("\n\nRational functions can quickly be created just by supplying lists")
-    R = RFunc([1,0,1,1,2],[2,0,1])
-    print("R = RFunc([1,0,1,1,2],[2,0,1])")
-    print(f"R = {R}")
-
-
-    print(f"\n\nderivative of R =\n{R.derivative()}")
+    R = RFunc( ["1/8"], ["1/3","1"] )
+    print(R)
+    print(R.content)
+    print(R.primitive_part)
 
     
-    print("\n\nTest Operations")
-    R = RFunc( [28,12], [2,-3,1] )
-    S = RFunc( [1,0,0,1], [2,4,3] )
-    P = QPoly( [3,5,1] )
-    print(f"R      = {R}")
-    print(f"S      = {S}")
-    print(f"P      = {P}")
-    print(f"-R     = {-R}")
-    print(f"R+2    = {R+2}")
-    print(f"2+R    = {2+R}")
-    print(f"R+S    = {R+S}")
-    print(f"S+R    = {S+R}")
-    print(f"R*2    = {R*2}")
-    print(f"2*R    = {2*R}")
-    print(f"S**2   = {S**2}")
-    print(f"S**-2  = {S**-2}")
-    print(f"S+Q    = {S+Q}")
-    print(f"Q+S    = {Q+S}")
+#    print("\n\nTest Operations")
+#    R = RFunc( [28,12], [2,-3,1] )
+#    S = RFunc( [1,0,0,1], [2,4,3] )
+#    P = QPoly( [3,5,1] )
+#    print(f"R      = {R}")
+#    print(f"S      = {S}")
+#    print(f"P      = {P}")
+#    print(f"-R     = {-R}")
+#    print(f"R+2    = {R+2}")
+#    print(f"2+R    = {2+R}")
+#    print(f"R+S    = {R+S}")
+#    print(f"S+R    = {S+R}")
+#    print(f"R*2    = {R*2}")
+#    print(f"2*R    = {2*R}")
+#    print(f"S**2   = {S**2}")
+#    print(f"S**-2  = {S**-2}")
+#    print(f"S+Q    = {S+Q}")
+#    print(f"Q+S    = {Q+S}")
