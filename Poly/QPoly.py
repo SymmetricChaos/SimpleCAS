@@ -59,58 +59,57 @@ class QPoly:
 
 
     def __add__(self,other):
-        """Add a polynomial to a polynomial"""
+        """Addition"""
         # If we can turn the other into a rational do that
         if type(other) in [int,str,float,Rational]:
             other = QPoly( [cast_to_rational(other)] )
             L = poly_add(self.coef,other.coef)
             return QPoly(L)
         
-        # If its another QPoly just add them
         elif type(other) == QPoly:
             L = poly_add(self.coef,other.coef)
             return QPoly(L)
 
 
     def __radd__(self,other):
-        """Polynomial addition is commutative"""
+        """Addition is commutative"""
         return self + other
 
 
     def __sub__(self,other):
-        """Subtract a polynomial from a polynomial"""
-        if type(other)  == int or type(other) == Rational:
-            other = QPoly([other])
+        """Subtraction"""
+        if type(other) in [int,str,float,Rational]:
+            other = QPoly( [cast_to_rational(other)] )
 
         L = poly_add(self.coef,[-c for c in other.coef])
         return QPoly(L)
 
 
-    def __rsub__(self,poly):
-        """Subtract a polynomial from a polynomial"""
-        if type(poly)  == int or type(poly) == Rational:
-            poly = QPoly([poly])
+    def __rsub__(self,other):
+        """Subtraction is NOT commutative"""
+        if type(other) in [int,str,float,Rational]:
+            other = QPoly( [cast_to_rational(other)] )
 
-        L = poly_add(self.coef,[-c for c in poly.coef])
+        L = poly_add(self.coef,[-c for c in other.coef])
         return QPoly(L)
 
 
-    def __mul__(self,poly):
-        """Multiply a polynomial by polynomial"""
-        if type(poly)  == int or type(poly) == Rational:
-            poly = QPoly([poly])
+    def __mul__(self,other):
+        """Multiplication"""
+        if type(other) in [int,str,float,Rational]:
+            other = QPoly( [cast_to_rational(other)] )
             
-        L = poly_mult(self.coef,poly.coef)
+        L = poly_mult(self.coef,other.coef)
         return QPoly(L)
 
 
-    def __rmul__(self,poly):
-        """Multiply a polynomial by polynomial"""
-        return self*poly
+    def __rmul__(self,other):
+        """Multiplication is commutative"""
+        return self*other
 
 
     def __pow__(self,pwr):
-        """Multiply a polynomial by itself"""
+        """Raise to an positive integer power"""
         if type(pwr) != int:
             raise TypeError(f"pwr must be an integer not {type(pwr)}")
         if pwr < 0:
@@ -127,10 +126,12 @@ class QPoly:
         return out
 
 
-    def __eq__(self,poly):
+    def __eq__(self,other):
         """Check if two polynomials have the same coefficients"""
-        if len(self) == len(poly):
-            if all([x == y for x,y in zip(self.coef,poly.coef)]):
+        if type(other) != QPoly:
+            return False
+        if len(self) == len(other):
+            if all([x == y for x,y in zip(self.coef,other.coef)]):
                 return True
         return False
 
@@ -139,9 +140,11 @@ class QPoly:
         """Algorithm for euclidean division of polynomials"""
 
         # Cast integer to poly if needed
-        if type(poly) == int or type(poly) == Rational:
+        if type(poly) in [int,Rational]:
             poly = QPoly([poly])
-        assert type(poly) == QPoly, f"Could not cast {poly} to QPoly"
+            
+        if type(poly) != QPoly:
+            raise TypeError(f"Could not cast {poly} to QPoly")
 
         # Check for division by zero    
         if poly.coef == [0]:
@@ -178,15 +181,29 @@ class QPoly:
             return QPoly(qt), QPoly(P)
 
 
-    # Using __floordiv__ since there can be a remainder not because we round down
-    def __floordiv__(self,poly):
+    # Using __floordiv__ since there can be a remainder, not because we round down
+    def __floordiv__(self,other):
         """Euclidean division of polynomials"""
-        return divmod(self,poly)[0]
+        return divmod(self,other)[0]
+    
+    
+    def __rfloordiv__(self,other):
+        """Euclidean division of polynomials"""
+        if type(other) in [int,Rational]:
+            other = QPoly([other])
+        return divmod(other,self)[0]
 
 
-    def __mod__(self,poly):
+    def __mod__(self,other):
         """Remainder of Euclidean division of polynomials"""
-        return divmod(self,poly)[1]
+        return divmod(self,other)[1]
+    
+    
+    def __rmod__(self,other):
+        """Remainder of Euclidean division of polynomials"""
+        if type(other) in [int,Rational]:
+            other = QPoly([other])
+        return divmod(self,other)[1]
     
     
     # __truediv__ isn't a closed operation so we get a QPolyQou object

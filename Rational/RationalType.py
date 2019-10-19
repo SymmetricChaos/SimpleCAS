@@ -111,6 +111,9 @@ class Rational:
 
 
     def __truediv__(self,divisor):
+        if type(divisor) not in [Rational,int]:
+            return NotImplemented
+
         if divisor == 0:
             raise ZeroDivisionError
         if type(divisor) == int:
@@ -127,6 +130,9 @@ class Rational:
 
 
     def __floordiv__(self,divisor):
+        if type(divisor) not in [Rational,int]:
+            return NotImplemented
+        
         if divisor == 0:
             raise ZeroDivisionError
         if type(divisor) == int:
