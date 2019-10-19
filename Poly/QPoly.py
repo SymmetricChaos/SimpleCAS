@@ -339,8 +339,15 @@ def poly_gcd(P,Q):
 class QPolySum:
     
     def __init__(self,terms):
-        assert type(terms) == list
-        self.terms = Counter(terms)
+        if type(terms) == list:
+            self.terms = Counter(terms)
+        elif type(terms) == QPoly:
+            self.terms = Counter([terms])
+        elif type(terms) == Counter:
+            self.terms = terms
+        else:
+            raise TypeError("Not a Counter or list")
+            
         self.simplify_const()
 
 
@@ -365,7 +372,31 @@ class QPolySum:
         for val,mul in self.terms.items():
             out += val*mul
         return out
-
+    
+    
+    def copy(self):
+        """Copy the sum"""
+        return QPolySum(self.terms.copy())
+    
+    
+    def __add__(self,other):
+        A = self.terms.copy()
+        A.update(other.terms)
+        return QPolySum(A)
+    
+    
+    def __mul__(self,other):
+        assert type(other) == int
+        
+        if other == 0:
+            return QPolySum([QPoly([0])])
+        
+        A = self.terms.copy()
+        B = A.copy()
+        for i in range(other-1):
+            A.update(B)
+        return QPolySum(A)
+    
 
     def __str__(self):
         out = []
@@ -722,3 +753,6 @@ if __name__ == '__main__':
     print()
     
     print((P)/(Q*P))
+    
+    print(sum_of_polys * 3)
+    print(sum_of_polys * 0)
