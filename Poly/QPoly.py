@@ -307,8 +307,23 @@ class QPolySum:
     def __init__(self,terms):
         assert type(terms) == list
         self.terms = Counter(terms)
-    
-    
+        self.simplify_const()
+
+
+    def simplify_const(self):
+        const = 0
+        remv = []
+        for i in self.terms.items():
+            if len(i[0]) == 1:
+                const += i[0]*i[1]
+                remv.append(i[0])
+        
+        for t in remv:
+            del self.terms[t]
+            
+        self.terms[const] = 1
+
+
     def __str__(self):
         out = []
         
@@ -372,4 +387,7 @@ if __name__ == '__main__':
     P = QPoly([1,2,3])
     Q = QPoly([6,-2])
     R = QPoly([5])
-    print(QPolySum([P,Q,P,R,R,R]))
+    S = QPoly([7])
+    
+    sum_of_polys = QPolySum([P,S,Q,P,R,R,R])
+    print(sum_of_polys)
