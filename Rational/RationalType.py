@@ -64,7 +64,7 @@ class Rational:
         # If we're adding a Rational to any other object we will instead use
         # the __radd__ method on that object.
         if type(addend) not in [Rational,int]:
-            return NotImplementedError
+            return NotImplemented
         
         if type(addend) == int:
             addend = Rational(addend)
@@ -83,7 +83,7 @@ class Rational:
 
     def __sub__(self,addend):
         if type(addend) not in [Rational,int]:
-            return NotImplementedError
+            return NotImplemented
         return self + -addend
 
 
@@ -93,7 +93,7 @@ class Rational:
 
     def __mul__(self,multiplier):
         if type(multiplier) not in [Rational,int]:
-            return NotImplementedError
+            return NotImplemented
         
         if type(multiplier) == int:
             multiplier = Rational(multiplier)
@@ -336,9 +336,4 @@ if __name__ == '__main__':
 #    Explanation = open(r"Explanation.txt","r")
 #    for i in Explanation.readlines():
 #        print(i)
-    import random 
-    for i in range(10):
-        R = Rational(random.randint(1,200),random.randint(1,200))
-        print(R)
-        print(R.decimal_expansion)
-        print()
+    pass

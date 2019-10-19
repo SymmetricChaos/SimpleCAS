@@ -58,31 +58,31 @@ class QPoly:
         return QPoly(L)
 
 
-    def __add__(self,poly):
+    def __add__(self,other):
         """Add a polynomial to a polynomial"""
         # If we can turn the other into a rational do that
-        if type(poly) in [int,str,float,Rational]:
-            poly = QPoly( [cast_to_rational(poly)] )
-            L = poly_add(self.coef,poly.coef)
+        if type(other) in [int,str,float,Rational]:
+            other = QPoly( [cast_to_rational(other)] )
+            L = poly_add(self.coef,other.coef)
             return QPoly(L)
         
         # If its another QPoly just add them
-        elif type(poly) == QPoly:
-            L = poly_add(self.coef,poly.coef)
+        elif type(other) == QPoly:
+            L = poly_add(self.coef,other.coef)
             return QPoly(L)
 
 
-    def __radd__(self,poly):
+    def __radd__(self,other):
         """Polynomial addition is commutative"""
-        return self + poly
+        return self + other
 
 
-    def __sub__(self,poly):
+    def __sub__(self,other):
         """Subtract a polynomial from a polynomial"""
-        if type(poly)  == int or type(poly) == Rational:
-            poly = QPoly([poly])
+        if type(other)  == int or type(other) == Rational:
+            other = QPoly([other])
 
-        L = poly_add(self.coef,[-c for c in poly.coef])
+        L = poly_add(self.coef,[-c for c in other.coef])
         return QPoly(L)
 
 
