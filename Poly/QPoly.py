@@ -311,6 +311,7 @@ class QPolySum:
 
 
     def simplify_const(self):
+        """Deal with constant terms"""
         const = 0
         remv = []
         for i in self.terms.items():
@@ -322,6 +323,14 @@ class QPolySum:
             del self.terms[t]
             
         self.terms[const] = 1
+
+
+    def cast_to_poly(self):
+        """Add everything together as a QPoly"""
+        out = QPoly([0])
+        for val,mul in self.terms.items():
+            out += val*mul
+        return out
 
 
     def __str__(self):
@@ -352,26 +361,65 @@ class QPolySum:
 
 
 
-#class QPolyProd:
-#    
-#    def __init__(self,terms):
-#        assert type(terms) == list
-#        self.terms = terms 
-#        
-#    def __str__(self):
-#        out = []
-#        for i in self.terms:
-#            if len(str(i)) == 1:
-#                out.append(str(i))
-#            else:
-#                out.append(f"({i})")
-#        
-#        return "".join(out)
-#
-#
-#
-#
-#
+class QPolyProd:
+    
+    def __init__(self,terms):
+        assert type(terms) == list
+        self.terms = Counter(terms)
+        self.simplify_const()
+
+
+    def simplify_const(self):
+        """Deal with constant terms"""
+        const = 1
+        remv = []
+        for i in self.terms.items():
+            if len(i[0]) == 1:
+                const *= i[0]**i[1]
+                remv.append(i[0])
+        
+        for t in remv:
+            del self.terms[t]
+            
+        self.terms[const] = 1
+
+
+    def cast_to_poly(self):
+        """Multiply everything together as a QPoly"""
+        out = QPoly([1])
+        for val,pwr in self.terms.items():
+            out *= val**pwr
+        return out
+
+
+    def __str__(self):
+        out = []
+        
+        S = []
+        for i in self.terms.keys():
+            S.append(i)
+        S.sort(key=len)
+        
+        for i in S:
+            pwr = self.terms[i]
+            
+            if pwr == 1:
+                if len(i) == 1:
+                    out.append(str(i))
+                else:
+                    out.append(f"({i})")
+            else:
+                if len(i) == 1:
+                    out.append(f"{i}^{pwr}")
+                else:
+                    out.append(f"({i})^{pwr}")
+        
+        return " ".join(out)
+
+
+
+
+
 #class QPolyQuo:
 #    
 #    def __init__(self,N,D):
@@ -391,3 +439,11 @@ if __name__ == '__main__':
     
     sum_of_polys = QPolySum([P,S,Q,P,R,R,R])
     print(sum_of_polys)
+    print(sum_of_polys.cast_to_poly())
+    
+    print()
+    
+    prod_of_polys = QPolyProd([P,S,Q,P])
+    print(prod_of_polys)
+    print(prod_of_polys.cast_to_poly())
+    
