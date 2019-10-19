@@ -358,6 +358,36 @@ class QPolySum:
         return " + ".join(out)
 
 
+    def _pretty_name(self):
+        out = []
+        
+        S = []
+        for i in self.terms.keys():
+            S.append(i)
+        S.sort(key=len)
+        
+        for i in S:
+            pwr = self.terms[i]
+            
+            if pwr == 1:
+                if len(i) == 1:
+                    out.append(str(i))
+                else:
+                    out.append(f"({i.pretty_name})")
+            else:
+                if len(i) == 1:
+                    out.append(f"{pwr}*{i.pretty_name}")
+                else:
+                    out.append(f"{pwr}({i.pretty_name})")
+        
+        J = "\;+\;".join(out)
+        J = J.replace("$","")
+        return f"${J}$"
+
+
+    pretty_name = property(_pretty_name)
+
+
 
 
 
@@ -414,11 +444,37 @@ class QPolyProd:
                 else:
                     out.append(f"({i})^{pwr}")
         
-        return " ".join(out)
+        return "".join(out)
 
 
+    def _pretty_name(self):
+        out = []
+        
+        S = []
+        for i in self.terms.keys():
+            S.append(i)
+        S.sort(key=len)
+        
+        for i in S:
+            pwr = self.terms[i]
+            
+            if pwr == 1:
+                if len(i) == 1:
+                    out.append(str(i))
+                else:
+                    out.append(f"({i.pretty_name})")
+            else:
+                if len(i) == 1:
+                    out.append(f"{i.pretty_name}^{{{pwr}}}")
+                else:
+                    out.append(f"({i.pretty_name})^{{{pwr}}}")
+        
+        J = "\;".join(out)
+        J = J.replace("$","")
+        return f"${J}$"
 
 
+    pretty_name = property(_pretty_name)
 
 #class QPolyQuo:
 #    
@@ -440,10 +496,12 @@ if __name__ == '__main__':
     sum_of_polys = QPolySum([P,S,Q,P,R,R,R])
     print(sum_of_polys)
     print(sum_of_polys.cast_to_poly())
+    print(sum_of_polys.pretty_name)
     
     print()
     
-    prod_of_polys = QPolyProd([P,S,Q,P])
+    prod_of_polys = QPolyProd([Q,S,Q,P,S])
     print(prod_of_polys)
     print(prod_of_polys.cast_to_poly())
     
+    print(prod_of_polys.pretty_name)
