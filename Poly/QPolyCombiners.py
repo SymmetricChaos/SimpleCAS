@@ -1,5 +1,5 @@
 from collections import Counter
-from QPoly import QPoly
+from Poly import QPoly
 
 
 

@@ -60,6 +60,12 @@ class Rational:
 
 
     def __add__(self,addend):
+        
+        # If we're adding a Rational to any other object we will instead use
+        # the __radd__ method on that object.
+        if type(addend) not in [Rational,int]:
+            return NotImplementedError
+        
         if type(addend) == int:
             addend = Rational(addend)
         
@@ -76,6 +82,8 @@ class Rational:
 
 
     def __sub__(self,addend):
+        if type(addend) not in [Rational,int]:
+            return NotImplementedError
         return self + -addend
 
 
@@ -84,6 +92,9 @@ class Rational:
     
 
     def __mul__(self,multiplier):
+        if type(multiplier) not in [Rational,int]:
+            return NotImplementedError
+        
         if type(multiplier) == int:
             multiplier = Rational(multiplier)
             

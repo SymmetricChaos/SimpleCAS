@@ -44,7 +44,7 @@ class QPoly:
     
     
     def __hash__(self):
-        return hash(str(self))
+        return hash("CustomPoly"+str(self))
 
 
     def __len__(self):
@@ -65,15 +65,11 @@ class QPoly:
             poly = QPoly( [cast_to_rational(poly)] )
             L = poly_add(self.coef,poly.coef)
             return QPoly(L)
+        
         # If its another QPoly just add them
         elif type(poly) == QPoly:
             L = poly_add(self.coef,poly.coef)
             return QPoly(L)
-        # Otherwise check if the other object can have QPoly added to it
-        # This is probably a bad idea in general but everything we care about
-        # is commutative.
-        else:
-            return poly + self
 
 
     def __radd__(self,poly):
