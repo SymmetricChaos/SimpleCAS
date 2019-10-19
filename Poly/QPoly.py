@@ -193,9 +193,9 @@ class QPoly:
         return divmod(self,poly)[1]
     
     
-#    def __truediv__(self,poly):
-#        """Truedivision of polynomials"""
-#        return RFunc(self,poly)
+    def __truediv__(self,poly):
+        """Truedivision of polynomials"""
+        return QPolyQuo(self,poly)
 
 
     def normalize(self):
@@ -300,8 +300,12 @@ class QPoly:
 
 
 
-# Objects to represent unsimplified sums, products, and quotients
-# Join like terms
+#######################
+## Combining Objects ##
+#######################
+
+# I think these have to be here to avoid circular reference issues
+
 class QPolySum:
     
     def __init__(self,terms):
@@ -476,12 +480,38 @@ class QPolyProd:
 
     pretty_name = property(_pretty_name)
 
-#class QPolyQuo:
-#    
-#    def __init__(self,N,D):
-#        self.N = N 
-#        self.D = D
+
+
+
+
+class QPolyQuo:
     
+    def __init__(self,N,D):
+        self.N = N 
+        self.D = D
+
+
+    def __str__(self):
+        if str(self.N) == "0":
+            return "0"
+        if str(self.D) == "1":
+            return str(self.N)
+
+        if len(self.N) == 1:
+            n = str(self.N)
+        else:
+            if self.N.content < 0:
+                n = f"-({-self.N})"
+            else:  
+                n = f"({self.N})"
+
+        if len(self.D) == 1:
+            d = str(self.D)
+        else:
+            d = f"({self.D})"
+
+        return f"{n} / {d}"
+
 
 
 
@@ -505,3 +535,5 @@ if __name__ == '__main__':
     print(prod_of_polys.cast_to_poly())
     
     print(prod_of_polys.pretty_name)
+    
+    print(R/Q)
