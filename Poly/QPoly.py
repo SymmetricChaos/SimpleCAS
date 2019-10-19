@@ -193,6 +193,7 @@ class QPoly:
         return divmod(self,poly)[1]
     
     
+    # __truediv__ isn't a closed operation so we get a QPolyQou object
     def __truediv__(self,poly):
         """Truedivision of polynomials"""
         return QPolyQuo(self,poly)
@@ -299,6 +300,7 @@ class QPoly:
 
 
 
+
 ############################
 ## Fundamental Operations ##
 ############################
@@ -323,6 +325,7 @@ def poly_gcd(P,Q):
     else:
         g = poly_gcd(P % Q, Q)
         return g.primitive_part
+
 
 
 
@@ -416,6 +419,7 @@ class QPolySum:
         return f"${J}$"
 
 
+    # Things that are like attributes can be access as properties
     pretty_name = property(_pretty_name)
 
 
@@ -505,12 +509,14 @@ class QPolyProd:
         return f"${J}$"
 
 
+    # Things that are like attributes can be access as properties
     pretty_name = property(_pretty_name)
 
 
 
 
 
+# Better known as Rational Functions
 class QPolyQuo:
     
     
