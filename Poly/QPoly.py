@@ -299,6 +299,33 @@ class QPoly:
 
 
 
+############################
+## Fundamental Operations ##
+############################
+    
+# GCD is defined as primitive part
+# It could also be defined as the monic part but primitive works even when one
+# wishes to work with integer polynomials
+def poly_gcd(P,Q):
+    """GCD of two polynomials"""
+    assert type(P) == QPoly
+    assert type(Q) == QPoly
+    
+    if Q.degree() > P.degree():
+        P,Q = Q,P
+        
+    # Check if we reached the end
+    if Q == QPoly([0]):
+        return P.primitive_part
+    if P == QPoly([0]):
+        return Q.primitive_part
+    
+    else:
+        g = poly_gcd(P % Q, Q)
+        return g.primitive_part
+
+
+
 
 #######################
 ## Combining Objects ##
@@ -487,8 +514,36 @@ class QPolyProd:
 class QPolyQuo:
     
     def __init__(self,N,D):
+        if type(N) == QPoly:
+            pass
+        elif type(N) == list:
+            N = QPoly( N )
+        else:
+            try:
+                N = QPoly( [N] )
+            except:
+                raise Exception(f"Could not coerce {N} to QPoly")
+        
+        if type(D) == QPoly:
+            pass
+        elif type(D) == list:
+            D = QPoly( D )
+        else:
+            try:
+                D = QPoly( [D] )
+            except:
+                raise Exception(f"Could not coerce {D} to QPoly")
+        
+        
         self.N = N 
         self.D = D
+        self.simplify()
+
+    def simplify(self):
+        # Remove common factors
+        G = poly_gcd(self.N,self.D)
+        self.N //= G
+        self.D //= G
 
 
     def __str__(self):
@@ -513,6 +568,24 @@ class QPolyQuo:
         return f"{n} / {d}"
 
 
+    def _pretty_name(self):
+        if str(self.N) == "0":
+            return "0"
+        elif str(self.D) == "1":
+            return str(self.N)
+        else:
+            if self.N.content < 0:
+                sgn = "-"
+                n = -self.N
+            else:
+                sgn = ""
+                n = self.N
+            return f"${sgn}\dfrac{{{n}}}{{{self.D}}}$"
+
+
+    pretty_name = property(_pretty_name)
+
+
 
 
 
@@ -526,7 +599,6 @@ if __name__ == '__main__':
     sum_of_polys = QPolySum([P,S,Q,P,R,R,R])
     print(sum_of_polys)
     print(sum_of_polys.cast_to_poly())
-    print(sum_of_polys.pretty_name)
     
     print()
     
@@ -534,6 +606,6 @@ if __name__ == '__main__':
     print(prod_of_polys)
     print(prod_of_polys.cast_to_poly())
     
-    print(prod_of_polys.pretty_name)
+    print()
     
-    print(R/Q)
+    print((P)/(Q*P))

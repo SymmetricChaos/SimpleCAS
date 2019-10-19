@@ -24,26 +24,7 @@ def monic(poly):
     return poly//poly.coef[-1]
 
 
-# GCD is defined as primitive part
-# It could also be defined as the monic part but primitive works even when one
-# wishes to work with integer polynomials
-def poly_gcd(P,Q):
-    """GCD of two polynomials"""
-    assert type(P) == QPoly
-    assert type(Q) == QPoly
-    
-    if Q.degree() > P.degree():
-        P,Q = Q,P
-        
-    # Check if we reached the end
-    if Q == QPoly([0]):
-        return P.primitive_part
-    if P == QPoly([0]):
-        return Q.primitive_part
-    
-    else:
-        g = poly_gcd(P % Q, Q)
-        return g.primitive_part
+
 
 
 def poly_egcd(P,Q):
