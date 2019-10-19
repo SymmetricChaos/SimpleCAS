@@ -1,5 +1,5 @@
 from Rational import Rational
-from Poly import QPoly
+from Poly import QPoly, QPolyQuo
 from RationalFunc import RFunc
 from Utility import unit_test
 
@@ -54,7 +54,8 @@ p_minitests = [ (P, "58/5x^3 + x^2 + 3/2"),
                 (P.derivative(), "174/5x^2 + 2x"),
                 (P.content, "1/10"),
                 (P.primitive_part, "116x^3 + 10x^2 + 15"),
-                (P.monic_part, "x^3 + 5/58x^2 + 15/116")
+                (P.monic_part, "x^3 + 5/58x^2 + 15/116"),
+                (P/Q,"(58/5x^3 + x^2 + 3/2) / (x - 5)")
               ]
 
 
@@ -63,10 +64,10 @@ p_minitests = [ (P, "58/5x^3 + x^2 + 3/2"),
 ## Rational Functions ##
 ########################
 
-R = RFunc( [1,1], [2,3] )
-S = RFunc( [-28,16,-16,16,12],[-2,5,-6,6,-4,1] )
-T = RFunc( [3,5,1], [1] )
-U = RFunc( ["1/8"], ["1/3","5/4"] )
+R = QPolyQuo( [1,1], [2,3] )
+S = QPolyQuo( [-28,16,-16,16,12],[-2,5,-6,6,-4,1] )
+T = QPolyQuo( [3,5,1], [1] )
+U = QPolyQuo( ["1/8"], ["1/3","5/4"] )
 
 rf_minitests = [ (R, "(x + 1) / (3x + 2)"),
                  (S, "(12x + 28) / (x^2 - 3x + 2)"), #simplify
@@ -81,5 +82,5 @@ print("\nTest Rational")
 unit_test(r_minitests)
 print("\nTest QPoly")
 unit_test(p_minitests)
-print("\nTest RFunc")
+print("\nTest QPolyQuo")
 unit_test(rf_minitests)

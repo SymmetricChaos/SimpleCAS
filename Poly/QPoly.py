@@ -69,6 +69,9 @@ class QPoly:
         elif type(other) == QPoly:
             L = poly_add(self.coef,other.coef)
             return QPoly(L)
+        
+        else:
+            return NotImplemented
 
 
     def __radd__(self,other):
@@ -184,6 +187,12 @@ class QPoly:
     # Using __floordiv__ since there can be a remainder, not because we round down
     def __floordiv__(self,other):
         """Euclidean division of polynomials"""
+        if type(other) in [int,Rational]:
+            other = QPoly([other])
+        elif type(other) == QPoly:
+            pass
+        else:
+            return NotImplemented
         return divmod(self,other)[0]
     
     
@@ -191,6 +200,10 @@ class QPoly:
         """Euclidean division of polynomials"""
         if type(other) in [int,Rational]:
             other = QPoly([other])
+        elif type(other) == QPoly:
+            pass
+        else:
+            return NotImplemented
         return divmod(other,self)[0]
 
 
@@ -207,9 +220,26 @@ class QPoly:
     
     
     # __truediv__ isn't a closed operation so we get a QPolyQou object
-    def __truediv__(self,poly):
+    def __truediv__(self,other):
         """Truedivision of polynomials"""
-        return QPolyQuo(self,poly)
+        if type(other) in [int,Rational]:
+            other = QPoly([other])
+        elif type(other) == QPoly:
+            pass
+        else:
+            return NotImplemented
+        return QPolyQuo(self,other)
+    
+    
+    def __rtruediv__(self,other):
+        """Truedivision of polynomials"""
+        if type(other) in [int,Rational]:
+            other = QPoly([other])
+        elif type(other) == QPoly:
+            pass
+        else:
+            return NotImplemented
+        return QPolyQuo(other,other)
 
 
     def normalize(self):
