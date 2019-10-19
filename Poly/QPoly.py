@@ -3,7 +3,7 @@
 
 from Rational import Rational, rational_gcd, cast_to_rational
 from Utility import poly_add, poly_mult, poly_print, poly_print_pretty
-
+from collections import Counter
 
 class QPoly:
     
@@ -297,47 +297,71 @@ class QPoly:
     monic_part = property(_monic_part)
 
 
+
+
+
 # Objects to represent unsimplified sums, products, and quotients
 # Join like terms
 class QPolySum:
     
     def __init__(self,terms):
         assert type(terms) == list
-        self.terms = terms
-        
+        self.terms = Counter(terms)
+    
+    
     def __str__(self):
         out = []
-        for i in self.terms:
-            if len(str(i)) == 1:
-                out.append(str(i))
+        
+        S = []
+        for i in self.terms.keys():
+            S.append(i)
+        S.sort(key=len,reverse=True)
+        
+        for i in S:
+            mul = self.terms[i]
+            
+            if mul == 1:
+                if len(i) == 1:
+                    out.append(str(i))
+                else:
+                    out.append(f"({i})")
             else:
-                out.append(f"({i})")
+                if len(i) == 1:
+                    out.append(f"{mul}*{i}")
+                else:
+                    out.append(f"{mul}({i})")
         
         return " + ".join(out)
 
 
-class QPolyProd:
-    
-    def __init__(self,terms):
-        assert type(terms) == list
-        self.terms = terms 
-        
-    def __str__(self):
-        out = []
-        for i in self.terms:
-            if len(str(i)) == 1:
-                out.append(str(i))
-            else:
-                out.append(f"({i})")
-        
-        return "".join(out)
 
-        
-class QPolyQuo:
-    
-    def __init__(self,N,D):
-        self.N = N 
-        self.D = D
+
+
+#class QPolyProd:
+#    
+#    def __init__(self,terms):
+#        assert type(terms) == list
+#        self.terms = terms 
+#        
+#    def __str__(self):
+#        out = []
+#        for i in self.terms:
+#            if len(str(i)) == 1:
+#                out.append(str(i))
+#            else:
+#                out.append(f"({i})")
+#        
+#        return "".join(out)
+#
+#
+#
+#
+#
+#class QPolyQuo:
+#    
+#    def __init__(self,N,D):
+#        self.N = N 
+#        self.D = D
     
 
 
@@ -346,6 +370,6 @@ class QPolyQuo:
 if __name__ == '__main__':
 
     P = QPoly([1,2,3])
-    Q = QPoly([6,-2,1])
-    print(QPolySum([P,Q,P]))
-    print(QPolyProd([P,Q,P]))
+    Q = QPoly([6,-2])
+    R = QPoly([5])
+    print(QPolySum([P,Q,P,R,R,R]))
