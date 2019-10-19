@@ -374,7 +374,8 @@ def poly_gcd(P,Q):
 ## Quotient Object ##
 #####################
 
-# Because QPolyQuo is used in QPoly (for truediv) this needs to stay here
+# Because QPolyQuo is used in the specification of QPoly (for truediv) this 
+# needs to stay here
 
 # Better known as Rational Functions
 class QPolyQuo:
@@ -470,10 +471,19 @@ class QPolyQuo:
 
 
     def __mul__(self,other):
+        
         if type(other) == QPolyQuo:
-            return QPolyQuo(self.N * other.N, self.D * other.D)
-        else:
+            return QPolyQuo(self.N*other.N, self.D*other.D)
+        
+        elif type(other) == QPoly:
             return self * QPolyQuo(other)
+        
+        elif type(other) in [int,str,float,Rational]:
+            other = QPolyQuo( [cast_to_rational(other)] )
+            return self * other
+        
+        else:
+            return NotImplemented
 
 
     def __rmul__(self,other):
@@ -511,10 +521,16 @@ class QPolyQuo:
     def __add__(self,other):
         if type(other) == QPolyQuo:
             return QPolyQuo(self.N*other.D + other.N*self.D, self.D*other.D)
+        
         elif type(other) == QPoly:
             return self + QPolyQuo(other)
+        
+        elif type(other) in [int,str,float,Rational]:
+            other = QPolyQuo( [cast_to_rational(other)] )
+            return self + other
+        
         else:
-            return self + QPolyQuo([other])
+            return NotImplemented
         
 
     def __radd__(self,other):
