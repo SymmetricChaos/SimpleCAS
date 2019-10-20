@@ -16,6 +16,9 @@ class QPolySum:
             raise TypeError("Not a Counter or list")
             
         self.simplify_const()
+        
+        
+        del self.terms[0]
 
 
     def simplify_const(self):
@@ -29,7 +32,8 @@ class QPolySum:
         
         for t in remv:
             del self.terms[t]
-            
+        
+        
         self.terms[const] = 1
 
 
@@ -63,6 +67,17 @@ class QPolySum:
         for i in range(other-1):
             A.update(B)
         return QPolySum(A)
+    
+    
+    def __len__(self):
+        out = 0
+        for i in self.terms:
+            out += len(i)
+        return out
+    
+    
+    def __hash__(self):
+        return hash("CustomPolySum"+str(self))
     
 
     def __str__(self):
@@ -155,6 +170,13 @@ class QPolyProd:
         return out
 
 
+    def __len__(self):
+        out = 0
+        for i in self.terms:
+            out += len(i)
+        return out
+
+
     def __str__(self):
         out = []
         
@@ -165,6 +187,7 @@ class QPolyProd:
         
         for i in S:
             pwr = self.terms[i]
+                        
             
             if pwr == 1:
                 if len(i) == 1:
@@ -178,6 +201,10 @@ class QPolyProd:
                     out.append(f"({i})^{pwr}")
         
         return "".join(out)
+
+
+    def __hash__(self):
+        return hash("CustomPolyProd"+str(self))
 
 
     def _pretty_name(self):
@@ -224,18 +251,13 @@ if __name__ == '__main__':
     sum_of_polys = QPolySum([P,S,Q,P,R,R,R])
     print(sum_of_polys)
     print(sum_of_polys.cast_to_poly())
-    
     print()
     
-    prod_of_polys = QPolyProd([Q,S,Q,P,S])
-    print(prod_of_polys)
-    print(prod_of_polys.cast_to_poly())
+    prod_of_polys1 = QPolyProd([P,S,R])
+    prod_of_polys2 = QPolyProd([P,S])
+    print(prod_of_polys1)
+    print(prod_of_polys1.cast_to_poly())
     
+    T = QPolySum([prod_of_polys1,prod_of_polys2])
     print()
-    
-    print((P)/(Q*P))
-    
-    print()
-    
-    print(sum_of_polys * 3)
-    print(sum_of_polys * 0)
+    print(T)
