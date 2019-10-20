@@ -7,17 +7,24 @@ class QPolySum:
     
     def __init__(self,terms):
         if type(terms) == list:
+            for i in terms:
+                assert type(i) in [QPoly,QPolyProd]
             self.terms = Counter(terms)
+            
         elif type(terms) == QPoly:
             self.terms = Counter([terms])
+            
+        elif type(terms) == QPolyProd:
+            self.terms = Counter([terms])
+            
         elif type(terms) == Counter:
             self.terms = terms
+            
         else:
-            raise TypeError("Not a Counter or list")
+            raise TypeError(f"Couldn't use type {type(terms)}")
             
         self.simplify_const()
-        
-        
+                
         del self.terms[0]
 
 
@@ -32,7 +39,6 @@ class QPolySum:
         
         for t in remv:
             del self.terms[t]
-        
         
         self.terms[const] = 1
 
@@ -153,9 +159,26 @@ class QPolySum:
 class QPolyProd:
     
     def __init__(self,terms):
-        assert type(terms) == list
-        self.terms = Counter(terms)
+        if type(terms) == list:
+            for i in terms:
+                assert type(i) in [QPoly,QPolySum]
+            self.terms = Counter(terms)
+            
+        elif type(terms) == QPoly:
+            self.terms = Counter([terms])
+            
+        elif type(terms) == QPolySum:
+            self.terms = Counter([terms])
+            
+        elif type(terms) == Counter:
+            self.terms = terms
+            
+        else:
+            raise TypeError(f"Couldn't use type {type(terms)}")
+            
         self.simplify_const()
+                
+        del self.terms[1]
 
 
     def simplify_const(self):
