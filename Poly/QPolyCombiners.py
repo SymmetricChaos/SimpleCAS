@@ -91,16 +91,27 @@ class QPolySum:
         for i in S:
             mul = self.terms[i]
             
-            if mul == 1:
-                if len(i) == 1:
-                    out.append(str(i))
+            if type(i) == QPoly:
+            
+                if mul == 1:
+                    if len(i) == 1:
+                        out.append(str(i))
+                    else:
+                        out.append(f"({i})")
                 else:
-                    out.append(f"({i})")
+                    if len(i) == 1:
+                        out.append(f"{mul}*{i}")
+                    else:
+                        out.append(f"{mul}({i})")
+                        
             else:
-                if len(i) == 1:
-                    out.append(f"{mul}*{i}")
+                if mul == 1:
+                    out.append(f"{i}")
                 else:
-                    out.append(f"{mul}({i})")
+                    if len(i) == 1:
+                        out.append(f"{mul}*{i}")
+                    else:
+                        out.append(f"{mul}({i})")
         
         return " + ".join(out)
 
