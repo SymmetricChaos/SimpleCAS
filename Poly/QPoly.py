@@ -228,7 +228,7 @@ class QPoly:
             pass
         else:
             return NotImplemented
-        return QPolyQuo(self,other)
+        return RFunc(self,other)
     
     
     def __rtruediv__(self,other):
@@ -239,7 +239,7 @@ class QPoly:
             pass
         else:
             return NotImplemented
-        return QPolyQuo(other,other)
+        return RFunc(other,other)
 
 
     def normalize(self):
@@ -370,15 +370,13 @@ def poly_gcd(P,Q):
         return g.primitive_part
 
 
-#####################
-## Quotient Object ##
-#####################
+########################
+## Rational Functions ##
+########################
 
-# Because QPolyQuo is used in the specification of QPoly (for truediv) this 
+# Because RFunc is used in the specification of QPoly (for truediv) this 
 # needs to stay here
-
-# Better known as Rational Functions
-class QPolyQuo:
+class RFunc:
     
     
     def __init__(self,N,D=QPoly([1])):
@@ -422,11 +420,11 @@ class QPolyQuo:
 
 
     def _primitive_part(self):
-        return QPolyQuo( self.N // self.content, self.D // self.content )
+        return RFunc( self.N // self.content, self.D // self.content )
         
 
     def copy(self):
-        return QPolyQuo(self.N.copy(),self.D.copy())
+        return RFunc(self.N.copy(),self.D.copy())
 
 
     def __str__(self):
@@ -467,19 +465,19 @@ class QPolyQuo:
     
 
     def inv(self):
-        return QPolyQuo(self.D,self.N)
+        return RFunc(self.D,self.N)
 
 
     def __mul__(self,other):
         
-        if type(other) == QPolyQuo:
-            return QPolyQuo(self.N*other.N, self.D*other.D)
+        if type(other) == RFunc:
+            return RFunc(self.N*other.N, self.D*other.D)
         
         elif type(other) == QPoly:
-            return self * QPolyQuo(other)
+            return self * RFunc(other)
         
         elif type(other) in [int,str,float,Rational]:
-            other = QPolyQuo( [cast_to_rational(other)] )
+            other = RFunc( [cast_to_rational(other)] )
             return self * other
         
         else:
@@ -495,7 +493,7 @@ class QPolyQuo:
             raise TypeError(f"pwr must be an integer not {type(pwr)}")
 
         if pwr == 0:
-            return QPolyQuo([1],[1])
+            return RFunc([1],[1])
         else:
             out = self.copy()
             for i in range(abs(pwr)-1):
@@ -508,10 +506,18 @@ class QPolyQuo:
         
     
     def __truediv__(self,other):
-        if type(other) == QPolyQuo:
+        if type(other) == RFunc:
             return self * other.inv()
+
+        elif type(other) == QPoly:
+            return self / RFunc(other)
+
+        elif type(other) in [int,str,float,Rational]:
+            other = RFunc( [cast_to_rational(other)] )
+            return self / other
+
         else:
-            return self / QPolyQuo(other)
+            return NotImplemented
 
 
     def __neg__(self):
@@ -519,14 +525,14 @@ class QPolyQuo:
 
 
     def __add__(self,other):
-        if type(other) == QPolyQuo:
-            return QPolyQuo(self.N*other.D + other.N*self.D, self.D*other.D)
+        if type(other) == RFunc:
+            return RFunc(self.N*other.D + other.N*self.D, self.D*other.D)
         
         elif type(other) == QPoly:
-            return self + QPolyQuo(other)
+            return self + RFunc(other)
         
         elif type(other) in [int,str,float,Rational]:
-            other = QPolyQuo( [cast_to_rational(other)] )
+            other = RFunc( [cast_to_rational(other)] )
             return self + other
         
         else:
@@ -538,10 +544,10 @@ class QPolyQuo:
 
 
     def __sub__(self,other):
-        if type(other) == QPolyQuo:
+        if type(other) == RFunc:
             return self + -other
         else:
-            return self - QPolyQuo(other)
+            return self - RFunc(other)
 
 
     def degree(self):
@@ -551,7 +557,7 @@ class QPolyQuo:
     def derivative(self):
         N = (self.D * self.N.derivative()) - (self.N * self.D.derivative())
         D = self.D * self.D
-        return QPolyQuo(N,D)
+        return RFunc(N,D)
 
 
     def _pretty_name(self):
@@ -573,3 +579,4 @@ class QPolyQuo:
     pretty_name = property(_pretty_name)
     content = property(_content)
     primitive_part = property(_primitive_part)
+

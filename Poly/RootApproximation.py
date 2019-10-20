@@ -1,4 +1,4 @@
-from Poly.QPoly import QPoly
+from Poly.QPoly import QPoly, RFunc
 from Poly.QPolyUtils import rational_roots
 from Rational import cast_to_rational, rational_round, sign
 
@@ -200,6 +200,60 @@ def qpoly_roots(poly,den_lim=1000,iter_lim=1000):
 
 
 
+
+def rfunc_roots(rfunc):
+    """Approximate roots of a rational function"""
+    assert type(rfunc) == RFunc
+    return qpoly_roots(rfunc.N)
+
+
+def rfunc_asymptotes(rfunc):
+    """Approximate asymptotes of a rational function"""
+    assert type(rfunc) == RFunc
+    dN = rfunc.N.degree()
+    dD = rfunc.D.degree()
+    
+    out = []
+    
+    if dN == dD+1:
+        out += [rfunc.N//rfunc.D]
+    elif dN == dD:
+        out += [QPoly( [rfunc.N[-1]/rfunc.D[-1]] )]
+    elif dN < dD:
+        out += [QPoly( [0] )]
+    
+    out += [QPoly([i]) for i in qpoly_roots(rfunc.D)]
+    
+    return out
+
+#def partial_fraction(rfunc):
+#    """Partial fraction decomposition of a rational function"""
+#    #f/g = Df/P + Cf/Q
+#    #g = P*Q
+#    #D and P from Bezout's identity
+#
+#    f = rfunc.N
+#    g = rfunc.D
+#    
+#    F = poly_factor(g)
+#    print("factors",F)
+#    
+#    gcd, C, D = poly_egcd(F[0],F[1])
+#    print("gcd",gcd)
+#    print("C",C)
+#    print("D",D)
+#
+#    norm = F[0]*C + F[1]*D
+#    print("normalizing factor",norm)
+#    C = C//norm
+#    D = D//norm
+#    
+#    t0 = RFunc( D*f, F[0] )
+#    t1 = RFunc( C*f, F[1] )
+#    out = f"{t0}  +  {t1}"
+#
+#    print(out)
+#    print(t0+t1)
         
 
 

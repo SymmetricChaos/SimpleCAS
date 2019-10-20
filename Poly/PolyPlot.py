@@ -1,18 +1,28 @@
 from Rational import rational_seq
 from Utility import make_canvas, plot_points, scatter_points, connect
-from Poly import QPoly, qpoly_roots, stationary_points, inflection_points
+from Poly import QPoly, RFunc, qpoly_roots, stationary_points, inflection_points, \
+                 rfunc_roots, rfunc_asymptotes
 
 
 def poly_plot(poly,size=[5,5],show_plot=True):
     """Automatically make a plot that shows the roots and critical points of the polynomial"""
     
-    r = qpoly_roots(poly)
-    s = stationary_points(poly)
-    c = inflection_points(poly)
+    if type(poly) == QPoly:
+        r = qpoly_roots(poly)
+        s = stationary_points(poly)
+        c = inflection_points(poly)
+        
+        interesting_points = r + s + c
+
+    elif type(poly) == RFunc:
+        r = rfunc_roots(poly)
+        a = rfunc_asymptotes(poly)
+        
+        interesting_points = r + a
     
-    interesting_points = r + s + c
     interesting_values = poly.evaluate(interesting_points)
     
+        
     # Pick the minimum possible axes for the graph
     xlimit = [ min(interesting_points), max(interesting_points) ]
     ylimit = [ min(interesting_values), max(interesting_values) ]
