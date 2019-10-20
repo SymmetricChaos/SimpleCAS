@@ -26,12 +26,20 @@ print(R+S)
 
 For most purposes creating Rational objects directly is rather cumbersome but also unnecessary. For convenience there is a `cast_to_rational` function provided that will try to create a Rational object from integers, floats, and properly formatted strings. This is used automatically by every function that accepts Rationals as an argument.
 
-Rationals can be expanded into both their decimal and simple continued fraction representations.
+Rationals can be expanded into several forms.
 
 ```
-R = Rational(37,11)
-print(R.digits(5))
-3.3636
+R = Rational(137,126)
+
+#String showing the first n digits after the decimals
+print(R.digits(5)) 
+1.08730
+
+# String showing the complete decimal expansion with the repeating part parenthesized
+print(R.decimal_expansion)  
+1.0(873015)
+
+# List with the canonical simple continued fraction
 print(R.cfrac())
 [3, 2, 1, 3]
 ```
