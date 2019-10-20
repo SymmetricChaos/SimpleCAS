@@ -75,16 +75,48 @@ def digits_to_frac(S):
         raise TypeError("Input {S} is {type(S)} not str")
     if "." not in S:
         S += "."
-        
-    m = re.fullmatch("-?\d*\.\d*",S)
+    
+    # One or zero dashes signs
+    # any number of digits
+    # a decimal point
+    # any number of digits
+    # one or zero open paren
+    # any number of gitis
+    # one or zero close paren
+    m = re.fullmatch("-?\d*\.\d*\(?\d*\)?",S)
     is_neg = 1
     if m:
-        if m[0] == "-":
-            is_neg = -1
-            m = m[1:]
-        D = len(S)-first_where(S,".")-1
-        S = S.replace(".","")
-        return Rational(int(S)*is_neg,10**D)
+        
+        # Fix this to work with 
+        if "(" in S:
+            if S[0] == "-":
+                is_neg = -1
+                S = S[1:]
+            D = first_where(S,".")-1 # pos of decimal
+            R = first_where(S,"(")+1 # pos of repeating part
+            
+            # String representing the non-repeating and repeating parts
+            fpart = S[:R-1].replace(".","")
+            rpart = S[R:-1]
+
+#            print(S)
+#            print(fpart)
+#            print(rpart)
+            
+            # Fraction representing the non-repeating part
+            fR = Rational(int(fpart),10**(D+1))
+            # Fraction represent the repeating part
+            rR = Rational(int(rpart),int("9"*len(rpart)+"0"*(D+1)))
+
+            return is_neg*(fR + rR)
+    
+        else:
+            if S[0] == "-":
+                is_neg = -1
+                S = S[1:]
+            D = len(S)-first_where(S,".")-1
+            S = S.replace(".","")
+            return Rational(int(S)*is_neg,10**D)
     else:
         raise Exception(f"Cannot coerce {S} to Rational")
 
@@ -221,18 +253,40 @@ def sign(Q):
 
 
 if __name__ == '__main__':
-    a = Rational(13,6)
-    b = Rational(3,4)
-    G = rational_gcd(a,b)
-    L = rational_lcm(a,b)
-    print(f"gcd({a},{b}) = {G}")
-    print(f"lcm({a},{b}) = {L}")
+#    a = Rational(13,6)
+#    b = Rational(3,4)
+#    G = rational_gcd(a,b)
+#    L = rational_lcm(a,b)
+#    print(f"gcd({a},{b}) = {G}")
+#    print(f"lcm({a},{b}) = {L}")
+#    
+#    d = "3.141592"
+#    r = digits_to_frac(d)
+#    print(f"{d} = {r} = {r.n/r.d}")
+#
+#    print(rational_round(r,106))
+#    
+#    print(rational_seq(0,3,Rational(2,3)))
     
-    d = "3.141592"
+    print()
+    
+    d = R = Rational(-16,25).decimal_expansion
     r = digits_to_frac(d)
     print(f"{d} = {r} = {r.n/r.d}")
-
-    print(rational_round(r,100))
+    print(r.decimal_expansion)
+        
     
-    print(rational_seq(0,3,Rational(2,3)))
+    print()
+    
+    d = R = Rational(137,126).decimal_expansion
+    r = digits_to_frac(d)
+    print(f"{d} = {r} = {r.n/r.d}")
+    print(r.decimal_expansion)
+    
+    print()
+    
+    d = R = Rational(-137,126).decimal_expansion
+    r = digits_to_frac(d)
+    print(f"{d} = {r} = {r.n/r.d}")
+    print(r.decimal_expansion)
     
