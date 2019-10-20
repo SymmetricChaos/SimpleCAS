@@ -61,7 +61,7 @@ print(P)
 -x^4 + 9/5x^2 + 3x - 13/10
 ```
 
-Naturally QPoly will interact with most mathematical operations. Addition, subtraction, and multiplication are defined with for all inputs. Exponentiation is defined for non-negative integers. True division is not defined because not every polynomial has an inverse which is also a polynomials, instead Euclidean divison is used.
+Naturally QPoly will interact with most mathematical operations. Addition, subtraction, and multiplication are defined with any QPoly, Rational, or Integer. Exponentiation is defined for non-negative integers. Since polynomials form a ring but not a field true division does not produce a QPoly, instead it returns an RFunc object. Euclidean division of polynomials takes the place of the floored division operation (in many cases this is preferred since it always returns a polynomial).
 
 But wait, there's more! The standard written form is fine for text but it looks ugly in places where more complex formatting is expected. To that end the `pretty_name` property gives a LaTeX formated version of the polynomial.
 
