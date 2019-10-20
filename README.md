@@ -52,6 +52,27 @@ print(rational_round(R,100))
 311/99
 ```
 
+Since writing out a `Rational(Numerator,Denominator)` can be inconvenient every time the `cast_to_rational` function is provided which accepts integers, floats, Rational, and properly formatted strings.
+
+```
+print(cast_to_rational(12))
+12
+
+print(cast_to_rational("45/12"))
+15/4
+
+print(cast_to_rational("12.95"))
+259/20
+
+print(cast_to_rational("-.71(010)"))
+-70939/999
+
+print(cast_to_rational(45.13))
+4513/100
+```
+
+While giving floats to `cast_to_rational` is allowed it is not recommended. All the other objects in SimpleCAS use Rationals for math and automatically use `cast_to_rational` on their inputs.
+
 ## QPoly
 Univariate polynomials with rational coefficients. Internally these are simple to represent as a list with the term of degree 0 in position 0, the term of degree 1 in position 1, and so on. This makes indexing the polynomial when working with it in Python intuitive but its not how we generally write polynomials in order to read them. When a QPoly object is printed it will show the standard written form with terms in descending order.
 
@@ -78,11 +99,11 @@ print(P.pretty_name)
 $−x^{4}\;+\;\dfrac{9x^{2}}{5}\;+\;3x\;−\;\dfrac{13}{10}$
 ```
 
-It looks pretty horrendous just written out like that but lets try it with the `poly_plot()` function which attempts to find the "interesting" part of the polynomial based on where the roots and stationary points are.
+It looks pretty horrendous just written out like that but lets try it with the `poly_plot` function which attempts to find the "interesting" part of the polynomial based on where the roots and stationary points are.
 
 ![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_example_1.png "polynomial")
 
-Rational approximations of the locations of where certain special points are given by `qpoly_roots()`, `stationary_points()`, and `inflection_points()`. Fineness of the approximation is adjustable.
+Rational approximations of the locations of where certain special points are given by `qpoly_roots`, `stationary_points`, and `inflection_points`. Fineness of the approximation is adjustable.
 
 
 ## RFunc
