@@ -1,5 +1,4 @@
-from Poly.QPoly import QPoly, RFunc
-from Poly.QPolyUtils import rational_roots
+from Poly import QPoly, RFunc, rational_roots
 from Rational import cast_to_rational, rational_round, sign
 
 

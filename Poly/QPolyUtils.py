@@ -1,5 +1,4 @@
-from Poly import QPoly
-from Poly import QPolyProd, QPolySum
+from Poly import QPoly, QPolyProd, QPolySum, poly_gcd
 from Rational import Rational, rational_gcd
 from Utility import factorization
 from itertools import product
@@ -210,19 +209,18 @@ if __name__ == '__main__':
     print()
     print("Completing the Square")
     R = QPoly( [27,12,3] )
-    print(f"R = {R}")
     sq = complete_the_square(R)
-    print(sq)
-#    
-#    
-#    print()
-#    print()
-#    print("Polynomial GCD")
-#    A = QPoly( [6,13,8,1] ) * QPoly( [3,0,0,-2] ) * QPoly( [1,1,1] )
-#    B = QPoly( [-6,-11,-4,1] ) * QPoly( [3,0,0,-2] )
-#    print(f"A = {A}")
-#    print(f"B = {B}")
-#    print(f"poly_gcd(A,B) = {poly_gcd(A,B)}")
+    print(f"R = {R}\n  = {sq}")
+    
+    
+    print()
+    print()
+    print("Polynomial GCD")
+    A = QPoly( [6,13,8,1] ) * QPoly( [3,0,0,-2] ) * QPoly( [1,1,1] )
+    B = QPoly( [-6,-11,-4,1] ) * QPoly( [3,0,0,-2] )
+    print(f"A = {A}")
+    print(f"B = {B}")
+    print(f"poly_gcd(A,B) = {poly_gcd(A,B)}")
 #    
 #
 #    print()
