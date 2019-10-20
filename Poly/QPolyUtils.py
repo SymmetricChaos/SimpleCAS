@@ -1,5 +1,5 @@
 from Poly import QPoly
-from Poly import QPolyProd
+from Poly import QPolyProd, QPolySum
 from Rational import Rational, rational_gcd
 from Utility import factorization
 from itertools import product
@@ -74,7 +74,9 @@ def complete_the_square(poly):
     h = poly[1]//(2*a)
     k = poly[0]-a*(h*h)
     
-    return a, QPoly( [h,1] ), k
+    hq = QPoly( [poly[1]//(2*a),1] )
+    
+    return QPolySum( [ QPolyProd([QPoly([a]),hq,hq]), QPoly([k])] )#   a, QPoly( [h,1] ), k
 
 
 def rational_roots(poly):
@@ -204,14 +206,13 @@ if __name__ == '__main__':
 #    print(f"Factorization of S: {poly_factor(S)}")
 #
 #
-#    print()
-#    print()
-#    print("Completing the Square")
-#    R = QPoly( [27,12,3] )
-#    print(f"R = {R}")
-#    sq = complete_the_square(R)
-#    print(sq)
-#    print(f"{sq[0]}({sq[1]})^2 + {sq[2]}")
+    print()
+    print()
+    print("Completing the Square")
+    R = QPoly( [27,12,3] )
+    print(f"R = {R}")
+    sq = complete_the_square(R)
+    print(sq)
 #    
 #    
 #    print()
