@@ -1,8 +1,8 @@
-from Poly.QPoly import QPoly
+from Poly import QPoly
+from Poly import QPolyProd
 from Rational import Rational, rational_gcd
 from Utility import factorization
 from itertools import product
-from collections import Counter
 
 def content(poly):
     """Rational GCD of the coefficients, negative if leading coef is negative,
@@ -168,24 +168,10 @@ def poly_factor(poly):
     return out
 
 
-# Deal with sorting
 def factored_form(poly):
     F = poly_factor(poly)
-    C = Counter(F)
+    return QPolyProd(F)
 
-    out = ""
-
-    for poly,pwr in C.items():
-        if str(poly) == "1":
-            continue
-        if len(poly) == 1:
-            out += f"{poly}"
-        elif pwr == 1:
-            out += f"({poly}) "
-        else:
-            out += f"({poly})^{pwr} "
-
-    print(out)
 
 
 
@@ -196,7 +182,7 @@ if __name__ == '__main__':
     S = QPoly([-1,1]) * QPoly([5,-7,3]) * QPoly([-1,1]) * QPoly([7,2]) * 3
     print(S)
     print("Factored version of S")
-    factored_form(S)
+    print(factored_form(S))
     
 #    x = [1,2,3]
 #    y = [1,8,27]
