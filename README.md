@@ -26,12 +26,20 @@ print(R+S)
 
 For most purposes creating Rational objects directly is rather cumbersome but also unnecessary. For convenience there is a `cast_to_rational` function provided that will try to create a Rational object from integers, floats, and properly formatted strings. This is used automatically by every function that accepts Rationals as an argument.
 
-Rationals can be expanded into both their decimal and simple continued fraction representations.
+Rationals can be expanded into several forms.
 
 ```
-R = Rational(37,11)
-print(R.digits(5))
-3.3636
+R = Rational(137,126)
+
+#String showing the first n digits after the decimals
+print(R.digits(5)) 
+1.08730
+
+# String showing the complete decimal expansion with the repeating part parenthesized
+print(R.decimal_expansion)  
+1.0(873015)
+
+# List with the canonical simple continued fraction
 print(R.cfrac())
 [3, 2, 1, 3]
 ```
@@ -61,7 +69,7 @@ print(P)
 -x^4 + 9/5x^2 + 3x - 13/10
 ```
 
-Naturally QPoly will interact with most mathematical operations. Addition, subtraction, and multiplication are defined with for all inputs. Exponentiation is defined for non-negative integers. True division is not defined because not every polynomial has an inverse which is also a polynomials, instead Euclidean divison is used.
+Naturally QPoly will interact with most mathematical operations. Addition, subtraction, and multiplication are defined with any QPoly, Rational, or Integer. Exponentiation is defined for non-negative integers. Since polynomials form a ring but not a field true division does not produce a QPoly, instead it returns an RFunc object. Euclidean division of polynomials takes the place of the floored division operation (in many cases this is preferred since it always returns a polynomial).
 
 But wait, there's more! The standard written form is fine for text but it looks ugly in places where more complex formatting is expected. To that end the `pretty_name` property gives a LaTeX formated version of the polynomial.
 
