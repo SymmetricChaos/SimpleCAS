@@ -193,16 +193,19 @@ class Rational:
         return False
     
     
-    def __pow__(self,power):
-        assert type(power) == int, "Only non-negative powers of integers are supported"
-        assert power >= 0, "Only non-negative powers of integers are supported"
-        if power == 0:
+    def __pow__(self,pwr):
+        if type(pwr) != int:
+            raise TypeError(f"pwr must be an integer not {type(pwr)}")
+        if pwr < 0:
+            raise TypeError(f"pwr must be non-negative")
+            
+        if pwr == 0:
             return Rational(1)
-        if power == 1:
+        if pwr == 1:
             return self
         else:
-            n = self.n**power
-            d = self.d**power
+            n = self.n**pwr
+            d = self.d**pwr
             return Rational(n,d)
 
 

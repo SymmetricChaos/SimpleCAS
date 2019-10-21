@@ -289,4 +289,3 @@ if __name__ == '__main__':
     r = digits_to_frac(d)
     print(f"{d} = {r} = {r.n/r.d}")
     print(r.decimal_expansion)
-    

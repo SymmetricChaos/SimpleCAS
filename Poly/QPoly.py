@@ -116,7 +116,7 @@ class QPoly:
         if type(pwr) != int:
             raise TypeError(f"pwr must be an integer not {type(pwr)}")
         if pwr < 0:
-            raise TypeError(f"pwr must be positive")
+            raise TypeError(f"pwr must be non-negative")
 
         if pwr == 0:
             return QPoly([1])
