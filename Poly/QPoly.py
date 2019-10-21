@@ -44,7 +44,7 @@ class QPoly:
     
     
     def __hash__(self):
-        return hash("CustomPoly"+str(self))
+        return hash("CustomQPoly"+str(self))
 
 
     def __len__(self):
