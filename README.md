@@ -24,8 +24,6 @@ print(R+S)
 89/9
 ```
 
-For most purposes creating Rational objects directly is rather cumbersome but also unnecessary. For convenience there is a `cast_to_rational` function provided that will try to create a Rational object from integers, floats, and properly formatted strings. This is used automatically by every function that accepts Rationals as an argument.
-
 Rationals can be expanded into several forms.
 
 ```
