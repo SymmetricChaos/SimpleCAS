@@ -29,7 +29,7 @@ Rationals can be expanded into several forms.
 ```
 R = Rational(137,126)
 
-#String showing the first n digits after the decimals
+# String showing the first n digits after the decimal
 print(R.digits(5)) 
 1.08730
 
@@ -42,7 +42,7 @@ print(R.cfrac())
 [3, 2, 1, 3]
 ```
 
-The continued fraction representation is useful for "rounding" rational numbers by finding the best rational approximation with a denominator no greater than a certain value.
+The continued fraction representation is useful for "rounding" rational numbers by finding the best rational approximation with a denominator no greater than a certain value. Note that this method uses semi-convergents and so it will actually *the* best approximation rather than simply *a* best approximation.
 
 ```
 R = Rational(392699,125000)
@@ -50,7 +50,7 @@ print(rational_round(R,100))
 311/99
 ```
 
-Since writing out a `Rational(Numerator,Denominator)` can be inconvenient every time the `cast_to_rational` function is provided which accepts integers, floats, Rational, and properly formatted strings.
+Since writing out a `Rational(Numerator,Denominator)` can be inconvenient every time the `cast_to_rational` function is provided which accepts integers and properly formatted strings as well as floating point numbers.
 
 ```
 print(cast_to_rational(12))
@@ -69,7 +69,12 @@ print(cast_to_rational(45.13))
 4513/100
 ```
 
-While giving floats to `cast_to_rational` is allowed it is not recommended. All the other objects in SimpleCAS use Rationals for math and automatically use `cast_to_rational` on their inputs.
+While giving floats to `cast_to_rational` is allowed it is not recommended. Floating point numbers are finite length binary approximations of some real number so the results may not be the same as expected. The method used also relies on how Python converts floating point numbers to strings so it is dependent on any settings that influence that.
+
+```
+print(cast_to_rational(1/3))
+3333333333333333/10000000000000000
+```
 
 ## QPoly
 Univariate polynomials with rational coefficients. Internally these are simple to represent as a list with the term of degree 0 in position 0, the term of degree 1 in position 1, and so on. This makes indexing the polynomial when working with it in Python intuitive but its not how we generally write polynomials in order to read them. When a QPoly object is printed it will show the standard written form with terms in descending order.
@@ -80,7 +85,7 @@ print(P)
 -11x^4 + x^2 + 3x + 2
 ```
 
-Because the coefficients are automatically passed through `cast_to_rational` it is easy to create polynomials with non-integer coefficients.
+Because the coefficients are automatically passed through `cast_to_rational` it is easy to create polynomials with non-integer coefficients, though keep in mind the warnings about using floating point numbers from above.
 
 ```
 P = QPoly( ["-1.3",3,"9/5",0,-1] )
@@ -88,7 +93,9 @@ print(P)
 -x^4 + 9/5x^2 + 3x - 13/10
 ```
 
-Naturally QPoly will interact with most mathematical operations. Addition, subtraction, and multiplication are defined with any QPoly, Rational, or Integer. Exponentiation is defined for non-negative integers. Since polynomials form a ring but not a field true division does not produce a QPoly, instead it returns an RFunc object. Euclidean division of polynomials takes the place of the floored division operation (in many cases this is preferred since it always returns a polynomial).
+Naturally QPoly will interact with most mathematical operations. Addition, subtraction, and multiplication are defined with any QPoly, Rational, or Integer. Exponentiation is defined for non-negative integers. Since polynomials form a ring but not a field true division does not produce a QPoly, instead it returns an RFunc object. Euclidean division of polynomials takes the place of the floored division operation (in many cases this is preferred since it always returns a polynomial). The modulus operator returns the remainder.
+
+The derivative and integral of the polynomials are avaible through the `.derivative()` and `.integral()` methods.
 
 But wait, there's more! The standard written form is fine for text but it looks ugly in places where more complex formatting is expected. To that end the `pretty_name` property gives a LaTeX formated version of the polynomial.
 
@@ -101,7 +108,7 @@ It looks pretty horrendous just written out like that but lets try it with the `
 
 ![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/poly_example_1.png "polynomial")
 
-Rational approximations of the locations of where certain special points are given by `qpoly_roots`, `stationary_points`, and `inflection_points`. Fineness of the approximation is adjustable.
+Rational approximations of the locations of where certain special points are given by the `qpoly_roots`, `stationary_points`, and `inflection_points` functions. Fineness of the approximation is adjustable.
 
 
 ## RFunc
