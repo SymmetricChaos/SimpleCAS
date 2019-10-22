@@ -1,4 +1,4 @@
-from Utility import make_canvas, scatter_points
+from Utility import make_canvas, scatter_points, show_plot
 from Poly import ZPoly
 
 
@@ -14,7 +14,7 @@ def zpoly_plot(poly,size=[5,5],show_plot=True):
     pts = [i for i in zip(x,y)]
     
     if show_plot:
-        make_canvas(xwidth,ywidth,size=size,show_axes=True,title=f"{poly.pretty_name} (mod {poly.F})")
+        make_canvas(xwidth,ywidth,size=size,show_axes=True,title=f"{poly.pretty_name}   (mod {poly.F})")
         scatter_points(pts)
 
     return pts
@@ -24,12 +24,15 @@ def zpoly_plot(poly,size=[5,5],show_plot=True):
 
 
 if __name__ == '__main__':
-    from random import randint
-    F = 97
+    from random import randint, sample
+    F = 16
     coefs = [randint(0,F) for i in range(5)]
-    print(coefs,type(coefs))
     P = ZPoly( coefs, F )
-    print(f"P = {P}")
+    print(f"P = {P} (mod {P.F})")
     
-    zpoly_plot(P)
+    pts = zpoly_plot(P)
+    show_plot()
+    print()
+    for i in pts:
+        print(i)
     
