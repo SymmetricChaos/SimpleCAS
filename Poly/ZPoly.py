@@ -18,12 +18,12 @@ class ZPoly:
         """Remove trailing zeroes"""
         if self.coef == []:
             self.coef = [0]
+        self.coef = [c % self.F for c in self.coef]
         while self.coef[-1] == 0 and len(self.coef) > 1:
             if len(self.coef) == 1:
                 break
             self.coef.pop()
         
-        self.coef = [c % self.F for c in self.coef]
 
 
     def __getitem__(self,n):
