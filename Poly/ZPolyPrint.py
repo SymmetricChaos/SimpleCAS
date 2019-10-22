@@ -21,46 +21,35 @@ def zpoly_print(poly):
         if poly[pwr] == 0:
             continue
         
-        
-        coe = poly[pwr]
-        val = abs(coe)
-        sgn = "-" if coe//val == -1 else "+"
-        
-        
-        # Handle sign for leading term
-        if pwr == d and sgn == "+":
-            sgn = ""
-            
+        coe = poly[pwr]            
         
         # Handle integer coefficients
 
         # Handle the special case of coefficient 1 or -1
-        if val == 1:
+        if coe == 1:
             
             # Special case if term is x or -x
             if pwr == 1:
-                s = f" {sgn} x"
+                s = f" + x"
             # Special case is term is 1 or -1
             elif pwr == 0:
-                s = f" {sgn} 1"
+                s = f" + 1"
             # General case
             else:
-                s = f" {sgn} x^{pwr}"
+                s = f" + x^{pwr}"
 
         # General case
         else:
             if pwr == 1:
-                s = f" {sgn} {val}x"
+                s = f" + {coe}x"
             elif pwr == 0:
-                s = f" {sgn} {val}"
+                s = f" + {coe}"
             else:
-                s = f" {sgn} {val}x^{pwr}"
-
-
-        # Special case of leading coefficient
+                s = f" + {coe}x^{pwr}"
+        
         if pwr == d:
-            s = s.replace(" ","")
-            
+            s = s[3:]
+        
         out += s
     
     return out# + f" (mod {poly.F})"
@@ -90,44 +79,38 @@ def zpoly_print_pretty(poly):
             continue
         
         
-        coe = poly[pwr]
-        val = abs(coe)
-        sgn = u"\u2212" if coe//val == -1 else "+" #U+2212 is the large minus
+        # Skip the zero coefficients entirely
+        if poly[pwr] == 0:
+            continue
         
-        
-        # Handle sign for leading term
-        if pwr == d and sgn == "+":
-            sgn = ""
-            
+        coe = poly[pwr]            
         
         # Handle integer coefficients
 
         # Handle the special case of coefficient 1 or -1
-        if val == 1:
+        if coe == 1:
             
             # Special case if term is x or -x
             if pwr == 1:
-                s = f" {sgn} x"
+                s = f" + x"
             # Special case is term is 1 or -1
             elif pwr == 0:
-                s = f" {sgn} 1"
+                s = f" + 1"
             # General case
             else:
-                s = f" {sgn} x^{{{pwr}}}"
+                s = f" + x^{{{pwr}}}"
 
         # General case
         else:
             if pwr == 1:
-                s = f" {sgn} {val}x"
+                s = f" + {coe}x"
             elif pwr == 0:
-                s = f" {sgn} {val}"
+                s = f" + {coe}"
             else:
-                s = f" {sgn} {val}x^{{{pwr}}}"
-
-
-        # Special case of leading coefficient
+                s = f" + {coe}x^{{{pwr}}}"
+        
         if pwr == d:
-            s = s.replace(" ","")
+            s = s[3:]
         else:
             s = s.replace(" ","\;")
             
