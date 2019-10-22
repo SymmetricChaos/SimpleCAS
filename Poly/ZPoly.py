@@ -1,7 +1,7 @@
 # Univariate polynomials with coefficients from the field of rationals
 
 from Utility import poly_add, poly_mult, mod_inv, mod_div
-from Poly.ZPolyPrint import zpoly_print
+from Poly.ZPolyPrint import zpoly_print, zpoly_print_pretty
 
 class ZPoly:
     
@@ -301,8 +301,12 @@ class ZPoly:
             self[i] = mod_div(self[i],C,self.F)
 
 
+    def _pretty_name(self):
+        """Formatted for LaTeX"""
+        return zpoly_print_pretty(self)
+
     # Things that are like attributes can be access as properties
-#    pretty_name = property(_pretty_name)
+    pretty_name = property(_pretty_name)
     monic_part = property(_monic_part)
 
 
