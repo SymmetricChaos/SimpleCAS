@@ -55,6 +55,22 @@ def lcm(*args):
     return lcm(a,b)
 
 
+def mod_inv(a, m):
+    """Modular Multiplicative Inverse"""
+    
+    a = a % m
+    
+    g, x, y = egcd(a, m)
+    if g != 1:
+        raise ValueError(f"Multiplicative inverse of {a} mod {m} does not exist")
+    else:
+        return x % m
+    
+    
+def mod_div(a,b,m):
+    return (a * mod_inv(b,m)) % m
+
+
 def factorial(n):
     """Factorial of n"""
     if type(n) != int:
