@@ -35,7 +35,7 @@ class ZPoly:
         """Allow valid coefficients to be set"""    
         if type(val) != int:
             raise TypeError("Values must be integers")
-        self.coef[n] = val
+        self.coef[n] = val % self.F
 
 
     # Need to check that modulus at the end isn't too slow
@@ -203,8 +203,8 @@ class ZPoly:
         if len(other) == 1:
             return ZPoly( [mod_div(P[0],q,self.F) for q in Q], self.F), ZPoly( [0], self.F)
         
-        # Use polynomial division algorithm, rationals are a field so this is
-        # always defined
+        # Use polynomial division algorithm this may not be defined if F is not
+        # a prime power.
         else:
             dP = len(P)-1
             dQ = len(Q)-1
@@ -238,46 +238,43 @@ class ZPoly:
         else:
             return NotImplemented
         return divmod(self,other)[0]
-#    
-#    
-#    def __rfloordiv__(self,other):
-#        """Euclidean division of polynomials"""
-#        if type(other) in [int,Rational]:
-#            other = QPoly([other])
-#        elif type(other) == QPoly:
-#            pass
-#        else:
-#            return NotImplemented
-#        return divmod(other,self)[0]
-#
-#
+    
+    
+    def __rfloordiv__(self,other):
+        """Euclidean division of polynomials"""
+        return other // self
+    
+    
     def __mod__(self,other):
         """Remainder of Euclidean division of polynomials"""
+        if type(other) == int:
+            other = ZPoly([other],self.F)
+        elif type(other) == ZPoly:
+            pass
+        else:
+            return NotImplemented
         return divmod(self,other)[1]
-#    
-#    
-#    def __rmod__(self,other):
-#        """Remainder of Euclidean division of polynomials"""
-#        if type(other) in [int,Rational]:
-#            other = QPoly([other])
-#        return divmod(self,other)[1]
-#    
-#    
-
-
+    
+    
+    def __rmod__(self,other):
+        """Remainder of Euclidean division of polynomials"""
+        other % self
+    
+    
     def copy(self):
         """Copy the polynomial"""
         return ZPoly(self.coef[:],self.F)
 
 
-#    def derivative(self):
-#        """Calculate the derivative of the polynomial"""
-#        co = self.coef.copy()
-#        for i in range(len(co)):
-#            co[i] *= i
-#        return ZPoly(co[1:])
-#
-#
+    def derivative(self):
+        """Calculate the formal derivative of the polynomial"""
+        co = self.coef.copy()
+        for i in range(len(co)):
+            co[i] *= i
+        return ZPoly(co[1:])
+
+
+#    # Dunno if formal integrals are a thing
 #    def integral(self,C):
 #        """Calculate the integral of the polynomial"""
 #        co = self.coef.copy()
@@ -285,65 +282,42 @@ class ZPoly:
 #        for pos,val in enumerate(co[1:],start=1):
 #            co[pos] = val/(pos)
 #        return ZPoly(co)
-#
-#
-#
-#    def is_monic(self):
-#        """Check if the polynomial is monic"""
-#        return self[-1] == 1 or self[-1] == -1
-#    
-#    
-#    def _monic_part(self):
-#        C = self.copy()
-#        C.make_monic()
-#        return C
-#
-#    
-#    def make_monic(self):
-#        C = self[-1]
-#        for i in range(len(self)):
-#            self[i] /= C
-#
-#
-#    def _content(self):
-#        """Rational GCD of the coefficients, negative if leading coef is negative,
-#        makes the polynomial have integer coefs"""
-#        return abs(rational_gcd(self.coef)) * (-1 if self.coef[-1] < 0 else 1)
-#    
-#
-#    def _primitive_part(self):
-#        """Smallest rational multiple of the polynomial with integer coefficients
-#        that have no common factors"""
-#        return self//self.content
-#    
-#    
-#    def is_primitive(self):
-#        """Convenience function to check if a polynomial is primitive"""
-#        return self.content == 1
-#
-#
-#    def make_primitive(self):
-#        C = self.content
-#        for i in range(len(self)):
-#            self[i] /= C
-#
-#
+
+
+    def is_monic(self):
+        """Check if the polynomial is monic"""
+        return self[-1] == 1 or self[-1] == -1
+    
+    
+    def _monic_part(self):
+        C = self.copy()
+        C.make_monic()
+        return C
+
+    
+    def make_monic(self):
+        C = self[-1]
+        for i in range(len(self)):
+            self[i] = mod_div(self[i],C,self.F)
+
 
     # Things that are like attributes can be access as properties
 #    pretty_name = property(_pretty_name)
-#    content = property(_content)
-#    primitive_part = property(_primitive_part)
-#    monic_part = property(_monic_part)
+    monic_part = property(_monic_part)
 
 
 
 
 if __name__ == '__main__':
-    P = ZPoly( [1,4,7], F = 17 )
-    Q = ZPoly( [1,1], F = 17)
-    print(P)
-    print(Q)
-    print(P//Q)
-    print(P%Q)
-
-    print((P//Q)*Q+(P%Q))
+    F = 17
+    P = ZPoly( [1,4,7], F = F )
+    Q = ZPoly( [8,1], F = F)
+    print(f"P = {P} (mod {F})")
+    print(f"Q = {Q} (mod {F})")
+    print()
+    print(f"P//Q = {P//Q}")
+    print(f"P%Q  = {P%Q}")
+    print("Check the the process reverses")
+    print((P//Q)*Q+(P%Q) == P)
+    
+    print(P.monic_part)
