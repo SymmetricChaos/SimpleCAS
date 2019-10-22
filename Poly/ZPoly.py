@@ -1,7 +1,7 @@
 # Univariate polynomials with coefficients from the field of rationals
 
-from Utility import poly_add, poly_mult, poly_print, poly_print_pretty
-
+from Utility import poly_add, poly_mult, mod_inv, mod_div
+from Poly.ZPolyPrint import zpoly_print
 
 class ZPoly:
     
@@ -10,6 +10,7 @@ class ZPoly:
         if type(F) != int:
             raise TypeError(f"Modulus must be int not {type(F)}")
         self.coef = coef
+        self.F = F
         self.normalize()
 
 
@@ -21,9 +22,8 @@ class ZPoly:
             if len(self.coef) == 1:
                 break
             self.coef.pop()
-            
-        for i in range(len(self)):
-            self.coef[i] = self.coef[i] % self.F
+        
+        self.coef = [c % self.F for c in self.coef]
 
 
     def __getitem__(self,n):
@@ -38,7 +38,7 @@ class ZPoly:
         self.coef[n] = val
 
 
-    # Need to check that this isn't too slow
+    # Need to check that modulus at the end isn't too slow
     def __call__(self,x):
         """Evaluate the polynomial at a given point"""
         out = 0
@@ -55,12 +55,12 @@ class ZPoly:
 
     def __str__(self):
         """Print nicely in descending written form"""
-        return poly_print(self)
+        return zpoly_print(self)
 
 
     def __repr__(self):
         """Print nicely in descending written form"""
-        return poly_print(self)
+        return zpoly_print(self)
     
     
     def __hash__(self):
@@ -75,20 +75,20 @@ class ZPoly:
     def __neg__(self):
         """Additive inverse of each coefficient"""
         L = [-c for c in self.coef]
-        return ZPoly(L)
+        return ZPoly(L,self.F)
 
 
     def __add__(self,other):
         """Addition"""
         # If we can turn the other into a rational do that
         if type(other) == int:
-            other = ZPoly( [other] )
+            other = ZPoly( [other],self.F )
             L = poly_add(self.coef,other.coef)
-            return ZPoly(L)
+            return ZPoly(L,self.F)
         
         elif type(other) == ZPoly:
             L = poly_add(self.coef,other.coef)
-            return ZPoly(L)
+            return ZPoly(L,self.F)
         
         else:
             return NotImplemented
@@ -106,19 +106,19 @@ class ZPoly:
             return NotImplemented
         
         if type(other) == int:
-            other = ZPoly( [other] )
+            other = ZPoly( [other],self.F )
         
         L = poly_add(self.coef,[-c for c in other.coef])
-        return ZPoly(L)
+        return ZPoly(L,self.F)
 
 
     def __rsub__(self,other):
         """Subtraction is NOT commutative"""
         if type(other) == int:
-            other = ZPoly( [other] )
+            other = ZPoly( [other],self.F )
 
         L = poly_add(self.coef,[-c for c in other.coef])
-        return ZPoly(L)
+        return ZPoly(L,self.F)
 
 
     def __mul__(self,other):
@@ -128,10 +128,10 @@ class ZPoly:
             return NotImplemented
         
         if type(other) == int:
-            other = ZPoly( [other] )
+            other = ZPoly( [other],self.F )
             
         L = poly_mult(self.coef,other.coef)
-        return ZPoly(L)
+        return ZPoly(L,self.F)
 
 
     def __rmul__(self,other):
@@ -147,7 +147,7 @@ class ZPoly:
             raise TypeError(f"pwr must be non-negative")
 
         if pwr == 0:
-            return ZPoly([1])
+            return ZPoly([1],self.F)
         elif pwr == 1:
             return self
         else:
@@ -176,61 +176,68 @@ class ZPoly:
         """Degree of the polynomial"""
         return len(self)-1
 
-#    def __divmod__(self,poly):
-#        """Algorithm for euclidean division of polynomials"""
-#
-#        # Cast integer to poly if needed
-#        if type(poly) in [int,Rational]:
-#            poly = QPoly([poly])
-#            
-#        if type(poly) != QPoly:
-#            raise TypeError(f"Could not cast {poly} to QPoly")
-#
-#        # Check for division by zero    
-#        if poly.coef == [0]:
-#            raise ZeroDivisionError
-#
-#        # We can only divide a longer polynomial by a shorter one
-#        if len(self) < len(poly):
-#            return QPoly([0]), self.copy()
-#
-#        # Copy inputs
-#        P = self.coef[:]
-#        Q = poly.coef[:]
-#
-#        # Case of a single int or rational
-#        if len(poly) == 1:
-#            return QPoly([p/Q[0] for p in P]), QPoly([0])
-#        # Use polynomial division algorithm, rationals are a field so this is
-#        # always defined
-#        else:
-#            dP = len(P)-1
-#            dQ = len(Q)-1
-#            if dP >= dQ:
-#                qt = [0] * dP
-#                while dP >= dQ:
-#                    d = [0]*(dP - dQ) + Q
-#                    mult = qt[dP - dQ] = P[-1] / d[-1]
-#                    d = [coeff*mult for coeff in d]
-#                    P = [ coeffN - coeffd for coeffN, coeffd in zip(P, d)]
-#                    while P[-1] == 0 and len(P) > 1:
-#                        if len(P) == 1:
-#                            break
-#                        P.pop()
-#                    dP = len(P)-1
-#            return QPoly(qt), QPoly(P)
-#
-#
-#    # Using __floordiv__ since there can be a remainder, not because we round down
-#    def __floordiv__(self,other):
-#        """Euclidean division of polynomials"""
-#        if type(other) in [int,Rational]:
-#            other = QPoly([other])
-#        elif type(other) == QPoly:
-#            pass
-#        else:
-#            return NotImplemented
-#        return divmod(self,other)[0]
+
+    def __divmod__(self,other):
+        """Algorithm for euclidean division of polynomials"""
+    
+        # Cast integer to poly if needed
+        if type(other) == int:
+            other = ZPoly( [other], self.F )
+            
+        if type(other) != ZPoly:
+            raise TypeError(f"Could not cast {other} to ZPoly")
+
+        # Check for division by zero    
+        if other.coef == [0]:
+            raise ZeroDivisionError
+
+        # We can only divide a longer polynomial by a shorter one
+        if len(self) < len(other):
+            return ZPoly([0],self.F), self.copy()
+
+        # Copy inputs
+        P = self.coef[:]
+        Q = other.coef[:]
+
+        # Case of a single int or rational
+        if len(other) == 1:
+            return ZPoly( [mod_div(P[0],q,self.F) for q in Q], self.F), ZPoly( [0], self.F)
+        
+        # Use polynomial division algorithm, rationals are a field so this is
+        # always defined
+        else:
+            dP = len(P)-1
+            dQ = len(Q)-1
+            if dP >= dQ:
+                qt = [0]*dP
+                while dP >= dQ:
+                    d = [0]*(dP - dQ) + Q
+                    mult = qt[dP - dQ] = P[-1] * mod_inv(d[-1],self.F)
+                    d = [co*mult for co in d]
+                    P = [ (coeffP - coeffd) % self.F for coeffP, coeffd in zip(P, d)]
+                    while P[-1] == 0 and len(P) > 1:
+                        if len(P) == 1:
+                            break
+                        P.pop()
+                    dP = len(P)-1
+                rm = [i % self.F for i in P]
+            else:
+                qt = [0]
+                rm = [i % self.F for i in P]
+
+        return ZPoly( qt, self.F), ZPoly( rm, self.F)
+
+
+    # Using __floordiv__ since there can be a remainder, not because we round down
+    def __floordiv__(self,other):
+        """Euclidean division of polynomials"""
+        if type(other) == int:
+            other = ZPoly([other],self.F)
+        elif type(other) == ZPoly:
+            pass
+        else:
+            return NotImplemented
+        return divmod(self,other)[0]
 #    
 #    
 #    def __rfloordiv__(self,other):
@@ -244,9 +251,9 @@ class ZPoly:
 #        return divmod(other,self)[0]
 #
 #
-#    def __mod__(self,other):
-#        """Remainder of Euclidean division of polynomials"""
-#        return divmod(self,other)[1]
+    def __mod__(self,other):
+        """Remainder of Euclidean division of polynomials"""
+        return divmod(self,other)[1]
 #    
 #    
 #    def __rmod__(self,other):
@@ -256,33 +263,11 @@ class ZPoly:
 #        return divmod(self,other)[1]
 #    
 #    
-#    # __truediv__ isn't a closed operation so we get a QPolyQou object
-#    def __truediv__(self,other):
-#        """Truedivision of polynomials"""
-#        if type(other) in [int,Rational]:
-#            other = QPoly([other])
-#        elif type(other) == QPoly:
-#            pass
-#        else:
-#            return NotImplemented
-#        return RFunc(self,other)
-#    
-#    
-#    def __rtruediv__(self,other):
-#        """Truedivision of polynomials"""
-#        if type(other) in [int,Rational]:
-#            other = QPoly([other])
-#        elif type(other) == QPoly:
-#            pass
-#        else:
-#            return NotImplemented
-#        return RFunc(other,other)
-
 
 
     def copy(self):
         """Copy the polynomial"""
-        return ZPoly(self.coef[:])
+        return ZPoly(self.coef[:],self.F)
 
 
 #    def derivative(self):
@@ -341,8 +326,8 @@ class ZPoly:
 #        C = self.content
 #        for i in range(len(self)):
 #            self[i] /= C
-
-
+#
+#
 
     # Things that are like attributes can be access as properties
 #    pretty_name = property(_pretty_name)
@@ -353,29 +338,12 @@ class ZPoly:
 
 
 
+if __name__ == '__main__':
+    P = ZPoly( [1,4,7], F = 17 )
+    Q = ZPoly( [1,1], F = 17)
+    print(P)
+    print(Q)
+    print(P//Q)
+    print(P%Q)
 
-############################
-## Fundamental Operations ##
-############################
-    
-# GCD is defined as primitive part
-# It could also be defined as the monic part but primitive works even when one
-# wishes to work with integer polynomials
-#def poly_gcd(P,Q):
-#    """GCD of two polynomials"""
-#    assert type(P) == QPoly
-#    assert type(Q) == QPoly
-#    
-#    if Q.degree() > P.degree():
-#        P,Q = Q,P
-#        
-#    # Check if we reached the end
-#    if Q == QPoly([0]):
-#        return P.primitive_part
-#    if P == QPoly([0]):
-#        return Q.primitive_part
-#    
-#    else:
-#        g = poly_gcd(P % Q, Q)
-#        return g.primitive_part
-
+    print((P//Q)*Q+(P%Q))
