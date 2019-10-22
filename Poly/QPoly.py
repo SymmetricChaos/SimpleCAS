@@ -31,7 +31,13 @@ class QPoly:
         for pwr,co in enumerate(self.coef):
             out = out + co*(x**pwr)
         return out
+    
 
+    def evaluate(self,X):
+        """Evaluate the polynomial at a given list of points"""
+        assert type(X) == list
+        return [self(x) for x in X]
+    
 
     def __str__(self):
         """Print nicely in descending written form"""
@@ -274,14 +280,7 @@ class QPoly:
         return QPoly(co)
 
 
-    def evaluate(self,X):
-        """Evaluate the polynomial at a given list of points"""
-        assert type(X) == list
-        out = [0]*len(X)
-        for pwr,coef in enumerate(self.coef):
-            for pos,x in enumerate(X):
-                out[pos] = (out[pos] + coef*(x**pwr))
-        return out
+
 
 
     def degree(self):
