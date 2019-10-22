@@ -2,7 +2,8 @@
 
 
 from Rational import Rational, rational_gcd, cast_to_rational
-from Utility import poly_add, poly_mult, poly_print, poly_print_pretty
+from Utility import poly_add, poly_mult
+from Poly.QPolyPrint import poly_print, poly_print_pretty
 
 
 class QPoly:
