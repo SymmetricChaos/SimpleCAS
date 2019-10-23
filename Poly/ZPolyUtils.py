@@ -14,10 +14,11 @@ def lagrange_interpolation(X,Y,F):
         final += out
     return final
 
+# Use lagrange interpolation for Shamir's secret sharing
 
 if __name__ == '__main__':
     F = 1613
-    X = [2,4,5]
-    Y = [1942,3402,4414]
+    X = [1,2,3,4,5]
+    Y = [1494,329,965,176,1188,775]
     
     print(lagrange_interpolation(X,Y,F))

@@ -25,7 +25,6 @@ class ZPoly:
             self.coef.pop()
         
 
-
     def __getitem__(self,n):
         """Make polynomial accessible by indexing"""
         return self.coef[n]

@@ -22,7 +22,7 @@ def gcd(*args):
     if len(args) == 2:
         a = args[0]
         b = args[1]
-        g,x,y = egcd(a,b)
+        g,_,_ = egcd(a,b)
         return g
     
     # if more than two break it up recursively
@@ -46,7 +46,7 @@ def lcm(*args):
     if len(args) == 2:
         a = args[0]
         b = args[1]
-        g,x,y = egcd(a,b)
+        g,_,_ = egcd(a,b)
         return abs(a*b)//g
     
     # if more than two break it up recursively
@@ -60,7 +60,7 @@ def mod_inv(a, m):
     
     a = a % m
     
-    g, x, y = egcd(a, m)
+    g, x, _ = egcd(a, m)
     if g != 1:
         raise ValueError(f"Multiplicative inverse of {a} mod {m} does not exist")
     else:
@@ -88,9 +88,9 @@ def choose(n,k):
     if type(k) != int:
         raise TypeError(f"k must be an integer not {type(k)}")
     if n < k:
-        raise Exception("n cannot be less than k")
+        raise ValueError("n cannot be less than k")
     if k < 0:
-        raise Exception("k must be nonnegative")
+        raise ValueError("k must be nonnegative")
         
     # Calculate the numerator and denominator seperately in order to avoid loss
     # of precision for large numbers.
@@ -107,10 +107,12 @@ def choose(n,k):
 
 
 def inds_where(L,val):
+    """All indices of list L that equal val"""
     return [i for i in range(len(L)) if L[i] == val]
 
 
 def first_where(L,val):
+    """First index of list L that equals val"""
     for pos,l in enumerate(L):
         if l == val:
             return pos
