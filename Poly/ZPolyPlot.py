@@ -24,8 +24,8 @@ def zpoly_plot(poly,size=[5,5],show_plot=True):
 
 
 if __name__ == '__main__':
-    from random import randint, sample
-    F = 16
+    from random import randint
+    F = 29
     coefs = [randint(0,F) for i in range(5)]
     P = ZPoly( coefs, F )
     print(f"P = {P} (mod {P.F})")
