@@ -8,7 +8,7 @@ For the love of common sense don't use SimpleCAS for anything remotely important
 
 
 # Features
-Currently three kinds of objects are supported by SimpleCAS:
+Currently four kinds of objects are supported by SimpleCAS:
 
 ## Rational
 Rational numbers represented in simplest form. They are essentially just a pair of numbers with a bunch of methods defined to make sure they interact with other Rational objects as well as Python's integers.
@@ -127,10 +127,20 @@ Making a picture of the "interesting" part of rational function is rather diffic
 ![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/rfunc_example.png "rational function")
 
 
+## ZPoly
+Polynomials with integer coefficients in some cyclic group.  ZPoly can be created in the same ways as as QPoly except that the order of the cyclic group must be specified. Coefficients are reduced modulo the order of the group. The same occurs if the polynomial is evaluated.
+
+```
+P = ZPoly( [50,0,-8,121,9], 27 )
+print(P)
+9x^4 + 13x^3 + 19x^2 + 23
+```
+
+It is often most useful for the order of the group to be a prime or prime power so that the group can also be treated as a finite field but this isn't required.
+
+
 # Planned Expansions
-Currently there are plans for a few additions to the system. Power series already have a tiny bit of support as the PSeries object. Polynomials with integer coefficient reduced modulo some integer used to be included as ZPoly but were removed to focus on the correctness of QPoly, they will be reintroduced at some point.
-
-
+Currently there are plans for a few additions to the system. Power series already have a tiny bit of support as the PSeries object. Combiner objects for QPoly have some support so that sums and products of QPoly can be represented.
 
 # Not Planned
 ## Multivariate Polynomials
