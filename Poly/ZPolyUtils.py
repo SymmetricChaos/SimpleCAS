@@ -46,6 +46,8 @@ def get_shamir_secret(pts,F):
 
 
 
+
+
 if __name__ == '__main__':
     
     secret = 1342
@@ -57,7 +59,7 @@ if __name__ == '__main__':
     print(f"We will use Shamir's method to break up the secret number {secret} into {total_parts} pieces such any {min_parts} pieces can be used to get the secret.")
     print(f"\nTo do this we create a random polynomial of degree {min_parts} that has constant term {secret} over a finite field and choose {total_parts} points on it.")
     
-    print(f"\nUse a finite field of order {F} we get the points:")
+    print(f"\nUsing a finite field of order {F} we get the points:")
     for i in pts:
         print(i)
     
