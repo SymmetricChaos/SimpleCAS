@@ -206,6 +206,9 @@ def int_root(x):
     return b
 
 
+
+
+
 def factorization(n,negatives=False):
     """All Unique Factors"""
     if type(n) != int:
@@ -235,6 +238,49 @@ def factorization(n,negatives=False):
     L.sort()
     
     return L
+
+
+def primes():
+    """Prime Numbers"""
+    D = {}
+    q = 2
+    
+    while True:
+        if q not in D:
+            
+            yield q
+                
+            D[q * q] = [q]
+        else:
+            for p in D[q]:
+                D.setdefault(p + q, []).append(p)
+            del D[q]
+        q += 1
+
+
+def prime_factorization(n):
+    """Prime Factors with Multiplicity"""
+    if type(n) != int:
+        raise TypeError("n must be an integer") 
+    
+    lim = int_root(n)+1
+    L = []
+    
+    for p in primes():
+        while n % p == 0:
+            L.append(p)
+            n = n // p
+            
+        if n == 1:
+            break
+        
+        if p > lim:
+            L.append(n)
+            break
+    return L
+
+
+
 
 
 def unit_test(minitests):
