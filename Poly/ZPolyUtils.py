@@ -1,6 +1,6 @@
-from Utility import mod_inv
+from Utility import mod_inv, factorization
 from Poly import ZPoly
-from random import randint
+from random import randint, sample
 
 def zpoly_lagrange_interpolation(X,Y,F):
     """Lagrange Polynomial"""
@@ -16,13 +16,16 @@ def zpoly_lagrange_interpolation(X,Y,F):
     return final
 
 
+# Currently only allows prime inputs, need to allow any prime power
 def make_shamir_secret(secret,k,n,F):
 
     if secret > F:
         raise ValueError("secret cannot be less than F or information will be lost")
     if k > n:
         raise ValueError("parts needed to reconstruct cannot be greater than total points created")
-    
+    if len(factorization(F)) != 2:
+        raise ValueError("Order for finite field must be a prime power")
+        
     co = [secret] + [randint(0,F-1) for i in range(k-1)]
 
     P = ZPoly( co, F )
@@ -46,7 +49,7 @@ def get_shamir_secret(pts,F):
 
 if __name__ == '__main__':
     
-    secret = 345
+    secret = 1342
     min_parts = 3
     total_parts = 6
     F = 1613
@@ -59,5 +62,8 @@ if __name__ == '__main__':
     for i in pts:
         print(i)
     
-    print(f"\nInterpolation gives us the answer:")
-    print(get_shamir_secret(pts,F))
+    print(f"\nPicking three of those we can reconstruct the answer:")
+    rpts = sample(pts,min_parts)
+    print(get_shamir_secret(rpts,F))
+    
+    
