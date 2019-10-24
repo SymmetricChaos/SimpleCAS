@@ -1,5 +1,5 @@
 from Rational import Rational
-from Poly import QPoly, RFunc
+from Poly import QPoly, ZPoly, RFunc
 from Utility import unit_test
 
 
@@ -77,7 +77,24 @@ rf_minitests = [ (R, "(x + 1) / (3x + 2)"),
                  (U.primitive_part, "12 / (120x + 32)")
                ]
 
+###########
+## ZPoly ##
+###########
 
+
+F = 27
+P = ZPoly( [50,0,-8,121,9], F )
+Q = ZPoly( [25,1,8], F )
+#print(f"P = {P} (mod {F})")
+#print(f"Q = {Q} (mod {F})")
+#print()
+#print(f"P//Q = {P//Q}")
+#print(f"P%Q  = {P%Q}")
+
+z_minitests = [ (P, "9x^4 + 13x^3 + 19x^2 + 23"),
+                (Q, "8x^2 + x + 25"),
+                (P+Q, "9x^4 + 13x^3 + x + 21"),
+              ]
 
 #######################
 ## Integration Tests ##
@@ -107,7 +124,9 @@ print("\nTest Rational")
 unit_test(r_minitests)
 print("\nTest QPoly")
 unit_test(p_minitests)
-print("\nTest QPolyQuo")
+print("\nTest RFunc")
 unit_test(rf_minitests)
+print("\nTest ZPoly")
+unit_test(z_minitests)
 print("\nIntegration Tests")
 unit_test(i_minitests)
