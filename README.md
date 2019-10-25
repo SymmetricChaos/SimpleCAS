@@ -161,7 +161,7 @@ This gives us the following points.
 (83272536, 75940346)
 ```
 
-Now four people can come together and interpolat the polynomial that passes through the points they've been given.
+Now four of people can come together and interpolatw the polynomial that passes through the points they've been given to reveal the secret that  was given to the group.
 
 ```
 p = [(21346801, 23023971),
@@ -172,7 +172,6 @@ print(get_shamir_secret(F))
 72697680
 ```
 
-Which reveals 
 
 # Planned Expansions
 Currently there are plans for a few additions to the system. Power series already have a tiny bit of support as the PSeries object. Combiner objects for QPoly have some support so that sums and products of QPoly can be represented.
