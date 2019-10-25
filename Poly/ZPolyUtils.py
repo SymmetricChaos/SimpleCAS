@@ -1,4 +1,4 @@
-from Utility import mod_inv, prime_factorization
+from Utility import mod_inv, prime_factorization, gcd
 from Poly import ZPoly
 from random import randint, sample
 
@@ -45,29 +45,42 @@ def get_shamir_secret(pts,F):
     return zpoly_lagrange_interpolation(X,Y,F)[0]
 
 
-# Do not use
-from itertools import product
-def crude_factorization(poly):
-    assert type(poly) == ZPoly
-    P = product([i for i in range(poly.F)],repeat=poly.degree()+1)
-    
-    T = poly.copy()
-    
-    out = []
-    
-    zero = ZPoly([0],poly.F)
-    one = ZPoly([1],poly.F)
-    
-    for i in P:
-        f = ZPoly(list(i),poly.F)
-        if f != zero and f != one and f != T:
-            while T % f == zero:
-                T = T//f
-                out.append(f)
-                if T == one:
-                    break
-    return out
 
+
+
+# Note that polynomial GCDs are unique only up to scalar multiplication so the
+# output is standardized as being monic
+def zpoly_gcd(P,Q):
+    """GCD of two polynomials over the same finite field"""
+    assert type(P) == ZPoly
+    assert type(Q) == ZPoly
+    assert P.F == Q.F
+    
+    if Q.degree() > P.degree():
+        P,Q = Q,P
+        
+    # Check if we reached the end
+    if Q == ZPoly([0], P.F):
+        return P.monic_part
+    if P == ZPoly([0], P.F):
+        return Q.monic_part
+    
+    else:
+        g = zpoly_gcd(P % Q, Q)
+        return g.monic_part
+
+
+
+#def square_free_factorization(poly):
+#    assert type(poly) == ZPoly
+#    C = poly[-1]
+#    M = poly.monic_part
+#    
+#    c = gcd()
+#    
+#    print(C)
+#    print(M)
+    
 
 
 if __name__ == '__main__':
@@ -90,8 +103,9 @@ if __name__ == '__main__':
     print(get_shamir_secret(rpts,F))
 
 
-
-    print("\n\nReally crude factoring method")
-    P = ZPoly([1,0,2,1,2],3)**2
+    print("\n\nGCD of ZPolys")
+    P = ZPoly( [1,2,3], 5) * ZPoly( [2,4], 5)
+    Q = ZPoly( [1,2,3], 5)
     print(P)
-    print(crude_factorization(P))
+    print(Q)
+    print(zpoly_gcd(P,Q))
