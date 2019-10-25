@@ -45,6 +45,28 @@ def get_shamir_secret(pts,F):
     return zpoly_lagrange_interpolation(X,Y,F)[0]
 
 
+# Do not use
+from itertools import product
+def crude_factorization(poly):
+    assert type(poly) == ZPoly
+    P = product([i for i in range(poly.F)],repeat=poly.degree()+1)
+    
+    T = poly.copy()
+    
+    out = []
+    
+    zero = ZPoly([0],poly.F)
+    one = ZPoly([1],poly.F)
+    
+    for i in P:
+        f = ZPoly(list(i),poly.F)
+        if f != zero and f != one and f != T:
+            while T % f == zero:
+                T = T//f
+                out.append(f)
+                if T == one:
+                    break
+    return out
 
 
 
@@ -66,3 +88,10 @@ if __name__ == '__main__':
     print(f"\nPicking three of those we can reconstruct the answer:")
     rpts = sample(pts,min_parts)
     print(get_shamir_secret(rpts,F))
+
+
+
+    print("\n\nReally crude factoring method")
+    P = ZPoly([1,0,2,1,2],3)**2
+    print(P)
+    print(crude_factorization(P))
