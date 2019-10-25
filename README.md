@@ -136,12 +136,43 @@ print(P)
 9x^4 + 13x^3 + 19x^2 + 18
 ```
 
-Note that when printed ZPoly does *not* include an indication that it is different from QPoly such as `(mod n)` since this is often inconvenient. The `zpoly_plot` function will draw the entire polynomial and include a nicely formatted name with the modulus included.
+Note that when printed ZPoly does *not* include an indication that it is different from QPoly such as `(mod n)` since this is often inconvenient. The `zpoly_plot` function will draw the entire polynomial and include a nicely formatted name with the modulus included. It doesn't work so well for polynomials with a huge number of points.
 
 ![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/ZPolyExample.png "polynomial over GF(83)")
 
-It is often useful for the order of the group to be a prime or prime power so that the group can also be treated as a finite field but this isn't required.
+It is often useful for the order of the group to be a prime or prime power so that the group can also be treated as a finite field but this isn't required. For example Shamir's Secret Sharing Scheme must be done over a finite field. The basics of the algorithm are provided by the functions `make_shamir_secret` and `get_shamir_secret`. Say that our secret is the word HELP which we can represent as the number 72697680 in the ASCII encoding. To split the secret so that it can be given to six people and any four of them can recontruct it we need a polynomial of degree 4 with 72697680 as the zeroth order term. We can pick the prime number 104395301 as the order of the field.
 
+```
+secret = 72697680
+min_parts = 4
+total_parts = 6
+F = 104395301
+pts = make_shamir_secret(secret,min_parts,total_parts,F)
+```
+
+This gives us the following points.
+
+```
+(21346801, 23023971)
+(62283306, 1693724)
+(91943746, 96294104)
+(5317738, 41135555)
+(97064895, 93506030)
+(83272536, 75940346)
+```
+
+Now four people can come together and interpolat the polynomial that passes through the points they've been given.
+
+```
+p = [(21346801, 23023971),
+     (62283306, 1693724),
+     (91943746, 96294104),
+     (5317738, 41135555)]
+print(get_shamir_secret(F))
+72697680
+```
+
+Which reveals 
 
 # Planned Expansions
 Currently there are plans for a few additions to the system. Power series already have a tiny bit of support as the PSeries object. Combiner objects for QPoly have some support so that sums and products of QPoly can be represented.
