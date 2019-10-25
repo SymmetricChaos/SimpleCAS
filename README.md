@@ -128,13 +128,17 @@ Making a picture of the "interesting" part of rational function is rather diffic
 
 
 ## ZPoly
-Polynomials with integer coefficients in some cyclic group.  ZPoly can be created in the same ways as as QPoly except that the order of the cyclic group must be specified. Coefficients are reduced modulo the order of the group. The same occurs if the polynomial is evaluated.
+Polynomials with integer coefficients from any cyclic group Z/nZ. ZPoly can be created in the same ways as as QPoly except that the order of the cyclic group must be specified. If the coefficients provided are not members of the cyclic group specified then they are reduced modulo the order of the group so that they will fit.
 
 ```
-P = ZPoly( [50,0,-8,121,9], 27 )
+P = ZPoly( [18,0,-8,121,9], 27 )
 print(P)
-9x^4 + 13x^3 + 19x^2 + 23
+9x^4 + 13x^3 + 19x^2 + 18
 ```
+
+Note that when printed ZPoly does *not* include an indication that it is different from QPoly such as `(mod n)` since this is often inconvenient. The `zpoly_plot` function will draw the entire polynomial and include a nicely formatted name with the modulus included.
+
+![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/ZPolyExample.png "polynomial over GF(83)")
 
 It is often most useful for the order of the group to be a prime or prime power so that the group can also be treated as a finite field but this isn't required.
 
