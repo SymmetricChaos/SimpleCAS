@@ -50,10 +50,10 @@ def get_shamir_secret(pts,F):
 
 if __name__ == '__main__':
     
-    secret = 1342
-    min_parts = 3
+    secret = 72697680
+    min_parts = 4
     total_parts = 6
-    F = 1613**2
+    F = 104395301
     pts = make_shamir_secret(secret,min_parts,total_parts,F)
     
     print(f"We will use Shamir's method to break up the secret number {secret} into {total_parts} pieces such any {min_parts} pieces can be used to get the secret.")
@@ -66,5 +66,3 @@ if __name__ == '__main__':
     print(f"\nPicking three of those we can reconstruct the answer:")
     rpts = sample(pts,min_parts)
     print(get_shamir_secret(rpts,F))
-    
-    
