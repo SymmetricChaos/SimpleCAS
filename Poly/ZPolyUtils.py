@@ -1,5 +1,5 @@
-from Utility import mod_inv, prime_factorization, gcd
-from Poly import ZPoly
+from Utility import mod_inv, prime_factorization
+from Poly import ZPoly, ZPolyProd
 from random import randint, sample
 
 
@@ -81,22 +81,19 @@ def square_free_factorization(poly):
     w = M//c
     
     one = ZPoly([1],poly.F)
-    R = one.copy()
+    R = ZPolyProd([one])
     i = 1
-    
-    print()
-    print(f"R={R}",f"w={w}",f"c={c}",i,sep="\n")
-    print()
     
     while w != one:
         y = zpoly_gcd(w,c)
         z = w//y
-        R = f"({z})^{i}"
+        for ctr in range(i):
+            R *= z
         w = y
         c = c//y
         i += 1
-        print(f"R={R}",f"y={y}",f"z={z}",f"w={w}",f"c={c}",i,sep="\n")
-        print()
+    print(R)
+    print(c)
 
 
 if __name__ == '__main__':
