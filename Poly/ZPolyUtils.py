@@ -81,7 +81,7 @@ def square_free_factorization(poly):
     w = M//c
     
     one = ZPoly([1],poly.F)
-    R = ZPolyProd([one])
+    R = ZPolyProd([one],5)
     i = 1
     
     while w != one:
@@ -92,8 +92,15 @@ def square_free_factorization(poly):
         w = y
         c = c//y
         i += 1
+        
     print(R)
     print(c)
+        
+#    if c != one:
+#        DO THE RECURSION
+
+
+
 
 
 if __name__ == '__main__':

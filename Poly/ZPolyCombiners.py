@@ -3,7 +3,7 @@ from collections import Counter
 
 class ZPolyProd:
     
-    def __init__(self,terms):
+    def __init__(self,terms,F):
         if type(terms) == list:
             self.terms = Counter(terms)
             
@@ -17,7 +17,7 @@ class ZPolyProd:
             raise TypeError(f"Couldn't use type {type(terms)}")
             
         self.simplify_const()
-                
+        self.F = F
         del self.terms[1]
 
 
@@ -49,14 +49,31 @@ class ZPolyProd:
         if type(other) == ZPoly:
             A = self.terms.copy()
             A.update([other])
-            return ZPolyProd(A)
+            return ZPolyProd(A,5)
         elif type(other) == ZPolyProd:
             A = self.terms.copy()
             A.update(other.terms)
-            return ZPolyProd(A)
+            return ZPolyProd(A,5)
         else:
             return NotImplemented
 
+    
+    def __pow__(self,other):
+        if type(other) != int:
+            raise TypeError("Power of ZPolyProd must be an integer")
+        if other < 1:
+            raise TypeError("Power of ZPolyProd must be non-negative")
+        
+#        if other == 0:
+#            issue with polys that might have different values of F
+        if other == 1:
+            return self
+        else:
+            out = self
+            for i in range(other-1):
+                out *= self
+            return out
+        
 
     def __len__(self):
         out = 0
@@ -130,9 +147,11 @@ class ZPolyProd:
 if __name__ == '__main__':
     P = ZPoly( [1,2,3], 5)
     Q = ZPoly( [2,4], 5)
-    C = ZPolyProd([P,Q])
+    C = ZPolyProd([P,Q],5)
     print(P)
     print(Q)
     print(C)
     print(C*Q)
     print(C*C)
+    print(C**3)
+    print(C)
