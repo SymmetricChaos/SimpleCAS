@@ -202,7 +202,7 @@ class ZPoly:
 
         # Case of a single int or rational
         if len(other) == 1:
-            return ZPoly( [mod_div(P[0],q,self.F) for q in Q], self.F), ZPoly( [0], self.F)
+            return ZPoly( [mod_div(p,Q[0],self.F) for p in P], self.F), ZPoly( [0], self.F)
         
         # Use polynomial division algorithm this may not be defined if F is not
         # a prime power.
