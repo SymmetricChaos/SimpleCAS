@@ -37,14 +37,16 @@ class ZPoly:
         self.coef[n] = val % self.F
 
 
-    # Need to check that modulus at the end isn't too slow
+    # Not sure about the best method but testing suggests that "co*x**pwr" is
+    # faster than "co*x**pwr % self.F" and "co*pow(x,pwr,self.F)" at least when
+    # coefficients are potentially much larger than powers
     def __call__(self,x):
         """Evaluate the polynomial at a given point"""
         out = 0
         for pwr,co in enumerate(self.coef):
-            out = out + co*(x**pwr)
+            out = out + co*x**pwr
         return out % self.F
-    
+
     
     def evaluate(self,X):
         """Evaluate the polynomial at a given list of points"""
@@ -63,7 +65,7 @@ class ZPoly:
     
     
     def __hash__(self):
-        return hash("CustomZPoly"+str(self))
+        return hash(f"CustomZPoly{self.F}{self}")
 
 
     def __len__(self):
@@ -324,3 +326,5 @@ if __name__ == '__main__':
     print((P//Q)*Q+(P%Q) == P)
     
     print(P.monic_part)
+    
+    print(hash(P))
