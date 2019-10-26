@@ -2,6 +2,7 @@ from Utility import mod_inv, prime_factorization, gcd
 from Poly import ZPoly
 from random import randint, sample
 
+
 def zpoly_lagrange_interpolation(X,Y,F):
     """Lagrange Polynomial"""
     final = ZPoly([0],F)
@@ -71,16 +72,31 @@ def zpoly_gcd(P,Q):
 
 
 
-#def square_free_factorization(poly):
-#    assert type(poly) == ZPoly
+def square_free_factorization(poly):
+    assert type(poly) == ZPoly
 #    C = poly[-1]
-#    M = poly.monic_part
-#    
-#    c = gcd()
-#    
-#    print(C)
-#    print(M)
+    M = poly.monic_part
     
+    c = zpoly_gcd(M,M.derivative())
+    w = M//c
+    
+    one = ZPoly([1],poly.F)
+    R = one.copy()
+    i = 1
+    
+    print()
+    print(f"R={R}",f"w={w}",f"c={c}",i,sep="\n")
+    print()
+    
+    while w != one:
+        y = zpoly_gcd(w,c)
+        z = w//y
+        R = f"({z})^{i}"
+        w = y
+        c = c//y
+        i += 1
+        print(f"R={R}",f"y={y}",f"z={z}",f"w={w}",f"c={c}",i,sep="\n")
+        print()
 
 
 if __name__ == '__main__':
@@ -109,3 +125,10 @@ if __name__ == '__main__':
     print(P)
     print(Q)
     print(zpoly_gcd(P,Q))
+
+    print("\n\nSquare-Free Factorization")
+    P = ZPoly([1,0,2,2,0,1,1,0,2,2,0,1],3)
+    print(P)
+    square_free_factorization(P)
+
+    print()
