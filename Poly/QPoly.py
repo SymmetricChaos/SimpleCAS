@@ -51,7 +51,7 @@ class QPoly:
     
     
     def __hash__(self):
-        return hash("CustomQPoly"+str(self))
+        return  hash(f"CustomQPoly{self}")
 
 
     def __len__(self):
@@ -279,9 +279,6 @@ class QPoly:
         for pos,val in enumerate(co[1:],start=1):
             co[pos] = val/(pos)
         return QPoly(co)
-
-
-
 
 
     def degree(self):
