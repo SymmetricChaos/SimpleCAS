@@ -1,6 +1,6 @@
 # Univariate polynomials with coefficients from the field of rationals
 
-from Utility import poly_add, poly_mult, mod_inv, mod_div
+from Utility import poly_add, poly_mult, mod_inv, mod_div, gcd
 from Poly.ZPolyPrint import zpoly_print, zpoly_print_pretty
 
 class ZPoly:
@@ -15,7 +15,7 @@ class ZPoly:
 
 
     def normalize(self):
-        """Remove trailing zeroes"""
+        """Remove trailing zeroes and reduce modulo F"""
         if self.coef == []:
             self.coef = [0]
         self.coef = [c % self.F for c in self.coef]
@@ -272,18 +272,17 @@ class ZPoly:
         co = self.coef.copy()
         for i in range(len(co)):
             co[i] *= i
-        return ZPoly(co[1:])
+        return ZPoly(co[1:],self.F)
 
 
-#    # Dunno if formal integrals are a thing
-#    def integral(self,C):
-#        """Calculate the integral of the polynomial"""
-#        co = self.coef.copy()
-#        co.insert(0,C)
-#        for pos,val in enumerate(co[1:],start=1):
-#            co[pos] = val/(pos)
-#        return ZPoly(co)
-
+    def _content(self):
+        return gcd(self.coef)
+    
+    
+    def _primitive_part(self):
+        co = [c//self.content for c in self.coef]
+        return ZPoly( co,self.F)
+    
 
     def is_monic(self):
         """Check if the polynomial is monic"""
@@ -309,6 +308,8 @@ class ZPoly:
     # Things that are like attributes can be access as properties
     pretty_name = property(_pretty_name)
     monic_part = property(_monic_part)
+    content = property(_content)
+    primitive_part = property(_primitive_part)
 
 
 
@@ -327,4 +328,3 @@ if __name__ == '__main__':
     
     print(P.monic_part)
     
-    print(hash(P))
