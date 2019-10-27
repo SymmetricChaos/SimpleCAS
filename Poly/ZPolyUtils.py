@@ -81,7 +81,7 @@ def square_free_factorization(poly):
     w = M//c
     
     one = ZPoly([1],poly.F)
-    R = ZPolyProd([one],5)
+    R = ZPolyProd([one],poly.F)
     i = 1
     
     while w != one:
