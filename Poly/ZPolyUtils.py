@@ -72,9 +72,9 @@ def zpoly_gcd(P,Q):
 
 
 
-def square_free_factorization(poly):
+def square_free_decomposition(poly):
     assert type(poly) == ZPoly
-#    C = poly[-1]
+    C = poly[-1]
     M = poly.monic_part
     
     c = zpoly_gcd(M,M.derivative())
@@ -93,7 +93,7 @@ def square_free_factorization(poly):
         c = c//y
         i += 1
         
-    print(R)
+    print(R*C)
     print(c)
         
 #    if c != one:
@@ -130,9 +130,9 @@ if __name__ == '__main__':
     print(Q)
     print(zpoly_gcd(P,Q))
 
-    print("\n\nSquare-Free Factorization")
-    P = ZPoly([1,0,2,2,0,1,1,0,2,2,0,1],3)
+    print("\n\nSquare-Free Decomposition")
+    P = ZPoly([1,0,2,2,0,1,1,0,2,2,0,1],3)*2
     print(P)
-    square_free_factorization(P)
+    square_free_decomposition(P)
 
     print()
