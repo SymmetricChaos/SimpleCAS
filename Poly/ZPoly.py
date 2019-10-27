@@ -64,8 +64,13 @@ class ZPoly:
         return zpoly_print(self)
     
     
+    def _full_name(self):
+        """Print nicely in descending written form with modulus"""
+        return f"{zpoly_print(self)} (mod {self.F})"
+    
+    
     def __hash__(self):
-        return hash(f"CustomZPoly{self.F}{self}")
+        return hash(f"CustomZPoly{self.full_name}")
 
 
     def __len__(self):
@@ -307,6 +312,7 @@ class ZPoly:
 
     # Things that are like attributes can be access as properties
     pretty_name = property(_pretty_name)
+    full_name = property(_full_name)
     monic_part = property(_monic_part)
     content = property(_content)
     primitive_part = property(_primitive_part)
@@ -318,8 +324,8 @@ if __name__ == '__main__':
     F = 17
     P = ZPoly( [1,4,7], F = F )
     Q = ZPoly( [8,1], F = F)
-    print(f"P = {P} (mod {F})")
-    print(f"Q = {Q} (mod {F})")
+    print(f"P = {P.full_name}")
+    print(f"Q = {Q.full_name}")
     print()
     print(f"P//Q = {P//Q}")
     print(f"P%Q  = {P%Q}")
@@ -327,4 +333,4 @@ if __name__ == '__main__':
     print((P//Q)*Q+(P%Q) == P)
     
     print(P.monic_part)
-    
+    print(P.full_name)
