@@ -44,7 +44,6 @@ class ZPolyProd:
         return out
 
 
-    # TODO: Scalar multiplication needed
     def __mul__(self,other):
         
         A = self.terms.copy()
@@ -75,11 +74,11 @@ class ZPolyProd:
     def __pow__(self,other):
         if type(other) != int:
             raise TypeError("Power of ZPolyProd must be an integer")
-        if other < 1:
+        if other < 0:
             raise TypeError("Power of ZPolyProd must be non-negative")
         
-#        if other == 0:
-#            issue with polys that might have different values of F
+        if other == 0:
+            return ZPolyProd( ZPoly([1],self.F), self.F)
         if other == 1:
             return self
         else:
@@ -96,30 +95,22 @@ class ZPolyProd:
         return out
 
 
+#   TODO: Validate this on various inputs
     def __str__(self):
         out = []
         
-        S = []
-        for i in self.terms.keys():
-            S.append(i)
-        S.sort(key=len)
         
-        for i in S:
-            pwr = self.terms[i]
-                        
+        for t,pwr in self.terms.items():
             
             if pwr == 1:
-                if len(i) == 1:
-                    if i[0] == 1:
-                        continue
-                    out.append(str(i))
+                if len(self) == 1:
+                    out.append(str(t))
+                elif len(self) > 1 and str(t) == "1":
+                    continue
                 else:
-                    out.append(f"({i})")
+                    out.append(f"({t})")
             else:
-                if len(i) == 1:
-                    out.append(f"{i}^{pwr}")
-                else:
-                    out.append(f"({i})^{pwr}")
+                out.append(f"({t})^{pwr}")
         
         return "".join(out)
 
@@ -146,7 +137,7 @@ class ZPolyProd:
                 else:
                     out.append(f"({i.pretty_name})")
             else:
-                if len(i) == 1 and i[0] > 1:
+                if len(i) == 1:
                     out.append(f"{i.pretty_name}^{{{pwr}}}")
                 else:
                     out.append(f"({i.pretty_name})^{{{pwr}}}")
@@ -170,4 +161,6 @@ if __name__ == '__main__':
     print(C*Q)
     print(C*C)
     print(C**3)
-    print(C*9)
+    print(C*1)
+    
+    print(C**0)
