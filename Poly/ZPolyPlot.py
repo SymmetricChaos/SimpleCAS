@@ -18,7 +18,7 @@ def zpoly_plot(poly,size=[5,5]):
 
     pts = zpoly_points(poly)
     
-    make_canvas(xwidth,ywidth,size=size,show_axes=True,title=f"{poly.pretty_name}   (mod {F})")
+    make_canvas(xwidth,ywidth,size=size,show_axes=True,title=poly.pretty_name)
     scatter_points(pts)
         
     return pts

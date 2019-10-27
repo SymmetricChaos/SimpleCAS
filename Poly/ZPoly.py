@@ -308,7 +308,7 @@ class ZPoly:
 
     def _pretty_name(self):
         """Formatted for LaTeX"""
-        return zpoly_print_pretty(self)
+        return f"{zpoly_print_pretty(self)} (mod {self.F})"
 
     # Things that are like attributes can be access as properties
     pretty_name = property(_pretty_name)
