@@ -119,6 +119,15 @@ def first_where(L,val):
     return None
      
 
+def sort_by_nth(L,n,func=None):
+    if func == None:
+        f = lambda x: x[n]
+        return sorted(L,key=f)
+    else:
+        f = lambda x: func(x[n])
+        return sorted(L,key=f)
+
+
 
 
 

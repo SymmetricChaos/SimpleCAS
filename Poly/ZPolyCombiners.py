@@ -1,5 +1,6 @@
 from Poly import ZPoly
 from collections import Counter
+from Utility import sort_by_nth
 
 class ZPolyProd:
     
@@ -99,16 +100,25 @@ class ZPolyProd:
     def __str__(self):
         out = []
         
+        S = []
+        for i in self.terms.items():
+            S.append(i)
+        S = sort_by_nth(S,0,len)
         
-        for t,pwr in self.terms.items():
+        
+        for t,pwr in S:
             
             if pwr == 1:
-                if len(self) == 1:
-                    out.append(str(t))
-                elif len(self) > 1 and str(t) == "1":
+                # If there aremultiple terms and the scalar is 1 ignore it
+                if len(self) > 1 and str(t) == "1":
                     continue
+                # Scalar terms in every other case
+                elif len(t) == 1:
+                    out.append(str(t))
+                # Non-scalar terms
                 else:
                     out.append(f"({t})")
+            # Non-scalar terns raised to a power
             else:
                 out.append(f"({t})^{pwr}")
         
@@ -120,41 +130,41 @@ class ZPolyProd:
 #        return hash(f"CustomZPolyProd{self}")
 
 
-    def _pretty_name(self):
-        out = []
-        
-        S = []
-        for i in self.terms.keys():
-            S.append(i)
-        S.sort(key=len)
-        
-        for i in S:
-            pwr = self.terms[i]
-            
-            if pwr == 1:
-                if len(i) == 1:
-                    out.append(str(i))
-                else:
-                    out.append(f"({i.pretty_name})")
-            else:
-                if len(i) == 1:
-                    out.append(f"{i.pretty_name}^{{{pwr}}}")
-                else:
-                    out.append(f"({i.pretty_name})^{{{pwr}}}")
-        
-        J = "\;".join(out)
-        J = J.replace("$","")
-        return f"${J}$"
+#    def _pretty_name(self):
+#        out = []
+#        
+#        S = []
+#        for i in self.terms.keys():
+#            S.append(i)
+#        S.sort(key=len)
+#        
+#        for i in S:
+#            pwr = self.terms[i]
+#            
+#            if pwr == 1:
+#                if len(i) == 1:
+#                    out.append(str(i))
+#                else:
+#                    out.append(f"({i.pretty_name})")
+#            else:
+#                if len(i) == 1:
+#                    out.append(f"{i.pretty_name}^{{{pwr}}}")
+#                else:
+#                    out.append(f"({i.pretty_name})^{{{pwr}}}")
+#        
+#        J = "\;".join(out)
+#        J = J.replace("$","")
+#        return f"${J}$"
 
 
     # Things that are like attributes can be access as properties
-    pretty_name = property(_pretty_name)
+#    pretty_name = property(_pretty_name)
     
     
 if __name__ == '__main__':
-    P = ZPoly( [1,2,3], 5)
-    Q = ZPoly( [2,4], 5)
-    C = ZPolyProd([P,Q],5)
+    P = ZPoly( [1,2,3], 19)
+    Q = ZPoly( [2,4], 19)
+    C = ZPolyProd([P,Q],19)
     print(P)
     print(Q)
     print(C)
@@ -163,4 +173,6 @@ if __name__ == '__main__':
     print(C**3)
     print(C*1)
     
-    print(C**0)
+    D = 2*C*Q
+    print(D)
+    print(D**0)
