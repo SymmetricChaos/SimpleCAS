@@ -46,16 +46,30 @@ class ZPolyProd:
 
     # TODO: Scalar multiplication needed
     def __mul__(self,other):
+        
+        A = self.terms.copy()
+        
+        if type(other) == int:
+            return self * ZPoly([other],self.F)
+
         if type(other) == ZPoly:
-            A = self.terms.copy()
-            A.update([other])
-            return ZPolyProd(A,5)
+            if other.F == self.F:
+                A.update([other])
+            else:
+                raise ValueError("Values of F do not match")
+
         elif type(other) == ZPolyProd:
-            A = self.terms.copy()
             A.update(other.terms)
-            return ZPolyProd(A,5)
+
         else:
             return NotImplemented
+        
+        return ZPolyProd(A,self.F)
+    
+    
+    def __rmul__(self,other):
+        
+        return self*other
 
     
     def __pow__(self,other):
@@ -96,6 +110,8 @@ class ZPolyProd:
             
             if pwr == 1:
                 if len(i) == 1:
+                    if i[0] == 1:
+                        continue
                     out.append(str(i))
                 else:
                     out.append(f"({i})")
@@ -108,7 +124,7 @@ class ZPolyProd:
         return "".join(out)
 
 
-    # TODO: Need to guarantee that identical objects will have an indentical hash
+#    TODO: Need to guarantee that identical objects will have an indentical hash
 #    def __hash__(self):
 #        return hash(f"CustomZPolyProd{self}")
 
@@ -130,7 +146,7 @@ class ZPolyProd:
                 else:
                     out.append(f"({i.pretty_name})")
             else:
-                if len(i) == 1:
+                if len(i) == 1 and i[0] > 1:
                     out.append(f"{i.pretty_name}^{{{pwr}}}")
                 else:
                     out.append(f"({i.pretty_name})^{{{pwr}}}")
@@ -154,4 +170,4 @@ if __name__ == '__main__':
     print(C*Q)
     print(C*C)
     print(C**3)
-    print(C)
+    print(C*9)
