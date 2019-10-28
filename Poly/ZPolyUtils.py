@@ -71,6 +71,9 @@ def zpoly_gcd(P,Q):
         return g.monic_part
 
 
+#def zpoly_nth_root(P,n): 
+    
+
 
 def square_free_decomposition(poly):
     assert type(poly) == ZPoly
@@ -81,7 +84,7 @@ def square_free_decomposition(poly):
     w = M//c
     
     one = ZPoly([1],poly.F)
-    R = ZPolyProd([one],poly.F)
+    R = ZPolyProd([one],poly.F)*C
     i = 1
     
     while w != one:
@@ -93,11 +96,12 @@ def square_free_decomposition(poly):
         c = c//y
         i += 1
         
-    print(R*C)
+    print(R)
     print(c)
         
 #    if c != one:
-#        DO THE RECURSION
+#        c = nth root of c
+#        R *= square_free_decomposition(c)**poly.F
 
 
 

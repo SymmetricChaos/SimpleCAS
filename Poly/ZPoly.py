@@ -334,3 +334,14 @@ if __name__ == '__main__':
     
     print(P.monic_part)
     print(P.full_name)
+    
+    
+    F = 2
+    R = ZPoly( [1,1,0,0,1], F = F )
+    P = ZPoly( [0,1], F = F )
+    out = ZPoly( [1], F = F )
+    print(f"\n\nElements of GF(16) with a zero of {R.full_name}")
+    for i in range(15):
+        print(out)
+        out = (out * P) % R
+    
