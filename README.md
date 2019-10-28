@@ -136,9 +136,11 @@ print(P)
 9x^4 + 13x^3 + 19x^2 + 18
 ```
 
-Note that when printed ZPoly does *not* include an indication that it is different from QPoly such as `(mod n)` since this is often inconvenient. The `zpoly_plot` function will draw the entire polynomial and include a nicely formatted name with the modulus included. It doesn't work so well for polynomials with a huge number of points.
+Note that when printed ZPoly does *not* include an indication that it is different from QPoly such as `(mod n)` since this is often inconvenient when several need to be printed for some reason. Instead use the `.full_name` attribute. Similarly the `.pretty_name` attribute which created a LaTeX formatted version of the polynomial does include the modulus. The `zpoly_plot` function will draw the entire polynomial and use `.pretty_name` to write the title.
 
 ![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/ZPolyExample.png "polynomial over GF(83)")
+
+Using `zpoly_plot` on polynomials with a very large number of points is not recommended.
 
 It is often useful for the order of the group to be a prime or prime power so that the group can also be treated as a finite field but this isn't required. For example Shamir's Secret Sharing Scheme must be done over a finite field. The basics of the algorithm are provided by the functions `make_shamir_secret` and `get_shamir_secret`. Say that our secret is the word HELP which we can represent as the number 72697680 in the ASCII encoding. To split the secret so that it can be given to six people and any four of them can recontruct it we need a polynomial of degree 4 with 72697680 as the zeroth order term. We can pick the prime number 104395301 as the order of the field.
 
@@ -161,7 +163,7 @@ This gives us the following points.
 (83272536, 75940346)
 ```
 
-Now four of people can come together and interpolatw the polynomial that passes through the points they've been given to reveal the secret that  was given to the group.
+Now four of people can come together and interpolate the polynomial that passes through the points they've been given to reveal the secret that was given to the group.
 
 ```
 p = [(21346801, 23023971),
@@ -174,7 +176,7 @@ print(get_shamir_secret(p,F))
 
 
 # Planned Expansions
-Currently there are plans for a few additions to the system. Power series already have a tiny bit of support as the PSeries object. Combiner objects for QPoly have some support so that sums and products of QPoly can be represented.
+Currently there are plans for a few additions to the system. Power series already have a tiny bit of support as the PSeries object. Combiner objects for QPoly have some support so that sums and products of QPoly can be represented. Similar objects for ZPoly are being worked on.
 
 # Not Planned
 ## Multivariate Polynomials
