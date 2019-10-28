@@ -19,7 +19,6 @@ class ZPolyProd:
             
         self.simplify_const()
         self.F = F
-        del self.terms[1]
 
 
     def simplify_const(self):
@@ -36,6 +35,8 @@ class ZPolyProd:
             
         self.terms[const] = 1
 
+        del self.terms[1]
+        
 
     def cast_to_poly(self):
         """Multiply everything together as a ZPoly"""
@@ -68,7 +69,6 @@ class ZPolyProd:
     
     
     def __rmul__(self,other):
-        
         return self*other
 
     
@@ -125,42 +125,51 @@ class ZPolyProd:
         return "".join(out)
 
 
-#    TODO: Need to guarantee that identical objects will have an indentical hash
+    def _full_name(self):
+        return f"{self} [mod {self.F}]"
+        
+
+#    TODO: Need to guarantee that only identical objects will have an indentical hash
 #    def __hash__(self):
 #        return hash(f"CustomZPolyProd{self}")
 
 
-#    def _pretty_name(self):
-#        out = []
-#        
-#        S = []
-#        for i in self.terms.keys():
-#            S.append(i)
-#        S.sort(key=len)
-#        
-#        for i in S:
-#            pwr = self.terms[i]
-#            
-#            if pwr == 1:
-#                if len(i) == 1:
-#                    out.append(str(i))
-#                else:
-#                    out.append(f"({i.pretty_name})")
-#            else:
-#                if len(i) == 1:
-#                    out.append(f"{i.pretty_name}^{{{pwr}}}")
-#                else:
-#                    out.append(f"({i.pretty_name})^{{{pwr}}}")
-#        
-#        J = "\;".join(out)
-#        J = J.replace("$","")
-#        return f"${J}$"
+    def _pretty_name(self):
+        out = []
+        
+        S = []
+        for i in self.terms.items():
+            S.append(i)
+        S = sort_by_nth(S,0,len)
+        
+        for t,pwr in S:
+            if pwr == 1:
+                # If there aremultiple terms and the scalar is 1 ignore it
+                if len(self) > 1 and str(t) == "1":
+                    continue
+                # Scalar terms in every other case
+                elif len(t) == 1:
+                    out.append(str(t))
+                # Non-scalar terms
+                else:
+                    out.append(f"({t.pretty_name})")
+            # Non-scalar terns raised to a power
+            else:
+                out.append(f"({t.pretty_name})^{{{pwr}}}")
+            
+        out = "".join(out)
+        out = out.replace("$","")
+        return f"${out}$"
 
 
     # Things that are like attributes can be access as properties
-#    pretty_name = property(_pretty_name)
-    
-    
+    pretty_name = property(_pretty_name)
+    full_name = property(_full_name)
+
+
+
+
+
 if __name__ == '__main__':
     P = ZPoly( [1,2,3], 19)
     Q = ZPoly( [2,4], 19)
@@ -171,8 +180,10 @@ if __name__ == '__main__':
     print(C*Q)
     print(C*C)
     print(C**3)
-    print(C*1)
+    print(C*2)
     
     D = 2*C*Q
     print(D)
     print(D**0)
+    print(D.pretty_name)
+    print(D.full_name)
