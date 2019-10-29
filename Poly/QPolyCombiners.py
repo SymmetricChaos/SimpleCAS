@@ -234,6 +234,18 @@ class QPolyProd:
         return self*other
 
 
+    def __pow__(self,other):
+        assert type(other) == int
+        
+        if other == 0:
+            return QPolySum([QPoly([0])])
+        
+        A = self.terms.copy()
+        B = A.copy()
+        for i in range(other-1):
+            A.update(B)
+        return QPolyProd(A)
+    
 
     def __str__(self):
         out = []
@@ -287,7 +299,7 @@ class QPolyProd:
                 else:
                     out.append(f"({i.pretty_name})^{{{pwr}}}")
         
-        J = "\;".join(out)
+        J = "".join(out)
         J = J.replace("$","")
         return f"${J}$"
 
@@ -321,7 +333,9 @@ if __name__ == '__main__':
     print(T)
     
     U = QPolyProd([])
-    U = U * P * Q * R
+    U = U * P * Q * R * P * R
     print(P)
     print(Q)
     print(U)
+    
+    print(U**2)
