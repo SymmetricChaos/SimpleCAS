@@ -204,6 +204,10 @@ class QPolyProd:
         return out
 
 
+    def copy(self):
+        return QPolyProd(self.terms.copy())
+
+
     def __len__(self):
         out = 0
         for i in self.terms:
