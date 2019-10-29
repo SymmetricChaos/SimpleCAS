@@ -211,6 +211,30 @@ class QPolyProd:
         return out
 
 
+    def __mul__(self,other):
+        
+        A = self.terms.copy()
+        
+        if type(other) == int:
+            return self * QPoly([other])
+
+        if type(other) == QPoly:
+            A.update([other])
+
+        elif type(other) == QPolyProd:
+            A.update(other.terms)
+
+        else:
+            return NotImplemented
+        
+        return QPolyProd(A)
+    
+    
+    def __rmul__(self,other):
+        return self*other
+
+
+
     def __str__(self):
         out = []
         
@@ -295,3 +319,9 @@ if __name__ == '__main__':
     T = QPolySum([prod_of_polys1,prod_of_polys2])
     print()
     print(T)
+    
+    U = QPolyProd([])
+    U = U * P * Q * R
+    print(P)
+    print(Q)
+    print(U)
