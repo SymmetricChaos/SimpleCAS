@@ -2,6 +2,9 @@ from Poly import ZPoly
 from collections import Counter
 from Utility import sort_by_nth
 
+
+
+
 class ZPolyProd:
     
     def __init__(self,terms,F):
@@ -129,17 +132,19 @@ class ZPolyProd:
         return f"{self} [mod {self.F}]"
         
 
-#    TODO: Need to guarantee that only identical objects will have an indentical hash
+#    TODO: currently this depends on the order that the ZPolys are put in
 #    def __hash__(self):
 #        return hash(f"CustomZPolyProd{self}")
 
 
+#   TODO: currently this depends on the order that the ZPolys are put in
     def _pretty_name(self):
         out = []
         
         S = []
         for i in self.terms.items():
             S.append(i)
+        # Sort S by the number of terms in each polynomial
         S = sort_by_nth(S,0,len)
         
         for t,pwr in S:
