@@ -115,7 +115,8 @@ def all_monic_polys(F):
     while True:
         P = product(co,repeat=l)
         for p in P:
-            yield ZPoly(p+(1,),F)
+            coefs = [i for i in reversed((1,)+p)]
+            yield ZPoly(coefs,F)
         l += 1
     
     
@@ -132,7 +133,8 @@ def all_polys(F):
         P = product(co,repeat=l)
         for p in P:
             for c in co[1:]:
-                yield ZPoly(p+(c,),F)
+                coefs = [i for i in reversed((c,)+p)]
+                yield ZPoly(coefs,F)
         l += 1
 
 
@@ -169,13 +171,13 @@ if __name__ == '__main__':
     square_free_decomposition(P)
 
     print()
-    for pos, val in enumerate(all_monic_polys(5)):
-        if pos > 20:
+    for pos, val in enumerate(all_polys(3)):
+        if pos > 40:
             break
         print(val)
         
     print()
-    for pos, val in enumerate(all_polys(5)):
-        if pos > 20:
+    for pos, val in enumerate(all_monic_polys(3)):
+        if pos > 40:
             break
         print(val)
