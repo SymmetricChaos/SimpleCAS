@@ -9,7 +9,11 @@ from Poly.QPolyPrint import poly_print, poly_print_pretty
 class QPoly:
     
     def __init__(self,coef):
-        assert type(coef) == list
+        try:
+            iter(coef)
+        except:
+            raise ValueError("coef must be iterable")
+            
         self.coef = []
         for c in coef:
             self.coef.append(cast_to_rational(c))

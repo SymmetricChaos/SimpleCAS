@@ -6,7 +6,11 @@ from Poly.ZPolyPrint import zpoly_print, zpoly_print_pretty
 class ZPoly:
     
     def __init__(self,coef,F):
-        assert type(coef) == list
+        try:
+            iter(coef)
+        except:
+            raise ValueError("coef must be iterable")
+            
         if type(F) != int:
             raise TypeError(f"Modulus must be int not {type(F)}")
         self.coef = coef
