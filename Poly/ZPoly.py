@@ -11,7 +11,7 @@ class ZPoly:
         except:
             raise TypeError("coef must be iterable")
         
-        for i in self.coef:
+        for i in coef:
             if type(i) != int:
                 raise TypeError("all coefficients must be integers")
         
