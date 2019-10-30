@@ -9,8 +9,12 @@ class ZPoly:
         try:
             iter(coef)
         except:
-            raise ValueError("coef must be iterable")
-            
+            raise TypeError("coef must be iterable")
+        
+        for i in self.coef:
+            if type(i) != int:
+                raise TypeError("all coefficients must be integers")
+        
         if type(F) != int:
             raise TypeError(f"Modulus must be int not {type(F)}")
         self.coef = coef
@@ -22,6 +26,7 @@ class ZPoly:
         """Remove trailing zeroes and reduce modulo F"""
         if self.coef == []:
             self.coef = [0]
+
         self.coef = [c % self.F for c in self.coef]
         while self.coef[-1] == 0 and len(self.coef) > 1:
             if len(self.coef) == 1:

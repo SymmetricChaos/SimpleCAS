@@ -12,7 +12,7 @@ class QPoly:
         try:
             iter(coef)
         except:
-            raise ValueError("coef must be iterable")
+            raise TypeError("coef must be iterable")
             
         self.coef = []
         for c in coef:
