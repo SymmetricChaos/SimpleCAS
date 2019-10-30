@@ -1,6 +1,7 @@
 from Utility import mod_inv, prime_factorization
 from Poly import ZPoly, ZPolyProd
 from random import randint, sample
+from itertools import product
 
 
 def zpoly_lagrange_interpolation(X,Y,F):
@@ -104,7 +105,35 @@ def square_free_decomposition(poly):
 #        R *= square_free_decomposition(c)**poly.F
 
 
-
+def all_monic_polys(F):
+    """Generator for all monic polynomials over F"""
+    
+    yield ZPoly([1],F)
+    co = [i for i in range(F)]
+    
+    l = 1
+    while True:
+        P = product(co,repeat=l)
+        for p in P:
+            yield ZPoly(p+(1,),F)
+        l += 1
+    
+    
+    
+def all_polys(F):
+    """Generator for all monic polynomials over F"""
+    
+    co = [i for i in range(F)]
+    for c in co:
+        yield ZPoly([c],F)
+    
+    l = 1
+    while True:
+        P = product(co,repeat=l)
+        for p in P:
+            for c in co[1:]:
+                yield ZPoly(p+(c,),F)
+        l += 1
 
 
 if __name__ == '__main__':
@@ -140,3 +169,13 @@ if __name__ == '__main__':
     square_free_decomposition(P)
 
     print()
+    for pos, val in enumerate(all_monic_polys(5)):
+        if pos > 20:
+            break
+        print(val)
+        
+    print()
+    for pos, val in enumerate(all_polys(5)):
+        if pos > 20:
+            break
+        print(val)
