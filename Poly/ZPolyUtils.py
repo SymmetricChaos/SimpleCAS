@@ -105,7 +105,7 @@ def square_free_decomposition(poly):
 #        R *= square_free_decomposition(c)**poly.F
 
 
-def all_monic_polys(F):
+def all_monic_zpolys(F):
     """Generator for all monic polynomials over F"""
     
     yield ZPoly([1],F)
@@ -121,7 +121,7 @@ def all_monic_polys(F):
     
     
     
-def all_polys(F):
+def all_zpolys(F):
     """Generator for all monic polynomials over F"""
     
     co = [i for i in range(F)]
@@ -170,14 +170,9 @@ if __name__ == '__main__':
     print(P)
     square_free_decomposition(P)
 
+
     print()
-    for pos, val in enumerate(all_polys(3)):
-        if pos > 40:
+    for poly in all_monic_zpolys(3):
+        if len(poly) > 3:
             break
-        print(val)
-        
-    print()
-    for pos, val in enumerate(all_monic_polys(3)):
-        if pos > 40:
-            break
-        print(val)
+        print(poly)
