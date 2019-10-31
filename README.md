@@ -8,7 +8,7 @@ For the love of common sense don't use SimpleCAS for anything remotely important
 
 
 # Features
-Currently four kinds of objects are supported by SimpleCAS:
+Currently three basic kinds of objects are supported by SimpleCAS: Rational (rational numbers), QPoly (polynomials with rational coefficients), and ZPoly (polynomials with integer coefficients).
 
 ## Rational
 Rational numbers represented in simplest form. They are essentially just a pair of numbers with a bunch of methods defined to make sure they interact with other Rational objects as well as Python's integers.
@@ -97,6 +97,13 @@ Naturally QPoly will interact with most mathematical operations. Addition, subtr
 
 The derivative and integral of the polynomials are avaible through the `.derivative()` and `.integral()` methods.
 
+```
+print(P.derivative())
+-4x^3 + 18/5x + 3
+print(P.integral(C=0))
+-1/5x^5 + 3/5x^3 + 3/2x^2 - 13/10x
+```
+
 But wait, there's more! The standard written form is fine for text but it looks ugly in places where more complex formatting is expected. To that end the `pretty_name` property gives a LaTeX formated version of the polynomial.
 
 ```
@@ -174,6 +181,27 @@ print(get_shamir_secret(p,F))
 72697680
 ```
 
+Because there are only finitely many polynomials of each degree for any given modulus it is possible to list all of them with `all_zpolys` or just the ones with leading coefficient 1 with `all_monic_zpolys`.
+
+```
+for poly in all_monic_polys(3):
+   if len(poly) > 3:
+       break
+   print(poly)
+1
+x
+x + 1
+x + 2
+x^2
+x^2 + 1
+x^2 + 2
+x^2 + x
+x^2 + x + 1
+x^2 + x + 2
+x^2 + 2x
+x^2 + 2x + 1
+x^2 + 2x + 2
+```
 
 # Planned Expansions
 Currently there are plans for a few additions to the system. Power series already have a tiny bit of support as the PSeries object. Combiner objects for QPoly have some support so that sums and products of QPoly can be represented. Similar objects for ZPoly are being worked on.
