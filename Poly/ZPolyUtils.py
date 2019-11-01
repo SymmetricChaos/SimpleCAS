@@ -136,6 +136,22 @@ def all_zpolys(F):
                 coefs = [i for i in reversed((c,)+p)]
                 yield ZPoly(coefs,F)
         l += 1
+        
+
+def all_irreducible_mod2():
+    out = [ZPoly([1,1,1],2)]
+    for poly in all_zpolys(2):
+        
+        if poly(0) == poly(1) == 0:
+            continue
+
+        for i in out:
+            r = poly%i
+            if r == ZPoly([0],2):
+                out.append(poly)
+                yield poly
+                break
+        
 
 
 if __name__ == '__main__':
@@ -171,8 +187,14 @@ if __name__ == '__main__':
     square_free_decomposition(P)
 
 
-    print()
+    print("\nAll monic polynomials over Z/3Z with degree less than 3")
     for poly in all_monic_zpolys(3):
         if len(poly) > 3:
+            break
+        print(poly)
+
+    print("\nAll irreducible polynomials over Z/2Z with degree less than 6")
+    for poly in all_irreducible_mod2():
+        if len(poly) > 6:
             break
         print(poly)
