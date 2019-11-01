@@ -141,17 +141,32 @@ def all_zpolys(F):
 def all_irreducible_mod2():
     """Sieve of Eratosthenes for polynomials in Z/2Z"""
     out = [ZPoly([1,1,1],2)]
-    for poly in all_zpolys(2):
+    
+    yield ZPoly([0,1],2)
+    
+    yield ZPoly([1,1],2)
+    
+    all_p = all_zpolys(2)
+    for i in range(7):
+        next(all_p)
+    
+    while True:
+        poly = next(all_p)
         
-        if poly(0) == poly(1) == 0:
-            continue
+        if poly(0) == poly(1) == 1:
 
-        for i in out:
-            r = poly%i
-            if r == ZPoly([0],2):
-                out.append(poly)
-                yield poly
-                break
+            for i in out:
+                
+                if len(i) > len(poly) // 2:
+                    out.append(poly)
+                    yield poly
+                    break
+                
+                r = poly%i
+                if r == ZPoly([0],2):
+                    out.append(poly)
+                    yield poly
+                    break
         
 
 
