@@ -143,11 +143,37 @@ class QPoly:
     def __eq__(self,other):
         """Check if two polynomials have the same coefficients"""
         if type(other) != QPoly:
-            return False
+            raise TypeError("Cannot compare QPoly to {type(other)}")
+        
         if len(self) == len(other):
             if all([x == y for x,y in zip(self.coef,other.coef)]):
                 return True
+
         return False
+    
+    
+    def __lt__(self,other):
+        """Strict less than relation"""
+        # See if the inputs are identical.
+        # Since __eq__ does error checking we don't need to repeat it
+        if self == other:
+            return False
+
+
+        if len(self) < len(other):
+            return True
+        
+        elif len(self) > len(other):
+            return False
+            
+        else:
+            X = reversed(self.coef)
+            Y = reversed(other.coef)
+            for x,y in zip(X,Y):
+                if x < y:
+                    return True
+                if x > y:
+                    return False
 
 
     def __divmod__(self,poly):
