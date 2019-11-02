@@ -247,6 +247,40 @@ def sign(Q):
         return -1
     else:
         return 0
+    
+
+def all_pos_rationals():
+    yield Rational(0)
+    diag = 1
+    prev = set()
+    while True:
+        N = 1
+        D = diag
+        for i in range(diag):
+            r = Rational(N,D)
+            if r not in prev:
+                prev.add(r)
+                yield r
+            N += 1
+            D -= 1
+        diag += 1
+    
+def all_rationals():
+    yield Rational(0)
+    diag = 1
+    prev = set()
+    while True:
+        N = 1
+        D = diag
+        for i in range(diag):
+            r = Rational(N,D)
+            if r not in prev:
+                prev.add(r)
+                yield r
+                yield -r
+            N += 1
+            D -= 1
+        diag += 1
 
 
 
@@ -289,3 +323,10 @@ if __name__ == '__main__':
     r = digits_to_frac(d)
     print(f"{d} = {r} = {r.n/r.d}")
     print(r.decimal_expansion)
+    
+    print()
+    
+    for pos,val in enumerate(all_pos_rationals()):
+        if pos > 20:
+            break
+        print(val)
