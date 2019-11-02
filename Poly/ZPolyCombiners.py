@@ -106,7 +106,7 @@ class ZPolyProd:
         S = []
         for i in self.terms.items():
             S.append(i)
-        S = sort_by_nth(S,0,len)
+        S = sort_by_nth(S,0)
         
         
         for t,pwr in S:
@@ -192,3 +192,17 @@ if __name__ == '__main__':
     print(D**0)
     print(D.pretty_name)
     print(D.full_name)
+    
+    
+    
+    print("\nTest Sorting")
+    P = ZPoly([1,2,3],5)
+    Q = ZPoly([1,4,1],5) 
+    R = ZPoly([4,1],5) 
+    S = ZPoly([3],5)
+    T = ZPoly([0,0,2],5)
+    U = ZPoly([0,1,0,0,0,1],5)
+    
+    C = ZPolyProd([Q,P,R,S,T,U],5)
+    C = C * P * S * T * T
+    print(C.full_name)

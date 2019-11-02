@@ -220,8 +220,10 @@ if __name__ == '__main__':
     P = ZPoly([1,2,3],5)
     Q = ZPoly([1,4,1],5) 
     R = ZPoly([4,1],5) 
-    S = ZPoly([3],5) 
+    S = ZPoly([3],5)
+    T = ZPoly([0,0,2],5)
+    U = ZPoly([0,1,0,0,0,1],5)
     
-    L = [Q,P,R,S]
+    L = [Q,P,R,S,T,U]
     print(L)
     print(sorted(L))
