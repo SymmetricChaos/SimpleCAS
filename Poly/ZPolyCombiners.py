@@ -99,7 +99,6 @@ class ZPolyProd:
         return out
 
 
-#   TODO: Validate this on various inputs
     def __str__(self):
         out = []
         
@@ -132,12 +131,11 @@ class ZPolyProd:
         return f"{self} [mod {self.F}]"
         
 
-#    TODO: currently this depends on the order that the ZPolys are put in
-#    def __hash__(self):
-#        return hash(f"CustomZPolyProd{self}")
+    
+    def __hash__(self):
+        return hash(f"CustomZPolyProd{self}")
 
 
-#   TODO: currently this depends on the order that the ZPolys are put in
     def _pretty_name(self):
         out = []
         
@@ -194,7 +192,7 @@ if __name__ == '__main__':
     print(D.full_name)
     
     
-    
+       
     print("\nTest Sorting")
     P = ZPoly([1,2,3],5)
     Q = ZPoly([1,4,1],5) 
@@ -203,6 +201,6 @@ if __name__ == '__main__':
     T = ZPoly([0,0,2],5)
     U = ZPoly([0,1,0,0,0,1],5)
     
-    C = ZPolyProd([Q,P,R,S,T,U],5)
+    C = ZPolyProd([P,Q,R,S,T,U],5)
     C = C * P * S * T * T
     print(C.full_name)

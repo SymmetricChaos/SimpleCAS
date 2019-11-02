@@ -206,9 +206,10 @@ class ZPoly:
             X = reversed(self.coef)
             Y = reversed(other.coef)
             for x,y in zip(X,Y):
+                if x < y:
+                    return True
                 if x > y:
                     return False
-            return True
             
 
     def degree(self):
@@ -378,7 +379,3 @@ if __name__ == '__main__':
     for i in range(15):
         print(out)
         out = (out * S) % R
-        
-        
-
-    
