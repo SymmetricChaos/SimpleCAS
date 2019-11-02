@@ -98,10 +98,6 @@ def digits_to_frac(S):
             # String representing the non-repeating and repeating parts
             fpart = S[:R-1].replace(".","")
             rpart = S[R:-1]
-
-#            print(S)
-#            print(fpart)
-#            print(rpart)
             
             # Fraction representing the non-repeating part
             fR = Rational(int(fpart),10**(D+1))
@@ -118,10 +114,10 @@ def digits_to_frac(S):
             S = S.replace(".","")
             return Rational(int(S)*is_neg,10**D)
     else:
-        raise Exception(f"Cannot coerce {S} to Rational")
+        raise ValueError(f"Cannot cast {S} to Rational")
 
 
-def str_to_frac(S):
+def ratio_to_frac(S):
     """Convert a string of form a/b to Rational"""
     if type(S) != str:
         raise TypeError("Input {S} is {type(S)} not str")
@@ -137,7 +133,7 @@ def str_to_frac(S):
         n,d = S.split("/")
         return Rational(int(n)*is_neg,int(d))
     else:
-        raise Exception(f"Cannot coerce {S} to Rational")
+        raise ValueError(f"Cannot cast {S} to Rational")
         
 
 def cast_to_rational(T):
@@ -151,11 +147,11 @@ def cast_to_rational(T):
         return cast_to_rational(str(T))
     elif type(T) == str:
         try:
-            return str_to_frac(T)
+            return ratio_to_frac(T)
         except:
             return digits_to_frac(T)
     else:
-        raise Exception(f"Could not coerce {T} to Rational")
+        raise ValueError(f"Could not cast {T} to Rational")
 
 
 
@@ -163,7 +159,8 @@ def cast_to_rational(T):
 
 def cfrac_convergents(L):
     """Rational convergents of a simple continued fraction."""
-    assert type(L) == list
+    if type(L) != list:
+        raise TypeError("L must be list not {type(L)}")
     for i in L:
         assert type(i) == int
         
@@ -184,7 +181,9 @@ def cfrac_convergents(L):
 
 def cfrac_to_frac(L):
     """Convert a continued fraction to a Rational"""
-    assert type(L) == list, f"tpye {type(L)} is not a list"
+    if type(L) != list:
+        raise TypeError("L must be list not {type(L)}")
+  
     for i in L:
         assert type(i) == int
     
@@ -213,7 +212,9 @@ def rational_seq(lo,hi,step):
 
 def rational_round(Q,dlim):
     """Best approximation of Q with denominator of d or less, by semi-convergents"""
-    assert type(Q) == Rational
+    if type(Q) != Rational:
+        raise TypeError("Q must be Rational not {type(Q)}")
+  
     assert type(dlim) == int
     if dlim < 1:
         raise ZeroDivisionError
@@ -239,8 +240,9 @@ def rational_round(Q,dlim):
 
 def sign(Q):
     """Sign of a rational number"""
-    assert type(Q) == Rational
-    
+    if type(Q) != Rational:
+        raise TypeError("Q must be Rational not {type(Q)}")
+  
     if Q.n > 0:
         return 1
     elif Q.n < 0:
@@ -250,6 +252,7 @@ def sign(Q):
     
 
 def all_pos_rationals():
+    """Generate all positive rational numbers"""
     yield Rational(0)
     diag = 1
     prev = set()
@@ -264,8 +267,10 @@ def all_pos_rationals():
             N += 1
             D -= 1
         diag += 1
-    
+
+
 def all_rationals():
+    """Generate all rational numbers"""
     yield Rational(0)
     diag = 1
     prev = set()
@@ -287,43 +292,47 @@ def all_rationals():
 
 
 if __name__ == '__main__':
-#    a = Rational(13,6)
-#    b = Rational(3,4)
-#    G = rational_gcd(a,b)
-#    L = rational_lcm(a,b)
-#    print(f"gcd({a},{b}) = {G}")
-#    print(f"lcm({a},{b}) = {L}")
-#    
-#    d = "3.141592"
-#    r = digits_to_frac(d)
-#    print(f"{d} = {r} = {r.n/r.d}")
-#
-#    print(rational_round(r,106))
-#    
-#    print(rational_seq(0,3,Rational(2,3)))
+    
+    print("GCD and LCM")
+    a = Rational(13,6)
+    b = Rational(3,4)
+    G = rational_gcd(a,b)
+    L = rational_lcm(a,b)
+    print(f"gcd({a},{b}) = {G}")
+    print(f"lcm({a},{b}) = {L}")
+    
     
     print()
+    print()
     
-    d = R = Rational(-16,25).decimal_expansion
+    d = "3.141592"
+    r = digits_to_frac(d)
+    print(f"{d} = {r} = {r.n/r.d}")
+
+    print(rational_round(r,106))
+    
+    print("\n\nRational Sequence")
+    print(rational_seq(0,3,Rational(2,3)))
+    
+    print()
+    print()
+    
+    d = Rational(-16,25).decimal_expansion
     r = digits_to_frac(d)
     print(f"{d} = {r} = {r.n/r.d}")
     print(r.decimal_expansion)
         
     
     print()
+    print("")
     
-    d = R = Rational(137,126).decimal_expansion
+    d = Rational(137,126).decimal_expansion
     r = digits_to_frac(d)
     print(f"{d} = {r} = {r.n/r.d}")
     print(r.decimal_expansion)
+    
     
     print()
-    
-    d = R = Rational(-137,126).decimal_expansion
-    r = digits_to_frac(d)
-    print(f"{d} = {r} = {r.n/r.d}")
-    print(r.decimal_expansion)
-    
     print()
     
     for pos,val in enumerate(all_pos_rationals()):
