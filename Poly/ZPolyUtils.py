@@ -214,3 +214,14 @@ if __name__ == '__main__':
         if len(poly) > 6:
             break
         print(poly)
+        
+    
+    print("\nTest Sorting Polynomials")
+    P = ZPoly([1,2,3],5)
+    Q = ZPoly([1,4,1],5) 
+    R = ZPoly([4,1],5) 
+    S = ZPoly([3],5) 
+    
+    L = [Q,P,R,S]
+    print(L)
+    print(sorted(L))

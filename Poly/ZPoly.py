@@ -175,17 +175,41 @@ class ZPoly:
     def __eq__(self,other):
         """Check if two polynomials have the same coefficients"""
         if type(other) != ZPoly:
-            return False
+            raise TypeError("Cannot compare ZPoly to {type(other)}")
         
         if self.F != other.F:
-            return False
+            raise ValueError("Can only compare ZPoly with identical F")
+
         
         if len(self) == len(other):
             if all([x == y for x,y in zip(self.coef,other.coef)]):
                 return True
 
         return False
+    
+    
+    def __lt__(self,other):
+        """Strict less than relation"""
+        # See if the inputs are identical.
+        # Since __eq__ does error checking we don't need to repeat it
+        if self == other:
+            return False
 
+
+        if len(self) < len(other):
+            return True
+        
+        elif len(self) > len(other):
+            return False
+            
+        else:
+            X = reversed(self.coef)
+            Y = reversed(other.coef)
+            for x,y in zip(X,Y):
+                if x > y:
+                    return False
+            return True
+            
 
     def degree(self):
         """Degree of the polynomial"""
@@ -343,14 +367,18 @@ if __name__ == '__main__':
     
     print(P.monic_part)
     print(P.full_name)
-    
+
     
     F = 2
     R = ZPoly( [1,1,0,0,1], F = F )
-    P = ZPoly( [0,1], F = F )
+    S = ZPoly( [0,1], F = F )
     out = ZPoly( [1], F = F )
     print(f"\n\nElements of GF(16) with a zero of {R.full_name}")
+    print(0)
     for i in range(15):
         print(out)
-        out = (out * P) % R
+        out = (out * S) % R
+        
+        
+
     
