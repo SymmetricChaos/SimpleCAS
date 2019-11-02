@@ -344,6 +344,7 @@ class ZPoly:
         """Formatted for LaTeX"""
         return f"{zpoly_print_pretty(self)} (mod {self.F})"
 
+
     # Things that are like attributes can be access as properties
     pretty_name = property(_pretty_name)
     full_name = property(_full_name)
@@ -374,8 +375,8 @@ if __name__ == '__main__':
     R = ZPoly( [1,1,0,0,1], F = F )
     S = ZPoly( [0,1], F = F )
     out = ZPoly( [1], F = F )
-    print(f"\n\nElements of GF(16) with a zero of {R.full_name}")
-    print(0)
+    print(f"\n\nOne version of of GF(16)")
+    print(f"0 = {R}")
     for i in range(15):
         print(out)
         out = (out * S) % R
