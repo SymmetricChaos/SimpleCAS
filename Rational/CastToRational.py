@@ -163,7 +163,7 @@ def cast_to_rational(T):
 
 if __name__ == '__main__':
 
-    for d in ["3","3.141592","3.14(26)","311.(26)","1.1e-5","1.1e2","1.1⏨-5","1.1*^2"]:
+    for d in ["3","3.141592","3.14(26)","311.(26)","1.24e-5","1.21e2"]:
         r = cast_to_rational(d)
         print(f"\n\n{d} = {r} = {r.n/r.d}")
         r = cast_to_rational("-"+d)
