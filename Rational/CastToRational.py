@@ -88,8 +88,8 @@ def ratio_to_frac(S):
     
 
 def scientific_to_frac(S):
-    """Convert a string formatted as scientific notation to Rational"""
-    S = S.replace("e","E")
+    """Convert a string formatted as e notation to Rational"""
+    S = re.sub("e|⏨|\*\^","E",S)
     m = re.fullmatch("-?\d\.\d+E-?\d+",S)
 
     if m:
@@ -163,7 +163,7 @@ def cast_to_rational(T):
 
 if __name__ == '__main__':
 
-    for d in ["3","3.141592","3.14(26)","311.(26)","1.1e-5","1.1e2"]:
+    for d in ["3","3.141592","3.14(26)","311.(26)","1.1e-5","1.1e2","1.1⏨-5","1.1*^2"]:
         r = cast_to_rational(d)
         print(f"\n\n{d} = {r} = {r.n/r.d}")
         r = cast_to_rational("-"+d)
