@@ -1,7 +1,7 @@
 from Rational.RationalType import Rational
 from Rational.CastToRational import cast_to_rational
 from Utility import gcd
-
+from Rational.CFracType import CFrac, cfrac_to_frac
 
 
 def _rational_gcd(A,B):
@@ -69,48 +69,6 @@ def rational_lcm(*args):
 
 
 
-def cfrac_convergents(L):
-    """Rational convergents of a simple continued fraction."""
-    if type(L) != list:
-        raise TypeError("L must be list not {type(L)}")
-    for i in L:
-        assert type(i) == int
-        
-    N = [1,L[0]]
-    D = [0,1]
-    con = 2
-    
-    yield Rational(N[-1],D[-1])
-    
-    while con < len(L)+1:
-        N.append( L[con-1] * N[con-1] + N[con-2] )
-        D.append( L[con-1] * D[con-1] + D[con-2] )
-
-        yield Rational(N[-1],D[-1])
-        
-        con += 1
-
-
-def cfrac_to_frac(L):
-    """Convert a continued fraction to a Rational"""
-    if type(L) != list:
-        raise TypeError("L must be list not {type(L)}")
-  
-    for i in L:
-        assert type(i) == int
-    
-    N = [1,L[0]]
-    D = [0,1]
-    con = 2
-    
-    while con < len(L)+1:
-        N.append( L[con-1] * N[con-1] + N[con-2] )
-        D.append( L[con-1] * D[con-1] + D[con-2] )
-        con += 1
-        
-    return Rational(N[-1],D[-1])
-
-
 def rational_seq(lo,hi,step):
     """Sequence of rational numbers"""
     lo   = cast_to_rational(lo)
@@ -132,7 +90,7 @@ def rational_round(Q,dlim):
         raise ZeroDivisionError
 
     # https://shreevatsa.wordpress.com/2011/01/10/not-all-best-rational-approximations-are-the-convergents-of-the-continued-fraction/
-    a = Q.cfrac()
+    a = CFrac(Q)
 
     prev = Rational(a[0])
     for pos,val in enumerate(a):

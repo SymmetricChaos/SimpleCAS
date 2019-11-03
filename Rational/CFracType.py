@@ -2,43 +2,43 @@ from Rational.RationalType import Rational
 
 class CFrac:
     
-    def __init__(self,L):
+    def __init__(self,terms):
     
-        if type(L) == Rational:
-            self.L = frac_to_cfrac(L)
+        if type(terms) == Rational:
+            self.terms = frac_to_cfrac(terms)
         else:
             try:
-                iter(L)
+                iter(terms)
             except:
-                raise TypeError("L must be iterable")
+                raise TypeError("terms must be iterable")
 
-            for i in L:
+            for i in terms:
                 if type(i) != int:
                     raise TypeError(f"all values of L must be int not {type(i)}")
     
-            self.L = L
+            self.terms = terms
 
 
     def __str__(self):
-        out = str(self.L)
+        out = str(self.terms)
         out = out.replace(",",";",1)
         return out
     
     
     def __len__(self):
-        return len(self.L)
+        return len(self.terms)
     
     
     def __getitem__(self,n):
-        """Make Cfrac accessible by indexing"""
-        return self.L[n]
+        """Make CFrac accessible by indexing"""
+        return CFrac(self.terms[n])
 
 
     def __setitem__(self,n,val):
         """Allow valid coefficients to be set"""    
         if type(val) != int:
             raise TypeError(f"Values must be integers not {type(val)}")
-        self.L[n] = val
+        self.terms[n] = val
         
 
 
@@ -103,14 +103,15 @@ def cfrac_to_frac(C):
     if type(C) != CFrac:
         raise TypeError(f"Input must be CFrac not {type(C)}")
 
+    L = C.terms
     
-    N = [1,C[0]]
+    N = [1,L[0]]
     D = [0,1]
     con = 2
     
     while con < len(C)+1:
-        N.append( C[con-1] * N[con-1] + N[con-2] )
-        D.append( C[con-1] * D[con-1] + D[con-2] )
+        N.append( L[con-1] * N[con-1] + N[con-2] )
+        D.append( L[con-1] * D[con-1] + D[con-2] )
         con += 1
         
     return Rational(N[-1],D[-1])
@@ -124,4 +125,5 @@ if __name__ == '__main__':
     C = CFrac(R)
     print(R)
     print(C)
+    print(C[:2])
     print(cfrac_to_frac(C))
