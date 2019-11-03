@@ -320,20 +320,6 @@ class Rational:
         return out
 
 
-    def cfrac(self):
-        """Canonical simple continued fraction representation"""
-        tmp = self.copy()
-        L = []
-        while True:
-            w,f = tmp.mixed_form()
-            L.append(w)
-            if f == 0:
-                break
-            tmp = f.inv()
-    
-        return Cfrac(L)
-
-
     pretty_name = property(_pretty_name)
     whole_part = property(_whole_part)
     fractional_part = property(_fractional_part)
@@ -341,38 +327,6 @@ class Rational:
     decimal_expansion = property(_decimal_expansion)
 
 
-
-class Cfrac:
-    
-    def __init__(self,L):
-    
-        try:
-            iter(L)
-        except:
-            raise TypeError("L must be iterable")
-
-        for i in L:
-            if type(i) != int:
-                raise TypeError(f"all values of L must be int not {type(i)}")
-
-        self.L = L
-
-    def __str__(self):
-        out = str(self.L)
-        out = out.replace(",",";",1)
-        return out
-    
-    
-    def __getitem__(self,n):
-        """Make Cfrac accessible by indexing"""
-        return self.coef[n]
-
-
-    def __setitem__(self,n,val):
-        """Allow valid coefficients to be set"""    
-        if type(val) != int:
-            raise TypeError(f"Values must be integers not {type(val)}")
-        self.coef[n] = val
 
 
 
@@ -385,5 +339,3 @@ if __name__ == '__main__':
     print(R**2)
     print(R**-3)
     print(R)
-    
-    print(R.cfrac())

@@ -1,0 +1,127 @@
+from Rational.RationalType import Rational
+
+class CFrac:
+    
+    def __init__(self,L):
+    
+        if type(L) == Rational:
+            self.L = frac_to_cfrac(L)
+        else:
+            try:
+                iter(L)
+            except:
+                raise TypeError("L must be iterable")
+
+            for i in L:
+                if type(i) != int:
+                    raise TypeError(f"all values of L must be int not {type(i)}")
+    
+            self.L = L
+
+
+    def __str__(self):
+        out = str(self.L)
+        out = out.replace(",",";",1)
+        return out
+    
+    
+    def __len__(self):
+        return len(self.L)
+    
+    
+    def __getitem__(self,n):
+        """Make Cfrac accessible by indexing"""
+        return self.L[n]
+
+
+    def __setitem__(self,n,val):
+        """Allow valid coefficients to be set"""    
+        if type(val) != int:
+            raise TypeError(f"Values must be integers not {type(val)}")
+        self.L[n] = val
+        
+
+
+
+
+def frac_to_cfrac(R):
+    """Canonical simple continued fraction representation"""
+    if type(R) != Rational:
+        raise TypeError(f"Input must be Rational not {type(R)}")
+    L = []
+    while True:
+        w,f = R.mixed_form()
+        L.append(w)
+        if f == 0:
+            break
+        R = f.inv()
+    return L
+
+
+def cfrac_convergents(C):
+    """Rational convergents of a simple continued fraction."""
+    if type(C) != CFrac:
+        raise TypeError(f"Input must be CFrac not {type(C)}")
+        
+    N = [1,C[0]]
+    D = [0,1]
+    con = 2
+    
+    yield Rational(N[-1],D[-1])
+    
+    while con < len(C)+1:
+        N.append( C[con-1] * N[con-1] + N[con-2] )
+        D.append( C[con-1] * D[con-1] + D[con-2] )
+
+        yield Rational(N[-1],D[-1])
+        
+        con += 1
+        
+        
+#def cfrac_semiconvergents(C):
+#    """Rational semiconvergents of a simple continued fraction."""
+#    if type(C) != CFrac:
+#        raise TypeError(f"Input must be CFrac not {type(C)}")
+#        
+#    N = [1,C[0]]
+#    D = [0,1]
+#    con = 2
+#    
+#    yield Rational(N[-1],D[-1])
+#    
+#    while con < len(C)+1:
+#        N.append( C[con-1] * N[con-1] + N[con-2] )
+#        D.append( C[con-1] * D[con-1] + D[con-2] )
+#
+#        yield Rational(N[-1],D[-1])
+#        
+#        con += 1
+
+
+def cfrac_to_frac(C):
+    """Convert a continued fraction to a Rational"""
+    if type(C) != CFrac:
+        raise TypeError(f"Input must be CFrac not {type(C)}")
+
+    
+    N = [1,C[0]]
+    D = [0,1]
+    con = 2
+    
+    while con < len(C)+1:
+        N.append( C[con-1] * N[con-1] + N[con-2] )
+        D.append( C[con-1] * D[con-1] + D[con-2] )
+        con += 1
+        
+    return Rational(N[-1],D[-1])
+
+
+
+
+
+if __name__ == '__main__':
+    R = Rational(5,7)
+    C = CFrac(R)
+    print(R)
+    print(C)
+    print(cfrac_to_frac(C))
