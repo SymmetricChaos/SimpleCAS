@@ -66,7 +66,6 @@ def rep_dec_to_frac(S):
         mul_rep = 10**R
         mul_dec = 10**D
 
-        print(A,B)
         return Rational(A-B,(mul_full-mul_rep) )*mul_dec*is_neg
 
     else:
@@ -164,29 +163,12 @@ def cast_to_rational(T):
 
 if __name__ == '__main__':
 
-    
-    
-    d = "3"
-    r = cast_to_rational(d)
-    print(f"{d} = {r} = {r.n/r.d}")
-    
-    d = "3.141592"
-    r = cast_to_rational(d)
-    print(f"{d} = {r} = {r.n/r.d}")
+    for d in ["3","3.141592","3.14(26)","311.(26)","1.1e-5","1.1e2"]:
+        r = cast_to_rational(d)
+        print(f"\n\n{d} = {r} = {r.n/r.d}")
+        r = cast_to_rational("-"+d)
+        print(f"\n-{d} = {r} = {r.n/r.d}")
 
-
-    d = "-3.14(26)"
-    r = cast_to_rational(d)
-    print(f"{d} = {r} = {r.n/r.d}")
-    
-    
-    d = "-311.(26)"
-    r = cast_to_rational(d)
-    print(f"{d} = {r} = {r.n/r.d}")
-    
-    d = "1.1e-05"
-    r = cast_to_rational(d)
-    print(f"{d} = {r} = {r.n/r.d}")
 
 #    
 #    d = Rational(-16,25).decimal_expansion
