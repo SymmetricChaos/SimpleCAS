@@ -180,7 +180,8 @@ if __name__ == '__main__':
     
     
     print("\n\nRationalRound")
-    R = Rational(214159,471)
+    R = Rational(214159,470)
+    print(R)
     print(rational_round(R,100))
 
     print("\n\nAll Positive Rational Numbers")

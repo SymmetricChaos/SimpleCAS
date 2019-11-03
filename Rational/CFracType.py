@@ -10,8 +10,8 @@ class CFrac:
             try:
                 iter(terms)
             except:
-                raise TypeError("terms must be iterable")
-
+                terms = [terms]
+                
             for i in terms:
                 if type(i) != int:
                     raise TypeError(f"all values of L must be int not {type(i)}")
@@ -31,14 +31,26 @@ class CFrac:
     
     def __getitem__(self,n):
         """Make CFrac accessible by indexing"""
-        return CFrac(self.terms[n])
+        return self.terms[n]
 
 
     def __setitem__(self,n,val):
-        """Allow valid coefficients to be set"""    
+        """Allow valid terms to be set"""    
         if type(val) != int:
             raise TypeError(f"Values must be integers not {type(val)}")
         self.terms[n] = val
+        
+
+    def __delitem__(self,n):
+        """Remove items"""    
+        del self.terms[n]
+
+    
+    def insert(self,n,val):
+        """Insert item"""
+        if type(val) != int:
+            raise TypeError(f"Values must be integers not {type(val)}")
+        self.terms.insert(n,val)
     
     
     def __add__(self,other):
@@ -48,7 +60,7 @@ class CFrac:
             return CFrac(self.terms + other)
         else:
             return NotImplemented 
-
+        
         
     def append(self,other):
         if type(other) == CFrac:
@@ -117,25 +129,25 @@ def cfrac_convergents(C):
         con += 1
         
         
-def cfrac_semiconvergents(C):
-    """Rational convergents of a simple continued fraction."""
-    if type(C) != CFrac:
-        raise TypeError(f"Input must be CFrac not {type(C)}")
-    
-    T = C.terms
-    N = [1,T[0]]
-    D = [0,1]
-    con = 2
-    
-    yield Rational(N[-1],D[-1])
-    
-    while con < len(C)+1:
-        N.append( T[con-1] * N[con-1] + N[con-2] )
-        D.append( T[con-1] * D[con-1] + D[con-2] )
-
-        yield Rational(N[-1],D[-1])
-        
-        con += 1
+#def cfrac_semiconvergents(C):
+#    """Rational convergents of a simple continued fraction."""
+#    if type(C) != CFrac:
+#        raise TypeError(f"Input must be CFrac not {type(C)}")
+#    
+#    T = C.terms
+#    N = [1,T[0]]
+#    D = [0,1]
+#    con = 2
+#    
+#    yield Rational(N[-1],D[-1])
+#    
+#    while con < len(C)+1:
+#        N.append( T[con-1] * N[con-1] + N[con-2] )
+#        D.append( T[con-1] * D[con-1] + D[con-2] )
+#
+#        yield Rational(N[-1],D[-1])
+#        
+#        con += 1
 
 
 
@@ -154,6 +166,9 @@ if __name__ == '__main__':
     
     print()
     C += [1,1]
+    C.insert(3,5)
+    C[2] += 1
     print(C)
     for i in cfrac_convergents(C):
         print(i)
+        
