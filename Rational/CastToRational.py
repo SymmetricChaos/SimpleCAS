@@ -76,7 +76,7 @@ def rep_dec_to_frac(S):
 def ratio_to_frac(S):
     """Convert a string of form a/b to Rational"""
         
-    m = re.fullmatch("-?\d*\/\d*",S)
+    m = re.fullmatch("-?\d+\/\d+",S)
     is_neg = 1
     if m:
         if m[0] == "-":
@@ -86,6 +86,50 @@ def ratio_to_frac(S):
         return Rational(int(n)*is_neg,int(d))
     else:
         return None
+    
+
+def scientific_to_frac(S):
+    """Convert a string formatted as scientific notation to Rational"""
+    S = S.replace("e","E")
+    m = re.fullmatch("-?\d\.\d+E-?\d+",S)
+
+    if m:
+        L,R = S.split("E")
+
+        
+        significand = term_dec_to_frac(L)
+        power = Rational(10)**int(R)
+
+        return significand*power
+    else:
+        return None
+    
+#def quote1_to_frac(S):
+#    """Convert a string following quote notation to Rational"""
+#        
+#    m = re.fullmatch("SOMETHING",S)
+#    is_neg = 1
+#    if m:
+#        if m[0] == "-":
+#            is_neg = -1
+#            m = m[1:]
+#        return Rational()
+#    else:
+#        return None
+#    
+#    
+#def quote2_to_frac(S):
+#    """Convert a string following quote notation to Rational, in the case where the quote and radix coincide"""
+#        
+#    m = re.fullmatch("SOMETHING",S)
+#    is_neg = 1
+#    if m:
+#        if m[0] == "-":
+#            is_neg = -1
+#            m = m[1:]
+#        return Rational()
+#    else:
+#        return None
         
 
 def cast_to_rational(T):
@@ -101,7 +145,11 @@ def cast_to_rational(T):
         return cast_to_rational(str(T))
     
     elif type(T) == str:
-        for func in [ratio_to_frac,int_str_to_frac,rep_dec_to_frac,term_dec_to_frac]:
+        for func in [ratio_to_frac,
+                     int_str_to_frac,
+                     term_dec_to_frac,
+                     rep_dec_to_frac,
+                     scientific_to_frac]:
             out = func(T)
             if type(out) == Rational:
                 return out
@@ -133,6 +181,10 @@ if __name__ == '__main__':
     
     
     d = "-311.(26)"
+    r = cast_to_rational(d)
+    print(f"{d} = {r} = {r.n/r.d}")
+    
+    d = "1.1e-05"
     r = cast_to_rational(d)
     print(f"{d} = {r} = {r.n/r.d}")
 
