@@ -196,12 +196,13 @@ class Rational:
     def __pow__(self,pwr):
         if type(pwr) != int:
             raise TypeError(f"pwr must be an integer not {type(pwr)}")
-        if pwr < 0:
-            raise TypeError(f"pwr must be non-negative")
-            
-        if pwr == 0:
+        
+        # For negative powers invert then use recursion
+        if pwr < 1:
+            return self.inv()**abs(pwr)
+        elif pwr == 0:
             return Rational(1)
-        if pwr == 1:
+        elif pwr == 1:
             return self
         else:
             n = self.n**pwr
@@ -345,4 +346,7 @@ if __name__ == '__main__':
 #    Explanation = open(r"Explanation.txt","r")
 #    for i in Explanation.readlines():
 #        print(i)
-    pass
+    R = Rational(5,7)
+    print(R**2)
+    print(R**-3)
+    print(R)
