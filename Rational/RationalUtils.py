@@ -1,6 +1,6 @@
 from Rational.RationalType import Rational
-from Utility import gcd, first_where
-import re
+from Rational.CastToRational import cast_to_rational
+from Utility import gcd
 
 
 
@@ -64,94 +64,6 @@ def rational_lcm(*args):
     a = rational_lcm(*args[0:2])
     b = rational_lcm(*args[2:])
     return _rational_lcm(a,b)
-
-
-
-
-
-def digits_to_frac(S):
-    """Convert a string of form a.b to Rational"""
-    if type(S) != str:
-        raise TypeError("Input {S} is {type(S)} not str")
-    if "." not in S:
-        S += "."
-    
-    # One or zero dashes signs
-    # any number of digits
-    # a decimal point
-    # any number of digits
-    # one or zero open paren
-    # any number of gitis
-    # one or zero close paren
-    m = re.fullmatch("-?\d*\.\d*\(?\d*\)?",S)
-    is_neg = 1
-    if m:
-        
-        # Fix this to work with 
-        if "(" in S:
-            if S[0] == "-":
-                is_neg = -1
-                S = S[1:]
-            D = first_where(S,".")-1 # pos of decimal
-            R = first_where(S,"(")+1 # pos of repeating part
-            
-            # String representing the non-repeating and repeating parts
-            fpart = S[:R-1].replace(".","")
-            rpart = S[R:-1]
-            
-            # Fraction representing the non-repeating part
-            fR = Rational(int(fpart),10**(D+1))
-            # Fraction represent the repeating part
-            rR = Rational(int(rpart),int("9"*len(rpart)+"0"*(D+1)))
-
-            return is_neg*(fR + rR)
-    
-        else:
-            if S[0] == "-":
-                is_neg = -1
-                S = S[1:]
-            D = len(S)-first_where(S,".")-1
-            S = S.replace(".","")
-            return Rational(int(S)*is_neg,10**D)
-    else:
-        raise ValueError(f"Cannot cast {S} to Rational")
-
-
-def ratio_to_frac(S):
-    """Convert a string of form a/b to Rational"""
-    if type(S) != str:
-        raise TypeError("Input {S} is {type(S)} not str")
-    if "/" not in S:
-        S += "/1"
-        
-    m = re.fullmatch("-?\d*\/\d*",S)
-    is_neg = 1
-    if m:
-        if m[0] == "-":
-            is_neg = -1
-            m = m[1:]
-        n,d = S.split("/")
-        return Rational(int(n)*is_neg,int(d))
-    else:
-        raise ValueError(f"Cannot cast {S} to Rational")
-        
-
-def cast_to_rational(T):
-    """Best effort to transform input to a rational number"""
-    
-    if type(T) == Rational:
-        return T
-    elif type(T) == int:
-        return Rational(T)
-    elif type(T) == float:
-        return cast_to_rational(str(T))
-    elif type(T) == str:
-        try:
-            return ratio_to_frac(T)
-        except:
-            return digits_to_frac(T)
-    else:
-        raise ValueError(f"Could not cast {T} to Rational")
 
 
 
@@ -302,39 +214,11 @@ if __name__ == '__main__':
     print(f"lcm({a},{b}) = {L}")
     
     
-    print()
-    print()
-    
-    d = "3.141592"
-    r = digits_to_frac(d)
-    print(f"{d} = {r} = {r.n/r.d}")
-
-    print(rational_round(r,106))
-    
     print("\n\nRational Sequence")
     print(rational_seq(0,3,Rational(2,3)))
     
-    print()
-    print()
-    
-    d = Rational(-16,25).decimal_expansion
-    r = digits_to_frac(d)
-    print(f"{d} = {r} = {r.n/r.d}")
-    print(r.decimal_expansion)
-        
-    
-    print()
-    print("")
-    
-    d = Rational(137,126).decimal_expansion
-    r = digits_to_frac(d)
-    print(f"{d} = {r} = {r.n/r.d}")
-    print(r.decimal_expansion)
-    
-    
-    print()
-    print()
-    
+
+    print("\n\nAll Positive Rational Numbers")
     for pos,val in enumerate(all_pos_rationals()):
         if pos > 20:
             break
