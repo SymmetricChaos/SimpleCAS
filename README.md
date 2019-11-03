@@ -56,22 +56,29 @@ Since writing out a `Rational(Numerator,Denominator)` can be inconvenient every 
 print(cast_to_rational(12))
 12
 
+# Ratio notation
 print(cast_to_rational("45/12"))
 15/4
 
+# Terminating decimal notation
 print(cast_to_rational("12.95"))
 259/20
 
+# Repeating decimal notation
 print(cast_to_rational("-.71(010)"))
 -70939/999
 
-print(cast_to_rational(45.13))
-4513/100
+# Scientific notation
+print(cast_to_rational("1.24e-5"))
+31/2500000
 ```
 
 While giving floats to `cast_to_rational` is allowed it is not recommended. Floating point numbers are finite length binary approximations of some real number so the results may not be the same as expected. The method used also relies on how Python converts floating point numbers to strings so it is dependent on any settings that influence that.
 
 ```
+print(cast_to_rational(45.13))
+4513/100
+
 print(cast_to_rational(1/3))
 3333333333333333/10000000000000000
 ```
