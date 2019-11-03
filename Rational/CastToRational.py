@@ -26,31 +26,48 @@ def term_dec_to_frac(S):
     else:
         return None
 
-        
+
+# conceptual basis for 
+#x = 3.14(26)
+#
+#10000x = 31426.(26)
+#  100x =   314.(26)
+# 9900x = 31426-314
+# 
+#
+# 
+# 
+#x = 31.(26)
+#
+#100x = 3126.(26)
+#   x =   31.(26)
+# 99x = 3126-31
+
 def rep_dec_to_frac(S):
     """Convert a string representing a repeating decimal to Rational"""
 
-    m = re.fullmatch("-?\d*\.\d*\(\d*\)",S)
+    m = re.fullmatch("-?\d*\.\d*\(\d+\)",S)
     is_neg = 1
     if m:
-        
+
         if S[0] == "-":
             is_neg = -1
             S = S[1:]
-        D = first_where(S,".")-1 # pos of decimal
-        R = first_where(S,"(")+1 # pos of repeating part
-        
-        # String representing the non-repeating and repeating parts
-        fpart = S[:R-1].replace(".","")
-        rpart = S[R:-1]
-        
-        # Fraction representing the non-repeating part
-        fR = Rational(int(fpart),10**(D+1))
-        # Fraction represent the repeating part
-        rR = Rational(int(rpart),int("9"*len(rpart)+"0"*(D+1)))
 
-        return is_neg*(fR + rR)
-    
+        T = re.sub("\(|\)|\.","",S)
+
+        D = first_where(S,".")-1 # pos of decimal
+        R = first_where(S,"(")-2 # pos of repeating part
+        
+        A = int(T)
+        B = int(T[:R+1])
+        
+        mul_full = 10**(len(T)-1)
+        mul_rep = 10**R
+        mul_dec = 10**D
+
+        print(A,B)
+        return Rational(A-B,(mul_full-mul_rep) )*mul_dec*is_neg
 
     else:
         return None
@@ -76,16 +93,20 @@ def cast_to_rational(T):
     
     if type(T) == Rational:
         return T
+    
     elif type(T) == int:
         return Rational(T)
+    
     elif type(T) == float:
         return cast_to_rational(str(T))
+    
     elif type(T) == str:
         for func in [ratio_to_frac,int_str_to_frac,rep_dec_to_frac,term_dec_to_frac]:
             out = func(T)
             if type(out) == Rational:
                 return out
         raise ValueError(f"Could not cast {T} to Rational")
+        
     else:
         raise ValueError(f"Could not cast {T} to Rational")
         
@@ -104,10 +125,17 @@ if __name__ == '__main__':
     d = "3.141592"
     r = cast_to_rational(d)
     print(f"{d} = {r} = {r.n/r.d}")
-#
-#    
-#    print()
-#    print()
+
+
+    d = "-3.14(26)"
+    r = cast_to_rational(d)
+    print(f"{d} = {r} = {r.n/r.d}")
+    
+    
+    d = "-311.(26)"
+    r = cast_to_rational(d)
+    print(f"{d} = {r} = {r.n/r.d}")
+
 #    
 #    d = Rational(-16,25).decimal_expansion
 #    r = digits_to_frac(d)
