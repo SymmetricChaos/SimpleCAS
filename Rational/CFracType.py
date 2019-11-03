@@ -165,9 +165,16 @@ if __name__ == '__main__':
         print(i)
     
     print()
+    print(C)
     C += [1,1]
+    print(C)
     C.insert(3,5)
-    C[2] += 1
+    print(C)
+    C[1] = 7
+    print(C)
+    C[2] += 9
+    print(C)
+    del C[6]
     print(C)
     for i in cfrac_convergents(C):
         print(i)
