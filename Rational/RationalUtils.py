@@ -83,28 +83,31 @@ def rational_seq(lo,hi,step):
 def rational_round(Q,dlim):
     """Best approximation of Q with denominator of d or less, by semi-convergents"""
     if type(Q) != Rational:
-        raise TypeError("Q must be Rational not {type(Q)}")
+        raise TypeError(f"Q must be Rational not {type(Q)}")
   
     assert type(dlim) == int
     if dlim < 1:
         raise ZeroDivisionError
 
     # https://shreevatsa.wordpress.com/2011/01/10/not-all-best-rational-approximations-are-the-convergents-of-the-continued-fraction/
-    a = CFrac(Q)
+    a = CFrac(Q).terms
 
     prev = Rational(a[0])
     for pos,val in enumerate(a):
         # Try appending the floor of half the next convergent
         semi = a[:pos]+[(val-1)//2+1]
+        semi = CFrac(semi)
+        
         # If it is worse than the last semiconvergent add 1
         if abs(cfrac_to_frac(semi) - Q)  >  abs(prev - Q):
-            semi[pos] += 1
-        while semi[pos] <= val:
+            semi.terms[pos] += 1
+            
+        while semi.terms[pos] <= val:
             if cfrac_to_frac(semi).d > dlim:
-                semi[pos] -= 1
+                semi.terms[pos] -= 1
                 return prev
             prev = cfrac_to_frac(semi)
-            semi[pos] += 1
+            semi.terms[pos] += 1
     return Q
 
 
@@ -175,6 +178,10 @@ if __name__ == '__main__':
     print("\n\nRational Sequence")
     print(rational_seq(0,3,Rational(2,3)))
     
+    
+    print("\n\nRationalRound")
+    R = Rational(214159,471)
+    print(rational_round(R,100))
 
     print("\n\nAll Positive Rational Numbers")
     for pos,val in enumerate(all_pos_rationals()):
