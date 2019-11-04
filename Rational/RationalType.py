@@ -198,7 +198,7 @@ class Rational:
             raise TypeError(f"pwr must be an integer not {type(pwr)}")
         
         # For negative powers invert then use recursion
-        if pwr < 1:
+        if pwr < 0:
             return self.inv()**abs(pwr)
         elif pwr == 0:
             return Rational(1)

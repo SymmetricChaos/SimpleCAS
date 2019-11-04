@@ -78,3 +78,6 @@ if __name__ == '__main__':
     if len(c) > 0:
         cpts = [(i,P(i)) for i in c]
         scatter_points(cpts,zorder=5,color='red')
+
+
+    

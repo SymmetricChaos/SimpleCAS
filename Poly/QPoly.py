@@ -607,3 +607,8 @@ class RFunc:
     content = property(_content)
     primitive_part = property(_primitive_part)
 
+
+if __name__ == '__main__':
+    P = QPoly( [1,"1/2",3,"7/3"] )
+    print(P)
+    print(P(3))
