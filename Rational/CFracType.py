@@ -59,7 +59,7 @@ class CFrac:
         elif type(other) == list:
             return CFrac(self.terms + other)
         else:
-            return NotImplemented 
+            return NotImplemented
         
         
     def append(self,other):
@@ -68,7 +68,7 @@ class CFrac:
         elif type(other) == list:
             self.terms += other
         else:
-            return NotImplemented 
+            raise TypeError(f"Can only append another CFrac or list not {type(other)}")
 
 
 
@@ -129,26 +129,30 @@ def cfrac_convergents(C):
         con += 1
         
         
-#def cfrac_semiconvergents(C):
-#    """Rational convergents of a simple continued fraction."""
-#    if type(C) != CFrac:
-#        raise TypeError(f"Input must be CFrac not {type(C)}")
-#    
-#    T = C.terms
-#    N = [1,T[0]]
-#    D = [0,1]
-#    con = 2
-#    
-#    yield Rational(N[-1],D[-1])
-#    
-#    while con < len(C)+1:
-#        N.append( T[con-1] * N[con-1] + N[con-2] )
-#        D.append( T[con-1] * D[con-1] + D[con-2] )
-#
-#        yield Rational(N[-1],D[-1])
-#        
-#        con += 1
+def cfrac_semiconvergents(C):
+    """Rational semiconvergents of a simple continued fraction."""
+    
+    if type(C) != CFrac:
+        raise TypeError(f"Input must be CFrac not {type(C)}")
+    
+    a = C.terms
+    Q = cfrac_to_frac(C)
 
+    prev = Rational(a[0])
+    for pos,val in enumerate(a):
+        # Try appending the floor of half the next convergent
+        semi = a[:pos]+[(val-1)//2+1]
+        semi = CFrac(semi)
+        
+        # If it is worse than the last semiconvergent add 1
+        if abs(cfrac_to_frac(semi) - Q)  >  abs(prev - Q):
+            semi.terms[pos] += 1
+            
+        while semi.terms[pos] <= val:
+            yield prev
+            prev = cfrac_to_frac(semi)
+            semi.terms[pos] += 1
+    yield Q
 
 
 
@@ -160,8 +164,9 @@ if __name__ == '__main__':
     print(C)
     print(C[:2])
     print(cfrac_to_frac(C))
-    print()
-    for i in cfrac_convergents(C):
+    
+    print(f"\n\nSemiconvergents of {R}")
+    for i in cfrac_semiconvergents(C):
         print(i)
     
     print()
@@ -176,6 +181,5 @@ if __name__ == '__main__':
     print(C)
     del C[6]
     print(C)
-    for i in cfrac_convergents(C):
-        print(i)
+
         
