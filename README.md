@@ -8,7 +8,7 @@ For the love of common sense don't use SimpleCAS for anything remotely important
 
 
 # Features
-Currently three basic kinds of objects are supported by SimpleCAS: Rational (rational numbers), QPoly (polynomials with rational coefficients), and ZPoly (polynomials with integer coefficients).
+Currently four basic kinds of objects are supported by SimpleCAS: Rational (rational numbers), CFrac (simple continued fractions), QPoly (polynomials with rational coefficients), and ZPoly (polynomials with integer coefficients).
 
 ## Rational
 Rational numbers represented in simplest form. They are essentially just a pair of numbers with a bunch of methods defined to make sure they interact with other Rational objects as well as Python's integers.
@@ -38,8 +38,8 @@ print(R.decimal_expansion)
 1.0(873015)
 
 # List with the canonical simple continued fraction
-print(R.cfrac())
-[3, 2, 1, 3]
+print(frac_to_cfrac(R))
+[3; 2, 1, 3]
 ```
 
 The continued fraction representation is useful for "rounding" rational numbers by finding the best rational approximation with a denominator no greater than a certain value. Note that this method uses semi-convergents and so it will actually *the* best approximation rather than simply *a* best approximation.
@@ -81,6 +81,20 @@ print(cast_to_rational(45.13))
 
 print(cast_to_rational(1/3))
 3333333333333333/10000000000000000
+```
+
+## CFrac
+
+Continued fractions with numerator one for all terms in canonical form. Continued fractions are an alternative way to represent rational numbers that encode a lot of useful information.
+
+
+```
+R = Rational(5,7)
+C = CFrac(R)
+print(R)
+5/7
+print(C)
+[0; 1, 2, 2]
 ```
 
 ## QPoly
