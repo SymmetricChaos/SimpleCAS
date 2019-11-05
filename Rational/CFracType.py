@@ -54,29 +54,37 @@ class CFrac:
     
     
     def __add__(self,other):
-        if type(other) == CFrac:
-            return CFrac(self.terms + other.terms)
-        elif type(other) == list:
+        if type(other) == list:
             return CFrac(self.terms + other)
         else:
             return NotImplemented
         
         
     def append(self,other):
-        if type(other) == CFrac:
-            self.terms += other.terms
-        elif type(other) == list:
+        if type(other) == list:
             self.terms += other
         else:
-            raise TypeError(f"Can only append another CFrac or list not {type(other)}")
+            raise TypeError(f"Can only append list not {type(other)}")
 
 
-#    def pretty_name(self):
-        # LaTeX encoding
-        # probably has to be recursive
-        #1+\cfrac{1}{2+\cfrac{1}{2+\cfrac{1}{2}}} 
+    def _pretty_name(self):
+        """Name formatted for LaTeX"""
 
+        if len(self) == 1:
+            return str(self[0])
+        
+        else:
+        
+            prm = "#+\cfrac{1}{*}"
+            out = "*"
+            for i in self[:-1]:
+                out = out.replace("*",prm)
+                out = out.replace("#",str(i))
+            out = out.replace("*",str(self[-1]))
+            return out
+        
 
+    pretty_name = property(_pretty_name)
 
 
 def frac_to_cfrac(R):
@@ -163,15 +171,13 @@ def cfrac_semiconvergents(C):
 
 
 if __name__ == '__main__':
-    R = Rational(5,7)
-    C = CFrac(R)
-    print(R)
+
+    C = CFrac([8,11,4,2,7])
     print(C)
+    print(C.pretty_name)
     
     
-#    print(C[:2])
-#    print(cfrac_to_frac()) 
-    print(CFrac([8,11,4,2,7]))
+    
 #    print(f"\n\nSemiconvergents of {R}")
 #    for i in cfrac_semiconvergents(C):
 #        print(i)
