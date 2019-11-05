@@ -100,14 +100,14 @@ def rational_round(Q,dlim):
         
         # If it is worse than the last semiconvergent add 1
         if abs(cfrac_to_frac(semi) - Q)  >  abs(prev - Q):
-            semi.terms[pos] += 1
+            semi[pos] += 1
             
         while semi.terms[pos] <= val:
             if cfrac_to_frac(semi).d > dlim:
-                semi.terms[pos] -= 1
+                semi[pos] -= 1
                 return prev
             prev = cfrac_to_frac(semi)
-            semi.terms[pos] += 1
+            semi[pos] += 1
     return Q
 
 

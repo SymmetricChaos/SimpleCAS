@@ -5,7 +5,7 @@ class CFrac:
     def __init__(self,terms):
     
         if type(terms) == Rational:
-            self.terms = frac_to_cfrac(terms)
+            self.terms = _frac_to_cfrac(terms)
         else:
             try:
                 iter(terms)
@@ -65,6 +65,46 @@ class CFrac:
             self.terms += other
         else:
             raise TypeError(f"Can only append list not {type(other)}")
+            
+            
+    def convergents(self):
+        """Rational convergents"""
+        T = self.terms
+        N = [1,T[0]]
+        D = [0,1]
+        con = 2
+        
+        yield Rational(N[-1],D[-1])
+        
+        while con < len(C)+1:
+            N.append( T[con-1] * N[con-1] + N[con-2] )
+            D.append( T[con-1] * D[con-1] + D[con-2] )
+        
+            yield Rational(N[-1],D[-1])
+            
+            con += 1
+            
+    def semiconvergents(self):
+        """Rational semiconvergents"""
+  
+        a = self.terms
+        Q = cfrac_to_frac(C)
+        
+        prev = Rational(a[0])
+        for pos,val in enumerate(a):
+            # Try appending the floor of half the next convergent
+            semi = a[:pos]+[(val-1)//2+1]
+            semi = CFrac(semi)
+            
+            # If it is worse than the last semiconvergent add 1
+            if abs(cfrac_to_frac(semi) - Q)  >  abs(prev - Q):
+                semi.terms[pos] += 1
+                
+            while semi.terms[pos] <= val:
+                yield prev
+                prev = cfrac_to_frac(semi)
+                semi.terms[pos] += 1
+        yield Q
 
 
     def _pretty_name(self):
@@ -87,7 +127,11 @@ class CFrac:
     pretty_name = property(_pretty_name)
 
 
-def frac_to_cfrac(R):
+
+
+# For internal use only. Users should simple give a Rational to CFrac which will
+# automatically call this
+def _frac_to_cfrac(R):
     """Canonical simple continued fraction representation"""
     if type(R) != Rational:
         raise TypeError(f"Input must be Rational not {type(R)}")
@@ -121,51 +165,6 @@ def cfrac_to_frac(C):
     return Rational(N[-1],D[-1])
 
 
-def cfrac_convergents(C):
-    """Rational convergents of a simple continued fraction."""
-    if type(C) != CFrac:
-        raise TypeError(f"Input must be CFrac not {type(C)}")
-    
-    T = C.terms
-    N = [1,T[0]]
-    D = [0,1]
-    con = 2
-    
-    yield Rational(N[-1],D[-1])
-    
-    while con < len(C)+1:
-        N.append( T[con-1] * N[con-1] + N[con-2] )
-        D.append( T[con-1] * D[con-1] + D[con-2] )
-
-        yield Rational(N[-1],D[-1])
-        
-        con += 1
-        
-        
-def cfrac_semiconvergents(C):
-    """Rational semiconvergents of a simple continued fraction."""
-    
-    if type(C) != CFrac:
-        raise TypeError(f"Input must be CFrac not {type(C)}")
-    
-    a = C.terms
-    Q = cfrac_to_frac(C)
-
-    prev = Rational(a[0])
-    for pos,val in enumerate(a):
-        # Try appending the floor of half the next convergent
-        semi = a[:pos]+[(val-1)//2+1]
-        semi = CFrac(semi)
-        
-        # If it is worse than the last semiconvergent add 1
-        if abs(cfrac_to_frac(semi) - Q)  >  abs(prev - Q):
-            semi.terms[pos] += 1
-            
-        while semi.terms[pos] <= val:
-            yield prev
-            prev = cfrac_to_frac(semi)
-            semi.terms[pos] += 1
-    yield Q
 
 
 
