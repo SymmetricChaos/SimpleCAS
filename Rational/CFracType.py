@@ -71,6 +71,11 @@ class CFrac:
             raise TypeError(f"Can only append another CFrac or list not {type(other)}")
 
 
+#    def pretty_name(self):
+        # LaTeX encoding
+        # probably has to be recursive
+        #1+\cfrac{1}{2+\cfrac{1}{2+\cfrac{1}{2}}} 
+
 
 
 
@@ -162,24 +167,26 @@ if __name__ == '__main__':
     C = CFrac(R)
     print(R)
     print(C)
-    print(C[:2])
-    print(cfrac_to_frac(C))
     
-    print(f"\n\nSemiconvergents of {R}")
-    for i in cfrac_semiconvergents(C):
-        print(i)
     
-    print()
-    print(C)
-    C += [1,1]
-    print(C)
-    C.insert(3,5)
-    print(C)
-    C[1] = 7
-    print(C)
-    C[2] += 9
-    print(C)
-    del C[6]
-    print(C)
+#    print(C[:2])
+#    print(cfrac_to_frac()) 
+    print(CFrac([8,11,4,2,7]))
+#    print(f"\n\nSemiconvergents of {R}")
+#    for i in cfrac_semiconvergents(C):
+#        print(i)
+#    
+#    print()
+#    print(C)
+#    C += [1,1]
+#    print(C)
+#    C.insert(3,5)
+#    print(C)
+#    C[1] = 7
+#    print(C)
+#    C[2] += 9
+#    print(C)
+#    del C[6]
+#    print(C)
 
         
