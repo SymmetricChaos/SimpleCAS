@@ -1,7 +1,7 @@
 from Rational.RationalType import Rational
 from Rational.CastToRational import cast_to_rational
 from Utility import gcd
-from Rational.CFracType import CFrac, cfrac_to_frac
+from Rational.CFracType import CFrac
 
 
 def _rational_gcd(A,B):
@@ -99,14 +99,14 @@ def rational_round(Q,dlim):
         semi = CFrac(semi)
         
         # If it is worse than the last semiconvergent add 1
-        if abs(cfrac_to_frac(semi) - Q)  >  abs(prev - Q):
+        if abs(semi.as_rational() - Q)  >  abs(prev - Q):
             semi[pos] += 1
             
         while semi.terms[pos] <= val:
-            if cfrac_to_frac(semi).d > dlim:
+            if semi.as_rational().d > dlim:
                 semi[pos] -= 1
                 return prev
-            prev = cfrac_to_frac(semi)
+            prev = semi.as_rational()
             semi[pos] += 1
     return Q
 

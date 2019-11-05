@@ -1,5 +1,6 @@
 from Rational.RationalType import Rational
 from Utility import first_where
+from CFracType import CFrac
 import re
 
 
@@ -102,33 +103,9 @@ def scientific_to_frac(S):
         return significand*power
     else:
         return None
-    
-#def quote1_to_frac(S):
-#    """Convert a string following quote notation to Rational"""
-#        
-#    m = re.fullmatch("SOMETHING",S)
-#    is_neg = 1
-#    if m:
-#        if m[0] == "-":
-#            is_neg = -1
-#            m = m[1:]
-#        return Rational()
-#    else:
-#        return None
-#    
-#    
-#def quote2_to_frac(S):
-#    """Convert a string following quote notation to Rational, in the case where the quote and radix coincide"""
-#        
-#    m = re.fullmatch("SOMETHING",S)
-#    is_neg = 1
-#    if m:
-#        if m[0] == "-":
-#            is_neg = -1
-#            m = m[1:]
-#        return Rational()
-#    else:
-#        return None
+
+
+
         
 
 def cast_to_rational(T):
@@ -142,6 +119,9 @@ def cast_to_rational(T):
     
     elif type(T) == float:
         return cast_to_rational(str(T))
+    
+    elif type(T) == CFrac:
+        return T.as_rational()
     
     elif type(T) == str:
         for func in [ratio_to_frac,

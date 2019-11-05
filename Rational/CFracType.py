@@ -65,7 +65,24 @@ class CFrac:
             self.terms += other
         else:
             raise TypeError(f"Can only append list not {type(other)}")
+    
+    
+    def as_rational(self):
+        """Convert a continued fraction to a Rational"""
+    
+        L = self.terms
+        
+        N = [1,L[0]]
+        D = [0,1]
+        con = 2
+        
+        while con < len(self)+1:
+            N.append( L[con-1] * N[con-1] + N[con-2] )
+            D.append( L[con-1] * D[con-1] + D[con-2] )
+            con += 1
             
+        return Rational(N[-1],D[-1])  
+    
             
     def convergents(self):
         """Rational convergents"""
@@ -88,7 +105,7 @@ class CFrac:
         """Rational semiconvergents"""
   
         a = self.terms
-        Q = cfrac_to_frac(C)
+        Q = self.as_rational()
         
         prev = Rational(a[0])
         for pos,val in enumerate(a):
@@ -97,12 +114,12 @@ class CFrac:
             semi = CFrac(semi)
             
             # If it is worse than the last semiconvergent add 1
-            if abs(cfrac_to_frac(semi) - Q)  >  abs(prev - Q):
+            if abs(semi.as_rational() - Q)  >  abs(prev - Q):
                 semi.terms[pos] += 1
                 
             while semi.terms[pos] <= val:
                 yield prev
-                prev = cfrac_to_frac(semi)
+                prev = semi.as_rational()
                 semi.terms[pos] += 1
         yield Q
 
@@ -144,28 +161,6 @@ def _frac_to_cfrac(R):
             break
         R = f.inv()
     return L
-
-
-def cfrac_to_frac(C):
-    """Convert a continued fraction to a Rational"""
-    if type(C) != CFrac:
-        raise TypeError(f"Input must be CFrac not {type(C)}")
-
-    L = C.terms
-    
-    N = [1,L[0]]
-    D = [0,1]
-    con = 2
-    
-    while con < len(C)+1:
-        N.append( L[con-1] * N[con-1] + N[con-2] )
-        D.append( L[con-1] * D[con-1] + D[con-2] )
-        con += 1
-        
-    return Rational(N[-1],D[-1])
-
-
-
 
 
 
