@@ -8,7 +8,7 @@ For the love of common sense don't use SimpleCAS for anything remotely important
 
 
 # Features
-Currently four basic kinds of objects are supported by SimpleCAS: Rational (rational numbers), CFrac (simple continued fractions), QPoly (polynomials with rational coefficients), and ZPoly (polynomials with integer coefficients).
+Currently four basic kinds of objects are supported by SimpleCAS: Rational (rational numbers), CFrac (simple continued fractions), QPoly (polynomials with rational coefficients), and ZPoly (polynomials with integer coefficients modulo some number).
 
 ## Rational
 Rational numbers represented in simplest form. They are essentially just a pair of numbers with a bunch of methods defined to make sure they interact with other Rational objects as well as Python's integers.
@@ -85,15 +85,14 @@ print(cast_to_rational(1/3))
 
 ## CFrac
 
-Continued fractions are an alternative way to represent rational numbers that encodes a lot of useful information. The CFrac type specifically represents simple continued fractions, those that have numerator one for all terms.
+[Continued fractions](https://en.wikipedia.org/wiki/Continued_fraction) are an alternative way to represent rational numbers that encodes a lot of useful information. The CFrac type specifically represents simple continued fractions, those that have numerator one for all terms.
 
 ![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/continued_fraction_example.png "[8; 11, 4, 2, 7]")
 
+The above way of writing out a continued fraction using LaTeX formatting while as clear as possible is not especially portable. Because the numerators are always equal to one just storing the denominators as a list is sufficient to describe it and also much easier to write. The integer part of the continued fraction is marked by a semicolon.
+
 ```
-R = Rational(6083,752)
-C = CFrac(R)
-print(R)
-6083/752
+C = CFrac([8, 11, 4, 2, 7])
 print(C)
 [8; 11, 4, 2, 7]
 ```
