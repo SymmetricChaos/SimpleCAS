@@ -85,16 +85,17 @@ print(cast_to_rational(1/3))
 
 ## CFrac
 
-Continued fractions with numerator one for all terms in canonical form. Continued fractions are an alternative way to represent rational numbers that encode a lot of useful information.
+Continued fractions are an alternative way to represent rational numbers that encodes a lot of useful information. The CFrac type specifically represents simple continued fractions, those that have numerator one for all terms.
 
+![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/continued_fraction_example.png "[8; 11, 4, 2, 7]")
 
 ```
-R = Rational(5,7)
+R = Rational(6083,752)
 C = CFrac(R)
 print(R)
-5/7
+6083/752
 print(C)
-[0; 1, 2, 2]
+[8; 11, 4, 2, 7]
 ```
 
 ## QPoly
