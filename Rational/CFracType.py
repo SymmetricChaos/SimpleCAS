@@ -93,7 +93,7 @@ class CFrac:
         
         yield Rational(N[-1],D[-1])
         
-        while con < len(C)+1:
+        while con < len(self)+1:
             N.append( T[con-1] * N[con-1] + N[con-2] )
             D.append( T[con-1] * D[con-1] + D[con-2] )
         
@@ -125,7 +125,7 @@ class CFrac:
 
 
     def _pretty_name(self):
-        """Name formatted for LaTeX"""
+        """Name formatted for LaTeX, requires amsmath"""
 
         if len(self) == 1:
             return str(self[0])
@@ -171,22 +171,24 @@ if __name__ == '__main__':
     print(C.pretty_name)
     
     
-    
-#    print(f"\n\nSemiconvergents of {R}")
-#    for i in cfrac_semiconvergents(C):
-#        print(i)
-#    
-#    print()
-#    print(C)
-#    C += [1,1]
-#    print(C)
-#    C.insert(3,5)
-#    print(C)
-#    C[1] = 7
-#    print(C)
-#    C[2] += 9
-#    print(C)
-#    del C[6]
-#    print(C)
+    print()
+    print(C)
+    C += [1,1]
+    print(C)
+    C.insert(3,5)
+    print(C)
+    C[1] = 7
+    print(C)
+    C[2] += 9
+    print(C)
+    del C[6]
+    print(C)
 
-        
+    
+    D = CFrac( [1,1,1,1,1,1,1,1,1,1,1,1] )
+    R = D.as_rational()
+    print(f"\n\nConvergents of {R}")
+    
+    for i in D.convergents():
+        s = str(i)
+        print(f"{s:<7} = {i.digits(6)}")
