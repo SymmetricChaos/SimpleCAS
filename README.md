@@ -87,15 +87,23 @@ print(cast_to_rational(1/3))
 
 [Continued fractions](https://en.wikipedia.org/wiki/Continued_fraction) are an alternative way to represent rational numbers that encodes a lot of useful information. The CFrac type specifically represents simple continued fractions, those that have numerator one for all terms.
 
-![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/continued_fraction_example.png "[8; 11, 4, 2, 7]")
+![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/continued_fraction_example.png "8+\cfrac{1}{11+\cfrac{1}{4+\cfrac{1}{2+\cfrac{1}{7}}}}")
 
-The above way of writing out a continued fraction using LaTeX formatting while as clear as possible is not especially portable. Because the numerators are always equal to one just storing the denominators as a list is sufficient to describe it and also much easier to write. The integer part of the continued fraction is marked by a semicolon.
+A more portable way to describe this is simply as a list. Because the numerators are always equal to one just storing the denominators as a list is sufficient to describe it and also much easier to write. The integer part of the continued fraction is marked by a semicolon.
 
 ```
 C = CFrac([8, 11, 4, 2, 7])
 print(C)
 [8; 11, 4, 2, 7]
 ```
+
+SimpleCAS can also produce the nice LaTeX formatting with the `.pretty_name` method.
+
+```
+print(C.pretty_name)
+8+\cfrac{1}{11+\cfrac{1}{4+\cfrac{1}{2+\cfrac{1}{7}}}}
+```
+
 
 ## QPoly
 Univariate polynomials with rational coefficients. Internally these are simple to represent as a list with the term of degree 0 in position 0, the term of degree 1 in position 1, and so on. This makes indexing the polynomial when working with it in Python intuitive but its not how we generally write polynomials in order to read them. When a QPoly object is printed it will show the standard written form with terms in descending order.
