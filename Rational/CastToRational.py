@@ -148,19 +148,3 @@ if __name__ == '__main__':
         print(f"\n\n{d} = {r} = {r.n/r.d}")
         r = cast_to_rational("-"+d)
         print(f"\n-{d} = {r} = {r.n/r.d}")
-
-
-#    
-#    d = Rational(-16,25).decimal_expansion
-#    r = digits_to_frac(d)
-#    print(f"{d} = {r} = {r.n/r.d}")
-#    print(r.decimal_expansion)
-#        
-#    
-#    print()
-#    print("")
-#    
-#    d = Rational(137,126).decimal_expansion
-#    r = digits_to_frac(d)
-#    print(f"{d} = {r} = {r.n/r.d}")
-#    print(r.decimal_expansion)

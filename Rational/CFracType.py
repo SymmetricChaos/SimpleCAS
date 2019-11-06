@@ -5,7 +5,7 @@ class CFrac:
     def __init__(self,terms):
     
         if type(terms) == Rational:
-            self.terms = _frac_to_cfrac(terms)
+            self.terms = _frac_to_cfrac_list(terms)
         else:
             try:
                 iter(terms)
@@ -148,7 +148,7 @@ class CFrac:
 
 # For internal use only. Users should simple give a Rational to CFrac which will
 # automatically call this
-def _frac_to_cfrac(R):
+def _frac_to_cfrac_list(R):
     """Canonical simple continued fraction representation"""
     if type(R) != Rational:
         raise TypeError(f"Input must be Rational not {type(R)}")
