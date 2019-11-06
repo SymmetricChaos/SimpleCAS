@@ -82,10 +82,10 @@ def rational_seq(lo,hi,step):
 
 def rational_round(Q,dlim):
     """Best approximation of Q with denominator of d or less, by semi-convergents"""
-    if type(Q) != Rational:
-        raise TypeError(f"Q must be Rational not {type(Q)}")
-  
-    assert type(dlim) == int
+
+    Q = cast_to_rational(Q)
+    if type(dlim) != int:
+        raise TypeError("dlim must be integer")
     if dlim < 1:
         raise ZeroDivisionError
 
@@ -113,16 +113,22 @@ def rational_round(Q,dlim):
 
 def sign(Q):
     """Sign of a rational number"""
-    if type(Q) != Rational:
-        raise TypeError("Q must be Rational not {type(Q)}")
-  
+    Q = cast_to_rational(Q)
     if Q.n > 0:
         return 1
     elif Q.n < 0:
         return -1
     else:
         return 0
+
+
+def mediant(a,b):
+
+    a = cast_to_rational(a)
+    b = cast_to_rational(b)
     
+    return Rational(a.n+b.n,a.d+b.d)
+
 
 def all_pos_rationals():
     """Generate all positive rational numbers"""
