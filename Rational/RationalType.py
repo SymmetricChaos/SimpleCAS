@@ -211,7 +211,7 @@ class Rational:
 
 
     def __hash__(self):
-        return hash("CustomRational"+str(self))
+        return hash(f"CustomRational{self}")
 
 
     def __float__(self):

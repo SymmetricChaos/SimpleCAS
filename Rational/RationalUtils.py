@@ -195,3 +195,6 @@ if __name__ == '__main__':
         if pos > 20:
             break
         print(val)
+        
+    print("\n\nMediant")
+    print(mediant("1/2","2/3"))
