@@ -1,4 +1,4 @@
-from Rational import Rational
+from Rational import Rational, CFrac
 from Poly import QPoly, ZPoly, RFunc
 from Utility import unit_test
 
@@ -35,6 +35,19 @@ r_minitests = [ (r, "32/7" ), #simplify
                 (v.decimal_expansion,"0.0069(4)"), # expansion with some nonrepeating part
                 (w.decimal_expansion,"0.(0020964360587)")
               ]
+
+
+
+#########################
+## Continued Fractions ##
+#########################
+
+#c = CFrac()
+#d = CFrac()
+#e = CFrac()
+#
+#c_minitests = [ 
+#              ]
 
 
 
