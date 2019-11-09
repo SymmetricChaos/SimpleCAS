@@ -1,9 +1,9 @@
 from Utility import make_canvas, scatter_points, show_plot
-from Poly import ZPoly
+from Poly import ZPolyM
  
-
+## TODO: make this handle both ZPoly and ZPolyM
 def zpoly_points(poly):
-    x = [n for n in range(F)]
+    x = [n for n in range(poly.M)]
     y = poly.evaluate(x)
     
     return [i for i in zip(x,y)]
@@ -12,9 +12,9 @@ def zpoly_points(poly):
 def zpoly_plot(poly,size=[5,5]):
     """Automatically make a plot that shows the roots and critical points of the polynomial"""
     
-    F = poly.F
-    xwidth = [-1,F+1]
-    ywidth = [-1,F+1]
+    M = poly.M
+    xwidth = [-1,M+1]
+    ywidth = [-1,M+1]
 
     pts = zpoly_points(poly)
     
@@ -29,10 +29,10 @@ def zpoly_plot(poly,size=[5,5]):
 
 if __name__ == '__main__':
     from random import randint
-    F = 83
-    coefs = [randint(0,F-1) for i in range(5)]
-    P = ZPoly( coefs, F )
-    print(f"P = {P} (mod {P.F})")
+    M = 83
+    coefs = [randint(0,M-1) for i in range(5)]
+    P = ZPolyM( coefs, M )
+    print(f"P = {P} (mod {P.M})")
     
     zpoly_plot(P)
     show_plot()

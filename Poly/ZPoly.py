@@ -1,6 +1,6 @@
 # Univariate polynomials with integer coefficients
 
-from Utility import poly_add, poly_mult
+from Utility import poly_add, poly_mult, gcd
 from Poly.ZPolyPrint import zpoly_print, zpoly_print_pretty
 
 class ZPoly:
@@ -16,7 +16,6 @@ class ZPoly:
         if type(F) != int:
             raise TypeError(f"Modulus must be int not {type(F)}")
         self.coef = coef
-        self.F = F
         self.normalize()
 
 

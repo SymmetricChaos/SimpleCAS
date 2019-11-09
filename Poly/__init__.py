@@ -13,6 +13,8 @@ from Poly.RootApproximation import bound_of_roots, newtons_method, \
 
 from Poly.PolyPlot import poly_plot
 
+from Poly.ZPolyM import ZPolyM
+
 from Poly.ZPoly import ZPoly
 
 from Poly.ZPolyCombiners import ZPolyProd
@@ -27,5 +29,6 @@ __all__=["QPoly","QPolySum","QPolyProd","RFunc","poly_factor",
          "bound_of_roots","newtons_method","sturm_root_isolation",
          "qpoly_roots","stationary_points","inflection_points","poly_gcd",
          "poly_egcd","rfunc_roots","rfunc_asymptotes","poly_plot",
-         "ZPoly","zpoly_plot","zpoly_points", "zpoly_lagrange_interpolation",
+         "ZPolyM","ZPoly","zpoly_plot","zpoly_points",
+         "zpoly_lagrange_interpolation",
          "make_shamir_secret","get_shamir_secret","ZPolyProd"]
