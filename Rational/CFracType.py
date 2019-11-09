@@ -11,11 +11,11 @@ class CFrac:
                 iter(terms)
             except:
                 terms = [terms]
-                
+
             for i in terms:
                 if type(i) != int:
                     raise TypeError(f"all values of L must be int not {type(i)}")
-    
+
             self.terms = terms
 
 
@@ -138,7 +138,7 @@ class CFrac:
                 out = out.replace("*",prm)
                 out = out.replace("#",str(i))
             out = out.replace("*",str(self[-1]))
-            return out
+            return f"${out}$"
         
 
     pretty_name = property(_pretty_name)

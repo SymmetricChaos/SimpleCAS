@@ -42,12 +42,14 @@ r_minitests = [ (r, "32/7" ), #simplify
 ## Continued Fractions ##
 #########################
 
-#c = CFrac()
+c = CFrac( [5,11,7,2] )
 #d = CFrac()
 #e = CFrac()
-#
-#c_minitests = [ 
-#              ]
+
+c_minitests = [ (c,"[5; 11, 7, 2]"),
+                (c.as_rational(),"850/167"),
+                (c.pretty_name,"$5+\cfrac{1}{11+\cfrac{1}{7+\cfrac{1}{2}}}$"),
+              ]
 
 
 
@@ -140,11 +142,18 @@ i_minitests = [ (P+r, "58/5x^3 + x^2 + 85/14" ),
 
 print("\nTest Rational")
 unit_test(r_minitests)
+
+print("\nTest CFrac")
+unit_test(c_minitests)
+
 print("\nTest QPoly")
 unit_test(p_minitests)
+
 print("\nTest RFunc")
 unit_test(rf_minitests)
+
 print("\nTest ZPoly")
 unit_test(z_minitests)
+
 print("\nIntegration Tests")
 unit_test(i_minitests)
