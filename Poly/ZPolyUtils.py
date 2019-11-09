@@ -4,47 +4,47 @@ from random import randint, sample
 from itertools import product
 
 
-def zpoly_lagrange_interpolation(X,Y,F):
+def zpoly_lagrange_interpolation(X,Y,M):
     """Lagrange Polynomial"""
-    final = ZPoly([0],F)
+    final = ZPoly([0],M)
     for x,y in zip(X,Y):
-        out = ZPoly([y],F)
+        out = ZPoly([y],M)
         for m in X:
             if m != x:
-                d = mod_inv(x-m,F)
-                P = ZPoly([-m,1],F)
+                d = mod_inv(x-m,M)
+                P = ZPoly([-m,1],M)
                 out *= P*d
         final += out
     return final
 
 
-def make_shamir_secret(secret,k,n,F):
+def make_shamir_secret(secret,k,n,M):
 
-    if secret > F:
-        raise ValueError("secret cannot be less than F or information will be lost")
+    if secret > M:
+        raise ValueError("secret cannot be less than M or information will be lost")
     if k > n:
         raise ValueError("parts needed to reconstruct cannot be greater than total points created")
-    if len(set(prime_factorization(F))) != 1:
+    if len(set(prime_factorization(M))) != 1:
         raise ValueError("Order for finite field must be a prime power")
         
     co = [secret] + [randint(0,F-1) for i in range(k-1)]
 
-    P = ZPoly( co, F )
+    P = ZPoly( co, M )
     
     pts = []
     for i in range(n):
-        r = randint(0,F-1)
+        r = randint(0,M-1)
         pts.append( (r,P(r)) )
     
     return pts
 
 
-def get_shamir_secret(pts,F):
+def get_shamir_secret(pts,M):
     
     X = [i[0] for i in pts]
     Y = [i[1] for i in pts]
     
-    return zpoly_lagrange_interpolation(X,Y,F)[0]
+    return zpoly_lagrange_interpolation(X,Y,M)[0]
 
 
 
@@ -54,17 +54,20 @@ def get_shamir_secret(pts,F):
 # output is standardized as being monic
 def zpoly_gcd(P,Q):
     """GCD of two polynomials over the same finite field"""
-    assert type(P) == ZPoly
-    assert type(Q) == ZPoly
-    assert P.F == Q.F
+    if not type(P) == type(Q) == ZPoly:
+        raise TypeError("P and Q must both be ZPoly")
+        
+    if not P.M == Q.M:
+        raise TypeError("P and Q must have the same modulus")
+
     
     if Q.degree() > P.degree():
         P,Q = Q,P
         
     # Check if we reached the end
-    if Q == ZPoly([0], P.F):
+    if Q == ZPoly([0], P.M):
         return P.monic_part
-    if P == ZPoly([0], P.F):
+    if P == ZPoly([0], P.M):
         return Q.monic_part
     
     else:
@@ -84,8 +87,8 @@ def square_free_decomposition(poly):
     c = zpoly_gcd(M,M.derivative())
     w = M//c
     
-    one = ZPoly([1],poly.F)
-    R = ZPolyProd([one],poly.F)*C
+    one = ZPoly([1],poly.M)
+    R = ZPolyProd([one],poly.M)*C
     i = 1
     
     while w != one:
@@ -105,28 +108,28 @@ def square_free_decomposition(poly):
 #        R *= square_free_decomposition(c)**poly.F
 
 
-def all_monic_zpolys(F):
+def all_monic_zpolys(M):
     """Generator for all monic polynomials over F"""
     
-    yield ZPoly([1],F)
-    co = [i for i in range(F)]
+    yield ZPoly([1],M)
+    co = [i for i in range(M)]
     
     l = 1
     while True:
         P = product(co,repeat=l)
         for p in P:
             coefs = [i for i in reversed((1,)+p)]
-            yield ZPoly(coefs,F)
+            yield ZPoly(coefs,M)
         l += 1
     
     
     
-def all_zpolys(F):
+def all_zpolys(M):
     """Generator for all monic polynomials over F"""
     
-    co = [i for i in range(F)]
+    co = [i for i in range(M)]
     for c in co:
-        yield ZPoly([c],F)
+        yield ZPoly([c],M)
     
     l = 1
     while True:
@@ -134,7 +137,7 @@ def all_zpolys(F):
         for p in P:
             for c in co[1:]:
                 coefs = [i for i in reversed((c,)+p)]
-                yield ZPoly(coefs,F)
+                yield ZPoly(coefs,M)
         l += 1
         
 

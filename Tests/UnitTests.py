@@ -1,5 +1,5 @@
 from Rational import Rational, CFrac
-from Poly import QPoly, ZPoly, RFunc
+from Poly import QPoly, ZPoly, RFunc, ZPolyProd
 from Utility import unit_test
 
 
