@@ -1,6 +1,6 @@
 from Rational.RationalType import Rational
 from Utility import first_where
-from CFracType import CFrac
+from Rational.CFracType import CFrac
 import re
 
 
