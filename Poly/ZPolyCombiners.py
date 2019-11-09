@@ -1,7 +1,7 @@
 from Poly import ZPoly
 from collections import Counter
 from Utility import sort_by_nth
-
+import re
 
 
 
@@ -159,10 +159,14 @@ class ZPolyProd:
             # Non-scalar terns raised to a power
             else:
                 out.append(f"({t.pretty_name})^{{{pwr}}}")
-            
+        
+        
+
         out = "".join(out)
+        out = re.sub(" \(mod \d*\)","",out)
         out = out.replace("$","")
-        return f"${out}$"
+        out += f"$ [mod {self.M}]"
+        return f"${out}"
 
 
     # Things that are like attributes can be access as properties
