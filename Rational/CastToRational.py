@@ -28,7 +28,7 @@ def term_dec_to_frac(S):
         return None
 
 
-# conceptual basis for 
+# conceptual basis 
 #x = 3.14(26)
 #
 #10000x = 31426.(26)

@@ -3,7 +3,6 @@ from Poly import ZPoly, ZPolyProd
 from random import randint, sample
 from itertools import product
 
-
 def zpoly_lagrange_interpolation(X,Y,M):
     """Lagrange Polynomial"""
     final = ZPoly([0],M)
@@ -170,7 +169,8 @@ def all_irreducible_mod2():
                     out.append(poly)
                     yield poly
                     break
-        
+
+
 
 
 if __name__ == '__main__':

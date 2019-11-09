@@ -5,7 +5,7 @@ from Poly.ZPolyPrint import zpoly_print, zpoly_print_pretty
 
 class ZPoly:
     
-    def __init__(self,coef,M):
+    def __init__(self,coef,M=None):
         try:
             iter(coef)
         except:
@@ -15,8 +15,11 @@ class ZPoly:
             if type(i) != int:
                 raise TypeError("all coefficients must be integers")
         
-        if type(M) != int:
-            raise TypeError(f"Modulus must be int not {type(M)}")
+        if M == None:
+            pass
+        else:
+            if type(M) != int:
+                raise TypeError(f"Modulus must be int or None not {type(M)}")
         self.coef = coef
         self.M = M
         self.normalize()
@@ -27,7 +30,11 @@ class ZPoly:
         if self.coef == []:
             self.coef = [0]
 
-        self.coef = [c % self.M for c in self.coef]
+        if self.M:    
+            self.coef = [c % self.M for c in self.coef]
+        else:
+            pass
+            
         while self.coef[-1] == 0 and len(self.coef) > 1:
             if len(self.coef) == 1:
                 break
@@ -43,7 +50,10 @@ class ZPoly:
         """Allow valid coefficients to be set"""    
         if type(val) != int:
             raise TypeError("Values must be integers")
-        self.coef[n] = val % self.M
+        if self.M:
+            self.coef[n] = val % self.M
+        else:
+            self.coef[n] = val
 
 
     # Not sure about the best method but testing suggests that "co*x**pwr" is
@@ -52,10 +62,14 @@ class ZPoly:
     def __call__(self,x):
         """Evaluate the polynomial at a given point"""
         out = 0
-        for pwr,co in enumerate(self.coef):
-            out = out + co*x**pwr
-        return out % self.M
-
+        if self.M:
+            for pwr,co in enumerate(self.coef):
+                out = (out + co*x**pwr) % self.M
+            return out
+        else:
+            for pwr,co in enumerate(self.coef):
+                out = out + co*x**pwr
+            return out
     
     def evaluate(self,X):
         """Evaluate the polynomial at a given list of points"""
@@ -75,7 +89,10 @@ class ZPoly:
     
     def _full_name(self):
         """Print nicely in descending written form with modulus"""
-        return f"{zpoly_print(self)} (mod {self.M})"
+        if self.M:
+            return f"{zpoly_print(self)} (mod {self.M})"
+        else:
+            return f"{zpoly_print(self)}"
     
     
     def __hash__(self):
@@ -239,13 +256,14 @@ class ZPoly:
         P = self.coef[:]
         Q = other.coef[:]
 
-        # Case of a single int or rational
+        # Case of division by a single int or rational
         if len(other) == 1:
-            return ZPoly( [mod_div(p,Q[0],self.M) for p in P], self.M), ZPoly( [0], self.M)
-        
-        # Use polynomial division algorithm this may not be defined if F is not
-        # a prime power.
-        else:
+            if self.M:
+                return ZPoly( [mod_div(p,Q[0],self.M) for p in P], self.M), ZPoly( [0], self.M)
+            else:
+                return ZPoly( [p//Q[0] for p in P], self.M), ZPoly( [p%Q[0] for p in P], self.M)
+        if self.M:
+            # Polynomial division if a modulus is given
             dP = len(P)-1
             dQ = len(Q)-1
             if dP >= dQ:
@@ -255,6 +273,27 @@ class ZPoly:
                     mult = qt[dP - dQ] = P[-1] * mod_inv(d[-1],self.M)
                     d = [co*mult for co in d]
                     P = [ (coeffP - coeffd) % self.M for coeffP, coeffd in zip(P, d)]
+                    while P[-1] == 0 and len(P) > 1:
+                        if len(P) == 1:
+                            break
+                        P.pop()
+                    dP = len(P)-1
+                rm = [i % self.M for i in P]
+            else:
+                qt = [0]
+                rm = [i % self.M for i in P]
+
+        else:
+            # Polynomial division if a modulus is NOT give
+            dP = len(P)-1
+            dQ = len(Q)-1
+            if dP >= dQ:
+                qt = [0]*dP
+                while dP >= dQ:
+                    d = [0]*(dP - dQ) + Q
+                    mult = qt[dP - dQ] = P[-1] // d[-1]
+                    d = [co*mult for co in d]
+                    P = [ (coeffP - coeffd)  for coeffP, coeffd in zip(P, d)]
                     while P[-1] == 0 and len(P) > 1:
                         if len(P) == 1:
                             break
@@ -342,7 +381,10 @@ class ZPoly:
 
     def _pretty_name(self):
         """Formatted for LaTeX"""
-        return f"{zpoly_print_pretty(self)} (mod {self.M})"
+        if self.M:
+            return f"{zpoly_print_pretty(self)} (mod {self.M})"
+        else:
+            return f"{zpoly_print_pretty(self)}"
 
 
     # Things that are like attributes can be access as properties
@@ -380,3 +422,10 @@ if __name__ == '__main__':
     for i in range(15):
         print(out)
         out = (out * S) % R
+        
+        
+    print("\n\n")
+    A = ZPoly( [3,-7,4] )
+    print(A//2)
+    print(A%2)
+    print((A//2)*2)
