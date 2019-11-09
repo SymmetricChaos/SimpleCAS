@@ -7,7 +7,7 @@ from Utility import sort_by_nth
 
 class ZPolyProd:
     
-    def __init__(self,terms,F):
+    def __init__(self,terms,M):
         if type(terms) == list:
             self.terms = Counter(terms)
             
@@ -21,7 +21,7 @@ class ZPolyProd:
             raise TypeError(f"Couldn't use type {type(terms)}")
             
         self.simplify_const()
-        self.F = F
+        self.M = M
 
 
     def simplify_const(self):
@@ -54,13 +54,13 @@ class ZPolyProd:
         A = self.terms.copy()
         
         if type(other) == int:
-            return self * ZPoly([other],self.F)
+            return self * ZPoly([other],self.M)
 
         if type(other) == ZPoly:
-            if other.F == self.F:
+            if other.M == self.M:
                 A.update([other])
             else:
-                raise ValueError("Values of F do not match")
+                raise ValueError("Values of M do not match")
 
         elif type(other) == ZPolyProd:
             A.update(other.terms)
@@ -68,7 +68,7 @@ class ZPolyProd:
         else:
             return NotImplemented
         
-        return ZPolyProd(A,self.F)
+        return ZPolyProd(A,self.M)
     
     
     def __rmul__(self,other):
@@ -82,7 +82,7 @@ class ZPolyProd:
             raise TypeError("Power of ZPolyProd must be non-negative")
         
         if other == 0:
-            return ZPolyProd( ZPoly([1],self.F), self.F)
+            return ZPolyProd( ZPoly([1],self.M), self.M)
         if other == 1:
             return self
         else:
@@ -128,7 +128,7 @@ class ZPolyProd:
 
 
     def _full_name(self):
-        return f"{self} [mod {self.F}]"
+        return f"{self} [mod {self.M}]"
         
 
     

@@ -5,7 +5,7 @@ from Poly.ZPolyPrint import zpoly_print, zpoly_print_pretty
 
 class ZPoly:
     
-    def __init__(self,coef,F):
+    def __init__(self,coef,M):
         try:
             iter(coef)
         except:
@@ -15,19 +15,19 @@ class ZPoly:
             if type(i) != int:
                 raise TypeError("all coefficients must be integers")
         
-        if type(F) != int:
-            raise TypeError(f"Modulus must be int not {type(F)}")
+        if type(M) != int:
+            raise TypeError(f"Modulus must be int not {type(M)}")
         self.coef = coef
-        self.F = F
+        self.M = M
         self.normalize()
 
 
     def normalize(self):
-        """Remove trailing zeroes and reduce modulo F"""
+        """Remove trailing zeroes and reduce modulo M"""
         if self.coef == []:
             self.coef = [0]
 
-        self.coef = [c % self.F for c in self.coef]
+        self.coef = [c % self.M for c in self.coef]
         while self.coef[-1] == 0 and len(self.coef) > 1:
             if len(self.coef) == 1:
                 break
@@ -43,18 +43,18 @@ class ZPoly:
         """Allow valid coefficients to be set"""    
         if type(val) != int:
             raise TypeError("Values must be integers")
-        self.coef[n] = val % self.F
+        self.coef[n] = val % self.M
 
 
     # Not sure about the best method but testing suggests that "co*x**pwr" is
-    # faster than "co*x**pwr % self.F" and "co*pow(x,pwr,self.F)" at least when
+    # faster than "co*x**pwr % self.M" and "co*pow(x,pwr,self.M)" at least when
     # coefficients are potentially much larger than powers
     def __call__(self,x):
         """Evaluate the polynomial at a given point"""
         out = 0
         for pwr,co in enumerate(self.coef):
             out = out + co*x**pwr
-        return out % self.F
+        return out % self.M
 
     
     def evaluate(self,X):
@@ -75,7 +75,7 @@ class ZPoly:
     
     def _full_name(self):
         """Print nicely in descending written form with modulus"""
-        return f"{zpoly_print(self)} (mod {self.F})"
+        return f"{zpoly_print(self)} (mod {self.M})"
     
     
     def __hash__(self):
@@ -90,20 +90,20 @@ class ZPoly:
     def __neg__(self):
         """Additive inverse of each coefficient"""
         L = [-c for c in self.coef]
-        return ZPoly(L,self.F)
+        return ZPoly(L,self.M)
 
 
     def __add__(self,other):
         """Addition"""
         # If we can turn the other into a rational do that
         if type(other) == int:
-            other = ZPoly( [other],self.F )
+            other = ZPoly( [other],self.M )
             L = poly_add(self.coef,other.coef)
-            return ZPoly(L,self.F)
+            return ZPoly(L,self.M)
         
         elif type(other) == ZPoly:
             L = poly_add(self.coef,other.coef)
-            return ZPoly(L,self.F)
+            return ZPoly(L,self.M)
         
         else:
             return NotImplemented
@@ -121,19 +121,19 @@ class ZPoly:
             return NotImplemented
         
         if type(other) == int:
-            other = ZPoly( [other],self.F )
+            other = ZPoly( [other],self.M )
         
         L = poly_add(self.coef,[-c for c in other.coef])
-        return ZPoly(L,self.F)
+        return ZPoly(L,self.M)
 
 
     def __rsub__(self,other):
         """Subtraction is NOT commutative"""
         if type(other) == int:
-            other = ZPoly( [other],self.F )
+            other = ZPoly( [other],self.M )
 
         L = poly_add(self.coef,[-c for c in other.coef])
-        return ZPoly(L,self.F)
+        return ZPoly(L,self.M)
 
 
     def __mul__(self,other):
@@ -143,10 +143,10 @@ class ZPoly:
             return NotImplemented
         
         if type(other) == int:
-            other = ZPoly( [other],self.F )
+            other = ZPoly( [other],self.M )
             
         L = poly_mult(self.coef,other.coef)
-        return ZPoly(L,self.F)
+        return ZPoly(L,self.M)
 
 
     def __rmul__(self,other):
@@ -162,7 +162,7 @@ class ZPoly:
             raise TypeError(f"pwr must be non-negative")
 
         if pwr == 0:
-            return ZPoly([1],self.F)
+            return ZPoly([1],self.M)
         elif pwr == 1:
             return self
         else:
@@ -177,7 +177,7 @@ class ZPoly:
         if type(other) != ZPoly:
             raise TypeError("Cannot compare ZPoly to {type(other)}")
         
-        if self.F != other.F:
+        if self.M != other.M:
             raise ValueError("Can only compare ZPoly with identical F")
 
         
@@ -222,7 +222,7 @@ class ZPoly:
     
         # Cast integer to poly if needed
         if type(other) == int:
-            other = ZPoly( [other], self.F )
+            other = ZPoly( [other], self.M )
             
         if type(other) != ZPoly:
             raise TypeError(f"Could not cast {other} to ZPoly")
@@ -233,7 +233,7 @@ class ZPoly:
 
         # We can only divide a longer polynomial by a shorter one
         if len(self) < len(other):
-            return ZPoly([0],self.F), self.copy()
+            return ZPoly([0],self.M), self.copy()
 
         # Copy inputs
         P = self.coef[:]
@@ -241,7 +241,7 @@ class ZPoly:
 
         # Case of a single int or rational
         if len(other) == 1:
-            return ZPoly( [mod_div(p,Q[0],self.F) for p in P], self.F), ZPoly( [0], self.F)
+            return ZPoly( [mod_div(p,Q[0],self.M) for p in P], self.M), ZPoly( [0], self.M)
         
         # Use polynomial division algorithm this may not be defined if F is not
         # a prime power.
@@ -252,27 +252,27 @@ class ZPoly:
                 qt = [0]*dP
                 while dP >= dQ:
                     d = [0]*(dP - dQ) + Q
-                    mult = qt[dP - dQ] = P[-1] * mod_inv(d[-1],self.F)
+                    mult = qt[dP - dQ] = P[-1] * mod_inv(d[-1],self.M)
                     d = [co*mult for co in d]
-                    P = [ (coeffP - coeffd) % self.F for coeffP, coeffd in zip(P, d)]
+                    P = [ (coeffP - coeffd) % self.M for coeffP, coeffd in zip(P, d)]
                     while P[-1] == 0 and len(P) > 1:
                         if len(P) == 1:
                             break
                         P.pop()
                     dP = len(P)-1
-                rm = [i % self.F for i in P]
+                rm = [i % self.M for i in P]
             else:
                 qt = [0]
-                rm = [i % self.F for i in P]
+                rm = [i % self.M for i in P]
 
-        return ZPoly( qt, self.F), ZPoly( rm, self.F)
+        return ZPoly( qt, self.M), ZPoly( rm, self.M)
 
 
     # Using __floordiv__ since there can be a remainder, not because we round down
     def __floordiv__(self,other):
         """Euclidean division of polynomials"""
         if type(other) == int:
-            other = ZPoly([other],self.F)
+            other = ZPoly([other],self.M)
         elif type(other) == ZPoly:
             pass
         else:
@@ -288,7 +288,7 @@ class ZPoly:
     def __mod__(self,other):
         """Remainder of Euclidean division of polynomials"""
         if type(other) == int:
-            other = ZPoly([other],self.F)
+            other = ZPoly([other],self.M)
         elif type(other) == ZPoly:
             pass
         else:
@@ -303,7 +303,7 @@ class ZPoly:
     
     def copy(self):
         """Copy the polynomial"""
-        return ZPoly(self.coef[:],self.F)
+        return ZPoly(self.coef[:],self.M)
 
 
     def derivative(self):
@@ -311,7 +311,7 @@ class ZPoly:
         co = self.coef.copy()
         for i in range(len(co)):
             co[i] *= i
-        return ZPoly(co[1:],self.F)
+        return ZPoly(co[1:],self.M)
 
 
     def _content(self):
@@ -320,7 +320,7 @@ class ZPoly:
     
     def _primitive_part(self):
         co = [c//self.content for c in self.coef]
-        return ZPoly( co,self.F)
+        return ZPoly( co,self.M)
     
 
     def is_monic(self):
@@ -337,12 +337,12 @@ class ZPoly:
     def make_monic(self):
         C = self[-1]
         for i in range(len(self)):
-            self[i] = mod_div(self[i],C,self.F)
+            self[i] = mod_div(self[i],C,self.M)
 
 
     def _pretty_name(self):
         """Formatted for LaTeX"""
-        return f"{zpoly_print_pretty(self)} (mod {self.F})"
+        return f"{zpoly_print_pretty(self)} (mod {self.M})"
 
 
     # Things that are like attributes can be access as properties
@@ -356,9 +356,9 @@ class ZPoly:
 
 
 if __name__ == '__main__':
-    F = 17
-    P = ZPoly( [1,4,7], F = F )
-    Q = ZPoly( [8,1], F = F)
+    M = 17
+    P = ZPoly( [1,4,7], M )
+    Q = ZPoly( [8,1], M)
     print(f"P = {P.full_name}")
     print(f"Q = {Q.full_name}")
     print()
@@ -371,10 +371,10 @@ if __name__ == '__main__':
     print(P.full_name)
 
     
-    F = 2
-    R = ZPoly( [1,1,0,0,1], F = F )
-    S = ZPoly( [0,1], F = F )
-    out = ZPoly( [1], F = F )
+    M = 2
+    R = ZPoly( [1,1,0,0,1], M )
+    S = ZPoly( [0,1], M )
+    out = ZPoly( [1], M )
     print(f"\n\nOne version of of GF(16)")
     print(f"0 = {R}")
     for i in range(15):
