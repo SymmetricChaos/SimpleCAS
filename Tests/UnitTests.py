@@ -42,6 +42,7 @@ r_minitests = [ (r, "32/7" ), #simplify
 ## Continued Fractions ##
 #########################
 
+## TODO: Test convergents and semi-convergents
 c = CFrac( [5,11,7,2] )
 #d = CFrac()
 #e = CFrac()
@@ -97,9 +98,9 @@ rf_minitests = [ (R, "(x + 1) / (3x + 2)"),
 ###########
 
 
-F = 29
-P = ZPoly( [50,0,-8,121,9], F )
-Q = ZPoly( [25,29,8], F )
+M = 29
+P = ZPoly( [50,0,-8,121,9], M )
+Q = ZPoly( [25,29,8], M )
 
 
 z_minitests = [ (P, "9x^4 + 5x^3 + 21x^2 + 21"),
@@ -115,6 +116,18 @@ z_minitests = [ (P, "9x^4 + 5x^3 + 21x^2 + 21"),
                 (Q//P*P+Q%P, str(Q)),
                 (P.monic_part, "x^4 + 7x^3 + 12x^2 + 12"),
               ]
+
+###############
+## ZPolyProd ##
+###############
+
+
+P = ZPoly( [1,2,3], 19)
+Q = ZPoly( [2,4], 19)
+C = ZPolyProd([P,Q],19)
+
+zpp_minitests = [ (C, "(4x + 2)(3x^2 + 2x + 1)"),
+                ]
 
 #######################
 ## Integration Tests ##
@@ -154,6 +167,10 @@ unit_test(rf_minitests)
 
 print("\nTest ZPoly")
 unit_test(z_minitests)
+
+print("\nTest ZPolyProd")
+unit_test(zpp_minitests)
+
 
 print("\nIntegration Tests")
 unit_test(i_minitests)
