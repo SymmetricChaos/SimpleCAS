@@ -1,5 +1,6 @@
 from Rational.RationalType import Rational
 from Rational.RationalUtils import mediant
+from Rational.CastToRational import cast_to_rational
 from Utility import sort_by_nth
 
 def farey_sequence(n):
@@ -47,21 +48,47 @@ def question_mark_func(n):
     return out
 
 
+def harmonic_progression(a=1,d=1):
+
+    a = cast_to_rational(a)
+    d = cast_to_rational(d)
+    
+    den = a
+    one = Rational(1)
+    while True:
+        yield one/den
+        den += d
+
+    
+
+
     
     
 
 if __name__ == '__main__':
-    from Utility import make_canvas, scatter_points
+    from Utility import make_canvas, scatter_points, show_plot
 
     print("Farey Sequence F_15")
     F15 = [i for i in farey_sequence(12)]
     print(F15)
     
-    print("\n\n")
+    print()
     xy = question_mark_func(30)
     make_canvas([0,1],size=5,title="Minkowski's Question-mark Function\nAt Rational Arguments")
     scatter_points(xy,s=1)
+    show_plot()
+
     
-    print("Minkowski's Question-mark Function at some rational arguments")
-    xy = question_mark_func(5)
-    print(xy)
+    print("\n\nHarmonic Progressions")
+    S1 = harmonic_progression(a=1,d=1)
+    for pos,val in enumerate(S1):
+        if pos > 10:
+            break
+        print(val)
+            
+    print()
+    S2 = harmonic_progression(a="1/3",d="1/2")
+    for pos,val in enumerate(S2):
+        if pos > 10:
+            break
+        print(val)
