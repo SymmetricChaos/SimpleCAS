@@ -17,7 +17,7 @@ from Poly.ZPoly import ZPoly
 
 from Poly.ZPolyCombiners import ZPolyProd
 
-from Poly.ZPolyPlot import zpoly_plot, zpoly_points
+from Poly.ZPolyPlot import zpoly_points
 
 from Poly.ZPolyUtils import zpoly_lagrange_interpolation, make_shamir_secret, \
                             get_shamir_secret
@@ -27,5 +27,5 @@ __all__=["QPoly","QPolySum","QPolyProd","RFunc","poly_factor",
          "bound_of_roots","newtons_method","sturm_root_isolation",
          "qpoly_roots","stationary_points","inflection_points","poly_gcd",
          "poly_egcd","rfunc_roots","rfunc_asymptotes","poly_plot",
-         "ZPoly","zpoly_plot","zpoly_points", "zpoly_lagrange_interpolation",
+         "ZPoly","zpoly_points", "zpoly_lagrange_interpolation",
          "make_shamir_secret","get_shamir_secret","ZPolyProd"]

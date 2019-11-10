@@ -1,12 +1,25 @@
 from Rational import rational_seq
 from Utility import make_canvas, plot_points, scatter_points, connect
-from Poly import QPoly, RFunc, qpoly_roots, stationary_points, inflection_points, \
-                 rfunc_roots, rfunc_asymptotes
-
+from Poly.QPoly import QPoly, RFunc
+from Poly.RootApproximation import qpoly_roots, stationary_points, \
+                                   inflection_points, rfunc_roots, \
+                                   rfunc_asymptotes
+from Poly.ZPoly import ZPoly
+from Poly.ZPolyPlot import zpoly_plot
 
 def poly_plot(poly,size=[5,5],show_plot=True):
     """Automatically make a plot that shows the roots and critical points of the polynomial"""
     
+    
+    if type(poly) == ZPoly:
+        if poly.M:
+            pts = zpoly_plot(poly)
+            return pts
+        else:
+            poly = QPoly(poly.coef)
+    
+
+
     if type(poly) == QPoly:
         r = qpoly_roots(poly)
         s = stationary_points(poly)
@@ -79,6 +92,14 @@ if __name__ == '__main__':
     if len(c) > 0:
         cpts = [(i,P(i)) for i in c]
         scatter_points(cpts,zorder=5,color='red')
+
+
+    M = 83
+    coefs = [randint(0,M-1) for i in range(5)]
+    P = ZPoly( coefs, M )
+    print(f"P = {P} (mod {P.M})")
+    
+    poly_plot(P)
 
 
     

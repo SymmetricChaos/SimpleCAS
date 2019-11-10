@@ -2,6 +2,7 @@
 
 from Utility import poly_add, poly_mult, mod_inv, mod_div, gcd
 from Poly.ZPolyPrint import zpoly_print, zpoly_print_pretty
+from Poly.QPoly import QPoly
 
 class ZPoly:
     
