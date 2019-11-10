@@ -427,5 +427,5 @@ if __name__ == '__main__':
     print("\n\n")
     A = ZPoly( [3,-7,4] )
     print(A//2)
-    print(A%2)
+    print(-(A%2))
     print((A//2)*2)

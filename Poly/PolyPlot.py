@@ -19,6 +19,7 @@ def poly_plot(poly,size=[5,5],show_plot=True):
         a = rfunc_asymptotes(poly)
         
         interesting_points = r + a
+        
     
     interesting_values = poly.evaluate(interesting_points)
     
