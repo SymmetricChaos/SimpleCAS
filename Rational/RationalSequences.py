@@ -73,7 +73,7 @@ if __name__ == '__main__':
     print(F15)
     
     print()
-    xy = question_mark_func(30)
+    xy = question_mark_func(35)
     make_canvas([0,1],size=5,title="Minkowski's Question-mark Function\nAt Rational Arguments")
     scatter_points(xy,s=1)
     show_plot()

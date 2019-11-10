@@ -7,6 +7,8 @@ from Poly.RootApproximation import qpoly_roots, stationary_points, \
 from Poly.ZPoly import ZPoly
 from Poly.ZPolyPlot import zpoly_plot
 
+
+
 def poly_plot(poly,size=[5,5],show_plot=True):
     """Automatically make a plot that shows the roots and critical points of the polynomial"""
     
@@ -18,8 +20,6 @@ def poly_plot(poly,size=[5,5],show_plot=True):
         else:
             poly = QPoly(poly.coef)
     
-
-
     if type(poly) == QPoly:
         r = qpoly_roots(poly)
         s = stationary_points(poly)
@@ -32,6 +32,9 @@ def poly_plot(poly,size=[5,5],show_plot=True):
         a = rfunc_asymptotes(poly)
         
         interesting_points = r + a
+    
+    else:
+        raise TypeError("Input must be QPoly, RFunc, or ZPoly")
         
     
     interesting_values = poly.evaluate(interesting_points)
