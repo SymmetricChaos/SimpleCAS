@@ -167,6 +167,20 @@ def all_rationals():
         diag += 1
 
 
+def engel_expansion(Q):
+    Q = cast_to_rational(Q)
+    
+    u = Q
+    
+    out = []
+    
+    while u != 0:
+        a = (1/u).__ceil__()
+        out.append(a)
+        u = u*a-1
+    return out
+    
+
 
 
 
@@ -195,6 +209,12 @@ if __name__ == '__main__':
         if pos > 20:
             break
         print(val)
-        
-    print("\n\nMediant")
-    print(mediant("1/2","2/3"))
+    
+    
+    a,b = "1/2","2/3"
+    print(f"\n\nMediant of {a} and {b}")
+    print(mediant(a,b))
+    
+    q = "1.17(215)"
+    print(f"\n\nEngel Expansion of {q}")
+    print(engel_expansion(q))

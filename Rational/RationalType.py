@@ -226,7 +226,15 @@ class Rational:
     def __floor__(self):
         """Greatest smaller integer"""
         return self.n // self.d
-
+    
+    
+    def __ceil__(self):
+        """Greatest smaller integer"""
+        if self.d == 1:
+            return self.n
+        else:
+            return (self.n // self.d)+1
+    
 
     def _whole_part(self):
         """The whole part of the fraction"""
