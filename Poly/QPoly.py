@@ -126,10 +126,10 @@ class QPoly:
         """Raise to an positive integer power"""
         if type(pwr) != int:
             raise TypeError(f"pwr must be an integer not {type(pwr)}")
-        if pwr < 0:
-            raise TypeError(f"pwr must be non-negative")
 
-        if pwr == 0:
+        if pwr < 0:
+            return RFunc(1,self**abs(pwr))
+        elif pwr == 0:
             return QPoly([1])
         elif pwr == 1:
             return self
@@ -612,3 +612,5 @@ if __name__ == '__main__':
     P = QPoly( [1,"1/2",3,"7/3"] )
     print(P)
     print(P(3))
+    print(P**-1)
+    print(P)
