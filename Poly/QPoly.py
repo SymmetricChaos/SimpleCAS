@@ -20,6 +20,16 @@ class QPoly:
         self.normalize()
 
 
+    def normalize(self):
+        """Remove trailing zeroes"""
+        if self.coef == []:
+            self.coef = [0]
+        while self.coef[-1] == 0 and len(self.coef) > 1:
+            if len(self.coef) == 1:
+                break
+            self.coef.pop()
+
+
     def __getitem__(self,n):
         """Make polynomial accessible by indexing"""
         return self.coef[n]
@@ -277,16 +287,6 @@ class QPoly:
         else:
             return NotImplemented
         return RFunc(other,other)
-
-
-    def normalize(self):
-        """Remove trailing zeroes"""
-        if self.coef == []:
-            self.coef = [0]
-        while self.coef[-1] == 0 and len(self.coef) > 1:
-            if len(self.coef) == 1:
-                break
-            self.coef.pop()
 
 
     def copy(self):
