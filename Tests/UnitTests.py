@@ -21,6 +21,7 @@ r_minitests = [ (r, "32/7" ), #simplify
                 (s.inv(), "1/6"), # inversion
                 (r**0, "1"), #power
                 (r**3, "32768/343"), #power
+                (r**-3, "343/32768"), #power
                 (s%2, "0"), # modulus
                 (r/t, "288/119"), # division
                 (r+s, "74/7"), # addition
@@ -70,6 +71,8 @@ p_minitests = [ (P, "58/5x^3 + x^2 + 3/2"),
                 (P.content, "1/10"),
                 (P.primitive_part, "116x^3 + 10x^2 + 15"),
                 (P.monic_part, "x^3 + 5/58x^2 + 15/116"),
+                (P//Q,"58/5x^2 + 59x + 295"),
+                (P%Q,"2953/2"),
                 (P/Q,"(58/5x^3 + x^2 + 3/2) / (x - 5)")
               ]
 
@@ -100,6 +103,8 @@ rf_minitests = [ (R, "(x + 1) / (3x + 2)"),
 M = 29
 P = ZPoly( [50,0,-8,121,9], M )
 Q = ZPoly( [25,29,8], M )
+PP = ZPoly( [50,0,-8,121,9] )
+QQ = ZPoly( [25,29,8] )
 
 
 z_minitests = [ (P, "9x^4 + 5x^3 + 21x^2 + 21"),
@@ -114,6 +119,11 @@ z_minitests = [ (P, "9x^4 + 5x^3 + 21x^2 + 21"),
                 (P//Q*Q+P%Q, str(P)),
                 (Q//P*P+Q%P, str(Q)),
                 (P.monic_part, "x^4 + 7x^3 + 12x^2 + 12"),
+                (PP,"9x^4 + 121x^3 - 8x^2 + 50"),
+                (QQ,"8x^2 + 29x + 25"),
+                (PP+QQ,"9x^4 + 121x^3 + 29x + 75"),
+                (PP*QQ,"72x^6 + 1229x^5 + 3670x^4 + 2793x^3 + 200x^2 + 1450x + 1250"),
+                (QQ**0,"1")
               ]
 
 
