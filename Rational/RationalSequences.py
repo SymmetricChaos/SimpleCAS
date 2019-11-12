@@ -1,7 +1,7 @@
 from Rational.RationalType import Rational
 from Rational.RationalUtils import mediant
 from Rational.CastToRational import cast_to_rational
-from Utility import sort_by_nth
+from Utility import sort_by_nth, choose
 
 def farey_sequence(n):
     """All unique fractions between 0 and 1 with denominator less than or equal to n"""
@@ -58,7 +58,8 @@ def harmonic_progression(a=1,d=1):
     while True:
         yield one/den
         den += d
-        
+
+
 def harmonic_series():
     out = Rational(1)
     ctr = 2
@@ -66,9 +67,18 @@ def harmonic_series():
         yield out
         out += Rational(1,ctr)
         ctr += 1
+        
+        
+def bernoulli_numbers(n):
+    B = 0
+    for k in range(n+1):
+        for v in range(k+1):
+            B += (-1)**v * choose(k,v) * Rational(v**n,k+1)
+    
+    return B
 
-    
-    
+
+
 
 if __name__ == '__main__':
     from Utility import make_canvas, scatter_points, show_plot
@@ -104,3 +114,7 @@ if __name__ == '__main__':
         if pos > 5:
             break
         print(val)
+        
+    print()
+    for i in range(10):
+        print(bernoulli_numbers(i))
