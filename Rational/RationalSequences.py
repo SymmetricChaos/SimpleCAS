@@ -58,9 +58,14 @@ def harmonic_progression(a=1,d=1):
     while True:
         yield one/den
         den += d
-
-    
-
+        
+def harmonic_series():
+    out = Rational(1)
+    ctr = 2
+    while True:
+        yield out
+        out += Rational(1,ctr)
+        ctr += 1
 
     
     
@@ -90,5 +95,12 @@ if __name__ == '__main__':
     S2 = harmonic_progression(a="1/3",d="2/9")
     for pos,val in enumerate(S2):
         if pos > 10:
+            break
+        print(val)
+    
+    print()
+    H = harmonic_series()
+    for pos,val in enumerate(H):
+        if pos > 5:
             break
         print(val)
