@@ -7,7 +7,8 @@ class CFracG:
     def __init__(self,nums,dens):
         
         if len(nums) != len(dens):
-            raise ValueError(f"Same number of numerators and denominators must be provided")
+            raise ValueError(f"Same number of numerators and denominators must be supplied")
+
     
         if type(nums) not in [list,tuple]:
             raise TypeError(f"Numerators must be given as a list or tuple, not {type(nums)}")
@@ -25,6 +26,7 @@ class CFracG:
                 if type(i) != int:
                     raise TypeError(f"All denominators must be given as int not {type(i)}")
         self.dens = dens
+
 
 
 #    def __str__(self):
@@ -109,7 +111,7 @@ class CFracG:
                 out = out.replace("*",prm)
                 out = out.replace("##",str(n))
                 out = out.replace("#",str(d))
-            out = out.replace("*",str(self.nums[-1]))
+            out = out.replace("*",str(self.dens[-1]))
             return f"${out}$"
         
 
@@ -123,6 +125,6 @@ class CFracG:
 
 if __name__ == '__main__':
 
-    C = CFracG([1,2,3,4],[2,2,2,2])
+    C = CFracG([1,2,3,4,5],[3,5,7,11,13])
     print(C)
     print(C.pretty_name)
