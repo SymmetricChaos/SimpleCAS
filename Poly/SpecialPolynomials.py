@@ -131,7 +131,11 @@ def lucas_poly_gen(n):
     F1 = QPoly([0,1])
     for i in range(n):
         yield F0
-        F0, F1 = F1, x*F1 + F0        
+        F0, F1 = F1, x*F1 + F0
+        
+#def bernoulli_polynomial_gen(n):
+    
+    
 
 
 
