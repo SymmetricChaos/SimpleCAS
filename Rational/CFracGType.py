@@ -29,10 +29,23 @@ class CFracG:
 
 
 
-#    def __str__(self):
-#        out = str(self.terms)
-#        out = out.replace(",",";",1)
-#        return out
+    def __str__(self):
+        if len(self) == 1:
+            return str(self[0])
+        
+        else:
+        
+            prm = "#+##/(*)" #primitive element
+            out = "*"
+            for n,d in zip(self.nums[:-1],self.dens[:-1]):
+                out = out.replace("*",prm)
+                out = out.replace("##",str(n))
+                out = out.replace("#",str(d))
+            out = out.replace("*",str(self.dens[-1]))
+            if self.dens[0] == 0:
+                return out[2:]
+            else:
+                return out
     
     
     def __len__(self):
@@ -121,7 +134,10 @@ class CFracG:
                 out = out.replace("##",str(n))
                 out = out.replace("#",str(d))
             out = out.replace("*",str(self.dens[-1]))
-            return f"${out}$"
+            if self.dens[0] == 0:
+                return f"${out[2:]}$"
+            else:
+                return f"${out}$"
         
 
     pretty_name = property(_pretty_name)
@@ -138,6 +154,7 @@ if __name__ == '__main__':
     print()
     C = CFracG([1,1,1,1],[2,3,1,4])
     print(C.pretty_name)
+    print(C)
     
     for i in C.convergents():
         print(i)
@@ -145,8 +162,9 @@ if __name__ == '__main__':
     print("\nAbove should be:\n2\n7/3\n9/4\n43/19")
         
     print()
-    C = CFracG([1,2,3,4,5,6,7],[1,2,3,4,5,6,7])
+    C = CFracG([1,2,3,4,5,6,7],[0,2,3,4,5,6,7])
     print(C.pretty_name)
+    print(C)
     
     for i in C.convergents():
         print(i,i.digits(5))
@@ -154,6 +172,7 @@ if __name__ == '__main__':
     print()
     C = CFracG([1,1,1,1,1,1,1],[1,2,3,4,5,6,7])
     print(C.pretty_name)
+
     
     for i in C.convergents():
         print(i,i.digits(5))
