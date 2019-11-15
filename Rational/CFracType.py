@@ -86,14 +86,12 @@ class CFrac:
             
     def convergents(self):
         """Rational convergents"""
-
         
         A1 = self.terms[0]
         A2 = self.terms[1]*self.terms[0]+1
         
         B1 = 1
         B2 = self.terms[1]
-        
         
         yield Rational(A1,B1)
         
@@ -105,7 +103,8 @@ class CFrac:
             yield Rational(A1,B1)
             
         yield Rational(A2,B2)
-            
+
+
     def semiconvergents(self):
         """Rational semiconvergents"""
   
@@ -143,7 +142,10 @@ class CFrac:
                 out = out.replace("*",prm)
                 out = out.replace("#",str(i))
             out = out.replace("*",str(self[-1]))
-            return f"${out}$"
+            if self.terms[0] == 0:
+                return f"${out[2:]}$"
+            else:
+                return f"${out}$"
         
 
     pretty_name = property(_pretty_name)
