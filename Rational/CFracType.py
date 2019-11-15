@@ -86,20 +86,25 @@ class CFrac:
             
     def convergents(self):
         """Rational convergents"""
-        T = self.terms
-        N = [1,T[0]]
-        D = [0,1]
-        con = 2
+
         
-        yield Rational(N[-1],D[-1])
+        A1 = self.terms[0]
+        A2 = self.terms[1]*self.terms[0]+1
         
-        while con < len(self)+1:
-            N.append( T[con-1] * N[con-1] + N[con-2] )
-            D.append( T[con-1] * D[con-1] + D[con-2] )
+        B1 = 1
+        B2 = self.terms[1]
         
-            yield Rational(N[-1],D[-1])
+        
+        yield Rational(A1,B1)
+        
+        for d in self.terms[2:]:
             
-            con += 1
+            A1, A2 = A2, d*A2+A1
+            B1, B2 = B2, d*B2+B1
+        
+            yield Rational(A1,B1)
+            
+        yield Rational(A2,B2)
             
     def semiconvergents(self):
         """Rational semiconvergents"""

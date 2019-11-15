@@ -102,7 +102,7 @@ class CFracG:
 #                prev = semi.as_rational()
 #                semi.terms[pos] += 1
 #        yield Q
-#
+
 
     # There are multiple pretty conventions for CFracG so at least one other
     # should be supported
