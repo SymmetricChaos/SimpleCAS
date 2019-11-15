@@ -8,7 +8,7 @@ For the love of common sense don't use SimpleCAS for anything remotely important
 
 
 # Features
-Currently four basic kinds of objects are supported by SimpleCAS: Rational (rational numbers), CFrac (simple continued fractions), QPoly (polynomials with rational coefficients), and ZPoly (polynomials with integer coefficients modulo some number).
+Currently four basic kinds of objects are supported by SimpleCAS: Rational (rational numbers), CFrac (simple continued fractions), QPoly (polynomials with rational coefficients), and ZPoly (polynomials with integer coefficients).
 
 ## Rational
 Rational numbers represented in simplest form. They are essentially just a pair of numbers with a bunch of methods defined to make sure they interact with other Rational objects as well as Python's integers.
@@ -164,7 +164,15 @@ Making a picture of the "interesting" part of rational function is rather diffic
 
 
 ## ZPoly
-Polynomials with integer coefficients that obey [modular arithmetic](https://en.wikipedia.org/wiki/Modular_arithmetic) for all operations. Equivalently the coefficients are drawn from some cyclic group Z/nZ. A ZPoly object can be created in the same ways as as QPoly except that the coefficients must be integers and the order of the cyclic group must also be specified. If the coefficients provided are not members of the cyclic group specified then they are reduced modulo the order of the group so that they will fit.
+Polynomials with integer coefficients.
+
+```
+P = ZPoly( [18,0,-8,121,9] )
+print(P)
+9x^4 + 121x^3 + -8x^2 + 18
+```
+
+Optionally a modulus can be provided in order to make the coefficients obey [modular arithmetic](https://en.wikipedia.org/wiki/Modular_arithmetic) for all operations. When the modulus is provided and the coefficients are not positive and less than the modulus then they are reduced by the modulus.
 
 ```
 P = ZPoly( [18,0,-8,121,9], 27 )
