@@ -55,23 +55,32 @@ class CFracG:
 #        return Rational(N[-1],D[-1])  
 #    
 #            
-#    def convergents(self):
-#        """Rational convergents"""
-#        T = self.terms
-#        N = [1,T[0]]
-#        D = [0,1]
-#        con = 2
-#        
-#        yield Rational(N[-1],D[-1])
-#        
-#        while con < len(self)+1:
-#            N.append( T[con-1] * N[con-1] + N[con-2] )
-#            D.append( T[con-1] * D[con-1] + D[con-2] )
-#        
-#            yield Rational(N[-1],D[-1])
-#            
-#            con += 1
-#            
+    def convergents(self):
+        """Rational convergents"""
+
+        
+        A1 = self.dens[0]
+        A2 = self.dens[1]*self.dens[0]+self.nums[0]
+        
+        B1 = 1
+        B2 = self.dens[1]
+        
+        
+        yield Rational(A1,B1)
+        
+        for d,n in zip(self.dens[2:],self.nums[1:]):
+            
+            A1, A2 = A2, d*A2+n*A1
+            B1, B2 = B2, d*B2+n*B1
+        
+            yield Rational(A1,B1)
+            
+        yield Rational(A2,B2)
+
+
+
+
+            
 #    def semiconvergents(self):
 #        """Rational semiconvergents"""
 #  
@@ -105,7 +114,7 @@ class CFracG:
         
         else:
         
-            prm = "#+\cfrac{##}{*}"
+            prm = "#+\cfrac{##}{*}" #primitive element
             out = "*"
             for n,d in zip(self.nums[:-1],self.dens[:-1]):
                 out = out.replace("*",prm)
@@ -125,6 +134,26 @@ class CFracG:
 
 if __name__ == '__main__':
 
-    C = CFracG([1,2,3,4,5],[3,5,7,11,13])
-    print(C)
+        
+    print()
+    C = CFracG([1,1,1,1],[2,3,1,4])
     print(C.pretty_name)
+    
+    for i in C.convergents():
+        print(i)
+        
+    print("\nAbove should be:\n2\n7/3\n9/4\n43/19")
+        
+    print()
+    C = CFracG([1,2,3,4,5,6,7],[1,2,3,4,5,6,7])
+    print(C.pretty_name)
+    
+    for i in C.convergents():
+        print(i,i.digits(5))
+        
+    print()
+    C = CFracG([1,1,1,1,1,1,1],[1,2,3,4,5,6,7])
+    print(C.pretty_name)
+    
+    for i in C.convergents():
+        print(i,i.digits(5))
