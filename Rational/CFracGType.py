@@ -28,13 +28,11 @@ class CFracG:
         self.dens = dens
 
 
-
     def __str__(self):
         if len(self) == 1:
             return str(self[0])
         
         else:
-        
             prm = "#+##/(*)" #primitive element
             out = "*"
             for n,d in zip(self.nums[:-1],self.dens[:-1]):
@@ -42,6 +40,7 @@ class CFracG:
                 out = out.replace("##",str(n))
                 out = out.replace("#",str(d))
             out = out.replace("*",str(self.dens[-1]))
+            out = out.replace(f"({self.dens[-1]})",f"{self.dens[-1]}")
             if self.dens[0] == 0:
                 return out[2:]
             else:
@@ -50,28 +49,28 @@ class CFracG:
     
     def __len__(self):
         return len(self.nums)
+
+
+    def as_rational(self):
+        """Convert a generalized continued fraction to a Rational"""
     
-#    def as_rational(self):
-#        """Convert a generalized continued fraction to a Rational"""
-#    
-#        L = self.terms
-#        
-#        N = [1,L[0]]
-#        D = [0,1]
-#        con = 2
-#        
-#        while con < len(self)+1:
-#            N.append( L[con-1] * N[con-1] + N[con-2] )
-#            D.append( L[con-1] * D[con-1] + D[con-2] )
-#            con += 1
-#            
-#        return Rational(N[-1],D[-1])  
-#    
-#            
+        A1 = self.dens[0]
+        A2 = self.dens[1]*self.dens[0]+self.nums[0]
+        
+        B1 = 1
+        B2 = self.dens[1]
+                
+        for d,n in zip(self.dens[2:],self.nums[1:]):
+            
+            A1, A2 = A2, d*A2+n*A1
+            B1, B2 = B2, d*B2+n*B1
+            
+        return Rational(A2,B2) 
+
+
     def convergents(self):
         """Rational convergents"""
 
-        
         A1 = self.dens[0]
         A2 = self.dens[1]*self.dens[0]+self.nums[0]
         
@@ -91,9 +90,6 @@ class CFracG:
         yield Rational(A2,B2)
 
 
-
-
-            
 #    def semiconvergents(self):
 #        """Rational semiconvergents"""
 #  
