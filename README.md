@@ -97,13 +97,35 @@ print(C)
 [8; 11, 4, 2, 7]
 ```
 
-SimpleCAS can also produce the nice LaTeX formatting with the `.pretty_name` method.
+SimpleCAS can also produce the nice LaTeX formatting with the `.pretty_name` attribute.
 
 ```
 print(C.pretty_name)
 8+\cfrac{1}{11+\cfrac{1}{4+\cfrac{1}{2+\cfrac{1}{7}}}}
 ```
 
+Generalized continued fractions are also supported as CFracG with somehwat different inputs. The list of numerators must be given along with the list of denominators. The inline printing for generalized continued fractions isn't quite as nice, though the `.pretty_name` attribute still gives the LaTeX formatting.
+
+```
+D = CFracG([4,1,4,9,16,25],[0,1,3,5,7,9,11])
+print(D)
+4/(1+1/(3+4/(5+9/(7+16/(9+25/11)))))
+```
+
+The convergents of this particular continued fraction approach pi.
+
+```
+for i in D.convergents():
+   s = str(i)
+   print(f"{s:<12} = {i.digits(5)}")
+0            = 0.00000
+4            = 4.00000
+3            = 3.00000
+19/6         = 3.16666
+160/51       = 3.13725
+1744/555     = 3.14234
+644/205      = 3.14146
+```
 
 ## QPoly
 Univariate polynomials with rational coefficients. Internally these are simple to represent as a list with the term of degree 0 in position 0, the term of degree 1 in position 1, and so on. This makes indexing the polynomial when working with it in Python intuitive but its not how we generally write polynomials in order to read them. When a QPoly object is printed it will show the standard written form with terms in descending order.
