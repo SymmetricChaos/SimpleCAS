@@ -117,14 +117,15 @@ The convergents of this particular continued fraction approach pi.
 ```
 for i in D.convergents():
    s = str(i)
-   print(f"{s:<12} = {i.digits(5)}")
-0            = 0.00000
-4            = 4.00000
-3            = 3.00000
-19/6         = 3.16666
-160/51       = 3.13725
-1744/555     = 3.14234
-644/205      = 3.14146
+   print(f"{s:<8} = {i.digits(5)}")
+   
+0        = 0.00000
+4        = 4.00000
+3        = 3.00000
+19/6     = 3.16666
+160/51   = 3.13725
+1744/555 = 3.14234
+644/205  = 3.14146
 ```
 
 ## QPoly
