@@ -97,13 +97,36 @@ print(C)
 [8; 11, 4, 2, 7]
 ```
 
-SimpleCAS can also produce the nice LaTeX formatting with the `.pretty_name` method.
+SimpleCAS can also produce the nice LaTeX formatting with the `.pretty_name` attribute.
 
 ```
 print(C.pretty_name)
 8+\cfrac{1}{11+\cfrac{1}{4+\cfrac{1}{2+\cfrac{1}{7}}}}
 ```
 
+Generalized continued fractions are also supported as CFracG with somehwat different inputs. The list of numerators must be given along with the list of denominators. The inline printing for generalized continued fractions isn't quite as nice, though the `.pretty_name` attribute still gives the LaTeX formatting.
+
+```
+D = CFracG([4,1,4,9,16,25],[0,1,3,5,7,9,11])
+print(D)
+4/(1+1/(3+4/(5+9/(7+16/(9+25/11)))))
+```
+
+The convergents of this particular continued fraction approach pi.
+
+```
+for i in D.convergents():
+   s = str(i)
+   print(f"{s:<8} = {i.digits(5)}")
+   
+0        = 0.00000
+4        = 4.00000
+3        = 3.00000
+19/6     = 3.16666
+160/51   = 3.13725
+1744/555 = 3.14234
+644/205  = 3.14146
+```
 
 ## QPoly
 Univariate polynomials with rational coefficients. Internally these are simple to represent as a list with the term of degree 0 in position 0, the term of degree 1 in position 1, and so on. This makes indexing the polynomial when working with it in Python intuitive but its not how we generally write polynomials in order to read them. When a QPoly object is printed it will show the standard written form with terms in descending order.
@@ -180,11 +203,13 @@ print(P)
 9x^4 + 13x^3 + 19x^2 + 18
 ```
 
-Note that when printed ZPoly does *not* include an indication that it is different from QPoly such as `(mod n)` since this is often inconvenient when several need to be printed for some reason. Instead use the `.full_name` attribute. Similarly the `.pretty_name` attribute which created a LaTeX formatted version of the polynomial does include the modulus. The `zpoly_plot` function will draw the entire polynomial and use `.pretty_name` to write the title.
+Note that when printed if a ZPoly object has a moudulus is does not print the `(mod n)` at the end since that is inconvenient in several circumstances. Instead the `.full_name` attribute should be used. The `.pretty_name` attribute which creates a LaTeX formatted version of the polynomial also does include the modulus by default. 
+
+The `poly_plot` function will automatically detect what kind of polynomial object has been provided to it. If ZPoly has no modulus the results are the same as for QPoly but when it does only the integer points are shown.
 
 ![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/ZPolyExample.png "polynomial over GF(83)")
 
-Using `zpoly_plot` on polynomials with a very large number of points is not recommended.
+Using `poly_plot` on polynomials with a very large number of points is not recommended.
 
 It is often useful for the order of the group to be a prime or prime power so that the group can also be treated as a finite field but this isn't required. For example Shamir's Secret Sharing Scheme must be done over a finite field. The basics of the algorithm are provided by the functions `make_shamir_secret` and `get_shamir_secret`. Say that our secret is the word HELP which we can represent as the number 72697680 in the ASCII encoding. To split the secret so that it can be given to six people and any four of them can recontruct it we need a polynomial of degree 4 with 72697680 as the zeroth order term. We can pick the prime number 104395301 as the order of the field.
 
@@ -218,7 +243,7 @@ print(get_shamir_secret(p,F))
 72697680
 ```
 
-Because there are only finitely many polynomials of each degree for any given modulus it is possible to list all of them with `all_zpolys` or just the ones with leading coefficient 1 with `all_monic_zpolys`.
+Because there are only finitely many polynomials of a given degree for any given modulus it is possible to list all of them with `all_zpolys` or just the ones with leading coefficient 1 with `all_monic_zpolys`. For instance all the monic polynomials over Z/3Z with degree two or less can be printed like this.
 
 ```
 for poly in all_monic_polys(3):
