@@ -27,7 +27,11 @@ class CFracG:
                     raise TypeError(f"All denominators must be given as int not {type(i)}")
         self.dens = dens
 
-
+    
+    def __len__(self):
+        return len(self.nums)
+    
+    
     def __str__(self):
         if len(self) == 1:
             return str(self[0])
@@ -45,10 +49,6 @@ class CFracG:
                 return out[2:]
             else:
                 return out
-    
-    
-    def __len__(self):
-        return len(self.nums)
 
 
     def as_rational(self):
@@ -122,7 +122,6 @@ class CFracG:
             return str(self[0])
         
         else:
-        
             prm = "#+\cfrac{##}{*}" #primitive element
             out = "*"
             for n,d in zip(self.nums[:-1],self.dens[:-1]):
@@ -142,8 +141,6 @@ class CFracG:
 
 
 
-
-
 if __name__ == '__main__':
 
         
@@ -157,18 +154,12 @@ if __name__ == '__main__':
         
     print("\nAbove should be:\n2\n7/3\n9/4\n43/19")
         
-    print()
-    C = CFracG([1,2,3,4,5,6,7],[0,2,3,4,5,6,7])
-    print(C.pretty_name)
-    print(C)
-    
-    for i in C.convergents():
-        print(i,i.digits(5))
         
     print()
-    C = CFracG([1,1,1,1,1,1,1],[1,2,3,4,5,6,7])
+    C = CFracG([4,1,4,9,16,25,36,49,64],[0,1,3,5,7,9,11,13,15])
     print(C.pretty_name)
 
     
     for i in C.convergents():
-        print(i,i.digits(5))
+        s = str(i)
+        print(f"{s:<12} = {i.digits(6)}")
