@@ -6,8 +6,12 @@ class CFracG:
     
     def __init__(self,nums,dens):
         
-        if len(nums) != len(dens):
-            raise ValueError(f"Same number of numerators and denominators must be supplied")
+        if len(nums) == len(dens)-1:
+            pass
+        elif len(nums) >= len(dens):
+            print("Extra numerators will be ignored")
+        else:
+            raise ValueError(f"Not enough numerators")
 
     
         if type(nums) not in [list,tuple]:
@@ -145,7 +149,7 @@ if __name__ == '__main__':
 
         
     print()
-    C = CFracG([1,1,1,1],[2,3,1,4])
+    C = CFracG([1,1,1],[2,3,1,4])
     print(C.pretty_name)
     print(C)
     
@@ -156,10 +160,10 @@ if __name__ == '__main__':
         
         
     print()
-    C = CFracG([4,1,4,9,16,25,36,49,64],[0,1,3,5,7,9,11,13,15])
+    C = CFracG([4,1,4,9,16,25],[0,1,3,5,7,9,11])
     print(C.pretty_name)
-
+    print(C)
     
     for i in C.convergents():
         s = str(i)
-        print(f"{s:<12} = {i.digits(6)}")
+        print(f"{s:<8} = {i.digits(5)}")
