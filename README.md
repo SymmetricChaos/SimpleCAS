@@ -203,11 +203,13 @@ print(P)
 9x^4 + 13x^3 + 19x^2 + 18
 ```
 
-Note that when printed ZPoly does *not* include an indication that it is different from QPoly such as `(mod n)` since this is often inconvenient when several need to be printed for some reason. Instead use the `.full_name` attribute. Similarly the `.pretty_name` attribute which created a LaTeX formatted version of the polynomial does include the modulus. The `zpoly_plot` function will draw the entire polynomial and use `.pretty_name` to write the title.
+Note that when printed if a ZPoly object has a moudulus is does not print the `(mod n)` at the end since that is inconvenient in several circumstances. Instead the `.full_name` attribute should be used. The `.pretty_name` attribute which creates a LaTeX formatted version of the polynomial also does include the modulus by default. 
+
+The `poly_plot` function will automatically detect what kind of polynomial object has been provided to it. If ZPoly has no modulus the results are the same as for QPoly but when it does only the integer points are shown.
 
 ![alt text](https://github.com/SymmetricChaos/SimpleCAS/blob/master/ImageFiles/ZPolyExample.png "polynomial over GF(83)")
 
-Using `zpoly_plot` on polynomials with a very large number of points is not recommended.
+Using `poly_plot` on polynomials with a very large number of points is not recommended.
 
 It is often useful for the order of the group to be a prime or prime power so that the group can also be treated as a finite field but this isn't required. For example Shamir's Secret Sharing Scheme must be done over a finite field. The basics of the algorithm are provided by the functions `make_shamir_secret` and `get_shamir_secret`. Say that our secret is the word HELP which we can represent as the number 72697680 in the ASCII encoding. To split the secret so that it can be given to six people and any four of them can recontruct it we need a polynomial of degree 4 with 72697680 as the zeroth order term. We can pick the prime number 104395301 as the order of the field.
 
@@ -241,7 +243,7 @@ print(get_shamir_secret(p,F))
 72697680
 ```
 
-Because there are only finitely many polynomials of each degree for any given modulus it is possible to list all of them with `all_zpolys` or just the ones with leading coefficient 1 with `all_monic_zpolys`.
+Because there are only finitely many polynomials of a given degree for any given modulus it is possible to list all of them with `all_zpolys` or just the ones with leading coefficient 1 with `all_monic_zpolys`. For instance all the monic polynomials over Z/3Z with degree two or less can be printed like this.
 
 ```
 for poly in all_monic_polys(3):
