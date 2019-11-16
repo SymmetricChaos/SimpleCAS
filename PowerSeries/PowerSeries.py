@@ -1,22 +1,28 @@
-from Rational import coerce_to_rational
+from Rational import cast_to_rational
 from Poly import QPoly
+import types
 
 class PSeries:
     
     def __init__(self,a,c=0):
-        try: 
-            iter(a)
-        except:
+        if not isinstance(a, types.GeneratorType):
             raise Exception(f"{a} is not iterable")
         self.a = a
-        self.c = coerce_to_rational(c)
+        self.c = cast_to_rational(c)
     
+
+    def __str__(self):
+        return self.head(2)
+
 
     def head(self,N):
         out = ""
         for pos,val in enumerate(self.a):
             if pos > N:
                 break
+            
+            if val == 0:
+                continue
             
             if val < 0:
                 val = abs(val)
@@ -33,24 +39,11 @@ class PSeries:
             out += sgn + term(val,self.c,pos)
             
         return out + " + ..."
-    
-
-    def truncate(self,N):
-        """Truncates the power series"""
-        return PSeries(self.a[:N],self.c)
 
 
-    def cast_to_poly(self,N=None):
+    def cast_to_poly(self,N):
         """Truncates the power series and returns a polynomial"""
-        
-        if N == None:
-            try:
-                N = len(self.a)
-            except:
-                raise Exception(f"{self.a} has no len() so N must be supplied")
-        else:
-            N = N
-        
+                
         P = QPoly([0])
         x = QPoly([0,1])
         for pos,val in enumerate(self.a):
@@ -60,18 +53,11 @@ class PSeries:
         return P
 
 
-    def evaluate(self,x,N=None):
-        
-        if N == None:
-            try:
-                N = len(self.a)
-            except:
-                raise Exception(f"{self.a} has no len() so N must be supplied")
-        else:
-            N = N
-        
-        x = coerce_to_rational(x)
-        
+    def evaluate(self,x,N):
+        """Truncates the power series and evakuates it"""
+                
+        x = cast_to_rational(x)
+
         out = 0
         for pos,val in enumerate(self.a):
             if pos > N:
@@ -128,13 +114,14 @@ def term(a,c,p):
         
 if __name__ == '__main__':
     def sq():
-        out = 0
+        out = 1
         while True:
             yield out*out
             out += 1
     
     
     P = PSeries(sq(),1)
+    print(P)
     print(f"P.head(3) = {P.head(3)}")
     print(f"\nCast the first four terms to a polynomial:\n{P.cast_to_poly(4)}")
     print(f"\nEvaluate the first four terms at x = 1:\n{P.evaluate('1/2',4)}")
