@@ -221,5 +221,3 @@ def cantor_tuple(*ks):
         return cantor_pairing(ks[0],ks[1])
     else:
         return cantor_tuple(cantor_tuple(*ks[:-1]),ks[-1])
-        
-print(cantor_tuple(1,2,3,4))

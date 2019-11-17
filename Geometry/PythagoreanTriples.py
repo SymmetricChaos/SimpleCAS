@@ -19,13 +19,13 @@ def prim_pythag_triples(N):
             
 if __name__ == '__main__':
     from Utility import make_canvas, scatter_points
-        
+
     for i in prim_pythag_triples(10):
         print(i)
-        
+
     make_canvas([-1.2,1.2],size=6,title="Rational Points on a Circle")
     pts = []
-    for i in prim_pythag_triples(10):
+    for i in prim_pythag_triples(11):
         pts += [[i[0]/i[2],i[1]/i[2]]]
         pts += [[-i[0]/i[2],i[1]/i[2]]]
         pts += [[i[0]/i[2],-i[1]/i[2]]]
