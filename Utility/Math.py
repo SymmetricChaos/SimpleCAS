@@ -103,6 +103,7 @@ def choose(n,k):
 
 
 def kronecker_delta(i,j):
+    """The Kronecker delta"""
     if i == j:
         return 1
     return 0
@@ -210,14 +211,25 @@ def prime_factorization(n):
     return L
 
 
-def cantor_pairing(x,y):
+def cantor_pair(x,y):
+    """A unique integer that represents the order pair (x,y)"""
     if type(x) != int or type(y) != int:
         raise TypeError("arguments must be integers")
-    return ((x+y)*(x+y+1)+y)//2
+    return ((x+y)*(x+y+1))//2+y
 
 
 def cantor_tuple(*ks):
+    """A unique integer that represents the given tuple"""
     if len(ks) == 2:
-        return cantor_pairing(ks[0],ks[1])
+        return cantor_pair(ks[0],ks[1])
     else:
         return cantor_tuple(cantor_tuple(*ks[:-1]),ks[-1])
+
+
+def cantor_pair_inv(n):
+    
+    w = (int_root(8*n+1)-1)//2
+    t = (w*w+w)//2
+    y = n - t
+    x = w - y
+    return x,y
