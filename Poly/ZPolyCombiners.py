@@ -1,6 +1,6 @@
 from Poly import ZPoly
 from collections import Counter
-from Utility import sort_by_nth
+from Utility import sort_by_nth, gcd
 import re
 
 
@@ -19,7 +19,9 @@ class ZPolySum:
             
         else:
             raise TypeError(f"Couldn't use type {type(terms)}")
-            
+        
+        
+        self.simplify_mult()
         self.simplify_const()
         self.M = M
 
@@ -39,10 +41,28 @@ class ZPolySum:
         self.terms[const] = 1
 
         del self.terms[1]
-        
+
+
+    def simplify_mult(self):
+        """Remove common factor of coefficients"""
+        remv = []
+        newc = []
+        for i in self.terms.items():
+            g = gcd(i[0].coef)
+            if g != 1 and g != 0:
+                remv.append(i[0])
+                newc.append( Counter( {i[0]//g:g*i[1]} ) )
+
+        for t in remv:
+            del self.terms[t]
+
+
+        for n in newc:
+            self.terms += n
+
 
     def cast_to_poly(self):
-        """Multiply everything together as a ZPoly"""
+        """Add everything together as a ZPoly"""
         out = ZPoly([0],self.M)
         for val,mul in self.terms.items():
             out += mul*val
@@ -147,7 +167,7 @@ class ZPolySum:
         
         
         # Join everything
-        out = "+".join(out)
+        out = " + ".join(out)
         # Remove the modulo terms
         out = re.sub(" \(mod \d*\)","",out)
         # Remove $ signs
@@ -161,6 +181,8 @@ class ZPolySum:
     # Things that are like attributes can be access as properties
     pretty_name = property(_pretty_name)
     full_name = property(_full_name)
+
+
 
 
 
@@ -293,7 +315,6 @@ class ZPolyProd:
             return str(self)
         
 
-    
     def __hash__(self):
         return hash(f"CustomZPolyProd{self.full_name}")
 
@@ -343,6 +364,10 @@ class ZPolyProd:
 
 
 
+
+
+
+
 if __name__ == '__main__':
     P = ZPoly( [1,2,3], 19)
     Q = ZPoly( [2,4], 19)
@@ -377,8 +402,5 @@ if __name__ == '__main__':
     
     print("\n\nSums")
     C = ZPolySum([P,Q,R,S,T,U],5)
-    C = C + P + S + T + T
+    C = C + P + S + T + T + P
     print(C.full_name)
-    
-    
-    
