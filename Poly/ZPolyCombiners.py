@@ -128,12 +128,15 @@ class ZPolyProd:
 
 
     def _full_name(self):
-        return f"{self} [mod {self.M}]"
+        if self.M != None:
+            return f"{self} [mod {self.M}]"
+        else:
+            return str(self)
         
 
     
     def __hash__(self):
-        return hash(f"CustomZPolyProd{self}")
+        return hash(f"CustomZPolyProd{self.full_name}")
 
 
     def _pretty_name(self):
@@ -161,12 +164,16 @@ class ZPolyProd:
                 out.append(f"({t.pretty_name})^{{{pwr}}}")
         
         
-
+        # Join everything
         out = "".join(out)
+        # Remove the modulo terms
         out = re.sub(" \(mod \d*\)","",out)
+        # Remove $ signs
         out = out.replace("$","")
-        out += f"$ [mod {self.M}]"
-        return f"${out}"
+        if self.M:    
+            return f"${out}$ [mod {self.M}]"
+        else:
+            return f"${out}$"
 
 
     # Things that are like attributes can be access as properties
@@ -196,7 +203,6 @@ if __name__ == '__main__':
     print(D.full_name)
     
     
-       
     print("\nTest Sorting")
     P = ZPoly([1,2,3],5)
     Q = ZPoly([1,4,1],5) 
