@@ -68,6 +68,7 @@ def mod_inv(a, m):
     
     
 def mod_div(a,b,m):
+    """a divided by b modulo m"""
     return (a * mod_inv(b,m)) % m
 
 
@@ -212,9 +213,11 @@ def prime_factorization(n):
 
 
 def cantor_pair(x,y):
-    """A unique integer that represents the order pair (x,y)"""
+    """A unique positive integer that represents the order pair (x,y), x and y positive"""
     if type(x) != int or type(y) != int:
         raise TypeError("arguments must be integers")
+    if x < 0 or y < 0:
+        raise ValueError("arguments must be positive")
     return ((x+y)*(x+y+1))//2+y
 
 
@@ -227,7 +230,12 @@ def cantor_tuple(*ks):
 
 
 def cantor_pair_inv(n):
-    
+    """Inverse of the cantor pairing function"""
+    if type(n) != int :
+        raise TypeError("n must be an integer")
+    if n < 0 :
+        raise ValueError("n must be positive")
+
     w = (int_root(8*n+1)-1)//2
     t = (w*w+w)//2
     y = n - t
