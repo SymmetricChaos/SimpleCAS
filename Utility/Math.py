@@ -208,3 +208,18 @@ def prime_factorization(n):
             L.append(n)
             break
     return L
+
+
+def cantor_pairing(x,y):
+    if type(x) != int or type(y) != int:
+        raise TypeError("arguments must be integers")
+    return ((x+y)*(x+y+1)+y)//2
+
+
+def cantor_tuple(*ks):
+    if len(ks) == 2:
+        return cantor_pairing(ks[0],ks[1])
+    else:
+        return cantor_tuple(cantor_tuple(*ks[:-1]),ks[-1])
+        
+print(cantor_tuple(1,2,3,4))
