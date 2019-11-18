@@ -2,7 +2,6 @@
 
 from Utility import poly_add, poly_mult, mod_inv, mod_div, gcd
 from Poly.ZPolyPrint import zpoly_print, zpoly_print_pretty
-from Poly.QPoly import QPoly
 
 class ZPoly:
     
@@ -263,6 +262,7 @@ class ZPoly:
                 return ZPoly( [mod_div(p,Q[0],self.M) for p in P], self.M), ZPoly( [0], self.M)
             else:
                 return ZPoly( [p//Q[0] for p in P], self.M), ZPoly( [p%Q[0] for p in P], self.M)
+        
         if self.M:
             # Polynomial division if a modulus is given
             dP = len(P)-1
@@ -283,9 +283,10 @@ class ZPoly:
             else:
                 qt = [0]
                 rm = [i % self.M for i in P]
+            return ZPoly( qt, self.M), ZPoly( rm, self.M)
 
         else:
-            # Polynomial division if a modulus is NOT give
+            # Polynomial division if a modulus is NOT given
             dP = len(P)-1
             dQ = len(Q)-1
             if dP >= dQ:
@@ -300,12 +301,11 @@ class ZPoly:
                             break
                         P.pop()
                     dP = len(P)-1
-                rm = [i % self.M for i in P]
+                rm = [i for i in P]
             else:
                 qt = [0]
-                rm = [i % self.M for i in P]
-
-        return ZPoly( qt, self.M), ZPoly( rm, self.M)
+                rm = [i for i in P]
+            return ZPoly( qt ), ZPoly( rm )
 
 
     # Using __floordiv__ since there can be a remainder, not because we round down
@@ -399,34 +399,37 @@ class ZPoly:
 
 
 if __name__ == '__main__':
-    M = 17
-    P = ZPoly( [1,4,7], M )
-    Q = ZPoly( [8,1], M)
-    print(f"P = {P.full_name}")
-    print(f"Q = {Q.full_name}")
-    print()
+#    M = 17
+#    P = ZPoly( [1,4,7], M )
+#    Q = ZPoly( [8,1], M)
+#    print(f"P = {P.full_name}")
+#    print(f"Q = {Q.full_name}")
+#    print()
+#    print(f"P//Q = {P//Q}")
+#    print(f"P%Q  = {P%Q}")
+#    print("Check the the process reverses")
+#    print((P//Q)*Q+(P%Q) == P)
+#    
+#    print(P.monic_part)
+#    print(P.full_name)
+#
+#    
+#    M = 2
+#    R = ZPoly( [1,1,0,0,1], M )
+#    S = ZPoly( [0,1], M )
+#    out = ZPoly( [1], M )
+#    print(f"\n\nOne version of of GF(16)")
+#    print(f"0 = {R}")
+#    for i in range(15):
+#        print(out)
+#        out = (out * S) % R
+        
+        
+    print("\n\n")
+    P = ZPoly( [1,4,7] )
+    Q = ZPoly( [8,1] )
+
     print(f"P//Q = {P//Q}")
     print(f"P%Q  = {P%Q}")
     print("Check the the process reverses")
     print((P//Q)*Q+(P%Q) == P)
-    
-    print(P.monic_part)
-    print(P.full_name)
-
-    
-    M = 2
-    R = ZPoly( [1,1,0,0,1], M )
-    S = ZPoly( [0,1], M )
-    out = ZPoly( [1], M )
-    print(f"\n\nOne version of of GF(16)")
-    print(f"0 = {R}")
-    for i in range(15):
-        print(out)
-        out = (out * S) % R
-        
-        
-    print("\n\n")
-    A = ZPoly( [3,-7,4] )
-    print(A//2)
-    print(-(A%2))
-    print((A//2)*2)
