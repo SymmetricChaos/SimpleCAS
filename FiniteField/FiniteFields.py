@@ -2,9 +2,6 @@ from Poly.ZPoly import ZPoly
 import pprint
 
 
-
-# work in division, gcd for polynomials
-
 def finite_field_example(P):
 
 
@@ -28,6 +25,7 @@ def finite_field_example(P):
     pprint.pprint(Fnum)
     
     return Fnum,Fpol
+
 
 
 

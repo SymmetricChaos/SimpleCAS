@@ -2,7 +2,6 @@
 
 from Utility import poly_add, poly_mult, mod_inv, mod_div, gcd
 from Poly.ZPolyPrint import zpoly_print, zpoly_print_pretty
-from time import sleep
 
 class ZPoly:
     
@@ -71,7 +70,8 @@ class ZPoly:
             for pwr,co in enumerate(self.coef):
                 out = out + co*x**pwr
             return out
-    
+
+
     def evaluate(self,X):
         """Evaluate the polynomial at a given list of points"""
         assert type(X) == list
@@ -198,7 +198,6 @@ class ZPoly:
         if self.M != other.M:
             raise ValueError("Can only compare ZPoly with identical F")
 
-        
         if len(self) == len(other):
             if all([x == y for x,y in zip(self.coef,other.coef)]):
                 return True
@@ -270,14 +269,18 @@ class ZPoly:
             dQ = len(Q)-1
             qt = [0]*dP
             while dP >= dQ:
+                
                 d = [0]*(dP - dQ) + Q
                 mult = qt[dP - dQ] = P[-1] * mod_inv(d[-1],self.M)
+                
                 d = [co*mult for co in d]
                 P = [ (coeffP - coeffd) % self.M for coeffP, coeffd in zip(P, d)]
+                
                 while P[-1] == 0 and len(P) > 1:
                     if len(P) == 1:
                         break
                     P.pop()
+                    
                 dP = len(P)-1
                 rm = [i % self.M for i in P]
 
@@ -291,22 +294,21 @@ class ZPoly:
             qt = [0]*dP
             while dP >= dQ:
                 
-                
                 d = [0]*(dP - dQ) + Q
                 mult = qt[dP - dQ] = P[-1] // d[-1]
-                
+
                 if P[-1] % d[-1] != 0:
                     raise Exception(f"Euclidean division of {self} by {other} is not defined")
-                
+
                 d = [co*mult for co in d]
                 P = [ (coeffP - coeffd)  for coeffP, coeffd in zip(P, d)]
-                
+
                 while P[-1] == 0 and len(P) > 1:
                     if len(P) == 1:
                         break
                     P.pop()
                 dP = len(P)-1
-                
+
             rm = [i for i in P]
 
             return ZPoly( qt ), ZPoly( rm )
