@@ -6,10 +6,8 @@ from Poly.ZPolyPrint import zpoly_print, zpoly_print_pretty
 class ZPoly:
     
     def __init__(self,coef,M=None):
-        try:
-            iter(coef)
-        except:
-            raise TypeError("coef must be iterable")
+        if type(coef) not in [list,tuple]:
+            raise TypeError("coef must be list or tuple")
         
         for i in coef:
             if type(i) != int:
@@ -20,7 +18,8 @@ class ZPoly:
         else:
             if type(M) != int:
                 raise TypeError(f"Modulus must be int or None not {type(M)}")
-        self.coef = coef
+        
+        self.coef = list(coef)
         self.M = M
         self.normalize()
 
@@ -196,7 +195,7 @@ class ZPoly:
             raise TypeError("Cannot compare ZPoly to {type(other)}")
         
         if self.M != other.M:
-            raise ValueError("Can only compare ZPoly with identical F")
+            raise ValueError("Can only compare ZPoly with identical modulus")
 
         if len(self) == len(other):
             if all([x == y for x,y in zip(self.coef,other.coef)]):
@@ -381,6 +380,8 @@ class ZPoly:
 
     
     def make_monic(self):
+        if self.M == None:
+            raise ValueError("Cannot produce a monic polynomial without modulus, try .primitive_part instead")
         C = self[-1]
         for i in range(len(self)):
             self[i] = mod_div(self[i],C,self.M)
@@ -402,36 +403,45 @@ class ZPoly:
     primitive_part = property(_primitive_part)
 
 
+def zpoly_gcd(P,Q):
+    """GCD of two polynomials"""
+    assert type(P) == ZPoly
+    assert type(Q) == ZPoly
+    assert P.M == Q.M
+    
+    if Q.degree() > P.degree():
+        P,Q = Q,P
+        
+    # Check if we reached the end
+    if Q == ZPoly([0],P.M):
+        return P.monic_part
+    if P == ZPoly([0],P.M):
+        return Q.monic_part
+    
+    else:
+        g = zpoly_gcd(P % Q, Q)
+        return g.monic_part
+
+
+
 
 
 if __name__ == '__main__':
+    
+    print("Division and Remainder with a modulus")
     M = 17
     P = ZPoly( [1,4,7], M )
     Q = ZPoly( [8,1], M)
     print(f"P = {P.full_name}")
     print(f"Q = {Q.full_name}")
-    print()
     print(f"P//Q = {P//Q}")
     print(f"P%Q  = {P%Q}")
-    print("Check the the process reverses")
-    print((P//Q)*Q+(P%Q) == P)
+    print(f"Check the the process reverses: {(P//Q)*Q+(P%Q) == P}")
     
-    print(P.monic_part)
-    print(P.full_name)
-
+    print(f"Monic part of P: {P.monic_part}")
     
-    M = 2
-    R = ZPoly( [1,1,0,0,1], M )
-    S = ZPoly( [0,1], M )
-    out = ZPoly( [1], M )
-    print(f"\n\nOne version of of GF(16)")
-    print(f"0 = {R}")
-    for i in range(15):
-        print(out)
-        out = (out * S) % R
-        
     
-    print("\n\n")
+    print("\n\nDivision and Remainder without a modulus")
     P = ZPoly( [1,4,7] )
     Q = ZPoly( [8,1] )
 
@@ -441,3 +451,15 @@ if __name__ == '__main__':
     print(f"P%Q  = {P%Q}")
     print("Check the the process reverses")
     print((P//Q)*Q+(P%Q) == P)
+
+    print(f"Primitive part of P: {P.primitive_part}")
+    
+    
+    print("\n\nzpoly_gcd")
+    A = ZPoly([1,1,0,1,0,1,1],2)
+    B = ZPoly([1,1,0,1,1],2)
+    print(A)
+    print(B)
+    print(zpoly_gcd(A,B))
+
+    

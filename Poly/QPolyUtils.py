@@ -1,4 +1,4 @@
-from Poly import QPoly, QPolyProd, QPolySum, poly_gcd
+from Poly import QPoly, QPolyProd, QPolySum, qpoly_gcd
 from Rational import Rational, rational_gcd
 from Utility import factorization
 from itertools import product
@@ -220,7 +220,7 @@ if __name__ == '__main__':
     B = QPoly( [-6,-11,-4,1] ) * QPoly( [3,0,0,-2] )
     print(f"A = {A}")
     print(f"B = {B}")
-    print(f"poly_gcd(A,B) = {poly_gcd(A,B)}")
+    print(f"qpoly_gcd(A,B) = {qpoly_gcd(A,B)}")
 #    
 #
 #    print()

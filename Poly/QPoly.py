@@ -9,14 +9,10 @@ from Poly.QPolyPrint import poly_print, poly_print_pretty
 class QPoly:
     
     def __init__(self,coef):
-        try:
-            iter(coef)
-        except:
-            raise TypeError("coef must be iterable")
-            
-        self.coef = []
-        for c in coef:
-            self.coef.append(cast_to_rational(c))
+        if type(coef) not in [list,tuple]:
+            raise TypeError(f"coef must be list or tuple not {type(coef)}")
+        
+        self.coef = [cast_to_rational(c) for c in coef]
         self.normalize()
 
 
@@ -378,7 +374,7 @@ class QPoly:
 # GCD is defined as primitive part
 # It could also be defined as the monic part but primitive works even when one
 # wishes to work with integer polynomials
-def poly_gcd(P,Q):
+def qpoly_gcd(P,Q):
     """GCD of two polynomials"""
     assert type(P) == QPoly
     assert type(Q) == QPoly
@@ -393,7 +389,7 @@ def poly_gcd(P,Q):
         return Q.primitive_part
     
     else:
-        g = poly_gcd(P % Q, Q)
+        g = qpoly_gcd(P % Q, Q)
         return g.primitive_part
 
 
@@ -410,7 +406,7 @@ class RFunc:
         
         if type(N) == QPoly:
             pass
-        elif type(N) == list:
+        elif type(N) in [list,tuple]:
             N = QPoly( N )
         else:
             try:
@@ -436,7 +432,7 @@ class RFunc:
 
     def simplify(self):
         # Remove common factors
-        G = poly_gcd(self.N,self.D)
+        G = qpoly_gcd(self.N,self.D)
         self.N //= G
         self.D //= G
         
