@@ -1,9 +1,9 @@
 from Poly.ZPoly import ZPoly
 import pprint
-import random
 
 
-# word in division, gcd for polynomials
+
+# work in division, gcd for polynomials
 
 def finite_field_example():
     print("GF(16)")
@@ -13,23 +13,41 @@ def finite_field_example():
     S = ZPoly( [0,1], 2 )
     out = ZPoly( [1], 2 )
     
-    F = {0:P}
+    Fnum = {0:P}
+    Fpol = {P:0, ZPoly([0],2):0}
     
     for i in range(1,16):
-        F[i] = out
+        Fnum[i] = out
+        Fpol[out] = i
         out = (out * S) % P
         
-    pprint.pprint(F)
+    pprint.pprint(Fnum)
     
-    print()
-    for i in range(10):
-        N = random.sample(list(F),2)
-        z = F[0]
-        a = F[N[0]]
-        b = F[N[1]]
-        print( ( a * b ) % z ) 
-        print()
+    return Fnum,Fpol
+
+
+
     
 if __name__ == '__main__':
+    import random
+    Fnum,Fpol = finite_field_example()
     
-    finite_field_example()
+    print()
+    for i in range(5):
+        x,y = random.sample(list(Fnum),2)
+        z = Fnum[0]
+        a = Fnum[x]
+        b = Fnum[y]
+        print(f"({a}) * ({b}) = {(a*b)%z}")
+        print(f"{Fpol[a]} * {Fpol[b]} = {Fpol[(a*b)%z]}")
+        print()
+        print()
+
+    for i in range(5):
+        x,y = random.sample(list(Fnum),2)
+        z = Fnum[0]
+        a = Fnum[x]
+        b = Fnum[y]
+        print(f"({a}) // ({b}) = {(a//b)%z}")
+        print(f"{Fpol[a]} // {Fpol[b]} = {Fpol[(a//b)%z]}")
+        print()
