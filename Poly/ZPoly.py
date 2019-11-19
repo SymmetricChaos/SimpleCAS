@@ -403,36 +403,38 @@ class ZPoly:
 
 
 if __name__ == '__main__':
-#    M = 17
-#    P = ZPoly( [1,4,7], M )
-#    Q = ZPoly( [8,1], M)
-#    print(f"P = {P.full_name}")
-#    print(f"Q = {Q.full_name}")
-#    print()
-#    print(f"P//Q = {P//Q}")
-#    print(f"P%Q  = {P%Q}")
-#    print("Check the the process reverses")
-#    print((P//Q)*Q+(P%Q) == P)
-#    
-#    print(P.monic_part)
-#    print(P.full_name)
-#
-#    
-#    M = 2
-#    R = ZPoly( [1,1,0,0,1], M )
-#    S = ZPoly( [0,1], M )
-#    out = ZPoly( [1], M )
-#    print(f"\n\nOne version of of GF(16)")
-#    print(f"0 = {R}")
-#    for i in range(15):
-#        print(out)
-#        out = (out * S) % R
+    M = 17
+    P = ZPoly( [1,4,7], M )
+    Q = ZPoly( [8,1], M)
+    print(f"P = {P.full_name}")
+    print(f"Q = {Q.full_name}")
+    print()
+    print(f"P//Q = {P//Q}")
+    print(f"P%Q  = {P%Q}")
+    print("Check the the process reverses")
+    print((P//Q)*Q+(P%Q) == P)
+    
+    print(P.monic_part)
+    print(P.full_name)
+
+    
+    M = 2
+    R = ZPoly( [1,1,0,0,1], M )
+    S = ZPoly( [0,1], M )
+    out = ZPoly( [1], M )
+    print(f"\n\nOne version of of GF(16)")
+    print(f"0 = {R}")
+    for i in range(15):
+        print(out)
+        out = (out * S) % R
         
-        
+    
     print("\n\n")
     P = ZPoly( [1,4,7] )
     Q = ZPoly( [8,1] )
 
+    print(f"P = {P.full_name}")
+    print(f"Q = {Q.full_name}")
     print(f"P//Q = {P//Q}")
     print(f"P%Q  = {P%Q}")
     print("Check the the process reverses")
