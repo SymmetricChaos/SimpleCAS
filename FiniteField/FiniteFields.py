@@ -1,4 +1,4 @@
-from Poly.ZPoly import ZPoly, zpoly_gcd
+from Poly.ZPoly import ZPoly
 import pprint
 
 
@@ -49,6 +49,16 @@ def ff_inv(a, R):
         return x % R
     
     
+def ff_div(a,b,R):
+    if b == R or str(b) == "0":
+        raise ZeroDivisionError
+    return (a * ff_inv(b,R)) % R
+
+
+
+
+    
+    
     
 
     
@@ -81,17 +91,18 @@ if __name__ == '__main__':
 
         print()
         
-    
-#    print("\n\n")
-#    for i in range(3):
-#        x,y = random.sample(list(Fnum),2)
-#        z = Fnum[0]
-#        a = Fnum[x]
-#        b = Fnum[y]
-#        print(f"({a}) + ({b}) = {(a+b)%z}")
-#        print(f"{Fpol[a]} + {Fpol[b]} = {Fpol[(a+b)%z]}")
-#        print()
-#        
+    print("\n\nExamples of Division over the Finite Field")
+    for i in range(3):
+        x,y = random.sample(list(Fnum),2)
+        z = Fnum[0]
+        a = Fnum[x]
+        b = Fnum[y]
+        if str(b%z) == "0":
+            continue
+        print(f"({a}) / ({b}) = {ff_div(a,b,z)}")
+#        print(f"{Fpol[a]} // {Fpol[b]} = {Fpol[(a//b)%z]}")
+        print()
+
 #    print("\n\n")
 #    for i in range(3):
 #        x,y = random.sample(list(Fnum),2)
@@ -102,12 +113,3 @@ if __name__ == '__main__':
 #        print(f"{Fpol[a]} * {Fpol[b]} = {Fpol[(a*b)%z]}")
 #        print()
 #    
-#    print("\n\n")
-#    for i in range(3):
-#        x,y = random.sample(list(Fnum),2)
-#        z = Fnum[0]
-#        a = Fnum[x]
-#        b = Fnum[y]
-#        print(f"({a}) // ({b}) = {(a//b)%z}")
-#        print(f"{Fpol[a]} // {Fpol[b]} = {Fpol[(a//b)%z]}")
-#        print()

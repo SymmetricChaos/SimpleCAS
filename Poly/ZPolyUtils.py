@@ -46,6 +46,16 @@ def get_shamir_secret(pts,M):
     return zpoly_lagrange_interpolation(X,Y,M)[0]   
 
 
+def zpoly_egcd(a, b):
+    """Extended Euclidean Algorithm"""
+    M = a.M
+    if a == ZPoly([0],M):
+        return (b, ZPoly([0],M), ZPoly([1],M))
+    else:
+        g, y, x = zpoly_egcd(b % a, a)
+        return (g, x - (b // a) * y, y)
+
+
 #def square_free_decomposition(poly):
 #    assert type(poly) == ZPoly
 #    print("!")
