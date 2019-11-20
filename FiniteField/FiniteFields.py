@@ -1,30 +1,61 @@
 from Poly import ZPoly, zpoly_egcd
-import pprint
+
+
+
+class FiniteField:
+    
+    def __init__(self,poly,R):
+        self.poly = poly % R
+        self.R = R
+
+
+    def __str__(self):
+        return f"{self.poly}"
+    
+    
+    def __repr__(self):
+        return f"{self.poly}"
+
+
+    def __add__(self,other):
+        return FiniteField(self.poly+other.poly,self.R)
+
+
+    def __mul__(self,other):
+        return FiniteField(self.poly*other.poly,self.R)
+
+
+    def __sub__(self,other):
+        return FiniteField(self.poly-other.poly,self.R)
+    
+
+    def __truediv__(self,other):
+        return FiniteField(ff_div(self.poly,other.poly,self.R),self.R)
+
 
 
 def finite_field_example(P):
 
 
-    S = ZPoly( [0,1], P.M )
-    out = ZPoly( [1], P.M )
+    S = FiniteField(ZPoly([0,1],P.M),P)
+    out = FiniteField(ZPoly([1],P.M),P)
     
-    Fnum = {0:P}
-    Fpol = {P:0, ZPoly([0],2):0}
+    L = []
     
     elems = (P.M)**(len(P)-1)
     
     for i in range(1,elems):
-        if out in Fpol:
+        if out in L:
             raise Exception("Not a finite field")
-        Fnum[i] = out
-        Fpol[out] = i
-        out = (out * S) % P
+        L.append(out)
+        out = (out * S)
 
+    for i in L:
+        print(i)
     
-    print(f"GF({elems})")    
-    pprint.pprint(Fnum)
-    
-    return Fnum,Fpol
+    return L
+
+
 
 
 def ff_inv(a, R):
@@ -48,58 +79,26 @@ def ff_div(a,b,R):
 
 
     
-    
-    
 
     
 if __name__ == '__main__':
     import random
-    
-    P = ZPoly( [1,1,0,0,1], 2 )
+
     P = ZPoly( [1,0,0,1,0,1], 2 )
-    Fnum,Fpol = finite_field_example(P)
+    L = finite_field_example(P)
     
-    
+    print(f"\n\nFinite Field of Characteristic 2 reduced by {P}")
+
     print("\n\nIn a field of characteristic two every element is its own additive inverse.")
     for i in range(3):
-        x,y = random.sample(list(Fnum),2)
-        z = Fnum[0]
-        a = Fnum[x]
-        b = Fnum[x]
-        print(f"({a}) + ({b}) = {(a+b)%z}")
-        print(f"{Fpol[a]} + {Fpol[b]} = {Fpol[(a+b)%z]}")
-        print()
-    
-    print("\n\nCalculate multiplicative inverses.")
-    for i in range(3):
-        x,y = random.sample(list(Fnum),2)
-        z = Fnum[0]
-        a = Fnum[x]
-        if str(a%z) == "0":
-            continue
-        print(f"({a}) * ({ff_inv(a,z)}) = {a*ff_inv(a,z)%z}")
-
+        a, = random.sample(L,1)
+        print(f"({a}) + ({a}) = {(a+a)}")
         print()
         
     print("\n\nExamples of Division over the Finite Field")
     for i in range(3):
-        x,y = random.sample(list(Fnum),2)
-        z = Fnum[0]
-        a = Fnum[x]
-        b = Fnum[y]
-        if str(b%z) == "0":
+        a,b = random.sample(L,2)
+        if str(b) == "0":
             continue
-        print(f"({a}) / ({b}) = {ff_div(a,b,z)}")
-#        print(f"{Fpol[a]} // {Fpol[b]} = {Fpol[(a//b)%z]}")
+        print(f"({a}) / ({b}) = {a/b}")
         print()
-
-#    print("\n\n")
-#    for i in range(3):
-#        x,y = random.sample(list(Fnum),2)
-#        z = Fnum[0]
-#        a = Fnum[x]
-#        b = Fnum[y]
-#        print(f"({a}) * ({b}) = {(a*b)%z}")
-#        print(f"{Fpol[a]} * {Fpol[b]} = {Fpol[(a*b)%z]}")
-#        print()
-#    
