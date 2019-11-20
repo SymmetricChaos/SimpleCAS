@@ -1,5 +1,5 @@
 from Utility import mod_inv, prime_factorization
-from Poly import ZPoly, ZPolyProd
+from Poly import ZPoly, ZPolyProd, zpoly_gcd
 from random import randint, sample
 from itertools import product
 
@@ -26,7 +26,7 @@ def make_shamir_secret(secret,k,n,M):
     if len(set(prime_factorization(M))) != 1:
         raise ValueError("Order for finite field must be a prime power")
         
-    co = [secret] + [randint(0,F-1) for i in range(k-1)]
+    co = [secret] + [randint(0,M-1) for i in range(k-1)]
 
     P = ZPoly( co, M )
     
@@ -43,68 +43,42 @@ def get_shamir_secret(pts,M):
     X = [i[0] for i in pts]
     Y = [i[1] for i in pts]
     
-    return zpoly_lagrange_interpolation(X,Y,M)[0]
+    return zpoly_lagrange_interpolation(X,Y,M)[0]   
 
 
-
-
-
-# Note that polynomial GCDs are unique only up to scalar multiplication so the
-# output is standardized as being monic
-def zpoly_gcd(P,Q):
-    """GCD of two polynomials over the same finite field"""
-    if not type(P) == type(Q) == ZPoly:
-        raise TypeError("P and Q must both be ZPoly")
-        
-    if not P.M == Q.M:
-        raise TypeError("P and Q must have the same modulus")
-
-    
-    if Q.degree() > P.degree():
-        P,Q = Q,P
-        
-    # Check if we reached the end
-    if Q == ZPoly([0], P.M):
-        return P.monic_part
-    if P == ZPoly([0], P.M):
-        return Q.monic_part
-    
-    else:
-        g = zpoly_gcd(P % Q, Q)
-        return g.monic_part
-
-
-#def zpoly_nth_root(P,n): 
-    
-
-
-def square_free_decomposition(poly):
-    assert type(poly) == ZPoly
-    C = poly[-1]
-    M = poly.monic_part
-    
-    c = zpoly_gcd(M,M.derivative())
-    w = M//c
-    
-    one = ZPoly([1],poly.M)
-    R = ZPolyProd([one],poly.M)*C
-    i = 1
-    
-    while w != one:
-        y = zpoly_gcd(w,c)
-        z = w//y
-        for ctr in range(i):
-            R *= z
-        w = y
-        c = c//y
-        i += 1
-        
-    print(R)
-    print(c)
-        
-#    if c != one:
-#        c = nth root of c
-#        R *= square_free_decomposition(c)**poly.F
+#def square_free_decomposition(poly):
+#    assert type(poly) == ZPoly
+#    print("!")
+#    
+#    if len(poly) == 1:
+#        print(poly)
+#        return poly
+#    
+#    d = poly.derivative()
+#    print(d)
+#    
+#    if d != ZPoly([0],poly.M):
+#        g = zpoly_gcd(poly,d)
+#        print(g)
+#        if g == ZPoly([1],poly.M):
+#            print("!!!")
+#            print(poly)
+#            return poly
+#        else:
+#            print(poly//g)
+#            square_free_decomposition(g)
+#        
+#    else:
+#        pwr = 1
+#        while True:
+#            for g in all_monic_zpolys(poly.M):
+#                p = g**(poly.M**pwr)
+#                if p == poly and g.derivative() != ZPoly([0],poly.M):
+#                    square_free_decomposition(g)
+#                    break
+#                if len(p) > len(poly):
+#                    pwr += 1
+#                    break
 
 
 def all_monic_zpolys(M):
@@ -120,9 +94,8 @@ def all_monic_zpolys(M):
             coefs = [i for i in reversed((1,)+p)]
             yield ZPoly(coefs,M)
         l += 1
-    
-    
-    
+
+
 def all_zpolys(M):
     """Generator for all monic polynomials over F"""
     
@@ -138,7 +111,7 @@ def all_zpolys(M):
                 coefs = [i for i in reversed((c,)+p)]
                 yield ZPoly(coefs,M)
         l += 1
-        
+
 
 def all_irreducible_mod2():
     """Sieve of Eratosthenes for polynomials in Z/2Z"""
@@ -173,6 +146,7 @@ def all_irreducible_mod2():
 
 
 
+
 if __name__ == '__main__':
     
     secret = 72697680
@@ -200,10 +174,11 @@ if __name__ == '__main__':
     print(Q)
     print(zpoly_gcd(P,Q))
 
-    print("\n\nSquare-Free Decomposition")
-    P = ZPoly([1,0,2,2,0,1,1,0,2,2,0,1],3)*2
-    print(P)
-    square_free_decomposition(P)
+
+#    print("\n\nSquare-Free Decomposition")
+#    P = ZPoly([1,0,2,2,0,1,1,0,2,2,0,1],3)
+#    print(P)
+#    print(square_free_decomposition(P))
 
 
     print("\nAll monic polynomials over Z/3Z with degree less than 3")

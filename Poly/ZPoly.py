@@ -192,7 +192,7 @@ class ZPoly:
     def __eq__(self,other):
         """Check if two polynomials have the same coefficients"""
         if type(other) != ZPoly:
-            raise TypeError("Cannot compare ZPoly to {type(other)}")
+            raise TypeError(f"Cannot compare ZPoly to {type(other)}")
         
         if self.M != other.M:
             raise ValueError("Can only compare ZPoly with identical modulus")
@@ -403,7 +403,7 @@ class ZPoly:
     primitive_part = property(_primitive_part)
 
 
-def zpoly_gcd(P,Q):
+def zpoly_gcd(P,Q,part="monic"):
     """GCD of two polynomials"""
     assert type(P) == ZPoly
     assert type(Q) == ZPoly
@@ -411,16 +411,26 @@ def zpoly_gcd(P,Q):
     
     if Q.degree() > P.degree():
         P,Q = Q,P
-        
-    # Check if we reached the end
-    if Q == ZPoly([0],P.M):
-        return P.monic_part
-    if P == ZPoly([0],P.M):
-        return Q.monic_part
     
-    else:
-        g = zpoly_gcd(P % Q, Q)
-        return g.monic_part
+    if part == "monic":
+        if Q == ZPoly([0],P.M):
+            return P.monic_part
+        if P == ZPoly([0],P.M):
+            return Q.monic_part
+        
+        else:
+            g = zpoly_gcd(P % Q, Q)
+            return g.monic_part
+    
+    if part == "primitive":
+        if Q == ZPoly([0],P.M):
+            return P.primitive_part
+        if P == ZPoly([0],P.M):
+            return Q.primitive_part
+        
+        else:
+            g = zpoly_gcd(P % Q, Q)
+            return g.primitive_part
 
 
 
