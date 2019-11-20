@@ -403,6 +403,9 @@ class ZPoly:
     primitive_part = property(_primitive_part)
 
 
+
+
+
 def zpoly_gcd(P,Q,part="monic"):
     """GCD of two polynomials"""
     assert type(P) == ZPoly
