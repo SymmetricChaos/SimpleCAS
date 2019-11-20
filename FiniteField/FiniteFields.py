@@ -1,4 +1,4 @@
-from Poly.ZPoly import ZPoly
+from Poly import ZPoly, zpoly_egcd
 import pprint
 
 
@@ -25,16 +25,6 @@ def finite_field_example(P):
     pprint.pprint(Fnum)
     
     return Fnum,Fpol
-
-
-def zpoly_egcd(a, b):
-    """Extended Euclidean Algorithm"""
-    M = a.M
-    if a == ZPoly([0],M):
-        return (b, ZPoly([0],M), ZPoly([1],M))
-    else:
-        g, y, x = zpoly_egcd(b % a, a)
-        return (g, x - (b // a) * y, y)
 
 
 def ff_inv(a, R):

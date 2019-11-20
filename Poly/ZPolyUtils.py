@@ -4,7 +4,7 @@ from random import randint, sample
 from itertools import product
 
 def zpoly_lagrange_interpolation(X,Y,M):
-    """Lagrange Polynomial"""
+    """Use lagrange polynomial to interpolate points of a zpoly"""
     final = ZPoly([0],M)
     for x,y in zip(X,Y):
         out = ZPoly([y],M)
@@ -18,13 +18,13 @@ def zpoly_lagrange_interpolation(X,Y,M):
 
 
 def make_shamir_secret(secret,k,n,M):
-
+    """Take a number and produce k ordered pairs such that n can be used to reconstruct the number"""
     if secret > M:
         raise ValueError("secret cannot be less than M or information will be lost")
     if k > n:
         raise ValueError("parts needed to reconstruct cannot be greater than total points created")
-    if len(set(prime_factorization(M))) != 1:
-        raise ValueError("Order for finite field must be a prime power")
+    if len(prime_factorization(M)) != 1:
+        raise ValueError("Order for finite field must be a prime")
         
     co = [secret] + [randint(0,M-1) for i in range(k-1)]
 
@@ -39,15 +39,17 @@ def make_shamir_secret(secret,k,n,M):
 
 
 def get_shamir_secret(pts,M):
-    
+    """Take some ordered and reconstruct the secret number"""
     X = [i[0] for i in pts]
     Y = [i[1] for i in pts]
     
     return zpoly_lagrange_interpolation(X,Y,M)[0]   
 
 
+## TODO: primitive and monic modes
+## TODO: support for M == None
 def zpoly_egcd(a, b):
-    """Extended Euclidean Algorithm"""
+    """Extended Euclidean Algorithm for ZPolys"""
     M = a.M
     if a == ZPoly([0],M):
         return (b, ZPoly([0],M), ZPoly([1],M))
