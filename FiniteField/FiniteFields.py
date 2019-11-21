@@ -14,13 +14,18 @@ class FF2:
 
 
     def __str__(self):
-        return "".join([str(i) for i in reversed(self.poly.coef)])
+        return str(self.poly)
 
     
     def __repr__(self):
-        return "".join([str(i) for i in reversed(self.poly.coef)])
+        return str(self.poly)
 
+    
+    def bitstring(self):
+        s = self.poly.coef + [0] * (len(self.R) - len(self.poly.coef) - 1)
+        return "".join([str(i) for i in reversed(s)])
 
+    
     def __add__(self,other):
         return FF2(self.poly+other.poly,self.R)
 
@@ -62,6 +67,7 @@ def finite_field_example(P):
 
 
 
+
 def ff_inv(a, R):
     """Modular Multiplicative Inverse"""
     
@@ -98,19 +104,19 @@ if __name__ == '__main__':
     print("\n\nExamples of Addition over the Finite Field")
     for i in range(3):
         a,b = random.sample(L,2)
-        print(f"{a} + {b} = {a+b}")
+        print(f"{a.bitstring()} + {b.bitstring()} = {(a+b).bitstring()}")
         print()
         
     print("\n\nIn a field of characteristic two every element is its own additive inverse.")
     for i in range(3):
         a, = random.sample(L,1)
-        print(f"{a} + {a} = {(a+a)}")
+        print(f"{a.bitstring()} + {a.bitstring()} = {(a+a).bitstring()}")
         print()
         
     print("\n\nExamples of Multiplication over the Finite Field")
     for i in range(3):
         a,b = random.sample(L,2)
-        print(f"{a} * {b} = {a*b}")
+        print(f"{a.bitstring()} * {b.bitstring()} = {(a*b).bitstring()}")
         print()
         
     print("\n\nExamples of Division over the Finite Field")
@@ -118,6 +124,6 @@ if __name__ == '__main__':
         a,b = random.sample(L,2)
         if str(b) == "0":
             continue
-        print(f"{a} / {b} = {a/b}")
+        print(f"{a.bitstring()} / {b.bitstring()} = {(a/b).bitstring()}")
         print()
 
