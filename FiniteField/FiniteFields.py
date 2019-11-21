@@ -17,7 +17,6 @@ class FF2:
         return "".join([str(i) for i in reversed(self.poly.coef)])
 
     
-    
     def __repr__(self):
         return "".join([str(i) for i in reversed(self.poly.coef)])
 
@@ -45,7 +44,7 @@ def finite_field_example(P):
     S = FF2(ZPoly([0,1],P.M),P)
     out = FF2(ZPoly([1],P.M),P)
     
-    L = []
+    L = [FF2(P,P)]
     
     elems = (P.M)**(len(P)-1)
     
@@ -55,8 +54,8 @@ def finite_field_example(P):
         L.append(out)
         out = (out * S)
 
-#    for i in L:
-#        print(i)
+    for i in L:
+        print(i)
     
     return L
 
@@ -92,7 +91,9 @@ if __name__ == '__main__':
     P = ZPoly( [1,0,0,1,0,1], 2 )
     L = finite_field_example(P)
     
-    print(f"\n\nFinite Field of Characteristic 2\nReducing Polynomial: {P}")
+    print(len(L))
+    
+    print(f"\n\nFinite Field of Characteristic 2 with {len(L)} elements\nReducing Polynomial: {P}")
         
     print("\n\nExamples of Addition over the Finite Field")
     for i in range(3):
