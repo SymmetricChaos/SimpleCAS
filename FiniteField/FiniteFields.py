@@ -59,8 +59,8 @@ def finite_field_example(P):
         L.append(out)
         out = (out * S)
 
-    for i in L:
-        print(i)
+#    for i in L:
+#        print(i)
     
     return L
 
@@ -94,24 +94,18 @@ def ff_div(a,b,R):
 if __name__ == '__main__':
     import random
 
-    P = ZPoly( [1,0,0,1,0,1], 2 )
+    P = ZPoly( [1,1,1,0,0,0,0,1,1], 2 )
     L = finite_field_example(P)
-    
-    print(len(L))
     
     print(f"\n\nFinite Field of Characteristic 2 with {len(L)} elements\nReducing Polynomial: {P}")
         
-    print("\n\nExamples of Addition over the Finite Field")
+    print("\n\nAddition and Subtraction and identical")
     for i in range(3):
         a,b = random.sample(L,2)
         print(f"{a.bitstring()} + {b.bitstring()} = {(a+b).bitstring()}")
+        print(f"{a.bitstring()} - {b.bitstring()} = {(a-b).bitstring()}")
         print()
         
-    print("\n\nIn a field of characteristic two every element is its own additive inverse.")
-    for i in range(3):
-        a, = random.sample(L,1)
-        print(f"{a.bitstring()} + {a.bitstring()} = {(a+a).bitstring()}")
-        print()
         
     print("\n\nExamples of Multiplication over the Finite Field")
     for i in range(3):
