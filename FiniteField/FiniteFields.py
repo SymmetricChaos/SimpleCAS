@@ -2,43 +2,48 @@ from Poly import ZPoly, zpoly_egcd
 
 
 
-class FiniteField:
+class FF2:
     
     def __init__(self,poly,R):
+        if poly.M != 2:
+            raise ValueError("Field must be of characteristic 2")
+        if R.M != 2:
+            raise ValueError("Field must be of characteristic 2")
         self.poly = poly % R
         self.R = R
 
 
     def __str__(self):
-        return f"{self.poly}"
+        return "".join([str(i) for i in reversed(self.poly.coef)])
+
     
     
     def __repr__(self):
-        return f"{self.poly}"
+        return "".join([str(i) for i in reversed(self.poly.coef)])
 
 
     def __add__(self,other):
-        return FiniteField(self.poly+other.poly,self.R)
+        return FF2(self.poly+other.poly,self.R)
 
 
     def __mul__(self,other):
-        return FiniteField(self.poly*other.poly,self.R)
+        return FF2(self.poly*other.poly,self.R)
 
 
     def __sub__(self,other):
-        return FiniteField(self.poly-other.poly,self.R)
+        return FF2(self.poly-other.poly,self.R)
     
 
     def __truediv__(self,other):
-        return FiniteField(ff_div(self.poly,other.poly,self.R),self.R)
+        return FF2(ff_div(self.poly,other.poly,self.R),self.R)
 
 
 
 def finite_field_example(P):
 
 
-    S = FiniteField(ZPoly([0,1],P.M),P)
-    out = FiniteField(ZPoly([1],P.M),P)
+    S = FF2(ZPoly([0,1],P.M),P)
+    out = FF2(ZPoly([1],P.M),P)
     
     L = []
     
@@ -50,8 +55,8 @@ def finite_field_example(P):
         L.append(out)
         out = (out * S)
 
-    for i in L:
-        print(i)
+#    for i in L:
+#        print(i)
     
     return L
 
@@ -65,7 +70,7 @@ def ff_inv(a, R):
     
     g, x, _ = zpoly_egcd(a, R)
     if g != ZPoly([1],a.M):
-        raise ValueError(f"Multiplicative inverse of {a} mod {R} does not exist")
+        raise ValueError(f"Multiplicative inverse of {a.full_name} mod {R.full_name} does not exist")
     else:
         return x % R
     
@@ -87,12 +92,24 @@ if __name__ == '__main__':
     P = ZPoly( [1,0,0,1,0,1], 2 )
     L = finite_field_example(P)
     
-    print(f"\n\nFinite Field of Characteristic 2 reduced by {P}")
-
+    print(f"\n\nFinite Field of Characteristic 2\nReducing Polynomial: {P}")
+        
+    print("\n\nExamples of Addition over the Finite Field")
+    for i in range(3):
+        a,b = random.sample(L,2)
+        print(f"{a} + {b} = {a+b}")
+        print()
+        
     print("\n\nIn a field of characteristic two every element is its own additive inverse.")
     for i in range(3):
         a, = random.sample(L,1)
-        print(f"({a}) + ({a}) = {(a+a)}")
+        print(f"{a} + {a} = {(a+a)}")
+        print()
+        
+    print("\n\nExamples of Multiplication over the Finite Field")
+    for i in range(3):
+        a,b = random.sample(L,2)
+        print(f"{a} * {b} = {a*b}")
         print()
         
     print("\n\nExamples of Division over the Finite Field")
@@ -100,5 +117,6 @@ if __name__ == '__main__':
         a,b = random.sample(L,2)
         if str(b) == "0":
             continue
-        print(f"({a}) / ({b}) = {a/b}")
+        print(f"{a} / {b} = {a/b}")
         print()
+
