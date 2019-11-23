@@ -1,6 +1,5 @@
 def integer_triangle(side_len):
-    """Closest approximations of regular polygons with integer coordinates"""
-    
+
     P = [[0,0],[side_len,0]]
     a = (side_len//2)
     c2 = side_len**2
@@ -12,6 +11,8 @@ def integer_triangle(side_len):
 
     
 def integer_octagon(n):
+    """Closest approximations of regular octagon with integer coordinates for vertices"""
+    
     a = 5
     b = 7
     a0,a1 = 1,2
@@ -41,12 +42,6 @@ def integer_octagon(n):
     
 if __name__ == '__main__':
     from Utility import make_canvas, plot_points,connect
-
-    make_canvas([-1,10],size=6)
-    for i in range(1,10):
-        pts = integer_triangle(i)
-        plot_points(pts,color='k')
-        connect(pts[0],pts[-1],color='k')
 
 
     make_canvas([-10,10],size=6,show_axes=False)
