@@ -6,7 +6,7 @@ class PSeries:
     
     def __init__(self,a,c=0):
         if not isinstance(a, types.GeneratorType):
-            raise Exception(f"{a} is not iterable")
+            raise Exception(f"{a} is not a generator")
         self.a = a
         self.c = cast_to_rational(c)
     
@@ -124,4 +124,5 @@ if __name__ == '__main__':
     print(P)
     print(f"P.head(3) = {P.head(3)}")
     print(f"\nCast the first four terms to a polynomial:\n{P.cast_to_poly(4)}")
-    print(f"\nEvaluate the first four terms at x = 1:\n{P.evaluate('1/2',4)}")
+    print(f"\nEvaluate the first four terms at x = 1/2:\n{P.evaluate('1/2',4)}")
+    print(f"\nEvaluate the first ten terms at x = 1/2:\n{P.evaluate('1/2',10)}")
