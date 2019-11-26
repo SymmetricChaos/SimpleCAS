@@ -58,43 +58,41 @@ def zpoly_egcd(a, b):
         return (g, x - (b // a) * y, y)
 
 
-#def square_free_decomposition(poly):
-#    assert type(poly) == ZPoly
-#    print("!")
-#    
-#    if len(poly) == 1:
-#        print(poly)
-#        return poly
-#    
-#    d = poly.derivative()
-#    print(d)
-#    
-#    if d != ZPoly([0],poly.M):
-#        g = zpoly_gcd(poly,d)
-#        print(g)
-#        if g == ZPoly([1],poly.M):
-#            print("!!!")
-#            print(poly)
-#            return poly
-#        else:
-#            print(poly//g)
-#            square_free_decomposition(g)
-#        
-#    else:
-#        pwr = 1
-#        while True:
-#            for g in all_monic_zpolys(poly.M):
-#                p = g**(poly.M**pwr)
-#                if p == poly and g.derivative() != ZPoly([0],poly.M):
-#                    square_free_decomposition(g)
-#                    break
-#                if len(p) > len(poly):
-#                    pwr += 1
-#                    break
+def square_free_decomposition(poly):
+    assert type(poly) == ZPoly
+    print("!")
+    
+    if len(poly) == 1:
+        print(poly)
+        return poly
+    
+    d = poly.derivative()
+    
+    if d != ZPoly([0],poly.M):
+        g = zpoly_gcd(poly,d)
+        print(g)
+        if g == ZPoly([1],poly.M):
+            print("!!!")
+            print(poly)
+            return poly
+        else:
+            print(poly//g)
+            return square_free_decomposition(g)
+        
+    else:
+        pwr = 1
+        while True:
+            for g in all_monic_zpolys(poly.M):
+                p = g**(poly.M**pwr)
+                if p == poly and g.derivative() != ZPoly([0],poly.M):
+                    return square_free_decomposition(g)
+                if len(p) > len(poly):
+                    pwr += 1
+                    break
 
 
 def all_monic_zpolys(M):
-    """Generator for all monic polynomials over F"""
+    """Generator for all monic polynomials over M"""
     
     yield ZPoly([1],M)
     co = [i for i in range(M)]
@@ -109,7 +107,7 @@ def all_monic_zpolys(M):
 
 
 def all_zpolys(M):
-    """Generator for all monic polynomials over F"""
+    """Generator for all polynomials over M"""
     
     co = [i for i in range(M)]
     for c in co:
@@ -187,10 +185,10 @@ if __name__ == '__main__':
     print(zpoly_gcd(P,Q))
 
 
-#    print("\n\nSquare-Free Decomposition")
-#    P = ZPoly([1,0,2,2,0,1,1,0,2,2,0,1],3)
-#    print(P)
-#    print(square_free_decomposition(P))
+    print("\n\nSquare-Free Decomposition")
+    P = ZPoly([1,0,2,2,0,1,1,0,2,2,0,1],3)
+    print(P)
+    print(square_free_decomposition(P))
 
 
     print("\nAll monic polynomials over Z/3Z with degree less than 3")
