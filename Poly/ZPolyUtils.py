@@ -47,7 +47,6 @@ def get_shamir_secret(pts,M):
 
 
 ## TODO: primitive and monic modes
-## TODO: support for M == None
 def zpoly_egcd(a, b):
     """Extended Euclidean Algorithm for ZPolys"""
     M = a.M

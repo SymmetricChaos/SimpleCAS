@@ -78,43 +78,60 @@ def bernoulli_numbers(n):
     return B
 
 
+def liouville_convergents(b=10):
+    k = 1
+    out = Rational(0)
+    ctr = 1
+    while True:
+        out += Rational(1,b**k)
+        ctr += 1
+        k *= ctr
+        yield out
+
 
 
 if __name__ == '__main__':
     from Utility import make_canvas, scatter_points, show_plot
 
-    print("Farey Sequence F_12")
-    F12 = [i for i in farey_sequence(12)]
-    print(F12)
-    
-    print()
-    xy = question_mark_func(25)
-    make_canvas([-.02,1.02],size=6,title="Minkowski's Question-mark Function\nAt Rational Arguments")
-    scatter_points(xy,s=1)
-    show_plot()
-
-    
-    print("\n\nHarmonic Progressions")
-    S1 = harmonic_progression(a=1,d=1)
-    for pos,val in enumerate(S1):
-        if pos > 10:
-            break
-        print(val)
+#    print("Farey Sequence F_12")
+#    F12 = [i for i in farey_sequence(12)]
+#    print(F12)
+#    
+#    print()
+#    xy = question_mark_func(25)
+#    make_canvas([-.02,1.02],size=6,title="Minkowski's Question-mark Function\nAt Rational Arguments")
+#    scatter_points(xy,s=1)
+#    show_plot()
+#
+#    
+#    print("\n\nHarmonic Progressions")
+#    S1 = harmonic_progression(a=1,d=1)
+#    for pos,val in enumerate(S1):
+#        if pos > 10:
+#            break
+#        print(val)
+#            
+#    print()
+#    S2 = harmonic_progression(a="1/3",d="2/9")
+#    for pos,val in enumerate(S2):
+#        if pos > 10:
+#            break
+#        print(val)
+#    
+#    print()
+#    H = harmonic_series()
+#    for pos,val in enumerate(H):
+#        if pos > 5:
+#            break
+#        print(val)
+        
+#    print()
+#    for i in range(10):
+#        print(bernoulli_numbers(i))
+        
             
     print()
-    S2 = harmonic_progression(a="1/3",d="2/9")
-    for pos,val in enumerate(S2):
-        if pos > 10:
+    for pos,val in enumerate(liouville_convergents(2)):
+        if pos >= 4:
             break
         print(val)
-    
-    print()
-    H = harmonic_series()
-    for pos,val in enumerate(H):
-        if pos > 5:
-            break
-        print(val)
-        
-    print()
-    for i in range(10):
-        print(bernoulli_numbers(i))
