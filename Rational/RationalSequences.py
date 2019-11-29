@@ -111,26 +111,26 @@ if __name__ == '__main__':
             break
         print(val)
             
-    print()
+    print("\n\nA Harmonic Progression")
     S2 = harmonic_progression(a="1/3",d="2/9")
     for pos,val in enumerate(S2):
         if pos > 10:
             break
         print(val)
     
-    print()
+    print("\n\nPartial Sums of the Harmonic Series")
     H = harmonic_series()
     for pos,val in enumerate(H):
         if pos > 5:
             break
         print(val)
         
-    print()
+    print("\n\nBernoulli Numbers")
     for i in range(10):
         print(bernoulli_numbers(i))
         
             
-    print()
+    print("\n\nConvergents of a Liouville Number")
     for pos,val in enumerate(liouville_convergents(2)):
         if pos >= 4:
             break
