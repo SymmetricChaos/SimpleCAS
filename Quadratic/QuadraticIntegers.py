@@ -54,6 +54,8 @@ class QuadInt:
                 return QuadInt(self.q,
                                self.m+other.m,
                                self.n+other.n)
+        elif type(other) == int:
+            return QuadInt(self.q,self.m,self.n+other)
         else:
             return NotImplemented
 
@@ -64,6 +66,11 @@ class QuadInt:
                 return QuadInt(self.q,
                                self.n*other.m + other.n*self.m,
                                self.n*other.n + self.m*other.m*self.q)
+        elif type(other) == int:
+            return QuadInt(self.q,
+                           other*self.m,
+                           other*self.n)
+
         else:
             return NotImplemented
         
@@ -90,8 +97,13 @@ class QuadInt:
 
 if __name__ == '__main__':
     Q = QuadInt(2)
-    R = QuadInt(2,3,3)
+    R = QuadInt(2,3,2)
     print(Q)
     print(R)
     print(Q+R)
     print(Q*R)
+    print(Q*Q)
+    print(R*R)
+    print(R.norm())
+    print(Q+2)
+    print(R*2)
