@@ -76,11 +76,11 @@ class GaussInt:
         
     def __neg__(self):
         return GaussInt(-self.re,-self.im)
-#    
-#    
-##    def __floordiv__(self,other):
-#        
-#
+    
+    
+#    def __floordiv__(self,other):
+        
+
     def __eq__(self,other):
         if type(other) == GaussInt:
             if self.re == other.re:
@@ -97,6 +97,14 @@ class GaussInt:
         return GaussInt(self.re,-self.im)
 
 
+
+def gauss_egcd(a, b):
+    """Extended Euclidean Algorithm"""
+    if a == 0:
+        return (b, 0, 1)
+    else:
+        g, y, x = gauss_egcd(b % a, a)
+        return (g, x - (b // a) * y, y)
 
 
 
