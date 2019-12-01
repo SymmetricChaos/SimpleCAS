@@ -13,21 +13,85 @@ class QuadInt:
         self.n = n
     
     
+    def __str__(self):
+        
+        # If the quadratic part is zero return just the whole part
+        if self.m == 0:
+            return f"{self.n}"
+        
+        # If the quadratic part is negative
+        elif self.m < 0:
+            # Unit case
+            if self.m == -1:
+                if self.n == 0:
+                    return f"-√{self.q}"
+                else:
+                    return f"{self.n} - √{self.q}"
+            # General case
+            if self.n == 0:
+                return f"-{self.m}√{self.q}"
+            else:
+                return f"{self.n} - {abs(self.m)}√{self.q}"
+        
+        # If the quadratic part is positive
+        else:
+            # Unit case
+            if self.m == 1:
+                if self.n == 0:
+                    return f"√{self.q}"
+                else:
+                    return f"{self.n} + √{self.q}"
+            # General case
+            if self.n == 0:
+                return f"{self.m}√{self.q}"
+            else:
+                return f"{self.n} + {self.m}√{self.q}"
+
     
     def __add__(self,other):
-        if from_same_ring(self,other):
-            return QuadInt(self.q,
-                                self.m+other.m,
-                                self.n+other.n)
+        if type(other) == QuadInt:
+            if self.q == other.q:
+                return QuadInt(self.q,
+                               self.m+other.m,
+                               self.n+other.n)
+        else:
+            return NotImplemented
+
+
     def __mul__(self,other):
-        if from_same_ring(self,other):
-            return QuadInt(self.q,
-                           self.n*other.m + other.n*self.m,
-                           self.n*other.n + self.m*other.m*self.q)
+        if type(other) == QuadInt:
+            if self.q == other.q:
+                return QuadInt(self.q,
+                               self.n*other.m + other.n*self.m,
+                               self.n*other.n + self.m*other.m*self.q)
+        else:
+            return NotImplemented
+        
+
+    def __eq__(self,other):
+        if type(other) == QuadInt:
+            if self.q == other.q:
+                if self.m == other.m:
+                    if self.n == other.n:
+                        return True
+        return False
+    
+    
+    def norm(self):
+        return self.n*self.n - self.q*self.m*self.m
 
 
-def from_same_ring(A,B):
-    if type(A) == QuadInt:
-        if type(B) == QuadInt:
-            return A.q == B.q
-    return False
+    def conjugate(self):
+        return QuadInt(self.q,-self.m,self.n)
+
+
+
+
+
+if __name__ == '__main__':
+    Q = QuadInt(2)
+    R = QuadInt(2,3,3)
+    print(Q)
+    print(R)
+    print(Q+R)
+    print(Q*R)
