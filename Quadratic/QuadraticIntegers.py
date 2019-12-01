@@ -1,3 +1,5 @@
+from math import sqrt
+
 class QuadInt:
     
     def __init__(self,q,m=1,n=0):
@@ -11,8 +13,12 @@ class QuadInt:
         self.m = m
         # Integer part
         self.n = n
-    
-    
+
+
+    def __float__(self):
+        return self.n + self.m*sqrt(self.q)
+
+
     def __str__(self):
         
         # If the quadratic part is zero return just the whole part
@@ -58,6 +64,10 @@ class QuadInt:
             return QuadInt(self.q,self.m,self.n+other)
         else:
             return NotImplemented
+        
+        
+    def __sub__(self,other):
+        return self + -other
 
 
     def __mul__(self,other):
@@ -70,9 +80,12 @@ class QuadInt:
             return QuadInt(self.q,
                            other*self.m,
                            other*self.n)
-
         else:
             return NotImplemented
+
+
+    def __neg__(self):
+        return QuadInt(self.q,-self.m,-self.n)
         
 
     def __eq__(self,other):
@@ -82,10 +95,6 @@ class QuadInt:
                     if self.n == other.n:
                         return True
         return False
-    
-    
-    def norm(self):
-        return self.n*self.n - self.q*self.m*self.m
 
 
     def conjugate(self):
@@ -105,5 +114,9 @@ if __name__ == '__main__':
     print(Q*Q)
     print(R*R)
     print(R.norm())
+    print(R.conjugate())
     print(Q+2)
     print(R*2)
+    print(-R)
+    print(float(R))
+    print(R-Q)
