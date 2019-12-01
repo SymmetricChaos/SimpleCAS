@@ -76,6 +76,9 @@ class GaussInt:
         
     def __neg__(self):
         return GaussInt(-self.n,-self.m)
+    
+    
+#    def __floordiv__(self,other):
         
 
     def __eq__(self,other):
@@ -100,7 +103,7 @@ class GaussInt:
 if __name__ == '__main__':
     Q = GaussInt(2)
     R = GaussInt(3,2)
-    print(GaussInt(2).norm())
+    print(GaussInt(1,1).norm())
     print(Q)
     print(R)
     print(Q+R)

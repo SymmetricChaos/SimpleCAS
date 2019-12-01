@@ -95,6 +95,10 @@ class QuadInt:
                     if self.n == other.n:
                         return True
         return False
+    
+    
+    def norm(self):
+        return self.m*self.m - self.n*self.n*self.q
 
 
     def conjugate(self):
@@ -113,7 +117,6 @@ if __name__ == '__main__':
     print(Q*R)
     print(Q*Q)
     print(R*R)
-    print(R.norm())
     print(R.conjugate())
     print(Q+2)
     print(R*2)
