@@ -1,61 +1,61 @@
 class GaussInt:
     
-    def __init__(self,m=1,n=0):
-        assert type(m) == int
-        assert type(n) == int
+    def __init__(self,re=0,im=1):
+        assert type(re) == int
+        assert type(im) == int
         
         # Real part
-        self.m = m
+        self.re = re
         # Imaginary part
-        self.n = n
+        self.im = im
 
 
 
-    def __float__(self):
-        return self.m + self.n*1j
+    def __complex__(self):
+        return self.re + self.im*1j
 
 
     def __str__(self):
         
-        # If the quadratic part is zero return just the whole part
-        if self.n == 0:
-            return f"{self.m}"
+        # If the imaginary part is zero return just the whole part
+        if self.im == 0:
+            return f"{self.re}"
         
-        # If the quadratic part is negative
-        elif self.n < 0:
+        # If the imaginary part is negative
+        elif self.im < 0:
             # Unit case
-            if self.n == -1:
-                if self.m == 0:
+            if self.im == -1:
+                if self.re == 0:
                     return f"-i"
                 else:
-                    return f"{self.m} - i"
+                    return f"{self.re} - i"
             # General case
-            if self.m == 0:
-                return f"-{self.n}i"
+            if self.re == 0:
+                return f"-{self.re}i"
             else:
-                return f"{self.m} - {abs(self.n)}i"
+                return f"{self.re} - {abs(self.im)}i"
         
         # If the quadratic part is positive
         else:
             # Unit case
-            if self.n == 1:
-                if self.m == 0:
+            if self.im == 1:
+                if self.re == 0:
                     return f"i"
                 else:
-                    return f"{self.m} + i"
+                    return f"{self.re} + i"
             # General case
-            if self.m == 0:
-                return f"{self.n}i"
+            if self.re == 0:
+                return f"{self.im}i"
             else:
-                return f"{self.m} + {self.n}i"
+                return f"{self.re} + {self.im}i"
 
     
     def __add__(self,other):
         if type(other) == GaussInt:
-            return GaussInt(self.n+other.m,
-                            self.m+other.n)
+            return GaussInt(self.re+other.re,
+                            self.im+other.im)
         elif type(other) == int:
-            return GaussInt(self.n,self.m+other)
+            return GaussInt(self.re+other,self.im)
         else:
             return NotImplemented
         
@@ -66,35 +66,35 @@ class GaussInt:
 
     def __mul__(self,other):
         if type(other) == GaussInt:
-            return GaussInt(self.m*other.m + other.n*self.n,
-                            self.m*other.n + self.n*other.m*-1)
+            return GaussInt(self.re*other.re - self.im*other.im,
+                            self.re*other.im + self.im*other.re)
         elif type(other) == int:
-            return GaussInt(other*self.n,
-                            other*self.m)
+            return GaussInt(other*self.re,
+                            other*self.im)
         else:
             return NotImplemented
         
     def __neg__(self):
-        return GaussInt(-self.n,-self.m)
-    
-    
-#    def __floordiv__(self,other):
-        
-
+        return GaussInt(-self.re,-self.im)
+#    
+#    
+##    def __floordiv__(self,other):
+#        
+#
     def __eq__(self,other):
         if type(other) == GaussInt:
-            if self.n == other.m:
-                if self.m == other.n:
+            if self.re == other.re:
+                if self.im == other.im:
                     return True
         return False
 
 
     def norm(self):
-        return self.m*self.m + self.n*self.n
+        return self.re*self.re + self.im*self.im
 
 
     def conjugate(self):
-        return GaussInt(-self.n,self.m)
+        return GaussInt(self.re,-self.im)
 
 
 
@@ -103,7 +103,6 @@ class GaussInt:
 if __name__ == '__main__':
     Q = GaussInt(2)
     R = GaussInt(3,2)
-    print(GaussInt(1,1).norm())
     print(Q)
     print(R)
     print(Q+R)
