@@ -168,21 +168,21 @@ class GaussRational:
         return False
     
     
-#    def __pow__(self,pwr):
-#        if type(pwr) != int:
-#            raise TypeError(f"pwr must be an integer not {type(pwr)}")
-#        
-#        # For negative powers invert then use recursion
-#        if pwr < 0:
-#            return self.inv()**abs(pwr)
-#        elif pwr == 0:
-#            return Rational(1)
-#        elif pwr == 1:
-#            return self
-#        else:
-#            n = self.n**pwr
-#            d = self.d**pwr
-#            return Rational(n,d)
+    def __pow__(self,pwr):
+        if type(pwr) != int:
+            raise TypeError(f"pwr must be an integer not {type(pwr)}")
+        
+        # For negative powers invert then use recursion
+        if pwr < 0:
+            return self.inv()**abs(pwr)
+        elif pwr == 0:
+            return GaussRational(1)
+        elif pwr == 1:
+            return self
+        else:
+            n = self.n**pwr
+            d = self.d**pwr
+            return GaussRational(n,d)
 #
 #
 #    def __hash__(self):
@@ -207,3 +207,4 @@ if __name__ == '__main__':
     b = GaussInt(1,2)
     R = GaussRational(a,b)
     print(R)
+    print(R**2)

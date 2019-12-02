@@ -77,6 +77,22 @@ class GaussInt:
     def __neg__(self):
         return GaussInt(-self.re,-self.im)
     
+    def __pow__(self,pwr):
+        if type(pwr) != int:
+            raise TypeError(f"pwr must be a non-negative positive integer not {type(pwr)}")
+        if pwr < 0:
+            raise ValueError("pwr must be non-negative")
+        
+        # For negative powers invert then use recursion
+        if pwr == 0:
+            return GaussInt(1)
+        elif pwr == 1:
+            return self
+        else:
+            out = self
+            for i in range(pwr-1):
+                out *= self
+            return out
     
 #    def __floordiv__(self,other):
         
@@ -123,3 +139,5 @@ if __name__ == '__main__':
     print(R*2)
     print(-R)
     print(R-Q)
+    print(R**2)
+    print(R*R)
