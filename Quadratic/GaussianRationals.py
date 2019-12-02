@@ -6,18 +6,24 @@ class GaussRational:
     
     def __init__(self,n,d=1):
         
-        if type(n) != GaussInt:
+        if type(n) not in [GaussInt,int]:
             raise TypeError("Numerator must be GaussInt.")
-        if type(d) != GaussInt:
+        if type(d) not in [GaussInt,int]:
             raise TypeError("Denominator must be GaussInt.")
         if d == 0:
             raise ZeroDivisionError
 
+        if type(n) == int:
+            n = GaussInt(n,0)
+
+        if type(d) == int:
+            d = GaussInt(d,0)
 
         self.n = n
         self.d = d
 #        self.make_primitive()
 #        self.simplify()
+
 
     def make_primitive(self):
         """Primitive but not fully simplified fraction"""
@@ -25,11 +31,20 @@ class GaussRational:
         self.n = self.n//g
         self.d = self.d//g
 
+
 #    def simplify(self):
 #        """Convert fraction to simplest form"""
 #        g = gcd(self.n,self.d)
 #        self.n = self.n//g
 #        self.d = self.d//g
+
+
+    def _pretty_name(self):
+        """Format for LaTeX"""
+        if self.d == 1:
+            return f"${self.n}$"
+        else:
+            return f"$\dfrac{{{self.n}}}{{{self.d}}}$"
 
 
     def copy(self):
@@ -55,14 +70,6 @@ class GaussRational:
 
     def __repr__(self):
         return str(self)
-
- 
-    def _pretty_name(self):
-        """Format for LaTeX"""
-        if self.d == 1:
-            return f"${self.n}$"
-        else:
-            return f"$\dfrac{{{self.n}}}{{{self.d}}}$"
 
 
     def inv(self):
@@ -116,31 +123,32 @@ class GaussRational:
         return GaussRational(n,d)
 
 
-#    def __rmul__(self,multiplier):
-#        if type(multiplier) == int:
-#            multiplier = Rational(multiplier)
-#        return self*multiplier
-#
-#
-#    def __truediv__(self,divisor):
-#        if type(divisor) not in [Rational,int]:
-#            return NotImplemented
-#
-#        if divisor == 0:
-#            raise ZeroDivisionError
-#        if type(divisor) == int:
-#            divisor = Rational(divisor)
-#        return self*divisor.inv()
-#    
-#     
-#    def __rtruediv__(self,dividend):
-#        if self == 0:
-#            raise ZeroDivisionError
-#        if type(dividend) == int:
-#            dividend = Rational(dividend)
-#        return self.inv()*dividend
-#
-#
+    def __rmul__(self,multiplier):
+        if type(multiplier) == int:
+            multiplier = GaussRational(multiplier)
+        return self*multiplier
+
+
+    def __truediv__(self,divisor):
+        if type(divisor) not in [GaussRational,int]:
+            return NotImplemented
+
+        if type(divisor) == int:
+            if divisor == 0:
+                raise ZeroDivisionError
+            divisor = GaussRational(divisor)
+            
+        return self*divisor.inv()
+    
+     
+    def __rtruediv__(self,dividend):
+        if self == GaussInt(0,0):
+            raise ZeroDivisionError
+        if type(dividend) == int:
+            dividend = GaussRational(dividend)
+        return self.inv()*dividend
+
+
 #    def __floordiv__(self,divisor):
 #        if type(divisor) not in [Rational,int]:
 #            return NotImplemented
@@ -196,9 +204,7 @@ class GaussRational:
 
     def __hash__(self):
         return hash(f"CustomGaussRational{self}")
-#
-#
-#    def __complex__(self):
+
 
 
     pretty_name = property(_pretty_name)
@@ -209,11 +215,13 @@ class GaussRational:
 
 if __name__ == '__main__':
 
-#    Explanation = open(r"Explanation.txt","r")
-#    for i in Explanation.readlines():
-#        print(i)
+
     a = GaussInt(0,1)
     b = GaussInt(1,2)
     R = GaussRational(a,b)
     print(R)
+    print(R.inv())
+    print(R.inv()*R)
     print(R**2)
+    print(R.pretty_name)
+    print(R/2)
