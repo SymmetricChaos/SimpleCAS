@@ -1,4 +1,6 @@
 from Quadratic.GaussianIntegers import GaussInt
+from Utility import gcd
+
 
 class GaussRational:
     
@@ -14,8 +16,14 @@ class GaussRational:
 
         self.n = n
         self.d = d
+#        self.make_primitive()
 #        self.simplify()
 
+    def make_primitive(self):
+        """Primitive but not fully simplified fraction"""
+        g = gcd(self.n.re,self.n.im,self.d.re,self.d.im)
+        self.n = self.n//g
+        self.d = self.d//g
 
 #    def simplify(self):
 #        """Convert fraction to simplest form"""
@@ -43,6 +51,7 @@ class GaussRational:
             den = f"({self.d})"
         
         return f"{num}/{den}"
+
 
     def __repr__(self):
         return str(self)
@@ -88,12 +97,12 @@ class GaussRational:
         if type(addend) not in [GaussRational,int]:
             return NotImplemented
         return self + -addend
-#
-#
-#    def __rsub__(self,addend):
-#        return addend + -self
-#    
-#
+
+
+    def __rsub__(self,addend):
+        return addend + -self
+
+
     def __mul__(self,multiplier):
         if type(multiplier) not in [GaussRational,int]:
             return NotImplemented
@@ -183,10 +192,10 @@ class GaussRational:
             n = self.n**pwr
             d = self.d**pwr
             return GaussRational(n,d)
-#
-#
-#    def __hash__(self):
-#        return hash(f"CustomRational{self}")
+
+
+    def __hash__(self):
+        return hash(f"CustomGaussRational{self}")
 #
 #
 #    def __complex__(self):

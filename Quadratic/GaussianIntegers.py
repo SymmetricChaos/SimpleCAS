@@ -10,9 +10,8 @@ class GaussInt:
         self.im = im
 
 
-
     def __complex__(self):
-        return self.re + self.im*1j
+        return complex(self.re,self.im)
 
 
     def __str__(self):
@@ -73,10 +72,12 @@ class GaussInt:
                             other*self.im)
         else:
             return NotImplemented
-        
+
+
     def __neg__(self):
         return GaussInt(-self.re,-self.im)
-    
+
+
     def __pow__(self,pwr):
         if type(pwr) != int:
             raise TypeError(f"pwr must be a non-negative positive integer not {type(pwr)}")
@@ -93,8 +94,15 @@ class GaussInt:
             for i in range(pwr-1):
                 out *= self
             return out
-    
+
+
 #    def __floordiv__(self,other):
+#        if type(other) == int:
+#            return
+#        if type(other) == GaussInt:
+#            return
+#        else:
+#            return NotImplemented
         
 
     def __eq__(self,other):
@@ -105,6 +113,10 @@ class GaussInt:
         return False
 
 
+    def __hash__(self):
+        return hash(f"CustomGaussInt{self}")
+    
+
     def norm(self):
         return self.re*self.re + self.im*self.im
 
@@ -114,13 +126,6 @@ class GaussInt:
 
 
 
-def gauss_egcd(a, b):
-    """Extended Euclidean Algorithm"""
-    if a == 0:
-        return (b, 0, 1)
-    else:
-        g, y, x = gauss_egcd(b % a, a)
-        return (g, x - (b // a) * y, y)
 
 
 
@@ -141,3 +146,5 @@ if __name__ == '__main__':
     print(R-Q)
     print(R**2)
     print(R*R)
+    print(R.re)
+    print(R.im)
