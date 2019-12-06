@@ -133,8 +133,7 @@ def lucas_poly_gen(n):
         yield F0
         F0, F1 = F1, x*F1 + F0
         
-#def bernoulli_polynomial_gen(n):
-    
+
     
 
 

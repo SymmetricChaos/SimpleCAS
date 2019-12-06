@@ -241,3 +241,11 @@ def cantor_pair_inv(n):
     y = n - t
     x = w - y
     return x,y
+
+
+def binomial_transform(L):
+    out = []
+    for n in len(L):
+        term = 0
+        for k in range(n):
+            term += -1**k * choose(n,k)*L[k]
