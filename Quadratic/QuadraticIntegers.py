@@ -82,6 +82,19 @@ class QuadInt:
                            other*self.n)
         else:
             return NotImplemented
+        
+        
+    def __pow__(self,other):
+        if type(other) == int:
+            if other < 0:
+                raise ValueError("Only non-negative powers allowed")
+            out = QuadInt(self.q,0,1)
+            for i in range(other):
+                out *= self
+            return out
+            
+        else:
+            return NotImplemented
 
 
     def __neg__(self):
@@ -123,3 +136,4 @@ if __name__ == '__main__':
     print(-R)
     print(float(R))
     print(R-Q)
+    print(R**2)
