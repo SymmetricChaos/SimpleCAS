@@ -249,3 +249,5 @@ def binomial_transform(L):
         term = 0
         for k in range(n):
             term += -1**k * choose(n,k)*L[k]
+        out.append(term)
+    return out
