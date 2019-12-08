@@ -54,7 +54,7 @@ class PSeries:
 
 
     def evaluate(self,x,N):
-        """Truncates the power series and evakuates it"""
+        """Truncates the power series and evaluates it"""
                 
         x = cast_to_rational(x)
 

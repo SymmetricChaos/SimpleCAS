@@ -8,7 +8,7 @@ def egcd(a, b):
 
 
 def steins_gcd(a,b):
-    """A potentially faster gcd algorithm"""
+    """A slightly faster gcd algorithm"""
     if a == 0:
         return b
     if a%2 == b%2 == 0:
