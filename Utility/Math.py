@@ -6,7 +6,19 @@ def egcd(a, b):
         g, y, x = egcd(b % a, a)
         return (g, x - (b // a) * y, y)
 
-		
+
+def steins_gcd(a,b):
+    """A potentially faster gcd algorithm"""
+    if a == 0:
+        return b
+    if a%2 == b%2 == 0:
+        return 2*steins_gcd(a//2,b//2)
+    if a%2 == b%2 == 1:
+        return steins_gcd((a-b)//2,b)
+    else:
+        return steins_gcd(a//2,b)
+
+
 def gcd(*args):
     """Greatest Common Denominator"""
 
