@@ -31,12 +31,12 @@ class QuadRational:
 #        self.make_primitive()
 #        self.simplify()
 
-
-    def make_primitive(self):
-        """Primitive but not fully simplified fraction"""
-        g = gcd(self.n.n,self.n.m,self.d.n,self.d.m)
-        self.n = self.n//g
-        self.d = self.d//g
+#
+#    def make_primitive(self):
+#        """Primitive but not fully simplified fraction"""
+#        g = gcd(self.n.n,self.n.m,self.d.n,self.d.m)
+#        self.n = QuadInt(self.n.m//g,self.n.n//g)
+#        self.d = QuadInt(self.d.m//g,self.d.n//g)
 
 
 #    def simplify(self):
@@ -232,3 +232,12 @@ if __name__ == '__main__':
     print(R**2)
     print(R.pretty_name)
     print(R/2)
+    
+    print()
+    
+    n = QuadInt(5,1,1)
+    d = QuadInt(5,0,2)
+    G = QuadRational(5,n,d)
+    print(G)
+    print(G**2)
+    print(G+1)
