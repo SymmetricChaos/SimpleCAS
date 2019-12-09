@@ -1,67 +1,63 @@
 from math import sqrt
 
-class QuadInt:
+class QuadInt2:
     
-    def __init__(self,q,m=1,n=0):
-        assert type(q) == int
-        assert type(m) == int
-        assert type(n) == int
+    def __init__(self,a,b=0):
+        assert type(a) == int
+        assert type(b) == int
         
-        # Quadratic extension
-        self.q = q
-        # Multiple of the quadratic
-        self.m = m
         # Integer part
-        self.n = n
+        self.a = a
+        
+        # Quadratic part
+        self.b = b
 
 
     def __float__(self):
-        return self.n + self.m*sqrt(self.q)
+        return self.a + self.b*sqrt(2)
 
 
     def __str__(self):
         
         # If the quadratic part is zero return just the whole part
-        if self.m == 0:
-            return f"{self.n}"
+        if self.b == 0:
+            return f"{self.a}"
         
         # If the quadratic part is negative
-        elif self.m < 0:
+        elif self.b < 0:
             # Unit case
-            if self.m == -1:
-                if self.n == 0:
-                    return f"-√{self.q}"
+            if self.b == -1:
+                if self.a == 0:
+                    return f"-√2"
                 else:
-                    return f"{self.n} - √{self.q}"
+                    return f"{self.a} - √2"
             # General case
-            if self.n == 0:
-                return f"-{self.m}√{self.q}"
+            if self.a == 0:
+                return f"-{self.b}√2"
             else:
-                return f"{self.n} - {abs(self.m)}√{self.q}"
+                return f"{self.a} - {abs(self.b)}√{2}"
         
         # If the quadratic part is positive
         else:
             # Unit case
-            if self.m == 1:
-                if self.n == 0:
-                    return f"√{self.q}"
+            if self.b == 1:
+                if self.a == 0:
+                    return f"√2"
                 else:
-                    return f"{self.n} + √{self.q}"
+                    return f"{self.a} + √2"
             # General case
-            if self.n == 0:
-                return f"{self.m}√{self.q}"
+            if self.a == 0:
+                return f"{self.b}√2"
             else:
-                return f"{self.n} + {self.m}√{self.q}"
+                return f"{self.a} + {self.b}√2"
 
     
     def __add__(self,other):
-        if type(other) == QuadInt:
-            if self.q == other.q:
-                return QuadInt(self.q,
-                               self.m+other.m,
-                               self.n+other.n)
+        if type(other) == QuadInt2:
+            return QuadInt2(self.a+other.a,
+                            self.b+other.b)
         elif type(other) == int:
-            return QuadInt(self.q,self.m,self.n+other)
+            return QuadInt2(self.a+other,self.b)
         else:
             return NotImplemented
         
@@ -71,15 +67,13 @@ class QuadInt:
 
 
     def __mul__(self,other):
-        if type(other) == QuadInt:
-            if self.q == other.q:
-                return QuadInt(self.q,
-                               self.n*other.m + other.n*self.m,
-                               self.n*other.n + self.m*other.m*self.q)
+        if type(other) == QuadInt2:
+            return QuadInt2(self.a*other.a + self.b*other.b*2,
+                            self.a*other.b + other.a*self.b
+                            )
         elif type(other) == int:
-            return QuadInt(self.q,
-                           other*self.m,
-                           other*self.n)
+            return QuadInt2(other*self.a,
+                            other*self.b)
         else:
             return NotImplemented
         
@@ -88,7 +82,7 @@ class QuadInt:
         if type(other) == int:
             if other < 0:
                 raise ValueError("Only non-negative powers allowed")
-            out = QuadInt(self.q,0,1)
+            out = QuadInt2(1)
             for i in range(other):
                 out *= self
             return out
@@ -98,42 +92,82 @@ class QuadInt:
 
 
     def __neg__(self):
-        return QuadInt(self.q,-self.m,-self.n)
+        return QuadInt2(-self.a,-self.b)
         
 
     def __eq__(self,other):
-        if type(other) == QuadInt:
-            if self.q == other.q:
-                if self.m == other.m:
-                    if self.n == other.n:
-                        return True
+        if type(other) == QuadInt2:
+            if self.a == other.a:
+                if self.b == other.b:
+                    return True
         return False
     
     
     def norm(self):
-        return self.m*self.m - self.n*self.n*self.q
+        return self.a*self.a - self.b*self.b*2
 
 
     def conjugate(self):
-        return QuadInt(self.q,-self.m,self.n)
+        return QuadInt2(self.a,-self.b)
+
+
+
+
+
+def div_by_root(a):
+    return QuadInt2(a.b,a.a//2)
+
+
+def quad_int2_gcd(a,b,d=QuadInt2(1)):
+    print(b.norm())
+    if a == b or a == -b:
+        return d*a
+    
+    if b.norm() == 1:
+        return d
+    
+    if b == QuadInt2(0):
+        return d*a
+    
+    if a.a%2 == b.a%2 == 0:
+        return quad_int2_gcd(div_by_root(a),div_by_root(b),d*QuadInt2(0,1))
+    
+    if a.a%2 == b.a%2 == 1:
+        return quad_int2_gcd(div_by_root(a+b),div_by_root(a-b),d)
+    
+    if a.a%2 == 0 and b.a == 1:
+        return quad_int2_gcd(a,div_by_root(b),d)
+    
+    if a.a%2 == 1 and b.a == 0:
+        return quad_int2_gcd(div_by_root(a),b,d)
 
 
 
 
 
 if __name__ == '__main__':
-    Q = QuadInt(2)
-    R = QuadInt(2,3,2)
+#    Q = QuadInt2(0,1)
+#    R = QuadInt2(3,2)
+#    print(Q)
+#    print(R)
+#    print(Q+R)
+#    print(Q*R)
+#    print(Q*Q)
+#    print(R*R)
+#    print(R.conjugate())
+#    print(Q+2)
+#    print(R*2)
+#    print(-R)
+#    print(float(R))
+#    print(R-Q)
+#    print(R**2)
+    
+    print()
+    Q = QuadInt2(9,8)
+    R = QuadInt2(5,6)
+    one = QuadInt2(1)
+    zero = QuadInt2(0)
+    sqrt2 = QuadInt2(0,1)
     print(Q)
     print(R)
-    print(Q+R)
-    print(Q*R)
-    print(Q*Q)
-    print(R*R)
-    print(R.conjugate())
-    print(Q+2)
-    print(R*2)
-    print(-R)
-    print(float(R))
-    print(R-Q)
-    print(R**2)
+    print(quad_int2_gcd(Q,one))
