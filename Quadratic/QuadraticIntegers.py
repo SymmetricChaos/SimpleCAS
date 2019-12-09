@@ -118,8 +118,10 @@ def div_by_root(a):
     return QuadInt2(a.b,a.a//2)
 
 
+
 def quad_int2_gcd(a,b,d=QuadInt2(1)):
-    print(b.norm())
+    """GCD using Stein's method"""
+
     if a == b or a == -b:
         return d*a
     
@@ -129,17 +131,21 @@ def quad_int2_gcd(a,b,d=QuadInt2(1)):
     if b == QuadInt2(0):
         return d*a
     
+    
     if a.a%2 == b.a%2 == 0:
         return quad_int2_gcd(div_by_root(a),div_by_root(b),d*QuadInt2(0,1))
     
     if a.a%2 == b.a%2 == 1:
         return quad_int2_gcd(div_by_root(a+b),div_by_root(a-b),d)
     
-    if a.a%2 == 0 and b.a == 1:
+    if a.a%2 == 0 and b.a%2 == 1:
         return quad_int2_gcd(a,div_by_root(b),d)
     
-    if a.a%2 == 1 and b.a == 0:
+    if a.a%2 == 1 and b.a%2 == 0:
         return quad_int2_gcd(div_by_root(a),b,d)
+    
+    else:
+        print("IT DIDNT WORK. HELP!")
 
 
 
@@ -170,4 +176,4 @@ if __name__ == '__main__':
     sqrt2 = QuadInt2(0,1)
     print(Q)
     print(R)
-    print(quad_int2_gcd(Q,one))
+    print(quad_int2_gcd(Q,R))
