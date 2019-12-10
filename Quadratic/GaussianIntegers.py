@@ -1,6 +1,8 @@
+from Utility import prime_factorization
+
 class GaussInt:
     
-    def __init__(self,re=0,im=1):
+    def __init__(self,re=1,im=0):
         assert type(re) == int
         assert type(im) == int
         
@@ -117,15 +119,47 @@ class GaussInt:
         return hash(f"CustomGaussInt{self}")
     
 
-    def norm(self):
+    def _norm(self):
         return self.re*self.re + self.im*self.im
 
 
-    def conjugate(self):
+    def _conjugate(self):
         return GaussInt(self.re,-self.im)
+    
+    norm = property(_norm)
+    conjugate = property(_conjugate)
 
 
 
+def factor_gauss(a):
+    
+    # Factors of the norm of the number must be the norms of the factors of the
+    # number
+    F = prime_factorization(a.norm)
+    print(F)
+    
+    # Residue mod 4
+    res = [f%4 for f in F]
+    print(res)
+
+
+#def steins_gauss_gcd(a,b,d=1):
+#    """A slightly faster gcd algorithm"""
+#    if a == b or a == -b:
+#        return d*a
+#    if b.norm() == 1:
+#        return d
+#    if b == GaussInt(0):
+#        return d*a
+#    if a.re % 2 == 0 and re.im % 2 == 0:
+#        return steins_gauss_gcd()
+#    
+#    if a.re % 2 == 0 and re.im % 2 == 1:
+#        
+#    if a.re % 2 == 1 and re.im % 2 == 0:
+#        
+#    if a.re % 2 == 1 and re.im % 2 == 1:
+        
 
 
 
@@ -138,8 +172,8 @@ if __name__ == '__main__':
     print(Q*R)
     print(Q*Q)
     print(R*R)
-    print(R.norm())
-    print(R.conjugate())
+    print(R.norm)
+    print(R.conjugate)
     print(Q+2)
     print(R*2)
     print(-R)
@@ -148,3 +182,6 @@ if __name__ == '__main__':
     print(R*R)
     print(R.re)
     print(R.im)
+    
+    G = GaussInt(440,-55)
+    factor_gauss(G)
