@@ -141,6 +141,41 @@ def factor_gauss(a):
     # Residue mod 4
     res = [f%4 for f in F]
     print(res)
+    
+
+## TODO: Ideally should be 
+def all_gauss_int():
+    diag = 1
+    prev = set()
+    while True:
+        a = 0
+        b = diag
+        for i in range(-diag,diag+1):
+            r = GaussInt(a,b)
+            if r not in prev:
+                if b == 0 or a == 0:
+                    prev.add(r)
+                    yield r
+                    prev.add(-r)
+                    yield -r
+                else:
+                    prev.add(r)
+                    yield r
+                    prev.add(-r)
+                    yield -r
+                    prev.add(r.conjugate)
+                    yield r.conjugate
+                    prev.add(-r.conjugate)
+                    yield -r.conjugate
+            a += 1
+            b -= 1
+        diag += 1
+
+
+#def ideals(a):
+#    yield GaussInt(0)
+#    yield a
+    
 
 
 #def steins_gauss_gcd(a,b,d=1):
@@ -164,24 +199,29 @@ def factor_gauss(a):
 
 
 if __name__ == '__main__':
-    Q = GaussInt(2)
-    R = GaussInt(3,2)
-    print(Q)
-    print(R)
-    print(Q+R)
-    print(Q*R)
-    print(Q*Q)
-    print(R*R)
-    print(R.norm)
-    print(R.conjugate)
-    print(Q+2)
-    print(R*2)
-    print(-R)
-    print(R-Q)
-    print(R**2)
-    print(R*R)
-    print(R.re)
-    print(R.im)
+#    Q = GaussInt(2)
+#    R = GaussInt(3,2)
+#    print(Q)
+#    print(R)
+#    print(Q+R)
+#    print(Q*R)
+#    print(Q*Q)
+#    print(R*R)
+#    print(R.norm)
+#    print(R.conjugate)
+#    print(Q+2)
+#    print(R*2)
+#    print(-R)
+#    print(R-Q)
+#    print(R**2)
+#    print(R*R)
+#    print(R.re)
+#    print(R.im)
+#    
+#    G = GaussInt(440,-55)
+#    factor_gauss(G)
     
-    G = GaussInt(440,-55)
-    factor_gauss(G)
+    for i,j in enumerate(all_gauss_int()):
+        if i > 20:
+            break
+        print(j)
