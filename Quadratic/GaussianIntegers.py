@@ -20,11 +20,21 @@ class GaussInt:
         
         # If the imaginary part is zero return just the whole part
         if self.im == 0:
-            return f"{self.re}"
+            if self.re == 1:
+                return "1"
+            elif self.re == -1:
+                return "-1"
+            else:
+                return f"{self.re}"
         
         # If the real part is zero just return the imaginary part
         if self.re == 0:
-            return f"{self.im}i"
+            if self.im == 1:
+                return "i"
+            elif self.im == -1:
+                return "-i"
+            else:
+                return f"{self.im}i"
         
         # If the imaginary part is negative
         elif self.im < 0:
@@ -159,25 +169,21 @@ def all_gauss_int():
     y = 0
     while True:
 
-        print(f"Moving Right {R}")
         for i in range(R):
             x += 1
             yield GaussInt(x,y)
         R += 2
         
-        print(f"Moving Down {D}")
         for i in range(D):
             y -= 1
             yield GaussInt(x,y)
         D += 2
         
-        print(f"Moving Left {L}")
         for i in range(L):
             x -= 1
             yield GaussInt(x,y)
         L += 2
         
-        print(f"Moving Up {U}")
         for i in range(U):
             y += 1
             yield GaussInt(x,y)
