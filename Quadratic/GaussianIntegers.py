@@ -22,6 +22,10 @@ class GaussInt:
         if self.im == 0:
             return f"{self.re}"
         
+        # If the real part is zero just return the imaginary part
+        if self.re == 0:
+            return f"{self.im}i"
+        
         # If the imaginary part is negative
         elif self.im < 0:
             # Unit case
@@ -36,7 +40,7 @@ class GaussInt:
             else:
                 return f"{self.re} - {abs(self.im)}i"
         
-        # If the quadratic part is positive
+        # If the imaginary part is positive
         else:
             # Unit case
             if self.im == 1:
@@ -143,33 +147,41 @@ def factor_gauss(a):
     print(res)
     
 
-## TODO: Ideally should be 
+## TODO: Ideally should be in some sort of order
 def all_gauss_int():
-    diag = 1
-    prev = set()
+
+    yield GaussInt(0,0)
+    R = 1
+    D = 1
+    L = 2
+    U = 2
+    x = 0
+    y = 0
     while True:
-        a = 0
-        b = diag
-        for i in range(-diag,diag+1):
-            r = GaussInt(a,b)
-            if r not in prev:
-                if b == 0 or a == 0:
-                    prev.add(r)
-                    yield r
-                    prev.add(-r)
-                    yield -r
-                else:
-                    prev.add(r)
-                    yield r
-                    prev.add(-r)
-                    yield -r
-                    prev.add(r.conjugate)
-                    yield r.conjugate
-                    prev.add(-r.conjugate)
-                    yield -r.conjugate
-            a += 1
-            b -= 1
-        diag += 1
+
+        print(f"Moving Right {R}")
+        for i in range(R):
+            x += 1
+            yield GaussInt(x,y)
+        R += 2
+        
+        print(f"Moving Down {D}")
+        for i in range(D):
+            y -= 1
+            yield GaussInt(x,y)
+        D += 2
+        
+        print(f"Moving Left {L}")
+        for i in range(L):
+            x -= 1
+            yield GaussInt(x,y)
+        L += 2
+        
+        print(f"Moving Up {U}")
+        for i in range(U):
+            y += 1
+            yield GaussInt(x,y)
+        U += 2
 
 
 #def ideals(a):

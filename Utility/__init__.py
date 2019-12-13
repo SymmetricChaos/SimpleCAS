@@ -9,11 +9,11 @@ from Utility.ListManip import lists_to_tuples, tuples_to_lists
 from Utility.PolyPrint import poly_print, poly_print_pretty
 
 from Utility.Math import egcd, gcd, lcm, factorization, prime_factorization, \
-                         factorial, mod_inv, mod_div, primes, choose
+                         factorial, mod_inv, mod_div, primes, choose, int_root
 
 __all__=["egcd", "gcd", "lcm", "poly_add", "poly_mult", 
          "inds_where", "first_where", "factorization", "make_canvas", 
          "plot_points", "scatter_points", "lists_to_tuples", "tuples_to_lists",
          "poly_print_pretty", "poly_print", "show_plot", "connect","factorial",
          "choose","unit_test", "mod_inv", "mod_div","primes",
-         "prime_factorization", "sort_by_nth"]
+         "prime_factorization", "sort_by_nth" ,"int_root"]
