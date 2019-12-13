@@ -147,9 +147,9 @@ def factor_gauss(a):
     print(res)
     
 
-## TODO: Ideally should be in some sort of order
 def all_gauss_int():
-
+    """Generate a spiral of gaussian integers"""
+    
     yield GaussInt(0,0)
     R = 1
     D = 1
@@ -184,9 +184,10 @@ def all_gauss_int():
         U += 2
 
 
-#def ideals(a):
-#    yield GaussInt(0)
-#    yield a
+def ideal(a):
+    """Generate the ideal of a given gaussian integer"""
+    for i in all_gauss_int():
+        yield i*a
     
 
 
