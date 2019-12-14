@@ -20,12 +20,7 @@ class GaussInt:
         
         # If the imaginary part is zero return just the whole part
         if self.im == 0:
-            if self.re == 1:
-                return "1"
-            elif self.re == -1:
-                return "-1"
-            else:
-                return f"{self.re}"
+            return f"{self.re}"
         
         # If the real part is zero just return the imaginary part
         if self.re == 0:
