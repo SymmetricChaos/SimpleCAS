@@ -40,13 +40,8 @@ class GaussInt:
         elif self.im < 0:
             # Unit case
             if self.im == -1:
-                if self.re == 0:
-                    return f"-i"
-                else:
-                    return f"{self.re} - i"
+                return f"{self.re} - i"
             # General case
-            if self.re == 0:
-                return f"-{self.re}i"
             else:
                 return f"{self.re} - {abs(self.im)}i"
         
@@ -54,13 +49,8 @@ class GaussInt:
         else:
             # Unit case
             if self.im == 1:
-                if self.re == 0:
-                    return f"i"
-                else:
-                    return f"{self.re} + i"
+                return f"{self.re} + i"
             # General case
-            if self.re == 0:
-                return f"{self.im}i"
             else:
                 return f"{self.re} + {self.im}i"
 
@@ -160,13 +150,15 @@ def factor_gauss(a):
 def all_gauss_int():
     """Generate a spiral of gaussian integers"""
     
-    yield GaussInt(0,0)
     R = 1
     D = 1
     L = 2
     U = 2
     x = 0
     y = 0
+    
+    yield GaussInt(x,y)
+    
     while True:
 
         for i in range(R):
@@ -241,6 +233,12 @@ if __name__ == '__main__':
 #    factor_gauss(G)
     
     for i,j in enumerate(all_gauss_int()):
+        if i > 20:
+            break
+        print(j)
+    
+    print("\n\n")
+    for i,j in enumerate(ideal(GaussInt(2,3))):
         if i > 20:
             break
         print(j)
