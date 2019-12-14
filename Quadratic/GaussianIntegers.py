@@ -184,6 +184,10 @@ def ideal(a):
     
 
 
+
+
+
+
 #def steins_gauss_gcd(a,b,d=1):
 #    """A slightly faster gcd algorithm"""
 #    if a == b or a == -b:
@@ -205,8 +209,8 @@ def ideal(a):
 
 
 if __name__ == '__main__':
-#    Q = GaussInt(2)
-#    R = GaussInt(3,2)
+    Q = GaussInt(2)
+    R = GaussInt(3,2)
 #    print(Q)
 #    print(R)
 #    print(Q+R)
@@ -223,17 +227,16 @@ if __name__ == '__main__':
 #    print(R*R)
 #    print(R.re)
 #    print(R.im)
-#    
-#    G = GaussInt(440,-55)
-#    factor_gauss(G)
+
     
     for i,j in enumerate(all_gauss_int()):
         if i > 20:
             break
         print(j)
+        
+        
+    print("\n\n\n")
     
-    print("\n\n")
-    for i,j in enumerate(ideal(GaussInt(2,3))):
-        if i > 20:
-            break
-        print(j)
+    print(Q)
+    print(R)
+    print(Q*GaussInt(1,1))
