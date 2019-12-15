@@ -205,8 +205,6 @@ class GaussRational:
     def __hash__(self):
         return hash(f"CustomGaussRational{self}")
 
-
-
     pretty_name = property(_pretty_name)
 
 

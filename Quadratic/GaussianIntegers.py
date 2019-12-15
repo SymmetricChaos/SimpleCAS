@@ -101,7 +101,7 @@ class GaussInt:
         if type(other) == int:
             return GaussInt(self.re//other,self.im//other)
         if type(other) == GaussInt:
-            return (self*other.conjugate) // (other*other.conjugate).re
+            return (self*other.conjugate) // other.norm
         else:
             return NotImplemented
         
