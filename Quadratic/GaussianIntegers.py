@@ -97,13 +97,16 @@ class GaussInt:
             return out
 
 
-#    def __floordiv__(self,other):
-#        if type(other) == int:
-#            return
-#        if type(other) == GaussInt:
-#            return
-#        else:
-#            return NotImplemented
+    def __floordiv__(self,other):
+        if type(other) == int:
+            return GaussInt(self.re//other,self.im//other)
+        if type(other) == GaussInt:
+            return (self*other.conjugate) // (other*other.conjugate).re
+        else:
+            return NotImplemented
+        
+    def __mod__(self,other):
+        return self - (other*(self//other))
         
 
     def __eq__(self,other):
@@ -237,6 +240,9 @@ if __name__ == '__main__':
         
     print("\n\n\n")
     
-    print(Q)
     print(R)
-    print(Q*GaussInt(1,1))
+    print(Q)
+    print(R//Q)
+    print(R%Q)
+    print(Q*(R//Q))
+    print(Q*(R//Q)+(R%Q))
