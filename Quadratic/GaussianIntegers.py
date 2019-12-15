@@ -232,18 +232,13 @@ if __name__ == '__main__':
     print("\n\nBasic operations:")
     print(f"Q   = {Q}")
     print(f"R   = {R}")
+    print(f"Q+R = {Q+R}")
+    print(f"Q-R = {Q-R}")
+    print(f"Q*R = {Q*R}")
+    print(f"Q^2 = {Q**2}")
+    print(f"-Q  = {-Q}")
     
-    print(Q+R)
-    print(Q*R)
-    print(Q*Q)
-    print(R*R)
-    
-#    print(Q+2)
-#    print(R*2)
-#    print(-R)
-#    print(R-Q)
-#    print(R**2)
-#    print(R*R)
+
 
     
     print("\n\nNonstandard operations:")
