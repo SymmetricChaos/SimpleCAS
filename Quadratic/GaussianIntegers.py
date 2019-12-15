@@ -97,6 +97,8 @@ class GaussInt:
             return out
 
 
+    # Division need to follow the division theorem and produce a number that 
+    # has a smaller norm
     def __floordiv__(self,other):
         if type(other) == int:
             return GaussInt(self.re//other,self.im//other)
@@ -104,7 +106,8 @@ class GaussInt:
             return (self*other.conjugate) // other.norm
         else:
             return NotImplemented
-        
+
+
     def __mod__(self,other):
         return self - (other*(self//other))
         
@@ -129,8 +132,8 @@ class GaussInt:
         return GaussInt(self.re,-self.im)
     
     norm = property(_norm)
+    conj = property(_conjugate)
     conjugate = property(_conjugate)
-
 
 
 def factor_gauss(a):
@@ -212,37 +215,56 @@ def ideal(a):
 
 
 if __name__ == '__main__':
-    Q = GaussInt(2)
+    
+    print("Generator of Gaussian Integers")
+    for i,j in enumerate(all_gauss_int()):
+        if i > 20:
+            break
+        print(j)
+    
+    
+    
+    print("\n\n\nDemonstrate Gaussian Integer Arithmetic")
+    Q = GaussInt(1,2)
     R = GaussInt(3,2)
-#    print(Q)
-#    print(R)
-#    print(Q+R)
-#    print(Q*R)
-#    print(Q*Q)
-#    print(R*R)
-#    print(R.norm)
-#    print(R.conjugate)
+    
+    
+    print("\n\nBasic operations:")
+    print(f"Q   = {Q}")
+    print(f"R   = {R}")
+    
+    print(Q+R)
+    print(Q*R)
+    print(Q*Q)
+    print(R*R)
+    
 #    print(Q+2)
 #    print(R*2)
 #    print(-R)
 #    print(R-Q)
 #    print(R**2)
 #    print(R*R)
-#    print(R.re)
-#    print(R.im)
 
     
-    for i,j in enumerate(all_gauss_int()):
-        if i > 20:
-            break
-        print(j)
-        
-        
-    print("\n\n\n")
+    print("\n\nNonstandard operations:")
     
-    print(R)
-    print(Q)
-    print(R//Q)
-    print(R%Q)
-    print(Q*(R//Q))
-    print(Q*(R//Q)+(R%Q))
+    print(f"R      = {R}")
+    print(f"R.norm = {R.norm}")
+    print(f"R.conj = {R.conj}")
+    print(f"R.re   = {R.re}")
+    print(f"R.im   = {R.im}")  
+    
+
+        
+    print("\n\n\nCheck that division works")
+    
+    
+    print(f"Q   = {Q}")
+    print(f"R   = {R}")
+    print(f"R/Q = {R//Q}")
+    print(f"R%Q = {R%Q}")
+    
+    print(f"\n({Q}) * ({R//Q}) = {Q*(R//Q)}")
+    print(f"\n({Q}) * ({R//Q}) + {R%Q} = {Q*(R//Q)+R%Q}")
+    
+    
