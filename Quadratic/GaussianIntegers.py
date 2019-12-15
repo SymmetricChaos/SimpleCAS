@@ -1,4 +1,4 @@
-from Utility import prime_factorization
+#from Utility import prime_factorization
 
 class GaussInt:
     
@@ -180,11 +180,6 @@ def ideal(a):
 
 
 
-
-        
-
-
-
 if __name__ == '__main__':
     
     print("Generator of Gaussian Integers")
@@ -193,7 +188,7 @@ if __name__ == '__main__':
             break
         print(j)
     
-    
+
     
     print("\n\n\nDemonstrate Gaussian Integer Arithmetic")
     Q = GaussInt(1,2)
@@ -209,7 +204,6 @@ if __name__ == '__main__':
     print(f"Q^2 = {Q**2}")
     print(f"-Q  = {-Q}")
     
-
 
     
     print("\n\nNonstandard operations:")
@@ -233,4 +227,18 @@ if __name__ == '__main__':
     print(f"\n({Q}) * ({R//Q}) = {Q*(R//Q)}")
     print(f"\n({Q}) * ({R//Q}) + {R%Q} = {Q*(R//Q)+R%Q}")
     
+    
+    
+    # Division theorem
+    # a = b*x + y
+    # such that y.norm < b.norm
+    
+    a = GaussInt(27,-23)
+    b = GaussInt(8,1)
+    
+    print("\n\n")
+    print(a)
+    print(b)
+    print(a//b)
+    print(a%b)
     
