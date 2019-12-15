@@ -136,18 +136,6 @@ class GaussInt:
     conjugate = property(_conjugate)
 
 
-def factor_gauss(a):
-    
-    # Factors of the norm of the number must be the norms of the factors of the
-    # number
-    F = prime_factorization(a.norm)
-    print(F)
-    
-    # Residue mod 4
-    res = [f%4 for f in F]
-    print(res)
-    
-
 def all_gauss_int():
     """Generate a spiral of gaussian integers"""
     
@@ -193,23 +181,6 @@ def ideal(a):
 
 
 
-
-#def steins_gauss_gcd(a,b,d=1):
-#    """A slightly faster gcd algorithm"""
-#    if a == b or a == -b:
-#        return d*a
-#    if b.norm() == 1:
-#        return d
-#    if b == GaussInt(0):
-#        return d*a
-#    if a.re % 2 == 0 and re.im % 2 == 0:
-#        return steins_gauss_gcd()
-#    
-#    if a.re % 2 == 0 and re.im % 2 == 1:
-#        
-#    if a.re % 2 == 1 and re.im % 2 == 0:
-#        
-#    if a.re % 2 == 1 and re.im % 2 == 1:
         
 
 
