@@ -1,4 +1,4 @@
-#from Utility import prime_factorization
+from Utility import gcd
 
 class GaussInt:
     
@@ -103,7 +103,9 @@ class GaussInt:
         if type(other) == int:
             return GaussInt(self.re//other,self.im//other)
         if type(other) == GaussInt:
-            return (self*other.conjugate) // other.norm
+            s = self*other.conjugate
+            n = other.norm
+            return GaussInt(round_div(s.re,n),round_div(s.im,n))
         else:
             return NotImplemented
 
@@ -131,9 +133,13 @@ class GaussInt:
     def _conjugate(self):
         return GaussInt(self.re,-self.im)
     
+    
     norm = property(_norm)
     conj = property(_conjugate)
     conjugate = property(_conjugate)
+
+
+
 
 
 def all_gauss_int():
@@ -177,6 +183,16 @@ def ideal(a):
         yield i*a
     
 
+def round_div(a,b):
+
+    t = ((a % b)*10)//b
+    if t >= 5:
+        return (a//b)+1
+    else:
+        return a//b
+    
+    
+    
 
 
 
@@ -228,10 +244,8 @@ if __name__ == '__main__':
     print(f"\n({Q}) * ({R//Q}) + {R%Q} = {Q*(R//Q)+R%Q}")
     
     
-    
-    # Division theorem
-    # a = b*x + y
-    # such that y.norm < b.norm
+    print("\n\nThe division theorem says that it is always the case that for the numbers a and b we can find numbers x and y such that:")
+    print("a = b*x + y\nand\ny.norm < b.norm")
     
     a = GaussInt(27,-23)
     b = GaussInt(8,1)
@@ -241,4 +255,7 @@ if __name__ == '__main__':
     print(b)
     print(a//b)
     print(a%b)
+    
+    print((a%b).norm)
+    print((b).norm)
     
