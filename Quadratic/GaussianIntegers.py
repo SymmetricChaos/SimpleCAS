@@ -244,18 +244,23 @@ if __name__ == '__main__':
     print(f"\n({Q}) * ({R//Q}) + {R%Q} = {Q*(R//Q)+R%Q}")
     
     
-    print("\n\nThe division theorem says that it is always the case that for the numbers a and b we can find numbers x and y such that:")
-    print("a = b*x + y\nand\ny.norm < b.norm")
+    print("\n\nThe Division Theorem for Gaussian integers says that it is always the case that for the numbers a and b we can find numbers x and y such that:")
+    print("\na = b*x + y\nand\ny.norm < b.norm")
     
     a = GaussInt(27,-23)
     b = GaussInt(8,1)
     
-    print("\n\n")
-    print(a)
-    print(b)
-    print(a//b)
-    print(a%b)
+    print()
+    print(f"a = {a}")
+    print(f"b = {b}")
+    print(f"a//b = {a//b}")
     
-    print((a%b).norm)
-    print((b).norm)
+    print()
+    
+    print(f"{a} = ({b})*({a//b}) + ({a%b})")
+    
+    print()
+    
+    print(f"N({a%b})   = {(a%b).norm}")
+    print(f"N({b}) = {b.norm}")
     
