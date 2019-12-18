@@ -182,15 +182,6 @@ def ideal(a):
     for i in all_gauss_int():
         yield i*a
     
-
-def round_div(a,b):
-    """Variant of floor division that rounds to the nearest integer instead"""
-    t = ((a % b)*10)//b
-    if t >= 5:
-        return (a//b)+1
-    else:
-        return a//b
-    
     
 def gauss_gcd(a,b):
     if a == GaussInt(0,0):

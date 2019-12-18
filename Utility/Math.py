@@ -255,6 +255,15 @@ def cantor_pair_inv(n):
     return x,y
 
 
+def round_div(a,b):
+    """Variant of floor division that rounds to the nearest integer instead"""
+    t = ((a % b)*10)//b
+    if t >= 5:
+        return (a//b)+1
+    else:
+        return a//b
+
+
 def binomial_transform(L):
     out = []
     for n in len(L):
