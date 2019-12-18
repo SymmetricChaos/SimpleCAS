@@ -1,4 +1,4 @@
-from Utility import gcd
+#from Utility import gcd
 
 class GaussInt:
     
@@ -184,7 +184,7 @@ def ideal(a):
     
 
 def round_div(a,b):
-
+    """Variant of floor division that rounds to the nearest integer instead"""
     t = ((a % b)*10)//b
     if t >= 5:
         return (a//b)+1
@@ -192,7 +192,13 @@ def round_div(a,b):
         return a//b
     
     
-    
+def gauss_gcd(a,b):
+    if a == GaussInt(0,0):
+        return b
+    else:
+        return gauss_gcd(b%a,a)
+
+
 
 
 
@@ -209,6 +215,7 @@ if __name__ == '__main__':
     print("\n\n\nDemonstrate Gaussian Integer Arithmetic")
     Q = GaussInt(1,2)
     R = GaussInt(3,2)
+    
     
     
     print("\n\nBasic operations:")
@@ -234,7 +241,6 @@ if __name__ == '__main__':
         
     print("\n\n\nCheck that division works")
     
-    
     print(f"Q   = {Q}")
     print(f"R   = {R}")
     print(f"R/Q = {R//Q}")
@@ -242,6 +248,7 @@ if __name__ == '__main__':
     
     print(f"\n({Q}) * ({R//Q}) = {Q*(R//Q)}")
     print(f"\n({Q}) * ({R//Q}) + {R%Q} = {Q*(R//Q)+R%Q}")
+    
     
     
     print("\n\nThe Division Theorem for Gaussian integers says that it is always the case that for the numbers a and b we can find numbers x and y such that:")
@@ -264,3 +271,14 @@ if __name__ == '__main__':
     print(f"N({a%b})   = {(a%b).norm}")
     print(f"N({b}) = {b.norm}")
     
+    
+    
+    print("\n\n\nGCD")
+    a = GaussInt(9,1)
+    b = GaussInt(3,1)
+    print(f"a = {a}")
+    print(f"b = {b}")
+    g = gauss_gcd(a,b)
+    print(f"gcd = {g}")
+    print(a//g)
+    print(b//g)
