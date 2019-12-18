@@ -1,4 +1,4 @@
-# Univariate polynomials with coefficients from the field of rationals
+# Univariate polynomials with coefficients from the ring of integers
 
 from Utility import poly_add, poly_mult, mod_inv, mod_div, gcd
 from Poly.ZPolyPrint import zpoly_print, zpoly_print_pretty
