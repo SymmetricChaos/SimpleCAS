@@ -42,7 +42,7 @@ class GPoly:
 
 
     # Not sure about the best method but testing suggests that "co*x**pwr" is
-    # faster than "co*x**pwr % self.M" and "co*pow(x,pwr,self.M)" at least when
+    # faster than "co*x**pwr % self.M" and "co*pow(x,pwr)" at least when
     # coefficients are potentially much larger than powers
     def __call__(self,x):
         """Evaluate the polynomial at a given point"""
@@ -66,20 +66,12 @@ class GPoly:
     def __str__(self):
         """Print nicely in descending written form"""
         return gpoly_print(self)
-#
-#
-#    def __repr__(self):
-#        """Print nicely in descending written form"""
-#        return zpoly_print(self)
-#    
-#    
-#    def _full_name(self):
-#        """Print nicely in descending written form with modulus"""
-#        if self.M:
-#            return f"{zpoly_print(self)} (mod {self.M})"
-#        else:
-#            return f"{zpoly_print(self)}"
-#    
+
+
+    def __repr__(self):
+        """Print nicely in descending written form"""
+        return str(self)
+    
     
     def __hash__(self):
         return hash(f"CustomGPoly{self.full_name}")
@@ -93,20 +85,20 @@ class GPoly:
     def __neg__(self):
         """Additive inverse of each coefficient"""
         L = [-c for c in self.coef]
-        return GPoly(L,self.M)
+        return GPoly(L)
 
 
 #    def __add__(self,other):
 #        """Addition"""
 #        # If we can turn the other into a rational do that
 #        if type(other) == int:
-#            other = GPoly( [other],self.M )
+#            other = GPoly( [other] )
 #            L = poly_add(self.coef,other.coef)
-#            return GPoly(L,self.M)
+#            return GPoly(L)
 #        
 #        elif type(other) == GPoly:
 #            L = poly_add(self.coef,other.coef)
-#            return GPoly(L,self.M)
+#            return GPoly(L)
 #        
 #        else:
 #            return NotImplemented
@@ -124,19 +116,19 @@ class GPoly:
 #            return NotImplemented
 #        
 #        if type(other) == int:
-#            other = GPoly( [other],self.M )
+#            other = GPoly( [other] )
 #        
 #        L = poly_add(self.coef,[-c for c in other.coef])
-#        return GPoly(L,self.M)
+#        return GPoly(L)
 #
 #
 #    def __rsub__(self,other):
 #        """Subtraction is NOT commutative"""
 #        if type(other) == int:
-#            other = GPoly( [other],self.M )
+#            other = GPoly( [other] )
 #
 #        L = poly_add(self.coef,[-c for c in other.coef])
-#        return GPoly(L,self.M)
+#        return GPoly(L)
 #
 #
 #    def __mul__(self,other):
@@ -146,10 +138,10 @@ class GPoly:
 #            return NotImplemented
 #        
 #        if type(other) == int:
-#            other = GPoly( [other],self.M )
+#            other = GPoly( [other] )
 #            
 #        L = poly_mult(self.coef,other.coef)
-#        return GPoly(L,self.M)
+#        return GPoly(L)
 #
 #
 #    def __rmul__(self,other):
@@ -165,7 +157,7 @@ class GPoly:
 #            raise TypeError(f"pwr must be non-negative")
 #
 #        if pwr == 0:
-#            return GPoly([1],self.M)
+#            return GPoly([1])
 #        elif pwr == 1:
 #            return self
 #        else:
@@ -180,39 +172,12 @@ class GPoly:
         if type(other) != GPoly:
             raise TypeError(f"Cannot compare GPoly to {type(other)}")
         
-        if self.M != other.M:
-            raise ValueError("Can only compare GPoly with identical modulus")
-
         if len(self) == len(other):
             if all([x == y for x,y in zip(self.coef,other.coef)]):
                 return True
 
         return False
-    
-    
-    def __lt__(self,other):
-        """Strict less than relation"""
-        # See if the inputs are identical.
-        # Since __eq__ does error checking we don't need to repeat it
-        if self == other:
-            return False
-
-
-        if len(self) < len(other):
-            return True
-        
-        elif len(self) > len(other):
-            return False
-            
-        else:
-            X = reversed(self.coef)
-            Y = reversed(other.coef)
-            for x,y in zip(X,Y):
-                if x < y:
-                    return True
-                if x > y:
-                    return False
-            
+                
 
     def degree(self):
         """Degree of the polynomial"""
@@ -224,7 +189,7 @@ class GPoly:
 #    
 #        # Cast integer to poly if needed
 #        if type(other) == int:
-#            other = GPoly( [other], self.M )
+#            other = GPoly( [other] )
 #            
 #        if type(other) != GPoly:
 #            raise TypeError(f"Could not cast {other} to GPoly")
@@ -235,7 +200,7 @@ class GPoly:
 #
 #        # We can only divide a longer polynomial by a shorter one
 #        if len(self) < len(other):
-#            return GPoly([0],self.M), self.copy()
+#            return GPoly([0]), self.copy()
 #
 #        # Copy inputs
 #        P = self.coef[:]
@@ -244,66 +209,42 @@ class GPoly:
 #        # Case of division by a single int
 #        if len(other) == 1:
 #            if self.M:
-#                return GPoly( [mod_div(p,Q[0],self.M) for p in P], self.M), GPoly( [0], self.M)
+#                return GPoly( [mod_div(p,Q[0]) for p in P]), GPoly( [0])
 #            else:
-#                return GPoly( [p//Q[0] for p in P], self.M), GPoly( [p%Q[0] for p in P], self.M)
+#                return GPoly( [p//Q[0] for p in P]), GPoly( [p%Q[0] for p in P])
 #        
-#        if self.M:
-#            # Polynomial division if a modulus is given
+#        # Polynomial division
+#
+#        dP = len(P)-1
+#        dQ = len(Q)-1
+#        qt = [0]*dP
+#        while dP >= dQ:
+#            
+#            d = [0]*(dP - dQ) + Q
+#            mult = qt[dP - dQ] = P[-1] // d[-1]
+#
+#            if P[-1] % d[-1] != 0:
+#                raise Exception(f"Euclidean division of {self} by {other} is not defined")
+#
+#            d = [co*mult for co in d]
+#            P = [ (coeffP - coeffd)  for coeffP, coeffd in zip(P, d)]
+#
+#            while P[-1] == 0 and len(P) > 1:
+#                if len(P) == 1:
+#                    break
+#                P.pop()
 #            dP = len(P)-1
-#            dQ = len(Q)-1
-#            qt = [0]*dP
-#            while dP >= dQ:
-#                
-#                d = [0]*(dP - dQ) + Q
-#                mult = qt[dP - dQ] = P[-1] * mod_inv(d[-1],self.M)
-#                
-#                d = [co*mult for co in d]
-#                P = [ (coeffP - coeffd) % self.M for coeffP, coeffd in zip(P, d)]
-#                
-#                while P[-1] == 0 and len(P) > 1:
-#                    if len(P) == 1:
-#                        break
-#                    P.pop()
-#                    
-#                dP = len(P)-1
-#                rm = [i % self.M for i in P]
 #
-#            return GPoly( qt, self.M), GPoly( rm, self.M)
-#        
-#        else:
-#            # Polynomial division if a modulus is NOT given
+#        rm = [i for i in P]
 #
-#            dP = len(P)-1
-#            dQ = len(Q)-1
-#            qt = [0]*dP
-#            while dP >= dQ:
-#                
-#                d = [0]*(dP - dQ) + Q
-#                mult = qt[dP - dQ] = P[-1] // d[-1]
-#
-#                if P[-1] % d[-1] != 0:
-#                    raise Exception(f"Euclidean division of {self} by {other} is not defined")
-#
-#                d = [co*mult for co in d]
-#                P = [ (coeffP - coeffd)  for coeffP, coeffd in zip(P, d)]
-#
-#                while P[-1] == 0 and len(P) > 1:
-#                    if len(P) == 1:
-#                        break
-#                    P.pop()
-#                dP = len(P)-1
-#
-#            rm = [i for i in P]
-#
-#            return GPoly( qt ), GPoly( rm )
+#        return GPoly( qt ), GPoly( rm )
 #
 #
 #    # Using __floordiv__ since there can be a remainder, not because we round down
 #    def __floordiv__(self,other):
 #        """Euclidean division of polynomials"""
 #        if type(other) == int:
-#            other = GPoly([other],self.M)
+#            other = GPoly([other])
 #        elif type(other) == GPoly:
 #            pass
 #        else:
@@ -319,7 +260,7 @@ class GPoly:
 #    def __mod__(self,other):
 #        """Remainder of Euclidean division of polynomials"""
 #        if type(other) == int:
-#            other = GPoly([other],self.M)
+#            other = GPoly([other])
 #        elif type(other) == GPoly:
 #            pass
 #        else:
@@ -334,15 +275,8 @@ class GPoly:
     
     def copy(self):
         """Copy the polynomial"""
-        return GPoly(self.coef[:],self.M)
+        return GPoly(self.coef[:])
 
-
-    def derivative(self):
-        """Calculate the formal derivative of the polynomial"""
-        co = self.coef.copy()
-        for i in range(len(co)):
-            co[i] *= i
-        return GPoly(co[1:],self.M)
 
 
     def is_monic(self):
