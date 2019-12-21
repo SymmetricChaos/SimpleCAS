@@ -199,6 +199,8 @@ def ideal(a):
     
 def gauss_gcd(a,b):
     if a == GaussInt(0,0):
+        if b.re < 0:
+            return -b
         return b
     else:
         return gauss_gcd(b%a,a)
@@ -285,5 +287,8 @@ if __name__ == '__main__':
     print(f"b = {b}")
     g = gauss_gcd(a,b)
     print(f"gcd = {g}")
-    print(a//g)
-    print(b//g)
+    print(f"a//g = {a//g}")
+    print(f"b//g = {b//g}")
+    
+    print(f"a = {(a//g)*g}")
+    print(f"b = {(b//g)*g}")
