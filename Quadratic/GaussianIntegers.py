@@ -119,6 +119,9 @@ class GaussInt:
             if self.re == other.re:
                 if self.im == other.im:
                     return True
+        elif type(other) == int:
+            if self.re == other and self.im == 0:
+                return True
         return False
 
 

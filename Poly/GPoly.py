@@ -22,7 +22,7 @@ class GPoly:
     def normalize(self):
         """Remove trailing zeroes and reduce modulo M"""
         if self.coef == []:
-            self.coef = [0]
+            self.coef = [GaussInt(0,0)]
             
         while self.coef[-1] == 0 and len(self.coef) > 1:
             if len(self.coef) == 1:
@@ -348,7 +348,9 @@ if __name__ == '__main__':
     
     print(P)
     
-    print(P-P)
+    Q = P-P
+    print(Q.coef)
+    print(Q)
     
     
 #    print("Division and Remainder with a modulus")
