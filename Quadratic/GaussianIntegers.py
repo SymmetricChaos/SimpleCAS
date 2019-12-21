@@ -61,10 +61,18 @@ class GaussInt:
             return GaussInt(self.re+other,self.im)
         else:
             return NotImplemented
+
+
+    def __radd__(self,other):
+        return self+other
         
         
     def __sub__(self,other):
         return self + -other
+    
+    
+    def __rsub__(self,other):
+        return other + -self
 
 
     def __mul__(self,other):

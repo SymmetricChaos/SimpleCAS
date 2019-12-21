@@ -344,12 +344,12 @@ if __name__ == '__main__':
     D = GaussInt(3,2)
     
     P = GPoly([A,B,C,D])
-    
+    Q = GPoly([B,D,A,C])
     
     print(P)
-    
     print(P-P)
-    print(P+P)
+    print(P+Q)
+    print(P*Q)
     
 #    print("Division and Remainder with a modulus")
 #    M = 17
