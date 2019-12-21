@@ -50,11 +50,37 @@ def gpoly_print(poly):
             # General case
             else:
                 if pwr == 1:
-                    s = f" {sgn} {val}x"
+                    s = f" {sgn} {val.re}x"
                 elif pwr == 0:
-                    s = f" {sgn} {val}"
+                    s = f" {sgn} {val.re}"
                 else:
-                    s = f" {sgn} {val}x^{pwr}"
+                    s = f" {sgn} {val.re}x^{pwr}"
+        
+        # Handle imaginary integer coefficients
+        elif val.re == 0:
+            
+            # Handle the special case of coefficient 1 or -1
+            if val.im == 1:
+                
+                # Special case if term is x or -x
+                if pwr == 1:
+                    s = f" {sgn} ix"
+                # Special case is term is 1 or -1
+                elif pwr == 0:
+                    s = f" {sgn} i"
+                # General case
+                else:
+                    s = f" {sgn} ix^{pwr}"
+
+            # General case
+            else:
+                if pwr == 1:
+                    s = f" {sgn} {val.im}ix"
+                elif pwr == 0:
+                    s = f" {sgn} {val.im}i"
+                else:
+                    s = f" {sgn} {val.im}ix^{pwr}"
+
 
         # Handle values with a complex part
         else:

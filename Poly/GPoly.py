@@ -338,10 +338,11 @@ if __name__ == '__main__':
     
     
     A = GaussInt(1,1)
-    B = GaussInt(3,2)
-    C = GaussInt(0,1)
+    B = GaussInt(6,0)
+    C = GaussInt(0,2)
+    D = GaussInt(3,2)
     
-    P = GPoly([A,B,C])
+    P = GPoly([A,B,C,D])
     
     print(P)
     
