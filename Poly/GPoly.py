@@ -348,10 +348,8 @@ if __name__ == '__main__':
     
     print(P)
     
-    Q = P-P
-    print(Q.coef)
-    print(Q)
-    
+    print(P-P)
+    print(P+P)
     
 #    print("Division and Remainder with a modulus")
 #    M = 17

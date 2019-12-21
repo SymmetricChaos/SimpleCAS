@@ -49,6 +49,9 @@ class GaussInt:
             else:
                 return f"{self.re} + {self.im}i"
 
+
+    def __repr__(self):
+        return str(self)
     
     def __add__(self,other):
         if type(other) == GaussInt:
