@@ -2,6 +2,7 @@
 
 from Quadratic import GaussInt
 from GPolyPrint import gpoly_print
+from Utility import poly_add, poly_mult, mod_inv, mod_div, gcd
 
 class GPoly:
     
@@ -88,83 +89,83 @@ class GPoly:
         return GPoly(L)
 
 
-#    def __add__(self,other):
-#        """Addition"""
-#        # If we can turn the other into a rational do that
-#        if type(other) == int:
-#            other = GPoly( [other] )
-#            L = poly_add(self.coef,other.coef)
-#            return GPoly(L)
-#        
-#        elif type(other) == GPoly:
-#            L = poly_add(self.coef,other.coef)
-#            return GPoly(L)
-#        
-#        else:
-#            return NotImplemented
-#
-#
-#    def __radd__(self,other):
-#        """Addition is commutative"""
-#        return self + other
-#
-#
-#    def __sub__(self,other):
-#        """Subtraction"""
-#        
-#        if type(other) not in [int,GPoly]:
-#            return NotImplemented
-#        
-#        if type(other) == int:
-#            other = GPoly( [other] )
-#        
-#        L = poly_add(self.coef,[-c for c in other.coef])
-#        return GPoly(L)
-#
-#
-#    def __rsub__(self,other):
-#        """Subtraction is NOT commutative"""
-#        if type(other) == int:
-#            other = GPoly( [other] )
-#
-#        L = poly_add(self.coef,[-c for c in other.coef])
-#        return GPoly(L)
-#
-#
-#    def __mul__(self,other):
-#        """Multiplication"""
-#        
-#        if type(other) not in [int,GPoly]:
-#            return NotImplemented
-#        
-#        if type(other) == int:
-#            other = GPoly( [other] )
-#            
-#        L = poly_mult(self.coef,other.coef)
-#        return GPoly(L)
-#
-#
-#    def __rmul__(self,other):
-#        """Multiplication is commutative"""
-#        return self*other
-#
-#
-#    def __pow__(self,pwr):
-#        """Raise to an positive integer power"""
-#        if type(pwr) != int:
-#            raise TypeError(f"pwr must be an integer not {type(pwr)}")
-#        if pwr < 0:
-#            raise TypeError(f"pwr must be non-negative")
-#
-#        if pwr == 0:
-#            return GPoly([1])
-#        elif pwr == 1:
-#            return self
-#        else:
-#            out = self.copy()
-#            for i in range(pwr-1):
-#                out *= self
-#        return out
+    def __add__(self,other):
+        """Addition"""
+        # If we can turn the other into a rational do that
+        if type(other) == int:
+            other = GPoly( [other] )
+            L = poly_add(self.coef,other.coef)
+            return GPoly(L)
+        
+        elif type(other) == GPoly:
+            L = poly_add(self.coef,other.coef)
+            return GPoly(L)
+        
+        else:
+            return NotImplemented
+
+
+    def __radd__(self,other):
+        """Addition is commutative"""
+        return self + other
+
+
+    def __sub__(self,other):
+        """Subtraction"""
+        
+        if type(other) not in [int,GPoly]:
+            return NotImplemented
+        
+        if type(other) == int:
+            other = GPoly( [other] )
+        
+        L = poly_add(self.coef,[-c for c in other.coef])
+        return GPoly(L)
+
+
+    def __rsub__(self,other):
+        """Subtraction is NOT commutative"""
+        if type(other) == int:
+            other = GPoly( [other] )
+
+        L = poly_add(self.coef,[-c for c in other.coef])
+        return GPoly(L)
+
+
+    def __mul__(self,other):
+        """Multiplication"""
+        
+        if type(other) not in [int,GPoly]:
+            return NotImplemented
+        
+        if type(other) == int:
+            other = GPoly( [other] )
+            
+        L = poly_mult(self.coef,other.coef)
+        return GPoly(L)
+
+
+    def __rmul__(self,other):
+        """Multiplication is commutative"""
+        return self*other
+
+
+    def __pow__(self,pwr):
+        """Raise to an positive integer power"""
+        if type(pwr) != int:
+            raise TypeError(f"pwr must be an integer not {type(pwr)}")
+        if pwr < 0:
+            raise TypeError(f"pwr must be non-negative")
+
+        if pwr == 0:
+            return GPoly([1])
+        elif pwr == 1:
+            return self
+        else:
+            out = self.copy()
+            for i in range(pwr-1):
+                out *= self
+        return out
 
 
     def __eq__(self,other):
@@ -344,7 +345,10 @@ if __name__ == '__main__':
     
     P = GPoly([A,B,C,D])
     
+    
     print(P)
+    
+    print(P-P)
     
     
 #    print("Division and Remainder with a modulus")
