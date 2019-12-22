@@ -199,9 +199,7 @@ def ideal(a):
     
 def gauss_gcd(a,b):
     if a == GaussInt(0,0):
-        if b.re < 0:
-            return -b
-        return b
+        return GaussInt(abs(b.re),abs(b.im))
     else:
         return gauss_gcd(b%a,a)
 
