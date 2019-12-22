@@ -196,10 +196,14 @@ def ideal(a):
     for i in all_gauss_int():
         yield i*a
     
-    
+
+# GCD is ambiguous in the gaussian integers, there can be up to four, though
+# all are unit multiple of each other
 def gauss_gcd(a,b):
+    """Returns a greatest common divisor of two gaussian integers"""
     if a == GaussInt(0,0):
-        return GaussInt(abs(b.re),abs(b.im))
+        if b.re >= 0:
+            return b
     else:
         return gauss_gcd(b%a,a)
 
@@ -279,8 +283,8 @@ if __name__ == '__main__':
     
     
     print("\n\n\nGCD")
-    a = GaussInt(9,1)
-    b = GaussInt(3,1)
+    a = GaussInt(11,3)
+    b = GaussInt(1,8)
     print(f"a = {a}")
     print(f"b = {b}")
     g = gauss_gcd(a,b)
