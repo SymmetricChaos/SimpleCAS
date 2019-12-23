@@ -202,8 +202,7 @@ def ideal(a):
 def gauss_gcd(a,b):
     """Returns a greatest common divisor of two gaussian integers"""
     if a == GaussInt(0,0):
-        if b.re >= 0:
-            return b
+        return b
     else:
         return gauss_gcd(b%a,a)
 
@@ -300,10 +299,14 @@ if __name__ == '__main__':
     print(f"b = {(b//g)*g}")
     
     
-    print("\n\nThis GCD causes an error")
-    a = GaussInt(-3,3)
+    print("\n\nGCD again")
+    a = GaussInt(-6,6)
     b = GaussInt(-3,9)
     print(f"a = {a}")
     print(f"b = {b}")
     g = gauss_gcd(a,b)
     print(f"gcd = {g}")
+    print(f"a//g = {a//g}")
+    print(f"b//g = {b//g}")
+    print(f"a = {(a//g)*g}")
+    print(f"b = {(b//g)*g}")
