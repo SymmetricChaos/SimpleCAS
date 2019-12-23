@@ -208,6 +208,10 @@ def gauss_gcd(a,b):
         return gauss_gcd(b%a,a)
 
 
+#def str_to_gauss(s):
+    
+
+
 
 
 
@@ -294,3 +298,12 @@ if __name__ == '__main__':
     
     print(f"a = {(a//g)*g}")
     print(f"b = {(b//g)*g}")
+    
+    
+    print("\n\nThis GCD causes an error")
+    a = GaussInt(-3,3)
+    b = GaussInt(-3,9)
+    print(f"a = {a}")
+    print(f"b = {b}")
+    g = gauss_gcd(a,b)
+    print(f"gcd = {g}")

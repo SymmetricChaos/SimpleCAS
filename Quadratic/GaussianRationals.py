@@ -1,5 +1,4 @@
-from Quadratic.GaussianIntegers import GaussInt
-from Utility import gcd
+from Quadratic.GaussianIntegers import GaussInt, gauss_gcd
 
 
 class GaussRational:
@@ -21,22 +20,17 @@ class GaussRational:
 
         self.n = n
         self.d = d
-#        self.make_primitive()
-#        self.simplify()
+        self.simplify()
 
 
-    def make_primitive(self):
-        """Primitive but not fully simplified fraction"""
-        g = gcd(self.n.re,self.n.im,self.d.re,self.d.im)
+
+
+    def simplify(self):
+        """Convert fraction to simplest form"""
+        g = gauss_gcd(self.n,self.d)
+        print(g)
         self.n = self.n//g
         self.d = self.d//g
-
-
-#    def simplify(self):
-#        """Convert fraction to simplest form"""
-#        g = gcd(self.n,self.d)
-#        self.n = self.n//g
-#        self.d = self.d//g
 
 
     def _pretty_name(self):
@@ -216,10 +210,13 @@ if __name__ == '__main__':
 
     a = GaussInt(0,1)
     b = GaussInt(1,2)
-    R = GaussRational(a,b)
+    c = GaussInt(3,3)
+    print(a*c)
+    print(b*c)
+    R = GaussRational(a*c,b*c)
     print(R)
-    print(R.inv())
-    print(R.inv()*R)
-    print(R**2)
-    print(R.pretty_name)
-    print(R/2)
+#    print(R.inv())
+#    print(R.inv()*R)
+#    print(R**2)
+#    print(R.pretty_name)
+#    print(R/2)
