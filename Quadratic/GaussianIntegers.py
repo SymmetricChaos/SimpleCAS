@@ -1,4 +1,5 @@
 from Utility import round_div
+import re
 
 class GaussInt:
     
@@ -208,8 +209,10 @@ def gauss_gcd(a,b):
         return gauss_gcd(b%a,a)
 
 
-#def str_to_gauss(s):
-    
+def str_to_gauss(S):
+    a = re.fullmatch("-?\d+",S)
+    b = re.fullmatch("-?\d+i",S)
+    c = re.fullmatch("-?\d+ [\+\-] \d*i",S)
 
 
 
@@ -311,3 +314,8 @@ if __name__ == '__main__':
     print(f"b//g = {b//g}")
     print(f"a = {(a//g)*g}")
     print(f"b = {(b//g)*g}")
+    
+    
+    print("\n\n")
+    
+    str_to_gauss("1 + 1i")
