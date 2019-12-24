@@ -28,7 +28,6 @@ class GaussRational:
     def simplify(self):
         """Convert fraction to simplest form"""
         g = gauss_gcd(self.n,self.d)
-        print(g)
         self.n = self.n//g
         self.d = self.d//g
 
@@ -143,33 +142,7 @@ class GaussRational:
         return self.inv()*dividend
 
 
-#    def __floordiv__(self,divisor):
-#        if type(divisor) not in [Rational,int]:
-#            return NotImplemented
-#        
-#        if divisor == 0:
-#            raise ZeroDivisionError
-#        if type(divisor) == int:
-#            divisor = Rational(divisor)
-#        q = self*divisor.inv()
-#        v = q.n // q.d
-#        return v
-#
-#
-#    def __mod__(self,modulus):
-#        if modulus == 0:
-#            raise ZeroDivisionError
-#        if type(modulus) == int:
-#            modulus = Rational(modulus)
-#        if modulus > self:
-#            return self
-#        else:
-#            a = self.copy()
-#            while a >= modulus:
-#                a -= modulus
-#            return a
-
-
+    # Because GCD is not unique we need to modify equality checking
     def __eq__(self,other):
         if type(other) == int:
             other = GaussRational(other)
@@ -208,12 +181,9 @@ class GaussRational:
 if __name__ == '__main__':
 
 
-    a = GaussInt(0,1)
-    b = GaussInt(1,2)
-    c = GaussInt(3,3)
-    print(a*c)
-    print(b*c)
-    R = GaussRational(a*c,b*c)
+    a = GaussInt(-3,-3)
+    b = GaussInt(2,4)
+    R = GaussRational(a,b)
     print(R)
 #    print(R.inv())
 #    print(R.inv()*R)

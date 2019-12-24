@@ -52,7 +52,8 @@ class GaussInt:
 
     def __repr__(self):
         return str(self)
-    
+
+
     def __add__(self,other):
         if type(other) == GaussInt:
             return GaussInt(self.re+other.re,
