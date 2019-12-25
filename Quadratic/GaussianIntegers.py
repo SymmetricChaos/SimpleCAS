@@ -3,7 +3,7 @@ import re
 
 class GaussInt:
     
-    def __init__(self,re=1,im=0):
+    def __init__(self,re=0,im=0):
         assert type(re) == int
         assert type(im) == int
         
@@ -213,8 +213,12 @@ def str_to_gauss(S):
     a = re.fullmatch("-?\d+",S)
     b = re.fullmatch("-?\d+i",S)
     c = re.fullmatch("-?\d+ [\+\-] \d*i",S)
-
-
+    if a:
+        return GaussInt(int(S))
+    if b:
+        return GaussInt(0,int(S[:-1]))
+    if c:
+        print("I got nothing")
 
 
 
@@ -318,4 +322,4 @@ if __name__ == '__main__':
     
     print("\n\n")
     
-    str_to_gauss("1 + 1i")
+    print(str_to_gauss("-5i"))

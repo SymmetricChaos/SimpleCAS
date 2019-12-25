@@ -1,10 +1,9 @@
 from Quadratic.QuadraticIntegers import QuadInt
-from Utility import gcd
 
 
 class QuadRational:
     
-    def __init__(self,q,n=1,d=1):
+    def __init__(self,q,n=0,d=1):
         
         if type(n) not in [QuadInt,int]:
             raise TypeError(f"Numerator must be QuadInt or int not {type(n)}.")
