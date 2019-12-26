@@ -29,8 +29,6 @@ class GaussRational:
         self.simplify()
 
 
-
-
     def simplify(self):
         """Convert fraction to simplest form"""
         g = gauss_gcd(self.n,self.d)
@@ -152,11 +150,10 @@ class GaussRational:
     def __eq__(self,other):
         if type(other) == int:
             other = GaussRational(other)
-        if self.n == other.n:
-            if self.d == other.d:
-                return True
-        return False
-    
+        if type(other) == GaussRational:
+            return self.n*other.d == self.d*other.n
+        else:
+            return False
     
     def __pow__(self,pwr):
         if type(pwr) != int:
