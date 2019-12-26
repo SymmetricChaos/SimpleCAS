@@ -187,7 +187,7 @@ class GaussRational:
 if __name__ == '__main__':
 
 
-    R = GaussRational("-3 - 3i","2 + 4i")
+    R = GaussRational("-3-3i","2+4i")
     print(R)
 #    print(R.inv())
 #    print(R.inv()*R)

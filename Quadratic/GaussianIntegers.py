@@ -211,11 +211,13 @@ def gauss_gcd(a,b):
 
 def str_to_gauss(S):
     
+    S = S.replace(" ","")
+    
     p = re.findall("-?\d+",S)
-    if re.fullmatch("-?\d+ \+ \d*i",S):
+    if re.fullmatch("-?\d+\+\d*i",S):
         return GaussInt(int(p[0]),int(p[1]))
     
-    elif re.fullmatch("-?\d+ - \d*i",S):
+    elif re.fullmatch("-?\d+-\d*i",S):
         p = re.findall("-?\d+",S)
         return GaussInt(int(p[0]),int(p[1]))
     
