@@ -1,9 +1,15 @@
-from Quadratic.GaussianIntegers import GaussInt, gauss_gcd
+from Quadratic.GaussianIntegers import GaussInt, gauss_gcd, str_to_gauss
 
 
 class GaussRational:
     
     def __init__(self,n,d=1):
+        
+        if type(n) == str:
+            n = str_to_gauss(n)
+        
+        if type(d) == str:
+            d = str_to_gauss(d)
         
         if type(n) not in [GaussInt,int]:
             raise TypeError("Numerator must be GaussInt.")
@@ -181,9 +187,7 @@ class GaussRational:
 if __name__ == '__main__':
 
 
-    a = GaussInt(-3,-3)
-    b = GaussInt(2,4)
-    R = GaussRational(a,b)
+    R = GaussRational("-3 - 3i","2 + 4i")
     print(R)
 #    print(R.inv())
 #    print(R.inv()*R)
