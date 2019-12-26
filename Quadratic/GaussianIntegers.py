@@ -239,12 +239,10 @@ if __name__ == '__main__':
             break
         print(j)
     
-
     
     print("\n\n\nDemonstrate Gaussian Integer Arithmetic")
     Q = GaussInt(1,2)
     R = GaussInt(3,2)
-    
     
     
     print("\n\nBasic operations:")
@@ -256,7 +254,6 @@ if __name__ == '__main__':
     print(f"Q^2 = {Q**2}")
     print(f"-Q  = {-Q}")
     
-
     
     print("\n\nNonstandard operations:")
     
@@ -266,7 +263,6 @@ if __name__ == '__main__':
     print(f"R.re   = {R.re}")
     print(f"R.im   = {R.im}")  
     
-
         
     print("\n\n\nCheck that division works")
     
@@ -277,7 +273,6 @@ if __name__ == '__main__':
     
     print(f"\n({Q}) * ({R//Q}) = {Q*(R//Q)}")
     print(f"\n({Q}) * ({R//Q}) + {R%Q} = {Q*(R//Q)+R%Q}")
-    
     
     
     print("\n\nThe Division Theorem for Gaussian integers says that it is always the case that for the numbers a and b we can find numbers x and y such that:")
@@ -299,7 +294,6 @@ if __name__ == '__main__':
     
     print(f"N({a%b})   = {(a%b).norm}")
     print(f"N({b}) = {b.norm}")
-    
     
     
     print("\n\n\nGCD")

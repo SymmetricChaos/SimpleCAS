@@ -146,7 +146,8 @@ class GaussRational:
         return self.inv()*dividend
 
 
-    # Because GCD is not unique we need to modify equality checking
+    # Because GCD is not unique it is possible for apparently different numbers
+    # to be equal
     def __eq__(self,other):
         if type(other) == int:
             other = GaussRational(other)
