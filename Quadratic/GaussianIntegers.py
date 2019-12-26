@@ -210,15 +210,21 @@ def gauss_gcd(a,b):
 
 
 def str_to_gauss(S):
-    a = re.fullmatch("-?\d+",S)
-    b = re.fullmatch("-?\d+i",S)
-    c = re.fullmatch("-?\d+ [\+\-] \d*i",S)
-    if a:
+    
+    if re.fullmatch("-?\d+ + \d*i",S):
+        p = re.findall("-?\d+",S)
+        return GaussInt(int(p[0]),int(p[1]))
+    elif re.fullmatch("-?\d+ - \d*i",S):
+        p = re.findall("-?\d+",S)
+        return GaussInt(int(p[0]),int(p[1]))
+    elif re.fullmatch("-?\d+",S):
         return GaussInt(int(S))
-    if b:
+    elif re.fullmatch("-?\d+i",S):
         return GaussInt(0,int(S[:-1]))
-    if c:
-        print("I got nothing")
+    else:
+        raise Exception("Not a valid input")
+
+
 
 
 
@@ -321,5 +327,9 @@ if __name__ == '__main__':
     
     
     print("\n\n")
-    
-    print(str_to_gauss("-5i"))
+    for g in ["6","7i","2 - 7i","5 + 2i"]:
+        try:
+            x = str_to_gauss(g)
+            print(f"{g} gives {g}",type(x))
+        except:
+            print(f"{g} gave an error")
