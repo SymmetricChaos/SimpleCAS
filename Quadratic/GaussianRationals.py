@@ -189,8 +189,8 @@ if __name__ == '__main__':
 
     R = GaussRational("-3-3i","2+4i")
     print(R)
-#    print(R.inv())
-#    print(R.inv()*R)
-#    print(R**2)
-#    print(R.pretty_name)
-#    print(R/2)
+    print(R.inv())
+    print(R.inv()*R)
+    print(R**2)
+    print(R.pretty_name)
+    print(R/2)

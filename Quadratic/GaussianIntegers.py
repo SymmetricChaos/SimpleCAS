@@ -161,12 +161,9 @@ class GaussInt:
 def all_gauss_int():
     """Generate a spiral of gaussian integers"""
     
-    R = 1
-    D = 1
-    L = 2
-    U = 2
-    x = 0
-    y = 0
+    R, L = 1, 2
+    D, U = 1, 2
+    x, y = 0, 0
     
     yield GaussInt(x,y)
     
