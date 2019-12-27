@@ -3,7 +3,7 @@ from Quadratic.GaussianIntegers import GaussInt, gauss_gcd, str_to_gauss
 
 class GaussRational:
     
-    def __init__(self,n,d=1):
+    def __init__(self,n=0,d=1):
         
         if type(n) == str:
             n = str_to_gauss(n)
@@ -78,13 +78,12 @@ class GaussRational:
 
 
     def __add__(self,addend):
-        
-        if type(addend) not in [GaussRational,int]:
-            return NotImplemented
-        
-        if type(addend) == int:
+        if type(addend) in [GaussInt,int]:
             addend = GaussRational(addend)
         
+        if type(addend) != GaussRational:
+            return NotImplemented
+                
         n = self.n*addend.d + addend.n*self.d
         d = self.d*addend.d
 
@@ -92,14 +91,10 @@ class GaussRational:
 
 
     def __radd__(self,addend):
-        if type(addend) == int:
-            addend = GaussRational(addend)
         return self + addend
 
 
     def __sub__(self,addend):
-        if type(addend) not in [GaussRational,int]:
-            return NotImplemented
         return self + -addend
 
 
@@ -108,7 +103,6 @@ class GaussRational:
 
 
     def __mul__(self,multiplier):
-
         if type(multiplier) in [GaussInt,int]:
             multiplier = GaussRational(multiplier)
             
@@ -122,12 +116,10 @@ class GaussRational:
 
 
     def __rmul__(self,multiplier):
-
         return self*multiplier
 
 
     def __truediv__(self,divisor):
-        
         if type(divisor) in [GaussInt,int]:
             divisor = GaussRational(divisor)
         
@@ -153,7 +145,8 @@ class GaussRational:
             return self.n*other.d == self.d*other.n
         else:
             return False
-    
+
+
     def __pow__(self,pwr):
         if type(pwr) != int:
             raise TypeError(f"pwr must be an integer not {type(pwr)}")
@@ -173,6 +166,7 @@ class GaussRational:
 
     def __hash__(self):
         return hash(f"CustomGaussRational{self}")
+
 
     pretty_name = property(_pretty_name)
 
