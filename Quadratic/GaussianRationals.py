@@ -108,11 +108,12 @@ class GaussRational:
 
 
     def __mul__(self,multiplier):
-        if type(multiplier) not in [GaussRational,int]:
-            return NotImplemented
-        
-        if type(multiplier) == int:
+
+        if type(multiplier) in [GaussInt,int]:
             multiplier = GaussRational(multiplier)
+            
+        if type(multiplier) != GaussRational:
+            return NotImplemented
             
         n = self.n * multiplier.n
         d = self.d * multiplier.d
@@ -121,28 +122,25 @@ class GaussRational:
 
 
     def __rmul__(self,multiplier):
-        if type(multiplier) == int:
-            multiplier = GaussRational(multiplier)
+
         return self*multiplier
 
 
     def __truediv__(self,divisor):
-        if type(divisor) not in [GaussRational,int]:
+        
+        if type(divisor) in [GaussInt,int]:
+            divisor = GaussRational(divisor)
+        
+        if type(divisor) != GaussRational:
             return NotImplemented
 
-        if type(divisor) == int:
-            if divisor == 0:
-                raise ZeroDivisionError
-            divisor = GaussRational(divisor)
+        if divisor in [0,GaussInt(0,0),GaussRational(0,1)]:
+            raise ZeroDivisionError
             
         return self*divisor.inv()
     
      
     def __rtruediv__(self,dividend):
-        if self == GaussInt(0,0):
-            raise ZeroDivisionError
-        if type(dividend) == int:
-            dividend = GaussRational(dividend)
         return self.inv()*dividend
 
 
@@ -186,9 +184,11 @@ if __name__ == '__main__':
 
 
     R = GaussRational("-3-3i","2+4i")
-    print(R)
-    print(R.inv())
-    print(R.inv()*R)
-    print(R**2)
-    print(R.pretty_name)
-    print(R/2)
+    print(f"R = {R}")
+    print(f"R.inv() = {R.inv()}")
+    print(f"1/R = {1/R}")
+    print(f"R * 1/R = {R*1/R}")
+    print(f"R*i = {R*GaussInt(0,1)}")
+#    print(R**2)
+#    print(R.pretty_name)
+#    print(R/2)
