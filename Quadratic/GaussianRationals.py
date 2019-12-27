@@ -178,11 +178,14 @@ if __name__ == '__main__':
 
 
     R = GaussRational("-3-3i","2+4i")
+    S = GaussRational("7-3i","-1+5i")
     print(f"R = {R}")
+    print(f"S = {S}")
     print(f"R.inv() = {R.inv()}")
     print(f"1/R = {1/R}")
     print(f"R * 1/R = {R*1/R}")
     print(f"R*i = {R*GaussInt(0,1)}")
-#    print(R**2)
-#    print(R.pretty_name)
-#    print(R/2)
+    print(R**2)
+    print(R*S)
+    print(R.pretty_name)
+    print(R/S)
