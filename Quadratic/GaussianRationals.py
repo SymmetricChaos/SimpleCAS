@@ -30,15 +30,17 @@ class GaussRational:
 
 
     def simplify(self):
-        """Convert fraction to simplest form"""
+        """Convert fraction to one of its reduced forms"""
         g = gauss_gcd(self.n,self.d)
-        self.n = self.n//g
-        self.d = self.d//g
         
+        if g != 1 or g != -1:
+            self.n = self.n//g
+            self.d = self.d//g
+
         if self.d.re < 0:
             self.n = -self.n
             self.d = -self.d
-
+        
 
     def _pretty_name(self):
         """Format for LaTeX"""
