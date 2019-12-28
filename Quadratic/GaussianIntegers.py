@@ -1,5 +1,6 @@
 from Utility import round_div
 import re
+from math import sqrt, atan
 
 class GaussInt:
     
@@ -14,6 +15,7 @@ class GaussInt:
 
 
     def __complex__(self):
+        """Convert to a normal Python complex number"""
         return complex(self.re,self.im)
 
 
@@ -88,6 +90,10 @@ class GaussInt:
             return NotImplemented
 
 
+    def __rmul__(self,other):
+        return self*other
+
+
     def __neg__(self):
         return GaussInt(-self.re,-self.im)
 
@@ -110,9 +116,12 @@ class GaussInt:
             return out
 
 
-    # Division need to follow the division theorem and produce a number that 
-    # has a smaller norm
+    # Note unusual form of division used in order to make the Division Theorem
+    # hold
     def __floordiv__(self,other):
+        """Euclidean division"""
+        if other in [0,GaussInt(0,0)]:
+            return ZeroDivisionError
         if type(other) == int:
             return GaussInt(self.re//other,self.im//other)
         if type(other) == GaussInt:
@@ -124,10 +133,12 @@ class GaussInt:
 
 
     def __mod__(self,other):
+        """Remainder after Euclidean division"""
         return self - (other*(self//other))
         
 
     def __eq__(self,other):
+        """Check for equality"""
         if type(other) == GaussInt:
             if self.re == other.re:
                 if self.im == other.im:
@@ -143,16 +154,28 @@ class GaussInt:
     
 
     def _norm(self):
+        """The norm of the number"""
         return self.re*self.re + self.im*self.im
 
 
     def _conjugate(self):
+        """The conjugate of the number"""
         return GaussInt(self.re,-self.im)
+    
+    
+    def _modulus(self):
+        """Distance from the origin"""
+        return sqrt(self.norm)
+
+
+    def _argument(self):
+        return atan(self.im/(self.modulus+self.re))
     
     
     norm = property(_norm)
     conj = property(_conjugate)
-    conjugate = property(_conjugate)
+    modulus = property(_modulus)
+    argument = property(_argument)
 
 
 
