@@ -34,6 +34,10 @@ class GaussRational:
         g = gauss_gcd(self.n,self.d)
         self.n = self.n//g
         self.d = self.d//g
+        
+        if self.d.re < 0:
+            self.n = -self.n
+            self.d = -self.d
 
 
     def _pretty_name(self):
@@ -185,7 +189,9 @@ if __name__ == '__main__':
     print(f"1/R = {1/R}")
     print(f"R * 1/R = {R*1/R}")
     print(f"R*i = {R*GaussInt(0,1)}")
-    print(R**2)
-    print(R*S)
+    print(f"R**2 = {R**2}")
+    print(f"R*S = {R*S}")
+    print(f"R/S = {R/S}")
+    print(-S)
     print(R.pretty_name)
-    print(R/S)
+    print(S.pretty_name)
