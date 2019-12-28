@@ -125,7 +125,7 @@ class GaussInt:
         if type(other) == int:
             return GaussInt(self.re//other,self.im//other)
         if type(other) == GaussInt:
-            s = self*other.conjugate
+            s = self*other.conj
             n = other.norm
             return GaussInt(round_div(s.re,n),round_div(s.im,n))
         else:
@@ -164,11 +164,12 @@ class GaussInt:
     
     
     def _modulus(self):
-        """Distance from the origin"""
+        """Distance from the origin, returns a float"""
         return sqrt(self.norm)
 
 
     def _argument(self):
+        """Angle relative to the positive reals, returns a float"""
         return atan(self.im/(self.modulus+self.re))
     
     
