@@ -234,12 +234,14 @@ def str_to_gauss(S):
     
     S = S.replace(" ","")
     
+    if S == "i":
+        return GaussInt(0,1)
+    
     p = re.findall("-?\d+",S)
     if re.fullmatch("-?\d+\+\d*i",S):
         return GaussInt(int(p[0]),int(p[1]))
     
     elif re.fullmatch("-?\d+-\d*i",S):
-        p = re.findall("-?\d+",S)
         return GaussInt(int(p[0]),int(p[1]))
     
     elif re.fullmatch("-?\d+",S):
@@ -257,19 +259,27 @@ def str_to_gauss(S):
 
 if __name__ == '__main__':
     
-    print("Generator of Gaussian Integers")
+    Q = GaussInt(1,2)
+    R = GaussInt(3,2)
+    
+    print("Spiral of first twenty four gaussian integers")
     for i,j in enumerate(all_gauss_int()):
-        if i > 20:
+        if i > 24:
             break
         print(j)
     
     
+    print(f"\n\nFrist ten ideals of {R}")
+    for i,j in enumerate(ideal(R)):
+        if i > 10:
+            break
+        print(j)
+    
     print("\n\n\nDemonstrate Gaussian Integer Arithmetic")
-    Q = GaussInt(1,2)
-    R = GaussInt(3,2)
+
     
     
-    print("\n\nBasic operations:")
+    print("\nBasic operations:")
     print(f"Q   = {Q}")
     print(f"R   = {R}")
     print(f"Q+R = {Q+R}")
@@ -347,8 +357,8 @@ if __name__ == '__main__':
     print(f"b = {(b//g)*g}")
     
     
-    print("\n\n")
-    for g in ["6","7i","2 - 7i","1 + 2i"]:
+    print("\n\nCheck str_to_gauss")
+    for g in ["6","7i","2 -7i","1 + 2i","i","b","5j"]:
         try:
             x = str_to_gauss(g)
             print(f"{g} gives {g}",type(x))
