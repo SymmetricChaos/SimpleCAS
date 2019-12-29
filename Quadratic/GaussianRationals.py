@@ -7,7 +7,6 @@ class GaussRational:
         
         if type(n) == str:
             n = str_to_gauss(n)
-        
         if type(d) == str:
             d = str_to_gauss(d)
         
@@ -20,7 +19,6 @@ class GaussRational:
 
         if type(n) == int:
             n = GaussInt(n,0)
-
         if type(d) == int:
             d = GaussInt(d,0)
 
@@ -33,10 +31,12 @@ class GaussRational:
         """Convert fraction to one of its reduced forms"""
         g = gauss_gcd(self.n,self.d)
         
-        if g != 1 or g != -1:
+        # Divide out GCD
+        if g != 1 and g != -1:
             self.n = self.n//g
             self.d = self.d//g
 
+        # Force lower coefficient to have positive real part
         if self.d.re < 0:
             self.n = -self.n
             self.d = -self.d
@@ -181,7 +181,6 @@ class GaussRational:
 
 
 if __name__ == '__main__':
-
 
     R = GaussRational("-3-3i","2+4i")
     S = GaussRational("7-3i","-1+5i")
