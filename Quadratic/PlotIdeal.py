@@ -1,10 +1,10 @@
 from Quadratic.GaussianIntegers import GaussInt, ideal
-from Utils.Drawing import make_canvas, scatter_points, connect
+from Utility.Drawing import make_canvas, scatter_points, connect
 
 
 G = GaussInt(1,2)
 
-make_canvas([-6,6],[-6,6],size=8,show_axes=True,title="Ideal")
+make_canvas([-6,6],[-6,6],size=8,show_axes=True,title=f"Ideal of {G}")
 
 
 pts = []

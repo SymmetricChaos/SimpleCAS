@@ -27,7 +27,8 @@ def make_canvas(x,y=None,size=None,show_axes=True,title="",titlesize=15):
         ax.set_yticks([])
         
     plt.tight_layout()
-    plt.title(title+"\n",fontsize=titlesize)
+    if title:
+        plt.title(f"\n{title}\n",fontsize=titlesize)
     
     return fig, ax
 
