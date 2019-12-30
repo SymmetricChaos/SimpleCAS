@@ -254,7 +254,12 @@ def str_to_gauss(S):
         raise Exception("Not a valid input")
 
 
+def associates(a):
+    """Integer multiples of a, couterclockwise from the positive real line"""
+    x = abs(a.re)
+    y = abs(a.im)
 
+    return [GaussInt(x,y),GaussInt(-y,x),GaussInt(-x,-y),GaussInt(y,-x)]
 
 
 if __name__ == '__main__':
@@ -365,3 +370,6 @@ if __name__ == '__main__':
             print(f"{g} gives {g}",type(x))
         except:
             print(f"{g} gave an error")
+
+
+    print(associates(GaussInt(-5,2)))
