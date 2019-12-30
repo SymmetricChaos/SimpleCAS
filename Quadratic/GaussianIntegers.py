@@ -255,11 +255,16 @@ def str_to_gauss(S):
 
 
 def associates(a):
-    """Integer multiples of a, couterclockwise from the positive real line"""
-    x = abs(a.re)
-    y = abs(a.im)
+    """Integer multiple of a, returns a set"""
+    L = {a}
+    for i in range(3):
+        a *= GaussInt(0,1)
+        L.add(a)
 
-    return [GaussInt(x,y),GaussInt(-y,x),GaussInt(-x,-y),GaussInt(y,-x)]
+    return L
+
+
+
 
 
 if __name__ == '__main__':
@@ -363,7 +368,7 @@ if __name__ == '__main__':
     print(f"b = {(b//g)*g}")
     
     
-    print("\n\nCheck str_to_gauss")
+    print("\n\nCheck str_to_gauss inputs")
     for g in ["6","7i","2 -7i","1 + 2i","i","b","5j"]:
         try:
             x = str_to_gauss(g)
@@ -372,4 +377,6 @@ if __name__ == '__main__':
             print(f"{g} gave an error")
 
 
-    print(associates(GaussInt(-5,2)))
+    G = GaussInt(-5,2)
+    print(f"\n\nAssociates of {G}")
+    print(associates(G))
