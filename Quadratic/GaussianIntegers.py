@@ -288,7 +288,6 @@ if __name__ == '__main__':
     print("\n\n\nDemonstrate Gaussian Integer Arithmetic")
 
     
-    
     print("\nBasic operations:")
     print(f"Q   = {Q}")
     print(f"R   = {R}")
@@ -297,28 +296,6 @@ if __name__ == '__main__':
     print(f"Q*R = {Q*R}")
     print(f"Q^2 = {Q**2}")
     print(f"-Q  = {-Q}")
-    
-    
-    print("\n\nNonstandard operations:")
-    
-    print(f"R      = {R}")
-    print(f"R.norm = {R.norm}")
-    print(f"R.conj = {R.conj}")
-    print(f"R.re   = {R.re}")
-    print(f"R.im   = {R.im}")  
-    print(f"R.modulus   = {R.modulus}")
-    print(f"R.argument   = {R.argument}")  
-        
-    print("\n\n\nCheck that division works")
-    
-    print(f"Q   = {Q}")
-    print(f"R   = {R}")
-    print(f"R/Q = {R//Q}")
-    print(f"R%Q = {R%Q}")
-    
-    print(f"\n({Q}) * ({R//Q}) = {Q*(R//Q)}")
-    print(f"\n({Q}) * ({R//Q}) + {R%Q} = {Q*(R//Q)+R%Q}")
-    
     
     print("\n\nThe Division Theorem for Gaussian integers says that it is always the case that for the numbers a and b we can find numbers x and y such that:")
     print("\na = b*x + y\nand\ny.norm < b.norm")
@@ -332,32 +309,26 @@ if __name__ == '__main__':
     print(f"a//b = {a//b}")
     
     print()
-    
     print(f"{a} = ({b})*({a//b}) + ({a%b})")
     
     print()
-    
     print(f"N({a%b})   = {(a%b).norm}")
     print(f"N({b}) = {b.norm}")
     
-    
-    print("\n\n\nGCD")
-    a = GaussInt(11,3)
-    b = GaussInt(1,8)
-    print(f"a = {a}")
-    print(f"b = {b}")
-    g = gauss_gcd(a,b)
-    print(f"gcd = {g}")
-    print(f"a//g = {a//g}")
-    print(f"b//g = {b//g}")
-    
-    print(f"a = {(a//g)*g}")
-    print(f"b = {(b//g)*g}")
+
+    print("\n\nNonstandard operations:")
+    print(f"R      = {R}")
+    print(f"R.norm = {R.norm}")
+    print(f"R.conj = {R.conj}")
+    print(f"R.re   = {R.re}")
+    print(f"R.im   = {R.im}")  
+    print(f"R.modulus = {R.modulus:.4}")
+    print(f"R.argument = {R.argument:.4}")  
     
     
     print("\n\nGCD again")
     a = GaussInt(-6,6)
-    b = GaussInt(-3,9)
+    b = GaussInt(3,-9)
     print(f"a = {a}")
     print(f"b = {b}")
     g = gauss_gcd(a,b)
