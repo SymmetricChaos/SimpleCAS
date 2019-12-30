@@ -22,4 +22,3 @@ connect([0,-10],[0,10],color="gray",zorder=0)
 for i in range(-10,10):
     connect([-10,i],[10,i],color="lightgray",zorder=-1)
     connect([i,-10],[i,10],color="lightgray",zorder=-1)
-    

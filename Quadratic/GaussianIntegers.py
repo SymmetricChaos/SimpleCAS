@@ -296,7 +296,8 @@ if __name__ == '__main__':
     print(f"R.conj = {R.conj}")
     print(f"R.re   = {R.re}")
     print(f"R.im   = {R.im}")  
-    
+    print(f"R.modulus   = {R.modulus}")
+    print(f"R.argument   = {R.argument}")  
         
     print("\n\n\nCheck that division works")
     
