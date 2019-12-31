@@ -19,8 +19,12 @@ def is_guass_prime(G):
     return False
 
 
+#def gauss_factorization(G):
+    
+
+
 if __name__ == '__main__':
-    L = ["5","2+5i","-2-5i"]
+    L = ["5","2+5i","-2-5i","-11+7i","88-23i","15+22i"]
     for i in L:
         g = str_to_gauss(i)
         print(g,is_guass_prime(g))
