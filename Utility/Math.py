@@ -153,6 +153,10 @@ def int_root(x):
     return b
 
 
+def is_square(x):
+    return int_root(x)**2 == x
+
+
 def factorization(n,negatives=False):
     """All Unique Factors"""
     if type(n) != int:

@@ -10,7 +10,8 @@ from Utility.PolyPrint import poly_print, poly_print_pretty
 
 from Utility.Math import egcd, gcd, lcm, factorization, prime_factorization, \
                          factorial, mod_inv, mod_div, primes, choose, int_root, \
-                         round_div, cantor_pair, cantor_tuple, cantor_pair_inv
+                         round_div, cantor_pair, cantor_tuple, cantor_pair_inv, \
+                         is_square
 
 __all__=["egcd", "gcd", "lcm", "poly_add", "poly_mult", 
          "inds_where", "first_where", "factorization", "make_canvas", 
@@ -18,4 +19,4 @@ __all__=["egcd", "gcd", "lcm", "poly_add", "poly_mult",
          "poly_print_pretty", "poly_print", "show_plot", "connect","factorial",
          "choose","unit_test", "mod_inv", "mod_div","primes",
          "prime_factorization", "sort_by_nth", "int_root", "round_div",
-         "cantor_pair", "cantor_tuple", "cantor_pair_inv"]
+         "cantor_pair", "cantor_tuple", "cantor_pair_inv","is_square"]
