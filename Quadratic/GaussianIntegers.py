@@ -1,4 +1,4 @@
-from Utility import round_div
+from Utility import round_div, int_root
 import re
 from math import sqrt, atan
 
@@ -255,7 +255,7 @@ def str_to_gauss(S):
 
 
 def associates(a):
-    """Integer multiple of a, returns a set"""
+    """Integer multiples of a"""
     L = {a}
     for i in range(3):
         a *= GaussInt(0,1)
@@ -264,7 +264,19 @@ def associates(a):
     return L
 
 
+def all_with_norm(n):
+    """Yield all gaussian integers with a given norm"""
+    out = set()
+    
+    for a in range(int_root(n)):
+        B = n - a**2
+        b = int_root(B)
+        if b**2 == B:
+            out = out.union(associates(GaussInt(a,b)))
+            out = out.union(associates(GaussInt(b,a)))
 
+    for i in out:
+        yield i
 
 
 if __name__ == '__main__':
@@ -351,3 +363,8 @@ if __name__ == '__main__':
     G = GaussInt(-5,2)
     print(f"\n\nAssociates of {G}")
     print(associates(G))
+    
+    exnorm = 25
+    print(f"\n\nAll Gaussian Integer with Norm {exnorm}")
+    for i in all_with_norm(exnorm):
+        print(f"{str(i):<7}  {i.norm}")
