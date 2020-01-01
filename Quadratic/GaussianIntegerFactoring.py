@@ -29,12 +29,16 @@ def gauss_factorization(G):
     for f in F:
         L.append([i for i in all_with_norm(f)])
     
+    u = GaussInt(0,1)
     for i in product(*L):
         pr = GaussInt(1)
         for fs in i:
             pr *= fs
         if pr in a:
-            return i
+            while pr != G:
+                pr *= GaussInt(0,1)
+                u *= GaussInt(0,1)
+            return i,u
     
 
 if __name__ == '__main__':
