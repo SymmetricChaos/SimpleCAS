@@ -268,8 +268,7 @@ def all_with_norm(n):
     """Yield all gaussian integers with a given norm"""
     out = set()
     
-    for a in range(int_root(n)):
-        print(a)
+    for a in range(int_root(n)+1):
         B = n - a**2
         b = int_root(B)
         if b**2 == B:
@@ -365,7 +364,7 @@ if __name__ == '__main__':
     print(f"\n\nAssociates of {G}")
     print(associates(G))
     
-    exnorm = 2
+    exnorm = 25
     print(f"\n\nAll Gaussian Integer with Norm {exnorm}")
     for i in all_with_norm(exnorm):
         print(f"{str(i):<7}  {i.norm}")

@@ -1,5 +1,6 @@
 from Utility.Math import prime_factorization
 from Quadratic.GaussianIntegers import GaussInt, str_to_gauss, all_with_norm, associates
+from itertools import product
 
 def is_gauss_prime(G):
     assert type(G) == GaussInt
@@ -20,14 +21,20 @@ def is_gauss_prime(G):
 
 # The norm is a multiplcative function
 # Thus if we can factor the norm we known the norms of the factors
-#def gauss_factorization(G):
-#    F = prime_factorization(G.norm)
-#    print(F)
-#    for f in F:
-#        if is_gauss_prime(GaussInt(f)):
-#            print(associates(GaussInt(f)))
-#        else:
-#            print(f,[i for i in all_with_norm(f)])
+def gauss_factorization(G):
+    """Return a prime factorization up to unit multiplication"""
+    a = associates(G)
+    F = prime_factorization(G.norm)
+    L = []
+    for f in F:
+        L.append([i for i in all_with_norm(f)])
+    
+    for i in product(*L):
+        pr = GaussInt(1)
+        for fs in i:
+            pr *= fs
+        if pr in a:
+            return i
     
 
 if __name__ == '__main__':
@@ -43,5 +50,4 @@ if __name__ == '__main__':
     
     print(f"The norm of {g} is {g.norm}")
     print(f"The prime factorization of {g.norm} is {prime_factorization(g.norm)}")
-    
-#    print(gauss_factorization(g))
+    print(f"By searching gaussian integers with these norms we find a prime factorization of:\n{gauss_factorization(g)}")
