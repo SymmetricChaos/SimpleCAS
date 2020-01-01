@@ -1,5 +1,5 @@
 from Utility.Math import prime_factorization
-from Quadratic.GaussianIntegers import GaussInt, str_to_gauss
+from Quadratic.GaussianIntegers import GaussInt, str_to_gauss, all_with_norm, associates
 
 def is_gauss_prime(G):
     assert type(G) == GaussInt
@@ -20,16 +20,28 @@ def is_gauss_prime(G):
 
 # The norm is a multiplcative function
 # Thus if we can factor the norm we known the norms of the factors
-def gauss_factorization(G):
-    F = prime_factorization(G.norm)
-    print(F)
-
+#def gauss_factorization(G):
+#    F = prime_factorization(G.norm)
+#    print(F)
+#    for f in F:
+#        if is_gauss_prime(GaussInt(f)):
+#            print(associates(GaussInt(f)))
+#        else:
+#            print(f,[i for i in all_with_norm(f)])
+    
 
 if __name__ == '__main__':
     L = ["5","2+5i","-2-5i","-11+7i","88-23i","15+22i"]
     for i in L:
         g = str_to_gauss(i)
-        print(g,is_gauss_prime(g))
+        p = "is prime" if is_gauss_prime(g) else "is not prime"
+        print(f"{i:<7}{p}")
     
+    print("\n\nPrime Factorization")
     g = GaussInt(-11,7)
-    print(gauss_factorization(g))
+    print(g)
+    
+    print(f"The norm of {g} is {g.norm}")
+    print(f"The prime factorization of {g.norm} is {prime_factorization(g.norm)}")
+    
+#    print(gauss_factorization(g))
