@@ -3,6 +3,7 @@ from Quadratic.GaussianIntegers import GaussInt, str_to_gauss, all_with_norm, as
 from itertools import product
 
 def is_gauss_prime(G):
+    """Check for primality in Z[i]"""
     assert type(G) == GaussInt
     
     if G.re == 0:
@@ -23,6 +24,7 @@ def is_gauss_prime(G):
 # Thus if we can factor the norm we known the norms of the factors
 def gauss_factorization(G):
     """Return a prime factorization up to unit multiplication"""
+    assert type(G) == GaussInt
     a = associates(G)
     F = prime_factorization(G.norm)
     L = []
@@ -42,7 +44,7 @@ def gauss_factorization(G):
     
 
 if __name__ == '__main__':
-    L = ["5","2+5i","-2-5i","-11+7i","88-23i","15+22i"]
+    L = ["2","3","5","2+5i","-2-5i","-11+7i","88-23i","15+22i"]
     for i in L:
         g = str_to_gauss(i)
         p = "is prime" if is_gauss_prime(g) else "is not prime"
