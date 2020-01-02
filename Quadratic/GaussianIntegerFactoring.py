@@ -29,7 +29,7 @@ def gauss_factorization(G):
     for f in F:
         L.append([i for i in all_with_norm(f)])
     
-    u = GaussInt(0,1)
+    u = GaussInt(1)
     for i in product(*L):
         pr = GaussInt(1)
         for fs in i:
@@ -38,7 +38,7 @@ def gauss_factorization(G):
             while pr != G:
                 pr *= GaussInt(0,1)
                 u *= GaussInt(0,1)
-            return i,u
+            return (*i,u)
     
 
 if __name__ == '__main__':
@@ -49,9 +49,14 @@ if __name__ == '__main__':
         print(f"{i:<7}{p}")
     
     print("\n\nPrime Factorization")
-    g = GaussInt(-11,7)
+    g = GaussInt(2319,1694)
+    factors = gauss_factorization(g)
     print(g)
     
     print(f"The norm of {g} is {g.norm}")
     print(f"The prime factorization of {g.norm} is {prime_factorization(g.norm)}")
-    print(f"By searching gaussian integers with these norms we find a prime factorization of:\n{gauss_factorization(g)}")
+    print(f"By searching gaussian integers with these norms we find a prime factorization of:\n{factors}")
+    out = GaussInt(1)
+    for i in factors:
+        out *= i
+    print(out)
