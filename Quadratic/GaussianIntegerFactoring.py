@@ -59,4 +59,4 @@ if __name__ == '__main__':
     out = GaussInt(1)
     for i in factors:
         out *= i
-    print(out)
+    print("Product Matches:",out == g)
