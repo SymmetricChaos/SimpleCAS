@@ -281,6 +281,8 @@ def all_with_norm(n):
 
 if __name__ == '__main__':
     
+    import random
+    
     Q = GaussInt(1,2)
     R = GaussInt(3,2)
     
@@ -368,3 +370,11 @@ if __name__ == '__main__':
     print(f"\n\nAll Gaussian Integer with Norm {exnorm}")
     for i in all_with_norm(exnorm):
         print(f"{str(i):<7}  {i.norm}")
+        
+        
+    m = GaussInt(2,2)
+    print("Z[i]/{m}")
+    for i in range(10):
+        a,b = random.randint(10,20), random.randint(10,20)
+        g = GaussInt(a,b)
+        print(f"{g} = {g%m}")
