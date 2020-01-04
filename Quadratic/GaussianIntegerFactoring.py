@@ -20,6 +20,7 @@ def is_gauss_prime(G):
     
     return False
 
+
 # The norm is a multiplcative function
 # Thus if we can factor the norm we known the norms of the factors
 def gauss_factorization(G):
@@ -52,6 +53,21 @@ if __name__ == '__main__':
     
     print("\n\nPrime Factorization")
     g = GaussInt(2319,1694)
+    factors = gauss_factorization(g)
+    print(g)
+    
+    print(f"The norm of {g} is {g.norm}")
+    print(f"The prime factorization of {g.norm} is {prime_factorization(g.norm)}")
+    print(f"By searching gaussian integers with these norms we find a prime factorization of:\n{factors}")
+    out = GaussInt(1)
+    for i in factors:
+        out *= i
+    print("Product Matches:",out == g)
+    
+    
+    
+    print("\n\nPrime Factorization")
+    g = GaussInt(2319,1694)*3
     factors = gauss_factorization(g)
     print(g)
     
