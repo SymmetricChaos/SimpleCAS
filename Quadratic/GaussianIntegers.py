@@ -340,7 +340,7 @@ if __name__ == '__main__':
     print(f"R.argument = {R.argument:.4}")  
     
     
-    print("\n\nGCD again")
+    print("\n\nGCD")
     a = GaussInt(-6,6)
     b = GaussInt(3,-9)
     print(f"a = {a}")
@@ -365,16 +365,11 @@ if __name__ == '__main__':
     G = GaussInt(-5,2)
     print(f"\n\nAssociates of {G}")
     print(associates(G))
-    
-    exnorm = 25
-    print(f"\n\nAll Gaussian Integer with Norm {exnorm}")
-    for i in all_with_norm(exnorm):
-        print(f"{str(i):<7}  {i.norm}")
+            
         
-        
-    m = GaussInt(2,2)
-    print("Z[i]/{m}")
+    m = GaussInt(1,2)
+    print(f"\n\nZ[i]/({m})")
     for i in range(10):
-        a,b = random.randint(10,20), random.randint(10,20)
+        a,b = random.randint(10,30), random.randint(10,30)
         g = GaussInt(a,b)
         print(f"{g} = {g%m}")
