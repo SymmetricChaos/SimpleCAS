@@ -51,18 +51,18 @@ if __name__ == '__main__':
         p = "is prime" if is_gauss_prime(g) else "is not prime"
         print(f"{i:<7}{p}")
     
-    print("\n\nPrime Factorization")
-    g = GaussInt(2319,1694)
-    factors = gauss_factorization(g)
-    print(g)
-    
-    print(f"The norm of {g} is {g.norm}")
-    print(f"The prime factorization of {g.norm} is {prime_factorization(g.norm)}")
-    print(f"By searching gaussian integers with these norms we find a prime factorization of:\n{factors}")
-    out = GaussInt(1)
-    for i in factors:
-        out *= i
-    print("Product Matches:",out == g)
+#    print("\n\nPrime Factorization")
+#    g = GaussInt(2319,1694)
+#    factors = gauss_factorization(g)
+#    print(g)
+#    
+#    print(f"The norm of {g} is {g.norm}")
+#    print(f"The prime factorization of {g.norm} is {prime_factorization(g.norm)}")
+#    print(f"By searching gaussian integers with these norms we find a prime factorization of:\n{factors}")
+#    out = GaussInt(1)
+#    for i in factors:
+#        out *= i
+#    print("Product Matches:",out == g)
     
     
     

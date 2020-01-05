@@ -3,8 +3,8 @@ from Utility.Drawing import make_canvas, scatter_points, connect
 from Utility.Math import int_root
 
 
-example_norm = 100
-sz = int_root(example_norm)+5
+example_norm = 970
+sz = int(int_root(example_norm)*1.2)
 
 make_canvas([-sz,sz],[-sz,sz],size=8,show_axes=True,title=f"Gaussian Integers with Norm {example_norm}")
 
