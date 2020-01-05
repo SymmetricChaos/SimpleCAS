@@ -1,4 +1,4 @@
-from Utility.Math import prime_factorization
+from Utility.Math import prime_factorization, gcd
 from Quadratic.GaussianIntegers import GaussInt, str_to_gauss, all_with_norm, associates
 from itertools import product
 
@@ -26,6 +26,11 @@ def is_gauss_prime(G):
 def gauss_factorization(G):
     """Return a prime factorization up to unit multiplication"""
     assert type(G) == GaussInt
+    
+    g = gcd(G.re,G.im)
+    G = G//g
+    
+    
     a = associates(G)
     F = prime_factorization(G.norm)
     L = []
@@ -41,7 +46,7 @@ def gauss_factorization(G):
             while pr != G:
                 pr *= GaussInt(0,1)
                 u *= GaussInt(0,1)
-            return (*i,u)
+            return (u,*prime_factorization(g),*i)
     
 
 if __name__ == '__main__':
@@ -67,7 +72,7 @@ if __name__ == '__main__':
     
     
     print("\n\nPrime Factorization")
-    g = GaussInt(2319,1694)*3
+    g = GaussInt(6957,5082)
     factors = gauss_factorization(g)
     print(g)
     
