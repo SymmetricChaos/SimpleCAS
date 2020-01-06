@@ -74,9 +74,13 @@ if __name__ == '__main__':
     print("\n\nPrime Factorization")
     g = GaussInt(6957,5082)
     factors = gauss_factorization(g)
-    print(g)
+    print(f"Lets find the prime factors of {g} in Z[i]")
+    print(f"The first step is to eliminate real integer factors. We can do this simply by finding the gcd of the real and imaginary parts.")
     
-    print(f"The norm of {g} is {g.norm}")
+    print(f"That gives us {gcd(g.re,g.im)}")
+    print(f"That leaves {g//3}")
+    
+    print(f"The norm of {g//3} is {(g//3).norm}")
     print(f"The prime factorization of {g.norm} is {prime_factorization(g.norm)}")
     print(f"By searching gaussian integers with these norms we find a prime factorization of:\n{factors}")
     out = GaussInt(1)
