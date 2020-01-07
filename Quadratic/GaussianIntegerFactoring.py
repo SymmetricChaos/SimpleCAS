@@ -6,6 +6,9 @@ def is_gauss_prime(G):
     """Check for primality in Z[i]"""
     assert type(G) == GaussInt
     
+    if G == GaussInt(0,0):
+        return False
+    
     if G.re == 0:
         if abs(G.im) % 4 == 3:
             if len(prime_factorization(abs(G.im))) == 1:
@@ -65,9 +68,10 @@ if __name__ == '__main__':
     
     
     den = gcd(g.re,g.im)
-    print(f"That gives us {den}")
-    print(f"That leaves {g//den}")
-    gauss_factorization(GaussInt(den))
+    print(f"That gives us {den} and leaves us with {g//den} to factor")
+    print(f"However we are not done with {den}. We need to find how it factors in Z[i] as well.")
+
+    print(gauss_factorization(GaussInt(5)))
     
     
     print(f"The norm of {g//den} is {(g//den).norm}")
