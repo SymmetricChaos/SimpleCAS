@@ -1,3 +1,10 @@
+from functools import reduce
+import operator
+
+def prod(iterable):
+    return reduce(operator.mul, iterable, 1)
+
+
 def egcd(a, b):
     """Extended Euclidean Algorithm"""
     if a == 0:
