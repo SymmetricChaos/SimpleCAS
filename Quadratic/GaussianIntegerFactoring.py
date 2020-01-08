@@ -24,22 +24,13 @@ def is_gauss_prime(G):
     return False
 
 
-# The norm is a multiplcative function
-# Thus if we can factor the norm we known the norms of the factors
-def gauss_factorization(G):
-    """Return a prime factorization up to unit multiplication"""
+def gauss_factorization_real(G):
     if type(G) == int:
         G = GaussInt(G)
     assert type(G) == GaussInt
-
+    
     if is_gauss_prime(G):
         return (G,)
-
-#    if G.im == 0 or G.re == 0:
-#        g = gcd(G.re,G.im)
-    
-    
-
     
     a = associates(G)
     F = prime_factorization(G.norm)
@@ -57,6 +48,41 @@ def gauss_factorization(G):
                 pr *= GaussInt(0,1)
                 u *= GaussInt(0,1)
             return (u,*i)
+        
+
+# The norm is a multiplcative function
+# Thus if we can factor the norm we known the norms of the factors
+def gauss_factorization(G):
+    """Return a prime factorization up to unit multiplication"""
+    if type(G) == int:
+        G = GaussInt(G)
+    assert type(G) == GaussInt
+
+    if is_gauss_prime(G):
+        return (G,)
+
+    g = gcd(G.re,G.im)
+    gf = gauss_factorization_real(g)
+    print(gf)
+    G = G//g
+
+    
+    a = associates(G)
+    F = prime_factorization(G.norm)
+    L = []
+    for f in F:
+        L.append([i for i in all_with_norm(f)])
+
+    u = GaussInt(1)
+    for i in product(*L):
+        pr = GaussInt(1)
+        for fs in i:
+            pr *= fs
+        if pr in a:
+            while pr != G:
+                pr *= GaussInt(0,1)
+                u *= GaussInt(0,1)
+            return (u,*gf,*i)
     
 
 if __name__ == '__main__':
@@ -77,7 +103,7 @@ if __name__ == '__main__':
     print(prod(gauss_factorization(8)))
     print("Factor 35")
     print(gauss_factorization(35))
-    
+#    
     
 #    print("\n\nPrime Factorization")
 #    g = GaussInt(6957,5082)*7
