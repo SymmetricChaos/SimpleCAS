@@ -48,6 +48,9 @@ def gauss_factorization_real(G):
                 pr *= GaussInt(0,1)
                 u *= GaussInt(0,1)
             return (u,*i)
+    
+    print("Not prime but factorization failed somehow")
+    return (G,)
         
 
 # The norm is a multiplcative function
@@ -62,8 +65,7 @@ def gauss_factorization(G):
         return (G,)
 
     g = gcd(G.re,G.im)
-    gf = gauss_factorization_real(g)
-    print(gf)
+    gf = ()#gauss_factorization_real(g)
     G = G//g
 
     
@@ -94,37 +96,37 @@ if __name__ == '__main__':
     
     
 
-    print("Factor 5")
-    print(gauss_factorization(5))
-    print("Factor 7")
-    print(gauss_factorization(7))
-    print("Factor 8")
-    print(gauss_factorization(8))
-    print(prod(gauss_factorization(8)))
-    print("Factor 35")
-    print(gauss_factorization(35))
-#    
+#    print("Factor 5")
+#    print(gauss_factorization(5))
+#    print("Factor 7")
+#    print(gauss_factorization(7))
+#    print("Factor 8")
+#    print(gauss_factorization(8))
+#    print(prod(gauss_factorization(8)))
+#    print("Factor 35")
+#    print(gauss_factorization_real(35))
     
-#    print("\n\nPrime Factorization")
-#    g = GaussInt(6957,5082)*7
-#    factors = gauss_factorization(g)
-#    print(f"Lets find the prime factors of {g} in Z[i]")
-#    print(f"The first step is to eliminate real integer factors. We can do this simply by finding the gcd of the real and imaginary parts.")
-#    
-#    
-#    den = gcd(g.re,g.im)
-#    print(f"That gives us {den} and leaves us with {g//den} to factor")
-#    print(f"However we are not done with {den}. We need to find how it factors in Z[i] as well.")
-#    print(gauss_factorization(21))
-#
-#    
-#    
-#    print(f"The norm of {g//den} is {(g//den).norm}")
-#    print(f"The prime factorization of {(g//den).norm} is {prime_factorization(g.norm)}")
-#    print(f"By searching gaussian integers with these norms we find a prime factorization of:\n{factors}")
-#    
-#    # Check that we did it correctly
-#    out = GaussInt(1)
-#    for f in factors:
-#        out *= f
-#    print("Product Matches:",out == g)
+    
+    print("\n\nPrime Factorization")
+    g = GaussInt(6957,5082)*7
+    factors = gauss_factorization(g)
+    print(f"Lets find the prime factors of {g} in Z[i]")
+    print(f"The first step is to eliminate real integer factors. We can do this simply by finding the gcd of the real and imaginary parts.")
+    
+    
+    den = gcd(g.re,g.im)
+    print(f"That gives us {den} and leaves us with {g//den} to factor")
+    print(f"However we are not done with {den}. We need to find how it factors in Z[i] as well.")
+    print(gauss_factorization_real(21))
+
+    
+    
+    print(f"The norm of {g//den} is {(g//den).norm}")
+    print(f"The prime factorization of {(g//den).norm} is {prime_factorization(g.norm)}")
+    print(f"By searching gaussian integers with these norms we find a prime factorization of:\n{factors}")
+    
+    # Check that we did it correctly
+    out = GaussInt(1)
+    for f in factors:
+        out *= f
+    print("Product Matches:",out == g)
