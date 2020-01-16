@@ -1,5 +1,6 @@
 from Rational import Rational, CFrac
 from Poly import QPoly, ZPoly, RFunc, ZPolyProd
+from Quadratic import GaussInt
 from Utility import unit_test
 
 
@@ -149,6 +150,20 @@ zpp_minitests = [ (C, "(4x + 2)(3x^2 + 2x + 1)^2"),
                 ]
 
 
+#######################
+## Gaussian Integers ##
+#######################
+
+# TODO: Additional tests
+P = GaussInt(1,2)
+Q = GaussInt(1,0)
+R = GaussInt(0,1)
+
+zi_minitests = [ (P,"1 + 2i"),
+                 (Q,"1"),
+                 (R,"i"),
+                ]
+
 
 #######################
 ## Integration Tests ##
@@ -191,6 +206,9 @@ unit_test(z_minitests)
 
 print("\nTest ZPolyProd")
 unit_test(zpp_minitests)
+
+print("\nTest GaussInt")
+unit_test(zi_minitests)
 
 print("\nIntegration Tests")
 unit_test(i_minitests)
