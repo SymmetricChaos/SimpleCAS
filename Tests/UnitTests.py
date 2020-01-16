@@ -155,13 +155,19 @@ zpp_minitests = [ (C, "(4x + 2)(3x^2 + 2x + 1)^2"),
 #######################
 
 # TODO: Additional tests
-P = GaussInt(1,2)
-Q = GaussInt(1,0)
-R = GaussInt(0,1)
+A = GaussInt(3,1)
+B = GaussInt(1,0)
+C = GaussInt(0,1)
+D = GaussInt(-5,-6)
+E = GaussInt(7,-1)
 
-zi_minitests = [ (P,"1 + 2i"),
-                 (Q,"1"),
-                 (R,"i"),
+zi_minitests = [ (A,"3 + i"),
+                 (B,"1"),
+                 (C,"i"),
+                 (D,"-5 - 6i"),
+                 (E,"7 - i"),
+                 (A*C,"-1 + 3i"),
+                 (D*E,"-41 - 37i")
                 ]
 
 
