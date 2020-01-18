@@ -335,9 +335,9 @@ if __name__ == '__main__':
     print(f"R.norm = {R.norm}")
     print(f"R.conj = {R.conj}")
     print(f"R.re   = {R.re}")
-    print(f"R.im   = {R.im}")  
+    print(f"R.im   = {R.im}")
     print(f"R.modulus = {R.modulus:.4}")
-    print(f"R.argument = {R.argument:.4}")  
+    print(f"R.argument = {R.argument:.4}")
     
     
     print("\n\nGCD")
