@@ -145,7 +145,7 @@ def quad_int2_gcd(a,b,d=QuadInt2(1)):
         return quad_int2_gcd(div_by_root(a),b,d)
     
     else:
-        print("IT DIDNT WORK. HELP!")
+        raise Exception("IT DIDNT WORK. HELP!")
 
 
 

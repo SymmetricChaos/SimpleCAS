@@ -351,7 +351,7 @@ if __name__ == '__main__':
     print(f"b//g = {b//g}")
     print(f"a = {(a//g)*g}")
     print(f"b = {(b//g)*g}")
-    
+        
     
     print("\n\nCheck str_to_gauss inputs")
     for g in ["6","7i","2 -7i","1 + 2i","i","b","5j"]:
@@ -368,8 +368,22 @@ if __name__ == '__main__':
             
         
     m = GaussInt(1,2)
-    print(f"\n\nZ[i]/({m})")
+    print(f"\n\nRandom Numbers from Z[i]/({m})")
     for i in range(10):
         a,b = random.randint(10,30), random.randint(10,30)
         g = GaussInt(a,b)
         print(f"{g} = {g%m}")
+        
+        
+        
+    print("\n\nA Forumula in Z[i]\na^2 + b^2 = (a+bi)(a-bi)")
+    a = 5 
+    b = 4
+    print("\nFor Example:")
+    print(f"{a**2} + {b**2} = ({GaussInt(a,b)})({GaussInt(a,-b)}) = {GaussInt(a,b)*GaussInt(a,-b)}")
+
+
+    
+    
+    
+    
