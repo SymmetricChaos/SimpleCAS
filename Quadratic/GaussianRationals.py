@@ -61,7 +61,7 @@ class GaussRational:
 
 
     def copy(self):
-        return GaussRational(self.n,self.d)
+        return GaussRational(self.re,self.im)
 
 
     def __str__(self):
@@ -197,21 +197,22 @@ class GaussRational:
 #            return False
 
 
-#    def __pow__(self,pwr):
-#        if type(pwr) != int:
-#            raise TypeError(f"pwr must be an integer not {type(pwr)}")
-#        
-#        # For negative powers invert then use recursion
-#        if pwr < 0:
-#            return self.inv()**abs(pwr)
-#        elif pwr == 0:
-#            return GaussRational(1)
-#        elif pwr == 1:
-#            return self
-#        else:
-#            n = self.n**pwr
-#            d = self.d**pwr
-#            return GaussRational(n,d)
+    def __pow__(self,pwr):
+        if type(pwr) != int:
+            raise TypeError(f"pwr must be an integer not {type(pwr)}")
+        
+        # For negative powers invert then use recursion
+        if pwr < 0:
+            return self.inv()**abs(pwr)
+        elif pwr == 0:
+            return GaussRational(1)
+        elif pwr == 1:
+            return self
+        else:
+            out = self.copy()
+            for i in range(pwr-1):
+                out *= self
+            return out
 
 
     def __hash__(self):
@@ -231,9 +232,10 @@ if __name__ == '__main__':
     print(f"R = {R}")
     print(f"-R = {-R}")
     print(f"1/R = {1/R}")
+    print(f"1/(1/R) = {1/(1/R)}")
     print(f"R * 1/R = {R*1/R}")
     print(f"R*i = {R*GaussInt(0,1)}")
-#    print(f"R**2 = {R**2}")
+    print(f"R**2 = {R**2}")
     print(f"S = {S}")
     print(f"R*S = {R*S}")
     print(f"R/S = {R/S}")
