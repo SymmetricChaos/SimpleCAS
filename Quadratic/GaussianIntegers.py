@@ -280,28 +280,28 @@ def all_with_norm(n):
 
 
 if __name__ == '__main__':
-    
+
     import random
-    
+
     Q = GaussInt(1,2)
     R = GaussInt(3,2)
-    
+
     print("Spiral of first twenty four gaussian integers")
     for i,j in enumerate(all_gauss_int()):
         if i > 24:
             break
         print(j)
-    
-    
+
+
     print(f"\n\nFrist ten ideals of {R}")
     for i,j in enumerate(ideal(R)):
         if i > 10:
             break
         print(j)
-    
+
     print("\n\n\nDemonstrate Gaussian Integer Arithmetic")
 
-    
+
     print("\nBasic operations:")
     print(f"Q   = {Q}")
     print(f"R   = {R}")
@@ -310,25 +310,25 @@ if __name__ == '__main__':
     print(f"Q*R = {Q*R}")
     print(f"Q^2 = {Q**2}")
     print(f"-Q  = {-Q}")
-    
+
     print("\n\nThe Division Theorem for Gaussian integers says that it is always the case that for the numbers a and b we can find numbers x and y such that:")
     print("\na = b*x + y\nand\ny.norm < b.norm")
-    
+
     a = GaussInt(27,-23)
     b = GaussInt(8,1)
-    
+
     print()
     print(f"a = {a}")
     print(f"b = {b}")
     print(f"a//b = {a//b}")
-    
+
     print()
     print(f"{a} = ({b})*({a//b}) + ({a%b})")
-    
+
     print()
     print(f"N({a%b})   = {(a%b).norm}")
     print(f"N({b}) = {b.norm}")
-    
+
 
     print("\n\nNonstandard operations:")
     print(f"R      = {R}")
@@ -338,8 +338,8 @@ if __name__ == '__main__':
     print(f"R.im   = {R.im}")
     print(f"R.modulus = {R.modulus:.4}")
     print(f"R.argument = {R.argument:.4}")
-    
-    
+
+
     print("\n\nGCD")
     a = GaussInt(-6,6)
     b = GaussInt(3,-9)
@@ -351,8 +351,8 @@ if __name__ == '__main__':
     print(f"b//g = {b//g}")
     print(f"a = {(a//g)*g}")
     print(f"b = {(b//g)*g}")
-        
-    
+
+
     print("\n\nCheck str_to_gauss inputs")
     for g in ["6","7i","2 -7i","1 + 2i","i","b","5j"]:
         try:
@@ -365,20 +365,20 @@ if __name__ == '__main__':
     G = GaussInt(-5,2)
     print(f"\n\nAssociates of {G}")
     print(associates(G))
-            
-        
+
+
     m = GaussInt(1,2)
     print(f"\n\nRandom Numbers from Z[i]/({m})")
     for i in range(10):
         a,b = random.randint(10,30), random.randint(10,30)
         g = GaussInt(a,b)
         print(f"{g} = {g%m}")
-        
-        
-        
+
+
+
     print("\n\nA Forumula in Z[i]\na^2 + b^2 = (a+bi)(a-bi)")
-    a = 5 
-    b = 4
+    a = 6 
+    b = 5
     print("\nFor Example:")
     print(f"{a**2} + {b**2} = ({GaussInt(a,b)})({GaussInt(a,-b)}) = {GaussInt(a,b)*GaussInt(a,-b)}")
 
