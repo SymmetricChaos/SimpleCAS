@@ -7,23 +7,6 @@ class GaussRational:
         
         self.re = cast_to_rational(re)
         self.im = cast_to_rational(im)
-
-#        self.simplify()
-
-
-#    def simplify(self):
-#        """Convert fraction to one of its reduced forms"""
-#        g = gauss_gcd(self.n,self.d)
-#        
-#        # Divide out GCD
-#        if g != 1 and g != -1:
-#            self.n = self.n//g
-#            self.d = self.d//g
-#
-#        # Force lower coefficient to have positive real part
-#        if self.d.re < 0:
-#            self.n = -self.n
-#            self.d = -self.d
         
 
     def _pretty_name(self):
@@ -110,7 +93,6 @@ class GaussRational:
         
         e = self.re**2 + self.im**2
 
-
         A = a/(b*e)
         B = -c/(d*e)
 
@@ -187,7 +169,7 @@ class GaussRational:
 
 
     def __eq__(self,other):
-        if type(other) in [int,Rational,GaussInt,GaussRational]
+        if type(other) in [int,Rational,GaussInt,GaussRational]:
             return str(self) == str(other)
         else:
             return False
