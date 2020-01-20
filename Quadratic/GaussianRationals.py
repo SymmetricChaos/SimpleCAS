@@ -186,15 +186,11 @@ class GaussRational:
         return self.inv()*dividend
 
 
-    # Because GCD is not unique it is possible for apparently different numbers
-    # to be equal
-#    def __eq__(self,other):
-#        if type(other) == int:
-#            other = GaussRational(other)
-#        if type(other) == GaussRational:
-#            return self.n*other.d == self.d*other.n
-#        else:
-#            return False
+    def __eq__(self,other):
+        if type(other) in [int,Rational,GaussInt,GaussRational]
+            return str(self) == str(other)
+        else:
+            return False
 
 
     def __pow__(self,pwr):
