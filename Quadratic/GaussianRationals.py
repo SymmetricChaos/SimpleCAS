@@ -158,7 +158,7 @@ class GaussRational:
         if type(divisor) != GaussRational:
             return NotImplemented
 
-        if divisor in [0,GaussInt(0,0),GaussRational(0,1)]:
+        if divisor in [0,GaussInt(0,0),GaussRational(0,0)]:
             raise ZeroDivisionError
             
         return self*divisor.inv()
@@ -205,8 +205,10 @@ class GaussRational:
 
 if __name__ == '__main__':
 
-    R = GaussRational("1/2","7/5")
-    S = GaussRational("4","9/7")
+    R = GaussRational("1/2","-7/5")
+    S = GaussRational("11/9","8/6")
+    T = GaussRational("4","3")
+    U = GaussRational("2","5")
     print(f"R = {R}")
     print(f"-R = {-R}")
     print(f"1/R = {1/R}")
@@ -215,7 +217,11 @@ if __name__ == '__main__':
     print(f"R*i = {R*GaussInt(0,1)}")
     print(f"R**2 = {R**2}")
     print(f"S = {S}")
+    print(f"S/i = {S/GaussRational(0,1)}")
     print(f"R*S = {R*S}")
     print(f"R/S = {R/S}")
+    
+    print(f"({T})/({U}) = {T/U}")
+    
     print(R.pretty_name)
     print(S.pretty_name)
