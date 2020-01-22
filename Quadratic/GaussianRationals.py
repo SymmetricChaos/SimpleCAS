@@ -1,5 +1,6 @@
-from Quadratic.GaussianIntegers import GaussInt, gauss_gcd, str_to_gauss
-from Rational import Rational, rational_gcd, cast_to_rational
+from Quadratic.GaussianIntegers import GaussInt
+from Rational import Rational, cast_to_rational
+
 
 class GaussRational:
     
@@ -196,8 +197,14 @@ class GaussRational:
     def __hash__(self):
         return hash(f"CustomGaussRational{self}")
 
+    
+    # Represent the number as a ratio of two Gaussian integers
+    def _integer_form(self):
+        pass
+
 
     pretty_name = property(_pretty_name)
+    integer_form = property(_integer_form)
 
 
 
@@ -222,6 +229,7 @@ if __name__ == '__main__':
     print(f"R/S = {R/S}")
     
     print(f"({T})/({U}) = {T/U}")
+    print(f"U = {U}")
+    print(f"1/U = {1/U}")
     
-    print(R.pretty_name)
-    print(S.pretty_name)
+    
