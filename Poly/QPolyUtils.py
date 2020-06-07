@@ -55,7 +55,13 @@ def lagrange_interpolation(X,Y):
         for m in X:
             if m != x:
                 d = Rational(1,(x-m))
+                print(d)
                 P = QPoly([-m,1])
+                print(P)
+                print(P*d)
+                print(out)
+                print(out*P*d)
+                print()
                 out *= P*d
         final += out
     return final
@@ -184,11 +190,13 @@ if __name__ == '__main__':
     print(S)
     print("Factored version of S")
     print(factored_form(S))
-    
-#    x = [1,2,3]
-#    y = [1,8,27]
-#    print(f"Lagrange Interpolation of\nx = {x}\ny = {y}")
-#    print(lagrange_interpolation(x,y))
+        
+    print()
+    print()
+    x = [1,2,3]
+    y = [1,8,27]
+    print(f"Lagrange Interpolation of\nx = {x}\ny = {y}")
+    print(lagrange_interpolation(x,y))
 #
 #
 #    print()
