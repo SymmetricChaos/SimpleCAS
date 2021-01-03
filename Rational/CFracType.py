@@ -177,6 +177,7 @@ if __name__ == '__main__':
     print(C)
     print(C.pretty_name)
     
+    print(CFrac(Rational(3,4)))
     
     print()
     print(C)

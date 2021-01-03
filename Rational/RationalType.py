@@ -347,3 +347,4 @@ if __name__ == '__main__':
     print(R**2)
     print(R**-3)
     print(R)
+    print(R.digits(10))

@@ -9,7 +9,7 @@ def first_where(L,val):
         if l == val:
             return pos
     return None
-     
+
 
 def sort_by_nth(L,n,func=None):
     if func == None:
@@ -37,7 +37,7 @@ def poly_pad(P,n):
     while len(out) < n:
         out.append(0)
     return out
-	
+
 
 def poly_add(P, Q):
     """Take list of polynomial coefficients and add them"""
